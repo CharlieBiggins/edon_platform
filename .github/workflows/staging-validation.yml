@@ -83,7 +83,12 @@ jobs:
       - name: Restart API and verify reconstruction
         run: |
           set -euo pipefail
-          kill "$(cat artifacts/api.pid)"; wait "$(cat artifacts/api.pid)" || test $? -eq 143
+          api_pid="$(cat artifacts/api.pid)"
+          if kill "$api_pid" 2>/dev/null; then :; fi
+          for i in $(seq 1 30); do
+            if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi
+            if test "$i" -eq 30; then echo "API did not stop"; exit 1; fi
+          done
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/start.js
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/server.js
           node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 & echo $! > artifacts/api-restart.pid
@@ -103,9 +108,7 @@ jobs:
           for pid_file in artifacts/api.pid artifacts/api-restart.pid artifacts/oidc.pid; do
             if test -f "$pid_file"; then
               pid="$(cat "$pid_file")"
-              kill "$pid" 2>/dev/null
-              status=$?
-              if test "$status" -ne 0 && kill -0 "$pid" 2>/dev/null; then exit "$status"; fi
+              if kill -0 "$pid" 2>/dev/null; then kill "$pid" 2>/dev/null; fi
             fi
           done
       - name: Upload validation artifacts
