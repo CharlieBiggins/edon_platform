@@ -44,6 +44,8 @@ jobs:
         with: { node-version: 22, cache: npm, cache-dependency-path: command-center/package-lock.json }
       - run: npm ci
         working-directory: command-center
+      - run: npm install --no-save pg
+        working-directory: command-center
       - name: Apply migrations and verify version
         run: |
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
