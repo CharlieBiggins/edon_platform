@@ -73,6 +73,12 @@ jobs:
           token="$(curl -fsS 'http://127.0.0.1:8899/token' | node -e "process.stdin.on('data',d=>process.stdout.write(JSON.parse(d).access_token))")"
           test -n "$token"
           echo "CEREBRUM_AUTH_TOKEN=$token" >> "$GITHUB_ENV"
+          durability_token="$(curl -fsS 'http://127.0.0.1:8899/token?role=auditor' | node -e "process.stdin.on('data',d=>process.stdout.write(JSON.parse(d).access_token))")"
+          test -n "$durability_token"
+          echo "CEREBRUM_DURABILITY_TOKEN=$durability_token" >> "$GITHUB_ENV"
+          echo "CEREBRUM_DURABILITY_ACTOR=audit-01" >> "$GITHUB_ENV"
+          echo "CEREBRUM_DURABILITY_ROLE=auditor" >> "$GITHUB_ENV"
+          echo "CEREBRUM_DURABILITY_TENANT=meridian-demo" >> "$GITHUB_ENV"
       - name: Start compiled API
         run: |
           set -euo pipefail

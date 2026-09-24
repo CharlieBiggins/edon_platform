@@ -4,14 +4,21 @@ import { resolve } from 'node:path';
 import { mkdir } from 'node:fs/promises';
 
 const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
+const token = process.env.CEREBRUM_DURABILITY_TOKEN;
+const expectedActor = process.env.CEREBRUM_DURABILITY_ACTOR ?? 'audit-01';
+const expectedRole = process.env.CEREBRUM_DURABILITY_ROLE ?? 'auditor';
+const expectedTenant = process.env.CEREBRUM_DURABILITY_TENANT ?? 'meridian-demo';
 const artifact = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(artifact, { recursive: true });
 const baselinePath = `${artifact}/durability-baseline.json`;
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 async function get(path) {
-  const response = await fetch(`${baseUrl}${path}`);
-  if (!response.ok) throw new Error(`${path} returned HTTP ${response.status}`);
-  const body = await response.json();
+  const response = await fetch(`${baseUrl}${path}`, { headers: token ? { authorization: `Bearer ${token}` } : {} });
+  const body = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const sanitized = body?.error ? { code: String(body.error.code ?? 'API_ERROR'), message: String(body.error.message ?? 'request failed') } : { body: String(JSON.stringify(body)).slice(0, 500) };
+    throw new Error(JSON.stringify({ method: 'GET', path, status: response.status, error: sanitized, expected_actor: expectedActor, expected_role: expectedRole, expected_tenant: expectedTenant }));
+  }
   if (!body.data) throw new Error(`${path} returned no data`);
   return body.data;
 }
