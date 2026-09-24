@@ -1,5 +1,10 @@
 import { createServer } from 'node:http';
-const jwks = { keys: [{ kty: 'RSA', kid: 'ci-test-key-v1', use: 'sig', alg: 'RS256', n: 'ci-placeholder', e: 'AQAB' }] };
-const server = createServer((request, response) => { response.setHeader('content-type', 'application/json'); if (request.url === '/.well-known/jwks.json') return response.end(JSON.stringify(jwks)); response.statusCode = 404; response.end(JSON.stringify({ error: 'not_found' })); });
+import { generateKeyPairSync, createSign } from 'node:crypto';
+const { privateKey, publicKey } = generateKeyPairSync('rsa', { modulusLength: 2048 });
+const jwk = publicKey.export({ format: 'jwk' });
+const issuer = process.env.OIDC_ISSUER ?? 'http://127.0.0.1:8899';
+const b64 = value => Buffer.from(JSON.stringify(value)).toString('base64url');
+const token = ({ tenant = 'meridian-demo', audience = 'cerebrum-control-plane', expires = 3600 } = {}) => { const header = b64({ alg: 'RS256', typ: 'JWT', kid: 'ci-test-key-v1' }); const payload = b64({ iss: issuer, aud: audience, sub: 'operator-01', tenant_id: tenant, actor_type: 'HUMAN', roles: ['operator'], iat: Math.floor(Date.now() / 1000), exp: Math.floor(Date.now() / 1000) + Number(expires) }); const signer = createSign('RSA-SHA256'); signer.update(`${header}.${payload}`); return `${header}.${payload}.${signer.sign(privateKey, 'base64url')}`; };
+const server = createServer((request, response) => { response.setHeader('content-type', 'application/json'); if (request.url === '/.well-known/jwks.json') return response.end(JSON.stringify({ keys: [{ ...jwk, kid: 'ci-test-key-v1', use: 'sig', alg: 'RS256' }] })); if (request.url?.startsWith('/token')) { const query = new URL(request.url, issuer).searchParams; return response.end(JSON.stringify({ access_token: token({ tenant: query.get('tenant') ?? 'meridian-demo', audience: query.get('audience') ?? 'cerebrum-control-plane', expires: Number(query.get('expires') ?? 3600) }), token_type: 'Bearer' })); } response.statusCode = 404; response.end(JSON.stringify({ error: 'not_found' })); });
 server.listen(8899, '127.0.0.1');
 process.on('SIGTERM', () => server.close(() => process.exit(0)));

@@ -21,5 +21,9 @@ DO $$ DECLARE t text; BEGIN
   END LOOP;
 END $$;
 
+GRANT SELECT, INSERT ON state_snapshots, idempotency_keys TO cerebrum_app;
+GRANT SELECT ON state_snapshots, idempotency_keys TO cerebrum_audit;
+REVOKE UPDATE, DELETE ON state_snapshots, idempotency_keys FROM cerebrum_app, cerebrum_audit;
+
 INSERT INTO schema_migrations(version) VALUES ('003_lifecycle_records') ON CONFLICT DO NOTHING;
 COMMIT;

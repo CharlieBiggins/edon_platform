@@ -16,7 +16,8 @@ jobs:
           --health-interval=5s --health-timeout=5s --health-retries=20
     env:
       RUNTIME_PROFILE: STAGING_TEST
-      DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
+      DATABASE_URL: postgresql://cerebrum_app:validation-only@127.0.0.1:5432/cerebrum_validation
+      MIGRATOR_DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
       MIGRATOR_ROLE: cerebrum_migrator
       APPLICATION_ROLE: cerebrum_app
       AUDIT_ROLE: cerebrum_audit
@@ -50,20 +51,27 @@ jobs:
       - name: Create database roles
         run: |
           set -euo pipefail
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
           DO $$ BEGIN CREATE ROLE cerebrum_migrator NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
           DO $$ BEGIN CREATE ROLE cerebrum_app NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
           DO $$ BEGIN CREATE ROLE cerebrum_audit NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+          ALTER ROLE cerebrum_app LOGIN PASSWORD 'validation-only';
+          ALTER ROLE cerebrum_audit LOGIN PASSWORD 'validation-only';
+          GRANT CONNECT ON DATABASE cerebrum_validation TO cerebrum_app, cerebrum_audit;
           SQL
       - name: Apply migrations and verify version
         run: |
           set -euo pipefail
-          for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records"
+          for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
           node scripts/oidc-test-issuer.mjs > $ARTIFACT_DIR/oidc.log 2>&1 & echo $! > $ARTIFACT_DIR/oidc.pid
+          for i in $(seq 1 30); do if curl -fsS http://127.0.0.1:8899/.well-known/jwks.json >/dev/null; then break; fi; sleep 1; done
+          token="$(curl -fsS 'http://127.0.0.1:8899/token' | node -e "process.stdin.on('data',d=>process.stdout.write(JSON.parse(d).access_token))")"
+          test -n "$token"
+          echo "CEREBRUM_AUTH_TOKEN=$token" >> "$GITHUB_ENV"
       - name: Start compiled API
         run: |
           set -euo pipefail
@@ -96,6 +104,22 @@ jobs:
           PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-baseline.txt
           test -s $ARTIFACT_DIR/db-durability-baseline.txt
           ! grep -Eq '=0:' $ARTIFACT_DIR/db-durability-baseline.txt
+      - name: Validate identity and tenant isolation
+        run: |
+          set -euo pipefail
+          node scripts/identity-tenant-validation.mjs
+          own="$(PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
+          other="$(PGOPTIONS='-c app.tenant_id=other-tenant' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
+          missing="$(PGOPTIONS='-c app.tenant_id=' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
+          test "$own" -gt 0; test "$other" = 0; test "$missing" = 0
+          if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE journal_events SET event_type='TAMPERED'"; then exit 1; fi
+          if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM journal_events"; then exit 1; fi
+          if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE receipts SET payload='{}'"; then exit 1; fi
+          if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM receipts"; then exit 1; fi
+          audit="$(PGOPTIONS='-c app.tenant_id=meridian-demo' psql postgresql://cerebrum_audit:validation-only@127.0.0.1:5432/cerebrum_validation -At -c "SELECT count(*) FROM journal_events")"
+          test "$audit" -gt 0
+          if PGOPTIONS='-c app.tenant_id=meridian-demo' psql postgresql://cerebrum_audit:validation-only@127.0.0.1:5432/cerebrum_validation -v ON_ERROR_STOP=1 -c "DELETE FROM journal_events"; then exit 1; fi
+          printf '{"own":%s,"other":%s,"missing":%s,"audit_read":%s,"append_only":"enforced"}\n' "$own" "$other" "$missing" "$audit" > "$ARTIFACT_DIR/postgres-tenant-isolation.json"
       - name: Restart API and verify durability
         run: |
           set -euo pipefail
