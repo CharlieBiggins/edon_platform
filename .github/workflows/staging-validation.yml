@@ -93,17 +93,23 @@ jobs:
           set -euo pipefail
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/healthz >/dev/null && curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat $ARTIFACT_DIR/api.log; exit 1
-      - name: Run HTTP lifecycle validation
+      - name: Run validation
         working-directory: command-center
+        shell: bash
         run: |
-          set -euo pipefail
-          set +e
+          set -Eeuo pipefail
+          trap 'code=$?;
+            safe_command="${BASH_COMMAND//validation-only/[REDACTED]}";
+            safe_command="${safe_command//CEREBRUM_AUTH_TOKEN=[^ ]*/CEREBRUM_AUTH_TOKEN=[REDACTED]}";
+            echo "::error::Command failed at line ${LINENO}: ${safe_command} (exit ${code})";
+            for log in "$ARTIFACT_DIR/api.log" "$ARTIFACT_DIR/api-restart.log" "$ARTIFACT_DIR/oidc.log"; do
+              if test -f "$log"; then
+                echo "===== $log =====";
+                tail -n 200 "$log";
+              fi;
+            done;
+            exit "$code"' ERR
           npm run test:staging
-          status=$?
-          set -e
-          if test "$status" -eq 0; then exit 0; fi
-          if test -f "$ARTIFACT_DIR/api.log"; then cat "$ARTIFACT_DIR/api.log"; fi
-          exit "$status"
       - name: Validate identity and tenant isolation
         run: |
           set -euo pipefail
