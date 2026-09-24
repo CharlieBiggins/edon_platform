@@ -1,17 +1,17 @@
 import { createServer, type IncomingMessage, type ServerResponse } from 'node:http';
-import { CONTRACT_VERSION, openApiDocument, validateBinding, type RequestBinding } from '../../../packages/contracts/src';
-import { AppendOnlyJournal } from '../../../packages/platform-core/src/event-journal';
-import { DeterministicEvidenceAdmission } from '../../../packages/platform-core/src/evidence-admission';
-import { DeterministicKernel } from '../../../packages/platform-core/src/kernel';
-import { LogisticsProposalGenerator } from '../../../packages/platform-core/src/proposal-generator';
-import { ReplayableStateProjector } from '../../../packages/platform-core/src/state-projector';
-import { HumanReviewGate } from '../../../packages/platform-core/src/human-review';
-import { ShadowEvaluator } from '../../../packages/platform-core/src/shadow-evaluator';
-import { SimulatedIdentityVerifier, type IdentityVerifier } from '../../../packages/platform-core/src/auth';
-import { InMemoryPlatformRepositories } from '../../../packages/platform-core/src/repositories';
-import { HashLinkedReceiptService } from '../../../packages/platform-core/src/receipt-service';
-import { KmsReceiptCustody, type ReceiptSigner } from '../../../packages/platform-core/src/receipt-custody';
-import { assertRuntimeProfile, type RuntimeDependencies, type RuntimeProfile } from './runtime';
+import { CONTRACT_VERSION, openApiDocument, validateBinding, type RequestBinding } from '../../../packages/contracts/src/index.js';
+import { AppendOnlyJournal } from '../../../packages/platform-core/src/event-journal.js';
+import { DeterministicEvidenceAdmission } from '../../../packages/platform-core/src/evidence-admission.js';
+import { DeterministicKernel } from '../../../packages/platform-core/src/kernel.js';
+import { LogisticsProposalGenerator } from '../../../packages/platform-core/src/proposal-generator.js';
+import { ReplayableStateProjector } from '../../../packages/platform-core/src/state-projector.js';
+import { HumanReviewGate } from '../../../packages/platform-core/src/human-review.js';
+import { ShadowEvaluator } from '../../../packages/platform-core/src/shadow-evaluator.js';
+import { SimulatedIdentityVerifier, type IdentityVerifier } from '../../../packages/platform-core/src/auth.js';
+import { InMemoryPlatformRepositories } from '../../../packages/platform-core/src/repositories.js';
+import { HashLinkedReceiptService } from '../../../packages/platform-core/src/receipt-service.js';
+import { KmsReceiptCustody, type ReceiptSigner } from '../../../packages/platform-core/src/receipt-custody.js';
+import { assertRuntimeProfile, type RuntimeDependencies, type RuntimeProfile } from './runtime.js';
 
 const journal = new AppendOnlyJournal();
 const repositories = new InMemoryPlatformRepositories();
@@ -62,3 +62,5 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     return failure(response, 'VALIDATION_FAILED', 'Route not found');
   });
 }
+
+

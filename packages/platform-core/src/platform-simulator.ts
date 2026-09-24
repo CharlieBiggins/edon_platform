@@ -1,4 +1,4 @@
-import type { ActionProposal, DecisionReceipt, EventEnvelope, EvidenceRecord, KernelDecision, OutcomeRecord } from '../../contracts/src';
+import type { ActionProposal, DecisionReceipt, EventEnvelope, EvidenceRecord, KernelDecision, OutcomeRecord } from '../../contracts/src/index.js';
 
 const now = () => new Date().toISOString();
 const digest = (value: unknown) => `sha256:sim-${JSON.stringify(value).length.toString(16)}-${String(value).slice(0, 8)}`;
@@ -24,3 +24,5 @@ export class ShadowRecoverySimulator {
   getJournal() { return [...this.events]; }
   private record(type: EventEnvelope['event_type'], actorId: string, actorType: EventEnvelope['actor_type'], incidentId: string, payload: unknown, before = this.stateVersion) { const event: EventEnvelope<unknown> = { event_id: `evt-${++this.sequence}`, tenant_id: 'meridian-demo', event_type: type, actor_id: actorId, actor_type: actorType, scope_id: 'memphis-fulfillment', incident_id: incidentId, occurred_at: now(), observed_at: now(), available_to_controller_at: now(), recorded_at: now(), correlation_id: `corr-${incidentId}`, causation_id: this.events.at(-1)?.event_id, trace_id: `trace-${incidentId}`, state_version_before: before, state_version_after: this.stateVersion, policy_version: 'POL-LOG-07 v18', model_release: type === 'PROPOSAL_CREATED' ? 'c1-shadow-0.9.1' : undefined, payload, payload_hash: digest(payload), previous_record_hash: this.events.at(-1)?.payload_hash ?? 'sha256:genesis', signature: 'simulated-signature', simulated: true }; this.events.push(event); return event; }
 }
+
+

@@ -1,8 +1,8 @@
-import { createControlPlaneServer } from './server';
-import { requireRuntimeEnvironment } from './runtime';
-import { PostgreSQLPlatformRepositories } from '../../../packages/platform-core/src/repositories';
-import { SimulatedIdentityVerifier } from '../../../packages/platform-core/src/auth';
-import { LocalReceiptSigner } from '../../../packages/platform-core/src/receipt-custody';
+import { createControlPlaneServer } from './server.js';
+import { requireRuntimeEnvironment } from './runtime.js';
+import { PostgreSQLPlatformRepositories } from '../../../packages/platform-core/src/repositories.js';
+import { SimulatedIdentityVerifier } from '../../../packages/platform-core/src/auth.js';
+import { LocalReceiptSigner } from '../../../packages/platform-core/src/receipt-custody.js';
 
 const config = requireRuntimeEnvironment(process.env);
 const loadPg = new Function('specifier', 'return import(specifier)') as (specifier: string) => Promise<{ Pool: new (options: { connectionString: string }) => { query: (text: string, values?: unknown[]) => Promise<{ rows: unknown[] }>; end: () => Promise<void> } }>;
@@ -14,3 +14,5 @@ const server = createControlPlaneServer({ profile: config.profile, repositories:
 server.listen(config.port, config.host, () => process.stdout.write(`Control Plane API listening on ${config.host}:${config.port}\n`));
 const shutdown = () => server.close(async () => { await pool.end(); process.exit(0); });
 process.on('SIGTERM', shutdown); process.on('SIGINT', shutdown);
+
+

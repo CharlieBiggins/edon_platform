@@ -1,11 +1,11 @@
-import { runCapacityDisruptionScenario } from './scenario-runner';
-import { AppendOnlyJournal } from '../../platform-core/src/event-journal';
-import { DeterministicEvidenceAdmission } from '../../platform-core/src/evidence-admission';
-import { DeterministicKernel } from '../../platform-core/src/kernel';
-import { HumanReviewGate } from '../../platform-core/src/human-review';
-import { HashLinkedReceiptService } from '../../platform-core/src/receipt-service';
-import { classifyAcknowledgement } from '../../platform-core/src/outcome-comparator';
-import { ReplayableStateProjector } from '../../platform-core/src/state-projector';
+import { runCapacityDisruptionScenario } from './scenario-runner.js';
+import { AppendOnlyJournal } from '../../platform-core/src/event-journal.js';
+import { DeterministicEvidenceAdmission } from '../../platform-core/src/evidence-admission.js';
+import { DeterministicKernel } from '../../platform-core/src/kernel.js';
+import { HumanReviewGate } from '../../platform-core/src/human-review.js';
+import { HashLinkedReceiptService } from '../../platform-core/src/receipt-service.js';
+import { classifyAcknowledgement } from '../../platform-core/src/outcome-comparator.js';
+import { ReplayableStateProjector } from '../../platform-core/src/state-projector.js';
 
 export type SliceCheck = { name: string; passed: boolean; detail: string };
 
@@ -55,3 +55,5 @@ export function validateReferenceSlice(): SliceCheck[] {
     { name: 'missing acknowledgement is explicit', passed: classifyAcknowledgement(false, false) === 'OUTCOME_UNKNOWN' && classifyAcknowledgement(false, true) === 'RECONCILIATION_REQUIRED', detail: 'Unknown and reconciliation-required outcomes remain distinct.' },
   ];
 }
+
+

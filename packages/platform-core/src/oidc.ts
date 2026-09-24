@@ -8,3 +8,5 @@ export class OidcJwksVerifier {
     try { const decode = (value: string) => JSON.parse(Buffer.from(value, 'base64url').toString('utf8')) as Record<string, unknown>; const header = decode(parts[0]); const claims = decode(parts[1]) as unknown as OidcClaims; if (!(await this.verifySignature(header, `${parts[0]}.${parts[1]}`, parts[2]))) return null; if (claims.iss !== this.issuer || !(Array.isArray(claims.aud) ? claims.aud.includes(this.audience) : claims.aud === this.audience) || claims.exp <= this.now() || (claims.nbf !== undefined && claims.nbf > this.now()) || claims.actor_status === 'DISABLED' || (expectedTenant && claims.tenant_id !== expectedTenant) || (requiredRole && !claims.roles?.includes(requiredRole))) return null; return claims; } catch { return null; }
   }
 }
+
+

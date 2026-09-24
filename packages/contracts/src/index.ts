@@ -13,4 +13,4 @@ export interface ActionProposal { proposal_id: string; incident_id: string; obje
 export interface KernelDecision { decision_id: string; proposal_id: string; disposition: KernelDisposition; reason_codes: string[]; required_approval: boolean; evaluated_at: string; state_version: number; policy_version: string; simulated: true; }
 export interface OutcomeRecord { outcome_id: string; proposal_id: string; observed_at: string; recovery_time: string; actual_cost: number; commitments_protected: number; evidence_ids: string[]; verification_status: 'PENDING' | 'VERIFIED' | 'DISPUTED'; }
 export interface DecisionReceipt { receipt_id: string; incident_id: string; proposal_id: string; kernel_decision_id: string; human_reviewed: boolean; shadow_only: true; outcome_id?: string; event_ids: string[]; receipt_hash: string; signature: string; simulated: true; }
-export * from './api';
+export * from './api.js';

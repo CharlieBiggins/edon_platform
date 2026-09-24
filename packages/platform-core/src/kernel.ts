@@ -1,4 +1,4 @@
-import type { Kernel } from './contracts';
+import type { Kernel } from './contracts.js';
 export class DeterministicKernel implements Kernel {
   evaluate(proposal: Parameters<Kernel['evaluate']>[0]) {
     return this.evaluateAt(proposal, proposal.state_version, 30000);
@@ -18,3 +18,5 @@ export class DeterministicKernel implements Kernel {
       policy_version: proposal.policy_version, simulated: true as const };
   }
 }
+
+

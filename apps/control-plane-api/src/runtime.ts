@@ -1,6 +1,6 @@
-import { InMemoryPlatformRepositories, type PlatformRepositories } from '../../../packages/platform-core/src/repositories';
-import { SimulatedIdentityVerifier, type IdentityVerifier } from '../../../packages/platform-core/src/auth';
-import { KmsReceiptCustody, type ReceiptSigner } from '../../../packages/platform-core/src/receipt-custody';
+import { InMemoryPlatformRepositories, type PlatformRepositories } from '../../../packages/platform-core/src/repositories.js';
+import { SimulatedIdentityVerifier, type IdentityVerifier } from '../../../packages/platform-core/src/auth.js';
+import { KmsReceiptCustody, type ReceiptSigner } from '../../../packages/platform-core/src/receipt-custody.js';
 
 export type RuntimeProfile = 'LOCAL' | 'STAGING_TEST' | 'STAGING' | 'PRODUCTION';
 export type RuntimeDependencies = { repositories: PlatformRepositories; identityVerifier: IdentityVerifier; receiptSigner: ReceiptSigner; tenantIsolation: boolean; auditLogging: boolean; signingKeyMode: 'KMS' | 'DEVELOPMENT' };
@@ -22,3 +22,5 @@ export function requireRuntimeEnvironment(env: Record<string, string | undefined
   if (env.AUDIT_LOGGING !== 'true' || env.TENANT_ISOLATION_ENFORCEMENT !== 'true') throw new Error('Audit logging and tenant isolation must be enabled');
   return { profile: 'STAGING_TEST' as const, host: env.API_HOST!, port: Number(env.API_PORT), databaseUrl: env.DATABASE_URL!, oidcIssuer: env.OIDC_ISSUER!, oidcAudience: env.OIDC_AUDIENCE!, jwksUrl: env.OIDC_JWKS_URL!, signingKey: env.RECEIPT_SIGNING_TEST_KEY! };
 }
+
+

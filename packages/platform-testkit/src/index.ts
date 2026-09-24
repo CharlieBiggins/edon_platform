@@ -1,4 +1,6 @@
-export * from './scenario-runner';
-export * from './validation';
-export * from './http-scenario';
-export * from './validation-report';
+export * from './scenario-runner.js';
+export * from './validation.js';
+export * from './http-scenario.js';
+export * from './validation-report.js';
+
+

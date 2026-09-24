@@ -1,5 +1,5 @@
-import type { EvidenceAdmission } from './contracts';
-import type { EvidenceRecord } from '../../contracts/src';
+import type { EvidenceAdmission } from './contracts.js';
+import type { EvidenceRecord } from '../../contracts/src/index.js';
 export class DeterministicEvidenceAdmission implements EvidenceAdmission {
   admit(input: unknown): EvidenceRecord[] {
     if (!input || typeof input !== 'object') return [];
@@ -12,3 +12,5 @@ export class DeterministicEvidenceAdmission implements EvidenceAdmission {
     ];
   }
 }
+
+

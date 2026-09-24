@@ -1,4 +1,4 @@
-import type { EventEnvelope } from './contracts';
+import type { EventEnvelope } from './contracts.js';
 
 const fingerprint = (event: EventEnvelope<unknown>) => JSON.stringify(event);
 
@@ -24,3 +24,5 @@ export class AppendOnlyJournal {
     return this.records.every(record => this.fingerprints.get(record.event_id) === fingerprint(record));
   }
 }
+
+

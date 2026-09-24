@@ -1,4 +1,4 @@
-import type { ActionProposal, DecisionReceipt, KernelDecision, OutcomeRecord } from '../../contracts/src';
+import type { ActionProposal, DecisionReceipt, KernelDecision, OutcomeRecord } from '../../contracts/src/index.js';
 const receiptHash = (value: unknown) => {
   const text = JSON.stringify(value);
   let hash = 2166136261;
@@ -12,3 +12,5 @@ export class HashLinkedReceiptService {
   }
   verify(receipt: DecisionReceipt) { const { receipt_hash, signature, ...body } = receipt; return signature === 'simulated-signature' && receipt_hash === receiptHash(body); }
 }
+
+

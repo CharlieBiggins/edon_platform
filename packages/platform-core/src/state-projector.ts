@@ -1,4 +1,4 @@
-import type { StateProjector } from './contracts';
+import type { StateProjector } from './contracts.js';
 export class ReplayableStateProjector implements StateProjector {
   project(events: { event_type: string; state_version_after: number; payload: unknown; occurred_at?: string }[]) {
     const projections = events.filter(event => {
@@ -17,3 +17,5 @@ export class ReplayableStateProjector implements StateProjector {
     } };
   }
 }
+
+

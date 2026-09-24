@@ -1,4 +1,4 @@
-import type { DecisionReceipt, EventEnvelope, EvidenceRecord, OutcomeRecord, ActionProposal, KernelDecision } from '../../contracts/src';
+import type { DecisionReceipt, EventEnvelope, EvidenceRecord, OutcomeRecord, ActionProposal, KernelDecision } from '../../contracts/src/index.js';
 
 export type StoredIncident = { incident_id: string; tenant_id: string; scope_id: string; state_version: number; status: string };
 export type StoredReview = { review_id: string; proposal_id: string; actor_id: string; approved: boolean; recorded_at: string };
@@ -61,3 +61,5 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async getReceipt(tenantId: string, receiptId: string) { const result = await this.db.query<{ payload: DecisionReceipt & { tenant_id: string } }>('SELECT payload FROM receipts WHERE tenant_id=$1 AND receipt_id=$2', [tenantId, receiptId]); return result.rows[0]?.payload ?? null; }
   async claimIdempotency(tenantId: string, key: string, response: unknown) { const result = await this.db.query<{ response: unknown }>('INSERT INTO idempotency_keys (tenant_id,key,response) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING response', [tenantId, key, JSON.stringify(response)]); if (result.rows.length) return { claimed: true, response }; const existing = await this.db.query<{ response: unknown }>('SELECT response FROM idempotency_keys WHERE tenant_id=$1 AND key=$2', [tenantId, key]); return { claimed: false, response: existing.rows[0]?.response }; }
 }
+
+
