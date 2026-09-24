@@ -179,7 +179,7 @@ export default function AskCerebrum(props: AskCerebrumProps) {
   useEffect(() => {
     function keydown(event: KeyboardEvent) { if (event.key === 'Escape' && props.open) { if (contextDrawerOpen) setContextDrawerOpen(false); else mode === 'full' ? setMode('expanded') : props.onOpenChange(false); } }
     window.addEventListener('keydown', keydown); return () => window.removeEventListener('keydown', keydown);
-  }, [props.open, mode, props.onOpenChange]);
+  }, [props.open, mode, contextDrawerOpen, props.onOpenChange]);
   useEffect(() => {
     if (typeof window === 'undefined') return;
     window.localStorage.setItem('cerebrum.workspace.split-preset', splitPreset);
