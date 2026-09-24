@@ -9,6 +9,7 @@ import { HumanReviewGate } from '../../../packages/platform-core/src/human-revie
 import { ShadowEvaluator } from '../../../packages/platform-core/src/shadow-evaluator';
 import { SimulatedIdentityVerifier, type IdentityVerifier } from '../../../packages/platform-core/src/auth';
 import { InMemoryPlatformRepositories } from '../../../packages/platform-core/src/repositories';
+import { HashLinkedReceiptService } from '../../../packages/platform-core/src/receipt-service';
 import { KmsReceiptCustody, type ReceiptSigner } from '../../../packages/platform-core/src/receipt-custody';
 import { assertRuntimeProfile, type RuntimeDependencies, type RuntimeProfile } from './runtime';
 
@@ -18,6 +19,7 @@ const eventsByKey = new Map<string, unknown>();
 const proposals = new Map<string, ReturnType<LogisticsProposalGenerator['create']>>();
 const receipts = new Map<string, unknown>();
 const outcomes = new Map<string, unknown>();
+const decisions = new Map<string, ReturnType<HumanReviewGate['reevaluate']>>();
 const state = () => new ReplayableStateProjector().project(journal.all());
 const json = (request: IncomingMessage) => new Promise<Record<string, unknown>>((resolve, reject) => { let body = ''; request.on('data', chunk => { body += chunk; }); request.on('end', () => { try { resolve(body ? JSON.parse(body) : {}); } catch { reject(new Error('invalid json')); } }); });
 const reply = (response: ServerResponse, status: number, body: unknown) => { response.statusCode = status; response.setHeader('content-type', 'application/json'); response.end(JSON.stringify(body)); };
@@ -50,9 +52,9 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
       await runtimeDependencies.repositories.claimIdempotency(principal!.tenant_id, bind!.idempotency_key, event); journal.append(event); eventsByKey.set(`${principal!.tenant_id}:${bind!.idempotency_key}`, event); return reply(response, 201, { data: event, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
     }
     if (request.method === 'POST' && url.pathname === '/v1/proposals') { const evidence = new DeterministicEvidenceAdmission().admit({ event: 'capacity_disruption' }); const proposal = new LogisticsProposalGenerator().create(state(), evidence); proposals.set(proposal.proposal_id, proposal); return reply(response, 201, { data: proposal, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
-    if (request.method === 'POST' && url.pathname === '/v1/reviews') { const proposal = proposals.get(String(body.proposal_id)); if (!proposal) return failure(response, 'VALIDATION_FAILED', 'Proposal not found', bind?.correlation_id); const decision = new HumanReviewGate().reevaluate(proposal, body.approved === true, state().version, 30000); return reply(response, 200, { data: decision, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
+    if (request.method === 'POST' && url.pathname === '/v1/reviews') { const proposal = proposals.get(String(body.proposal_id)); if (!proposal) return failure(response, 'VALIDATION_FAILED', 'Proposal not found', bind?.correlation_id); const decision = new HumanReviewGate().reevaluate(proposal, body.approved === true, state().version, 30000); decisions.set(proposal.proposal_id, decision); return reply(response, 200, { data: decision, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
     if (request.method === 'POST' && url.pathname === '/v1/shadow-evaluations') { const proposal = proposals.get(String(body.proposal_id)); if (!proposal) return failure(response, 'VALIDATION_FAILED', 'Proposal not found', bind?.correlation_id); return reply(response, 201, { data: new ShadowEvaluator().record(proposal), meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
-    if (request.method === 'POST' && url.pathname === '/v1/outcomes') { outcomes.set(String(body.outcome_id), body); return reply(response, 201, { data: body, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
+    if (request.method === 'POST' && url.pathname === '/v1/outcomes') { outcomes.set(String(body.outcome_id), body); const proposal = proposals.get(String(body.proposal_id)); const decision = proposal ? decisions.get(proposal.proposal_id) : undefined; if (proposal && decision) { const receipt = new HashLinkedReceiptService().issue(proposal, decision, body as never); receipts.set(receipt.receipt_id, receipt); } return reply(response, 201, { data: body, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
     if (request.method === 'GET' && url.pathname.startsWith('/v1/state/')) return reply(response, 200, { data: state(), meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } });
     if (request.method === 'GET' && url.pathname.startsWith('/v1/incidents/')) return reply(response, 200, { data: { incident_id: url.pathname.split('/').at(-1), state: state(), proposal_ids: [...proposals.keys()] }, meta: { correlation_id: 'read', contract_version: CONTRACT_VERSION } });
     if (request.method === 'GET' && url.pathname.startsWith('/v1/receipts/')) return reply(response, 200, { data: receipts.get(url.pathname.split('/').at(-1) ?? '') ?? null, meta: { correlation_id: 'read', contract_version: CONTRACT_VERSION } });

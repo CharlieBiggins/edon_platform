@@ -1,35 +1,25 @@
 name: staging-equivalent-validation
-
 on:
   workflow_dispatch:
   push:
-    paths:
-      - 'apps/control-plane-api/**'
-      - 'packages/**'
-      - 'scripts/staging-validation.mjs'
-
+    paths: ['apps/control-plane-api/**', 'packages/**', 'scripts/**', '.github/workflows/staging-validation.yml']
 jobs:
   staging-validation:
     runs-on: ubuntu-latest
     services:
       postgres:
         image: postgres:16
-        env:
-          POSTGRES_USER: cerebrum_admin
-      POSTGRES_PASSWORD: validation-only
-          POSTGRES_DB: cerebrum_validation
+        env: { POSTGRES_USER: cerebrum_admin, POSTGRES_PASSWORD: validation-only, POSTGRES_DB: cerebrum_validation }
         ports: ['5432:5432']
         options: >-
           --health-cmd="pg_isready -U cerebrum_admin -d cerebrum_validation"
           --health-interval=5s --health-timeout=5s --health-retries=20
     env:
-      DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
-      CEREBRUM_RUNTIME_PROFILE: STAGING_TEST
-      CEREBRUM_API_URL: http://127.0.0.1:8787
       RUNTIME_PROFILE: STAGING_TEST
       DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
       MIGRATOR_ROLE: cerebrum_migrator
       APPLICATION_ROLE: cerebrum_app
+      AUDIT_ROLE: cerebrum_audit
       OIDC_ISSUER: http://127.0.0.1:8899
       OIDC_AUDIENCE: cerebrum-control-plane
       OIDC_JWKS_URL: http://127.0.0.1:8899/.well-known/jwks.json
@@ -38,63 +28,76 @@ jobs:
       TENANT_ISOLATION_ENFORCEMENT: 'true'
       API_HOST: 127.0.0.1
       API_PORT: '8787'
+      CEREBRUM_API_URL: http://127.0.0.1:8787
+      CEREBRUM_ARTIFACT_DIR: ../artifacts
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 22, cache: npm, cache-dependency-path: command-center/package-lock.json }
-      - run: npm ci
+      - name: Install dependencies
         working-directory: command-center
-      - run: npm install --no-save pg
-        working-directory: command-center
+        run: npm ci && npm install --no-save pg
+      - name: Build contracts, core, testkit and API
+        run: |
+          set -euo pipefail
+          command-center/node_modules/.bin/tsc -p packages/contracts/tsconfig.json
+          command-center/node_modules/.bin/tsc -p packages/platform-core/tsconfig.json
+          command-center/node_modules/.bin/tsc -p packages/platform-testkit/tsconfig.json
+          command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
+      - name: Create database roles
+        run: |
+          set -euo pipefail
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          DO $$ BEGIN CREATE ROLE cerebrum_migrator NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+          DO $$ BEGIN CREATE ROLE cerebrum_app NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+          DO $$ BEGIN CREATE ROLE cerebrum_audit NOLOGIN; EXCEPTION WHEN duplicate_object THEN NULL; END $$;
+          SQL
       - name: Apply migrations and verify version
         run: |
+          set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT version FROM schema_migrations ORDER BY version;"
-      - name: Typecheck server packages
-        run: command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
-      - name: Build API
-        run: command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
-      - name: Start API in STAGING_TEST
+          test "$(psql "$DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security"
+      - name: Start temporary OIDC issuer
         run: |
           mkdir -p artifacts
-          nohup node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
-          echo $! > artifacts/api.pid
-      - name: Wait for API readiness
+          node scripts/oidc-test-issuer.mjs > artifacts/oidc.log 2>&1 & echo $! > artifacts/oidc.pid
+      - name: Start compiled API
+        run: node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 & echo $! > artifacts/api.pid
+      - name: Wait for readiness
         run: |
-          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/healthz && curl -fsS http://127.0.0.1:8787/readyz && exit 0; sleep 1; done
-          cat artifacts/api.log
-          exit 1
-      - name: Run HTTP lifecycle and infrastructure suites
-        run: npm run test:staging
+          set -euo pipefail
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/healthz >/dev/null && curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
+          cat artifacts/api.log; exit 1
+      - name: Run HTTP lifecycle validation
         working-directory: command-center
+        run: npm run test:staging
       - name: Restart API and verify reconstruction
         run: |
-          kill "$(cat artifacts/api.pid)" || true
-          nohup node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 &
-          echo $! > artifacts/api-restart.pid
-          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/readyz && exit 0; sleep 1; done
-          cat artifacts/api-restart.log
-          exit 1
-      - name: Backup and restore checks
+          set -euo pipefail
+          kill "$(cat artifacts/api.pid)"; wait "$(cat artifacts/api.pid)" || test $? -eq 143
+          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 & echo $! > artifacts/api-restart.pid
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
+          cat artifacts/api-restart.log; exit 1
+      - name: Backup and restore database
         run: |
+          set -euo pipefail
           pg_dump "$DATABASE_URL" > artifacts/backup.sql
-          createdb -h 127.0.0.1 -U cerebrum_admin cerebrum_restore || true
-          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore < artifacts/backup.sql
-          echo '{"backup": "created", "restore": "applied"}' > artifacts/backup-restore.json
-      - name: Cleanup API processes
+          createdb -h 127.0.0.1 -U cerebrum_admin cerebrum_restore
+          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore -v ON_ERROR_STOP=1 < artifacts/backup.sql
+          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM journal_events;"
+          printf '{"backup":"created","restore":"applied"}\n' > artifacts/backup-restore.json
+      - name: Stop services
         if: always()
         run: |
-          test ! -f artifacts/api.pid || kill "$(cat artifacts/api.pid)" || true
-          test ! -f artifacts/api-restart.pid || kill "$(cat artifacts/api-restart.pid)" || true
-      - name: Publish validation report
+          for pid_file in artifacts/api.pid artifacts/api-restart.pid artifacts/oidc.pid; do
+            if test -f "$pid_file"; then
+              pid="$(cat "$pid_file")"
+              kill "$pid" 2>/dev/null
+              status=$?
+              if test "$status" -ne 0 && kill -0 "$pid" 2>/dev/null; then exit "$status"; fi
+            fi
+          done
+      - name: Upload validation artifacts
         if: always()
         uses: actions/upload-artifact@v4
-        with:
-          name: staging-validation-report
-          path: artifacts/staging-validation.json
-      - name: Upload runtime artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: staging-runtime-artifacts
-          path: artifacts/
+        with: { name: staging-validation-artifacts, path: artifacts/, if-no-files-found: error }

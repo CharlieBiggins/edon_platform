@@ -10,15 +10,19 @@ await check('process health', '/healthz');
 await check('runtime readiness', '/readyz');
 const binding = { tenant_id: 'meridian-demo', actor_id: 'operator-01', correlation_id: 'ci-corr-1042', trace_id: 'ci-trace-1042', idempotency_key: 'ci-idem-1042', contract_version: '2026-09-24.v1', request_timestamp: '2026-09-24T15:24:03.122Z', expected_state_version: 141, evidence_references: ['EV-2081'] };
 async function post(path, payload) { const response = await fetch(`${baseUrl}${path}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) }); const data = await response.json(); checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : String(data?.error?.code ?? 'failed') }); return data?.data; }
+function assertValue(name, condition, detail) { checks.push({ name, passed: Boolean(condition), detail }); }
 const event = await post('/v1/events', { binding, incident_id: 'INC-1042', scope_id: 'memphis-fulfillment', payload: { capacity_units: 260 } });
 await check('projected state', '/v1/state/memphis-fulfillment');
 const proposal = await post('/v1/proposals', { binding });
+assertValue('proposal created', Boolean(proposal?.proposal_id), 'proposal identifier returned');
 const decision = await post('/v1/reviews', { binding, proposal_id: proposal?.proposal_id, approved: true });
+assertValue('Kernel reevaluation', decision?.disposition === 'APPROVAL_REQUIRED', `disposition=${decision?.disposition ?? 'missing'}`);
 await post('/v1/shadow-evaluations', { binding, proposal_id: proposal?.proposal_id });
 await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: proposal?.proposal_id, verification_status: 'PENDING', actual_cost: 15800, commitments_protected: 3 });
-await check('receipt serialization', '/v1/receipts/RCP-1042');
+const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), 'receipt survives HTTP serialization');
 await check('reconstruction serialization', '/v1/reconstructions/INC-1042');
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
-await mkdir('artifacts', { recursive: true });
-await writeFile('artifacts/staging-validation.json', JSON.stringify(report, null, 2));
+const artifactDir = process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts';
+await mkdir(artifactDir, { recursive: true });
+await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
 if (!report.passed) process.exitCode = 1;
