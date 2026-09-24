@@ -15,7 +15,6 @@ import { assertRuntimeProfile, type RuntimeDependencies, type RuntimeProfile } f
 
 const journal = new AppendOnlyJournal();
 const repositories = new InMemoryPlatformRepositories();
-const eventsByKey = new Map<string, unknown>();
 const proposals = new Map<string, ReturnType<LogisticsProposalGenerator['create']>>();
 const receipts = new Map<string, unknown>();
 const outcomes = new Map<string, unknown>();
@@ -45,11 +44,13 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     if (request.method === 'POST' && !principal) return failure(response, 'PERMISSION_DENIED', 'Authentication expired or revoked');
     if (request.method === 'POST' && principal && bind && (bind.tenant_id !== principal.tenant_id || bind.actor_id !== principal.actor_id)) return failure(response, 'PERMISSION_DENIED', 'Request identity does not match verified identity', principal.actor_id);
     if (request.method === 'POST' && (!validateRequest(body) || bind?.contract_version !== CONTRACT_VERSION)) return failure(response, 'VALIDATION_FAILED', 'Required request binding is missing or invalid', bind?.correlation_id);
-    if (request.method === 'POST' && bind && eventsByKey.has(`${bind.tenant_id}:${bind.idempotency_key}`)) return reply(response, 200, { data: eventsByKey.get(`${bind.tenant_id}:${bind.idempotency_key}`), meta: { correlation_id: bind.correlation_id, contract_version: CONTRACT_VERSION } });
     if (request.method === 'POST' && bind?.expected_state_version !== undefined && bind.expected_state_version !== state().version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind.correlation_id);
     if (request.method === 'POST' && url.pathname === '/v1/events') {
       const event = { event_id: String(body.event_id ?? `evt-${journal.all().length + 1}`), tenant_id: bind!.tenant_id, event_type: 'OBSERVATION_RECEIVED' as const, actor_id: bind!.actor_id, actor_type: 'CONNECTOR' as const, scope_id: String(body.scope_id ?? 'memphis-fulfillment'), incident_id: String(body.incident_id ?? 'INC-1042'), occurred_at: bind!.request_timestamp, observed_at: bind!.request_timestamp, available_to_controller_at: bind!.request_timestamp, recorded_at: bind!.request_timestamp, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version_before: state().version, state_version_after: state().version, policy_version: 'POL-LOG-07 v18', payload: body.payload ?? {}, payload_hash: 'sha256:api', previous_record_hash: 'sha256:api', signature: 'simulated', simulated: true as const };
-      await runtimeDependencies.repositories.claimIdempotency(principal!.tenant_id, bind!.idempotency_key, event); journal.append(event); eventsByKey.set(`${principal!.tenant_id}:${bind!.idempotency_key}`, event); return reply(response, 201, { data: event, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
+      const idempotency = await runtimeDependencies.repositories.claimIdempotency(principal!.tenant_id, `POST:/v1/events:${bind!.idempotency_key}`, event);
+      if (!idempotency.claimed) return reply(response, 200, { data: idempotency.response, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
+      journal.append(event);
+      return reply(response, 201, { data: event, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
     }
     if (request.method === 'POST' && url.pathname === '/v1/proposals') { const evidence = new DeterministicEvidenceAdmission().admit({ event: 'capacity_disruption' }); const proposal = new LogisticsProposalGenerator().create(state(), evidence); proposals.set(proposal.proposal_id, proposal); return reply(response, 201, { data: proposal, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }
     if (request.method === 'POST' && url.pathname === '/v1/reviews') { const proposal = proposals.get(String(body.proposal_id)); if (!proposal) return failure(response, 'VALIDATION_FAILED', 'Proposal not found', bind?.correlation_id); const decision = new HumanReviewGate().reevaluate(proposal, body.approved === true, state().version, 30000); decisions.set(proposal.proposal_id, decision); return reply(response, 200, { data: decision, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } }); }

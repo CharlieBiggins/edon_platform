@@ -9,7 +9,16 @@ async function check(name, path) {
 await check('process health', '/healthz');
 await check('runtime readiness', '/readyz');
 const binding = { tenant_id: 'meridian-demo', actor_id: 'operator-01', correlation_id: 'ci-corr-1042', trace_id: 'ci-trace-1042', idempotency_key: 'ci-idem-1042', contract_version: '2026-09-24.v1', request_timestamp: '2026-09-24T15:24:03.122Z', expected_state_version: 141, evidence_references: ['EV-2081'] };
-async function post(path, payload) { const response = await fetch(`${baseUrl}${path}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(payload) }); const data = await response.json(); checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : String(data?.error?.code ?? 'failed') }); return data?.data; }
+let postSequence = 0;
+async function post(path, payload) {
+  postSequence += 1;
+  const operation = path.replace(/^\/v1\//, '').replace(/[^a-z0-9]+/gi, '-');
+  const requestBinding = { ...(payload.binding ?? binding), idempotency_key: `ci-${operation}-${postSequence}` };
+  const response = await fetch(`${baseUrl}${path}`, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ ...payload, binding: requestBinding }) });
+  const data = await response.json();
+  checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : String(data?.error?.code ?? 'failed') });
+  return data?.data;
+}
 function assertValue(name, condition, detail) { checks.push({ name, passed: Boolean(condition), detail }); }
 const event = await post('/v1/events', { binding, incident_id: 'INC-1042', scope_id: 'memphis-fulfillment', payload: { capacity_units: 260 } });
 await check('projected state', '/v1/state/memphis-fulfillment');
