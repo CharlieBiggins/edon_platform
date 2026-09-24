@@ -6,6 +6,8 @@ import type { Activity as ActivityRecord, Incident, Page, Plan, Receipt, Scenari
 
 type AskMode = 'docked' | 'expanded' | 'full';
 type WorkspaceDensity = 'comfortable' | 'compact';
+type SplitPreset = 'compact' | 'balanced' | 'analysis' | 'chat' | 'custom';
+type MobilePane = 'chat' | 'workspace';
 type AnalysisKind = 'explanation' | 'summary' | 'plans' | 'evidence' | 'timeline' | 'commitments' | 'proposal' | 'graph' | 'outcome';
 type Message = { id: number; role: 'user' | 'cerebrum'; text: string; kind?: AnalysisKind };
 type InspectorTab = 'evidence' | 'timeline' | 'commitments' | 'plans' | 'graph' | 'decision' | 'outcome' | 'receipts';
@@ -144,12 +146,25 @@ function Inspector({ tab, setTab, props }: { tab: InspectorTab; setTab: (tab: In
 export default function AskCerebrum(props: AskCerebrumProps) {
   const [mode, setMode] = useState<AskMode>('docked');
   const [density, setDensity] = useState<WorkspaceDensity>('comfortable');
+  const [splitPreset, setSplitPreset] = useState<SplitPreset>(() => {
+    if (typeof window === 'undefined') return 'balanced';
+    const value = window.localStorage.getItem('cerebrum.workspace.split-preset');
+    return value === 'compact' || value === 'analysis' || value === 'chat' || value === 'custom' ? value : 'balanced';
+  });
+  const [chatWidth, setChatWidth] = useState(() => {
+    if (typeof window === 'undefined') return 45;
+    const value = Number(window.localStorage.getItem('cerebrum.workspace.chat-width'));
+    return Number.isFinite(value) ? Math.min(70, Math.max(35, value)) : 45;
+  });
+  const [collapsedPane, setCollapsedPane] = useState<'chat' | 'workspace' | null>(null);
+  const [mobilePane, setMobilePane] = useState<MobilePane>('chat');
   const [input, setInput] = useState('');
   const [inspectorTab, setInspectorTab] = useState<InspectorTab>('evidence');
   const [messages, setMessages] = useState<Message[]>([{ id: 1, role: 'cerebrum', text: 'I am scoped to the current Command Center view. Ask for an explanation, evidence trace, comparison, or read-only simulation.', kind: 'summary' }]);
   const [pinned, setPinned] = useState<number[]>([]);
   const messageId = useRef(2);
   const endRef = useRef<HTMLDivElement>(null);
+  const workspaceRef = useRef<HTMLDivElement>(null);
   const evidence = useMemo(() => evidenceFor(props.incident), [props.incident]);
 
   useEffect(() => { if (props.open) endRef.current?.scrollIntoView({ block: 'nearest' }); }, [props.open, messages, mode]);
@@ -157,6 +172,11 @@ export default function AskCerebrum(props: AskCerebrumProps) {
     function keydown(event: KeyboardEvent) { if (event.key === 'Escape' && props.open) mode === 'full' ? setMode('expanded') : props.onOpenChange(false); }
     window.addEventListener('keydown', keydown); return () => window.removeEventListener('keydown', keydown);
   }, [props.open, mode, props.onOpenChange]);
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.localStorage.setItem('cerebrum.workspace.split-preset', splitPreset);
+    window.localStorage.setItem('cerebrum.workspace.chat-width', String(chatWidth));
+  }, [chatWidth, splitPreset]);
 
   function submit(question = input) {
     const clean = question.trim(); if (!clean) return;
@@ -181,6 +201,42 @@ export default function AskCerebrum(props: AskCerebrumProps) {
 
   function changeMode(next: AskMode) { setMode(next); props.onOpenChange(true); }
 
+  function selectPreset(preset: Exclude<SplitPreset, 'custom'>) {
+    const widths: Record<Exclude<SplitPreset, 'custom'>, number> = { compact: 35, balanced: 45, analysis: 60, chat: 60 };
+    setSplitPreset(preset);
+    setChatWidth(widths[preset]);
+    setCollapsedPane(preset === 'chat' ? 'workspace' : null);
+    if (preset === 'chat') {
+      setMode('full');
+      props.onOpenChange(true);
+    }
+  }
+
+  function resizeFromPointer(event: React.PointerEvent<HTMLButtonElement>) {
+    if (!workspaceRef.current || !event.currentTarget.hasPointerCapture(event.pointerId)) return;
+    const bounds = workspaceRef.current.getBoundingClientRect();
+    const minimum = (420 / bounds.width) * 100;
+    const workspaceMinimum = (600 / bounds.width) * 100;
+    const maximum = Math.min(70, 100 - workspaceMinimum);
+    const next = Math.min(maximum, Math.max(minimum, ((event.clientX - bounds.left) / bounds.width) * 100));
+    setChatWidth(next);
+    setSplitPreset('custom');
+    setCollapsedPane(null);
+  }
+
+  function keyboardResize(event: React.KeyboardEvent<HTMLButtonElement>) {
+    let next = chatWidth;
+    if (event.key === 'ArrowLeft') next -= 2;
+    else if (event.key === 'ArrowRight') next += 2;
+    else if (event.key === 'Home') next = 35;
+    else if (event.key === 'End') next = 70;
+    else return;
+    event.preventDefault();
+    setChatWidth(Math.min(70, Math.max(35, next)));
+    setSplitPreset('custom');
+    setCollapsedPane(null);
+  }
+
   if (!props.open) return <button className="ask-launcher" onClick={() => props.onOpenChange(true)}><Sparkles size={17}/><span>Ask Cerebrum</span><small>Context-aware · simulated</small></button>;
 
   const workspaceLabel = mode === 'docked' ? 'Ask Cerebrum docked workspace' : mode === 'expanded' ? 'Cerebrum Workspace expanded' : 'Cerebrum Workspace full investigation';
@@ -188,12 +244,14 @@ export default function AskCerebrum(props: AskCerebrumProps) {
     <header className="ask-header"><div className="ask-brand"><span>{mode === 'docked' ? <Sparkles size={17}/> : <Boxes size={18}/>}</span><div><strong>{mode === 'docked' ? 'CEREBRUM' : 'CEREBRUM WORKSPACE'}</strong><small>{mode === 'docked' ? `Contextual analysis · Incident ${props.incident.id}` : `${props.incident.id} · ${props.incident.title}`}</small></div></div><div className="ask-mode-actions"><button className="density-toggle" aria-label={`Density: ${density === 'comfortable' ? 'Comfortable' : 'Compact'}`} aria-pressed={density === 'compact'} onClick={() => setDensity(value => value === 'comfortable' ? 'compact' : 'comfortable')}>{density === 'comfortable' ? 'Comfortable' : 'Compact'}</button>{mode === 'docked' && <button aria-label="Expand workspace" onClick={() => changeMode('expanded')} title="Expand workspace"><Expand size={15}/><span>Expand workspace</span></button>}{mode === 'expanded' && <><button onClick={() => changeMode('docked')} title="Dock panel"><Minimize2 size={15}/><span>Dock Ask Cerebrum</span></button><button onClick={() => changeMode('full')} title="Full investigation"><Maximize2 size={15}/><span>Full investigation</span></button></>}{mode === 'full' && <button onClick={() => changeMode('expanded')} title="Exit full screen"><Columns2 size={15}/><span>Exit full screen</span></button>}<button aria-label="Close Ask Cerebrum" onClick={() => props.onOpenChange(false)}><X size={17}/></button></div></header>
     <div className="workspace-boundary"><strong>SIMULATED ENVIRONMENT</strong><b>SHADOW MODE</b><span>READ ONLY</span><span><LockKeyhole size={12}/> No authorization or execution available</span></div>
     <div className="workspace-incident-header"><div><span className="eyebrow">{mode === 'full' ? 'FOCUSED INVESTIGATION' : pageLabels[props.page]}</span><h2>{props.incident.title}</h2><p>{props.scope.label} · {props.scope.detail} · {props.incident.id}</p></div><div className="incident-header-status"><span><Activity size={14}/> {props.scenario === 'normal' ? 'Network stable outside incident scope' : `Network state: ${props.scenario}`}</span><span><Clock3 size={14}/> Updated {props.incident.stateFreshness}</span><Badge tone={props.scenario === 'normal' ? 'teal' : 'amber'}>{props.scenario === 'normal' ? 'Current' : props.scenario}</Badge></div>{mode === 'full' && <div className="incident-header-actions"><span><Users size={14}/> Jordan Ellis · Maya Chen</span><button onClick={() => props.onNotify('Investigation assigned to Maya Chen in this simulated session.')}>Assign</button><button onClick={() => props.onNotify('Simulated invitation copied. No message was sent.')}>Share</button></div>}</div>
-    <div className="ask-workspace"><section className="ask-conversation" aria-label="Ask Cerebrum conversation">{mode !== 'docked' && <div className="ask-conversation-header"><div><span className="eyebrow">CEREBRUM</span><strong>Contextual analysis · Incident {props.incident.id}</strong></div><div><button onClick={() => changeMode('full')} disabled={mode === 'full'}><Focus size={12}/> {mode === 'full' ? 'Investigation active' : 'Start focused investigation'}</button><button onClick={pinLatest}><Bookmark size={12}/> Pin answer</button><button onClick={() => setInspectorTab('evidence')}><Search size={12}/> Cite evidence</button><button onClick={() => setInspectorTab('plans')}><Columns2 size={12}/> Compare plans</button><button onClick={() => submit('Reserve Nashville capacity and draft a structured proposal for the recommended recovery plan')}><FileCheck2 size={12}/> Draft proposal</button><button onClick={() => props.onNotify('Simulated executive briefing prepared from the current investigation scope.')}><Sparkles size={12}/> Generate briefing</button></div></div>}<div className="ask-messages" role="region" tabIndex={0} aria-label="Ask Cerebrum conversation history">{messages.map(message => <article key={message.id} className={`ask-message ${message.role} ${pinned.includes(message.id) ? 'pinned' : ''}`}><span>{message.role === 'user' ? 'YOU ASKED' : 'CEREBRUM'}{message.role === 'cerebrum' && pinned.includes(message.id) && <b><Bookmark size={10}/> PINNED</b>}</span><p>{message.text}{message.role === 'cerebrum' && <span className="claim-citations"> <button onClick={() => setInspectorTab('evidence')}>[1]</button> <button onClick={() => setInspectorTab('evidence')}>[2]</button> <button onClick={() => setInspectorTab('evidence')}>[3]</button> <button onClick={() => setInspectorTab('evidence')}>[4]</button></span>}</p>{message.role === 'cerebrum' && message.kind && <><AnalysisObject message={message} props={props} /><div className="answer-provenance"><strong>BASED ON</strong><span>6 evidence records</span><span>State v{props.version}</span><span>Policy v18</span><span>2 unresolved assumptions</span><button aria-label={pinned.includes(message.id) ? 'Unpin answer' : 'Pin answer'} onClick={() => setPinned(current => current.includes(message.id) ? current.filter(id => id !== message.id) : [...current, message.id])}><Bookmark size={11}/>{pinned.includes(message.id) ? 'Unpin' : 'Pin'}</button></div></>}</article>)}<div ref={endRef}/></div>
+    <div className="ask-main-workspace">
+    {mode !== 'docked' && <div className="workspace-split-toolbar" aria-label="Workspace layout controls"><div className="workspace-presets" role="group" aria-label="Workspace split preset"><span className="workspace-control-label">Workspace layout</span>{(['compact', 'balanced', 'analysis', 'chat'] as const).map(preset => <button key={preset} className={splitPreset === preset ? 'active' : ''} aria-pressed={splitPreset === preset} onClick={() => selectPreset(preset)}>{preset === 'compact' ? 'Compact · 35/65' : preset === 'balanced' ? 'Balanced · 45/55' : preset === 'analysis' ? 'Analysis · 60/40' : 'Chat Focus'}</button>)}</div><div className="workspace-pane-actions"><button onClick={() => setCollapsedPane(collapsedPane === 'chat' ? null : 'chat')} aria-pressed={collapsedPane === 'chat'}>{collapsedPane === 'chat' ? 'Restore chat' : 'Collapse chat'}</button><button onClick={() => setCollapsedPane(collapsedPane === 'workspace' ? null : 'workspace')} aria-pressed={collapsedPane === 'workspace'}>{collapsedPane === 'workspace' ? 'Restore workspace' : 'Collapse workspace'}</button></div><div className="workspace-mobile-switch" role="tablist" aria-label="Workspace pane"><button role="tab" aria-selected={mobilePane === 'chat'} onClick={() => setMobilePane('chat')}>Chat</button><button role="tab" aria-selected={mobilePane === 'workspace'} onClick={() => setMobilePane('workspace')}>Workspace</button></div></div>}
+    <div ref={workspaceRef} className={`ask-workspace ${collapsedPane === 'chat' ? 'chat-collapsed' : ''} ${collapsedPane === 'workspace' ? 'workspace-collapsed' : ''} mobile-${mobilePane}`} style={{ '--chat-width': `${chatWidth}%` } as React.CSSProperties}><section className="ask-conversation" aria-label="Ask Cerebrum conversation">{mode !== 'docked' && <div className="ask-conversation-header"><div><span className="eyebrow">CEREBRUM</span><strong>Contextual analysis · Incident {props.incident.id}</strong></div><div><button onClick={() => changeMode('full')} disabled={mode === 'full'}><Focus size={12}/> {mode === 'full' ? 'Investigation active' : 'Start focused investigation'}</button><button onClick={pinLatest}><Bookmark size={12}/> Pin answer</button><button onClick={() => setInspectorTab('evidence')}><Search size={12}/> Cite evidence</button><button onClick={() => setInspectorTab('plans')}><Columns2 size={12}/> Compare plans</button><button onClick={() => submit('Reserve Nashville capacity and draft a structured proposal for the recommended recovery plan')}><FileCheck2 size={12}/> Draft proposal</button><button onClick={() => props.onNotify('Simulated executive briefing prepared from the current investigation scope.')}><Sparkles size={12}/> Generate briefing</button></div></div>}<div className="ask-messages" role="region" tabIndex={0} aria-label="Ask Cerebrum conversation history">{messages.map(message => <article key={message.id} className={`ask-message ${message.role} ${pinned.includes(message.id) ? 'pinned' : ''}`}><span>{message.role === 'user' ? 'YOU ASKED' : 'CEREBRUM'}{message.role === 'cerebrum' && pinned.includes(message.id) && <b><Bookmark size={10}/> PINNED</b>}</span><p>{message.text}{message.role === 'cerebrum' && <span className="claim-citations"> <button onClick={() => setInspectorTab('evidence')}>[1]</button> <button onClick={() => setInspectorTab('evidence')}>[2]</button> <button onClick={() => setInspectorTab('evidence')}>[3]</button> <button onClick={() => setInspectorTab('evidence')}>[4]</button></span>}</p>{message.role === 'cerebrum' && message.kind && <><AnalysisObject message={message} props={props} /><div className="answer-provenance"><strong>BASED ON</strong><span>6 evidence records</span><span>State v{props.version}</span><span>Policy v18</span><span>2 unresolved assumptions</span><button aria-label={pinned.includes(message.id) ? 'Unpin answer' : 'Pin answer'} onClick={() => setPinned(current => current.includes(message.id) ? current.filter(id => id !== message.id) : [...current, message.id])}><Bookmark size={11}/>{pinned.includes(message.id) ? 'Unpin' : 'Pin'}</button></div></>}</article>)}<div ref={endRef}/></div>
       <div className="ask-composer-region">
         <div className="ask-prompt-list" aria-label="Suggested questions">{prompts.slice(0, mode === 'docked' ? 3 : 5).map(prompt => <button key={prompt} onClick={() => submit(prompt)}>{prompt}</button>)}</div>
         <form className="ask-composer" onSubmit={event => { event.preventDefault(); submit(); }}><label htmlFor="ask-input" className="sr-only">Ask about current institutional context</label><textarea id="ask-input" rows={2} value={input} onChange={event => setInput(event.target.value)} onKeyDown={event => { if (event.key === 'Enter' && !event.shiftKey) { event.preventDefault(); submit(); } }} placeholder="Ask about this incident, compare plans, or draft a proposal..."/><button type="submit" aria-label="Send question" disabled={!input.trim()}><Send size={16}/></button><small><LockKeyhole size={11}/> Analysis only. Conversation cannot authorize or execute.</small></form>
       </div>
-    </section>{mode !== 'docked' && <Inspector tab={inspectorTab} setTab={setInspectorTab} props={props}/>}</div>
+    </section>{mode !== 'docked' && <><button className="workspace-divider" type="button" role="separator" aria-orientation="vertical" aria-label="Resize Ask Cerebrum and institutional workspace" aria-valuemin={35} aria-valuemax={70} aria-valuenow={Math.round(chatWidth)} onPointerDown={event => event.currentTarget.setPointerCapture(event.pointerId)} onPointerMove={resizeFromPointer} onPointerUp={event => { if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId); }} onDoubleClick={() => selectPreset('balanced')} onKeyDown={keyboardResize}><span /></button><Inspector tab={inspectorTab} setTab={setInspectorTab} props={props}/></>}</div></div>
     {mode !== 'docked' && <aside className="decision-rail" aria-label="Persistent decision status"><div><span>DECISION WINDOW</span><strong>{props.incident.timeRemaining.toUpperCase()}</strong></div><dl><div><dt>Modeled exposure</dt><dd>${Math.round(props.incident.exposure / 1000)}K</dd></div><div><dt>Commitments at risk</dt><dd>{props.incident.commitments}</dd></div><div><dt>Current recommendation</dt><dd>Available</dd></div><div><dt>Human review</dt><dd>Required</dd></div></dl><button onClick={() => setInspectorTab('plans')}>Compare plans</button><button className="primary" onClick={() => setInspectorTab('decision')}>Review recommendation</button></aside>}
     {mode === 'docked' && <footer className="ask-docked-footer"><button onClick={props.onShowEvidence}>View evidence <span>{evidence.filter(item => item.status !== 'Restricted').length}</span></button><button onClick={props.onComparePlans}>Compare plans</button><button onClick={() => changeMode('expanded')}>Expand <Expand size={13}/></button></footer>}
   </section></div>;
