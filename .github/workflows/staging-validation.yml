@@ -123,10 +123,17 @@ jobs:
             other_count="$(PGOPTIONS='-c app.tenant_id=other-tenant' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM $table")"
             test "$other_count" = 0
           done
+          for table in state_snapshots incidents idempotency_keys; do
+            if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM $table WHERE false"; then exit 1; fi
+          done
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE journal_events SET event_type='TAMPERED'"; then exit 1; fi
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM journal_events"; then exit 1; fi
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE receipts SET payload='{}'"; then exit 1; fi
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM receipts"; then exit 1; fi
+          for table in evidence_records proposals human_reviews kernel_decisions mandates shadow_evaluations outcomes; do
+            if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE $table SET payload=payload WHERE false"; then exit 1; fi
+            if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM $table WHERE false"; then exit 1; fi
+          done
           audit="$(PGOPTIONS='-c app.tenant_id=meridian-demo' psql postgresql://cerebrum_audit:validation-only@127.0.0.1:5432/cerebrum_validation -At -c "SELECT count(*) FROM journal_events")"
           test "$audit" -gt 0
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql postgresql://cerebrum_audit:validation-only@127.0.0.1:5432/cerebrum_validation -v ON_ERROR_STOP=1 -c "DELETE FROM journal_events"; then exit 1; fi
