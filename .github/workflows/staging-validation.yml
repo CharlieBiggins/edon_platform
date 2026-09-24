@@ -63,7 +63,7 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records"
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
@@ -112,6 +112,17 @@ jobs:
           other="$(PGOPTIONS='-c app.tenant_id=other-tenant' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
           missing="$(PGOPTIONS='-c app.tenant_id=' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
           test "$own" -gt 0; test "$other" = 0; test "$missing" = 0
+          test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'state_snapshots', 'UPDATE')")" = t
+          test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'incidents', 'UPDATE')")" = t
+          test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'proposals', 'UPDATE')")" = f
+          test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'kernel_decisions', 'UPDATE')")" = f
+          test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'outcomes', 'UPDATE')")" = f
+          PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE state_snapshots SET values=values WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'"
+          PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE incidents SET status=status WHERE tenant_id='meridian-demo' AND incident_id='INC-1042'"
+          for table in evidence_records proposals human_reviews kernel_decisions mandates shadow_evaluations outcomes; do
+            other_count="$(PGOPTIONS='-c app.tenant_id=other-tenant' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM $table")"
+            test "$other_count" = 0
+          done
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE journal_events SET event_type='TAMPERED'"; then exit 1; fi
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "DELETE FROM journal_events"; then exit 1; fi
           if PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE receipts SET payload='{}'"; then exit 1; fi
