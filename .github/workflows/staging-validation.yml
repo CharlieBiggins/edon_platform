@@ -37,7 +37,7 @@ jobs:
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
           psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT current_database();"
       - name: Typecheck server packages
-        run: command-center/node_modules/.bin/tsc.cmd -p apps/control-plane-api/tsconfig.json
+        run: command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
       - name: Start API in STAGING_TEST
         run: echo "API startup is supplied by the deployment harness for this reference repository"
       - name: Run HTTP lifecycle and infrastructure suites
