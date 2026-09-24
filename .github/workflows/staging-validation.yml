@@ -37,6 +37,8 @@ jobs:
       - name: Install dependencies
         working-directory: command-center
         run: npm ci && npm install --no-save pg
+      - name: Install API runtime dependency
+        run: npm install --no-save --prefix apps/control-plane-api pg
       - name: Build contracts, core, testkit and API
         run: |
           set -euo pipefail
@@ -62,7 +64,12 @@ jobs:
           mkdir -p artifacts
           node scripts/oidc-test-issuer.mjs > artifacts/oidc.log 2>&1 & echo $! > artifacts/oidc.pid
       - name: Start compiled API
-        run: node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 & echo $! > artifacts/api.pid
+        run: |
+          set -euo pipefail
+          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
+          echo $! > artifacts/api.pid
+          sleep 2
+          if ! kill -0 "$(cat artifacts/api.pid)" 2>/dev/null; then cat artifacts/api.log; exit 1; fi
       - name: Wait for readiness
         run: |
           set -euo pipefail
