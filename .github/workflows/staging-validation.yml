@@ -95,13 +95,41 @@ jobs:
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat artifacts/api-restart.log; exit 1
       - name: Backup and restore database
+        env:
+          PGPASSWORD: validation-only
+          PGCONNECT_TIMEOUT: '5'
         run: |
           set -euo pipefail
-          pg_dump "$DATABASE_URL" > artifacts/backup.sql
-          createdb -h 127.0.0.1 -U cerebrum_admin cerebrum_restore
-          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore -v ON_ERROR_STOP=1 < artifacts/backup.sql
-          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM journal_events;"
-          printf '{"backup":"created","restore":"applied"}\n' > artifacts/backup-restore.json
+          pg_dump \
+            -h 127.0.0.1 \
+            -U cerebrum_admin \
+            -d cerebrum_validation \
+            --no-owner \
+            --no-acl \
+            > artifacts/backup.sql
+          dropdb \
+            --if-exists \
+            -h 127.0.0.1 \
+            -U cerebrum_admin \
+            cerebrum_restore
+          createdb \
+            -h 127.0.0.1 \
+            -U cerebrum_admin \
+            cerebrum_restore
+          psql \
+            -h 127.0.0.1 \
+            -U cerebrum_admin \
+            -d cerebrum_restore \
+            -v ON_ERROR_STOP=1 \
+            < artifacts/backup.sql
+          psql \
+            -h 127.0.0.1 \
+            -U cerebrum_admin \
+            -d cerebrum_restore \
+            -v ON_ERROR_STOP=1 \
+            -c "SELECT count(*) FROM journal_events;"
+          printf '{"backup":"created","restore":"applied"}\n' \
+            > artifacts/backup-restore.json
       - name: Stop services
         if: always()
         run: |
