@@ -1,0 +1,64 @@
+{
+  "schema_version": "operator-reported-dev016-result.v1",
+  "protocol_id": "CEREBRUM-DEV-016-NARROW",
+  "reported_at": "2026-09-06",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE",
+  "passed": false,
+  "confirmation_scored": false,
+  "confirmation_remained_sealed": true,
+  "continuation_seed": 26090612,
+  "training_records": 368,
+  "effective_batch_size": 16,
+  "optimizer_steps": 12,
+  "effective_sample_exposures": 192,
+  "registered_dataset_exposure_fraction": 0.5217391304347826,
+  "candidates": [
+    {
+      "candidate_id": "continuation-step-6",
+      "step": 6,
+      "adapter_tree_sha256": "sha256:b9debb4b5d5316e4971409d07959d02f88fb3cd7f7a6b0df514ebd5351828afb",
+      "predictions_sha256": "sha256:9bc46761ab7795bc3a0ecdf3f371c2f717a243bee721a9072a1ef2a734be4e2c",
+      "checks_passed": 23,
+      "check_count": 26,
+      "failure_count": 12
+    },
+    {
+      "candidate_id": "continuation-step-12",
+      "step": 12,
+      "adapter_tree_sha256": "sha256:314793b8380994ac2e3b366d8dc6a924d54d2c0020c69e6e1c9b17603b88ead8",
+      "predictions_sha256": "sha256:e114f0760569982da6329a2aa5c8a7064fba3cfff53cb93422a24e1bc3739f6c",
+      "checks_passed": 23,
+      "check_count": 26,
+      "failure_count": 12
+    }
+  ],
+  "failed_checks": [
+    "certificate_pivotal_floor",
+    "transition_post_state_floor",
+    "zero_unsafe_authorizations"
+  ],
+  "shared_failure_count": 12,
+  "changed_output_count_between_checkpoints": 2,
+  "failure_counts_by_mechanism": {
+    "DELAYED_EVIDENCE": 5,
+    "APPROVAL_WITHDRAWAL": 4,
+    "EVIDENCE_EXPIRY": 1,
+    "JURISDICTION_SHIFT": 1,
+    "UNRESOLVED_APPEAL": 1
+  },
+  "failure_counts_by_task": {
+    "CERTIFICATE": 2,
+    "PAIR_CONTRAST": 3,
+    "QUEUE_TRACE": 4,
+    "TRANSITION": 3
+  },
+  "unsafe_authorization_case_ids": ["case-221073e582c09c6a"],
+  "unsafe_intervention_family": "DELAYED_EVIDENCE",
+  "transition_post_state_failure_case_ids": [
+    "case-f8e3b2c5a4784de2",
+    "case-33d64c236373383a"
+  ],
+  "binding_authority": false,
+  "transfer_authorized": false,
+  "claim_boundary": "Operator-reported DEV-016 development hold and field-level audit only; both checkpoints shared all 12 failing cases and the untouched confirmation remained sealed."
+}

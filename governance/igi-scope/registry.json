@@ -1,0 +1,15 @@
+{
+  "schema_version": "edon-igi-scope-registry.v1",
+  "updated": "2026-08-25",
+  "scopes": [
+    {
+      "scope_id": "EDON-IGI-SCOPE-001",
+      "version": "1.0.0",
+      "status": "FROZEN_DEFINITION_NO_IGI_RESULT",
+      "path": "governance/igi-scope/EDON-IGI-SCOPE-001",
+      "claim_class": "BOUNDED_GENERAL_INSTITUTIONAL_INTELLIGENCE",
+      "universal_claim_authorized": false
+    }
+  ],
+  "binding_authority": false
+}

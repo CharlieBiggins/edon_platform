@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/federation/escalation.schema.json",
+  "title": "Additive federation escalation",
+  "type": "object",
+  "required": ["tenant_id", "escalation_id", "decision_id", "source_scope_id", "target_scope_id", "severity", "reason", "evidence_sha256", "opened_at", "binding_authority"],
+  "properties": {
+    "tenant_id": {"type": "string"},
+    "escalation_id": {"type": "string"},
+    "decision_id": {"type": "string"},
+    "source_scope_id": {"type": "string"},
+    "target_scope_id": {"type": "string"},
+    "severity": {"enum": ["INFO", "LOW", "MEDIUM", "HIGH", "CRITICAL"]},
+    "reason": {"type": "string", "minLength": 1},
+    "evidence_sha256": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "opened_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string"},
+    "status": {"enum": ["OPEN", "OPENED", "ACKNOWLEDGED", "RESOLVED", "REJECTED"]},
+    "events": {"type": "array", "items": {"type": "object"}},
+    "binding_authority": {"const": false}
+  }
+}

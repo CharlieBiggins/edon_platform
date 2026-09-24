@@ -1,0 +1,151 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Safety-constrained near-clock checkpoint selection readiness only; no learned confirmation, full regression, or transfer authorization.",
+  "config_sha256": "sha256:2f0da70dad40026f763886e794b46578ecc230fbdd954394fb75d3fbb3c29909",
+  "core_control_count": 30,
+  "core_controls": {
+    "all_splits_balanced": true,
+    "all_splits_tight_offsets": true,
+    "certificate_only": true,
+    "confirmation_count_64": true,
+    "confirmation_single_use": true,
+    "deterministic_selection_ranking": true,
+    "development_count_32": true,
+    "effective_batch_16": true,
+    "fresh_continuation_seed": true,
+    "frozen_base_revision": true,
+    "full_regression_disabled": true,
+    "low_continuation_learning_rate": true,
+    "operator_reported_learning_curve_frozen": true,
+    "oracle_confirmation_ceiling_passes": true,
+    "oracle_development_ceiling_passes": true,
+    "qualified_source_all_controls": true,
+    "registered_12_optimizer_steps": true,
+    "registered_checkpoints_6_and_12": true,
+    "registered_parent_diagnostic_hash": true,
+    "registered_parent_identity": true,
+    "registered_parent_manifest_hash": true,
+    "registered_protocol_identity": true,
+    "safety_first_selection_gate": true,
+    "safety_weighted_training": true,
+    "split_families_disjoint": true,
+    "split_pairs_disjoint": true,
+    "split_renderers_disjoint": true,
+    "three_registered_candidates": true,
+    "train_count_192": true,
+    "transfer_authorization_disabled": true
+  },
+  "core_controls_passed": 30,
+  "expected_confirmation_predictions_if_selected": 64,
+  "expected_development_predictions": 96,
+  "expected_optimizer_steps": 12,
+  "full_regression": false,
+  "parent_checkpoint_tree_sha256": null,
+  "parent_control_count": 7,
+  "parent_controls": {
+    "parent_checkpoint_12_present": false,
+    "parent_checkpoint_diagnostic_hash": false,
+    "parent_checkpoint_diagnostic_identity": false,
+    "parent_checkpoint_diagnostic_present": false,
+    "parent_training_manifest_hash": false,
+    "parent_training_manifest_identity": false,
+    "parent_training_manifest_present": false
+  },
+  "parent_controls_passed": 0,
+  "prepared_hashes": {
+    "development_selection": "sha256:eea9e7cd6e09377120a3e77f303e0ab67a2b58132050b28a03870d2b858aa618",
+    "train": "sha256:31143e5562d5d2e2558374873bf012891dfd31483690e25d28dd422fb4914751",
+    "untouched_confirmation": "sha256:a96630a8e55cf2008861458ce2ee0545884af231f083a5904f549b6d4eab44dc"
+  },
+  "protocol_id": "CEREBRUM-DEV-013-FOCUSED",
+  "public_scored": false,
+  "schema_version": "cerebrum-dev013-focused-readiness.v1",
+  "splits": {
+    "development_selection": {
+      "boundary_offset_counts": {
+        "-1": 16,
+        "1": 16
+      },
+      "case_ids": 32,
+      "decision_counts": {
+        "ALLOW": 16,
+        "CONTESTED": 16
+      },
+      "pair_ids": 16,
+      "records": 32,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_SELECTION_REGISTER": 32
+      },
+      "task_counts": {
+        "CERTIFICATE": 32
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "train": {
+      "boundary_offset_counts": {
+        "-1": 96,
+        "1": 96
+      },
+      "case_ids": 192,
+      "decision_counts": {
+        "ALLOW": 96,
+        "CONTESTED": 96
+      },
+      "pair_ids": 24,
+      "records": 192,
+      "renderer_counts": {
+        "APPEAL_PAIR_MATRIX": 48,
+        "BOUNDARY_DELTA_LEDGER": 48,
+        "EXECUTION_CUTOFF_CARD": 48,
+        "NEAR_CLOCK_MEMO": 48
+      },
+      "task_counts": {
+        "CERTIFICATE": 192
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "untouched_confirmation": {
+      "boundary_offset_counts": {
+        "-1": 32,
+        "1": 32
+      },
+      "case_ids": 64,
+      "decision_counts": {
+        "ALLOW": 32,
+        "CONTESTED": 32
+      },
+      "pair_ids": 32,
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_CONFIRMATION_DOCKET": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 64
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    }
+  },
+  "status": "READY_PENDING_DEV012_CHECKPOINT_IMPORT",
+  "transfer_authorized": false
+}

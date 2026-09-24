@@ -1,0 +1,9 @@
+{
+  "claim_boundary": "Authenticates retained result bytes in the current workspace only; does not recreate missing historical custody or execution artifacts.",
+  "files": 3,
+  "generated_date": "2026-08-13",
+  "package": "ACTIONNET-DATA-QUAL-001",
+  "reconstructs_original_custody_transaction": false,
+  "schema_version": "edon-current-workspace-checksum-scope.v1",
+  "status": "CURRENT_WORKSPACE_SNAPSHOT"
+}

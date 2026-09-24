@@ -1,0 +1,108 @@
+{
+  "binding_authority": false,
+  "certificate_only": true,
+  "confirmation_single_use": true,
+  "development_selection_is_adaptive": true,
+  "exact_near_clock_pairs": true,
+  "full_regression": false,
+  "prepared_hashes": {
+    "development_selection": "sha256:eea9e7cd6e09377120a3e77f303e0ab67a2b58132050b28a03870d2b858aa618",
+    "train": "sha256:31143e5562d5d2e2558374873bf012891dfd31483690e25d28dd422fb4914751",
+    "untouched_confirmation": "sha256:a96630a8e55cf2008861458ce2ee0545884af231f083a5904f549b6d4eab44dc"
+  },
+  "protocol_id": "CEREBRUM-DEV-013-FOCUSED",
+  "schema_version": "cerebrum-dev013-focused-data-manifest.v1",
+  "source_hashes": {
+    "development_selection": "sha256:f78945c042af4acf49ab079e5dcb603d7fbe0453e0d24a045e6234fb284a9cba",
+    "train": "sha256:c7954aa8fccf91f8ed347b903e91c3e4aedeaae897c6854860eafc3f8d29cf0d",
+    "untouched_confirmation": "sha256:605d80653a784374f5d9764fba0d9d0c81871ff21af1032553ba40af78553bd9"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-013-result-v1.0.0",
+  "splits": {
+    "development_selection": {
+      "boundary_offset_counts": {
+        "-1": 16,
+        "1": 16
+      },
+      "case_ids": 32,
+      "decision_counts": {
+        "ALLOW": 16,
+        "CONTESTED": 16
+      },
+      "pair_ids": 16,
+      "records": 32,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_SELECTION_REGISTER": 32
+      },
+      "task_counts": {
+        "CERTIFICATE": 32
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "train": {
+      "boundary_offset_counts": {
+        "-1": 96,
+        "1": 96
+      },
+      "case_ids": 192,
+      "decision_counts": {
+        "ALLOW": 96,
+        "CONTESTED": 96
+      },
+      "pair_ids": 24,
+      "records": 192,
+      "renderer_counts": {
+        "APPEAL_PAIR_MATRIX": 48,
+        "BOUNDARY_DELTA_LEDGER": 48,
+        "EXECUTION_CUTOFF_CARD": 48,
+        "NEAR_CLOCK_MEMO": 48
+      },
+      "task_counts": {
+        "CERTIFICATE": 192
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "untouched_confirmation": {
+      "boundary_offset_counts": {
+        "-1": 32,
+        "1": 32
+      },
+      "case_ids": 64,
+      "decision_counts": {
+        "ALLOW": 32,
+        "CONTESTED": 32
+      },
+      "pair_ids": 32,
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_CONFIRMATION_DOCKET": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 64
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    }
+  },
+  "transfer_authorized": false
+}

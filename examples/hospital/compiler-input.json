@@ -1,0 +1,135 @@
+{
+  "schema_version": "edon-institution-compiler-input.v1",
+  "compiler_run_id": "synthetic-hospital-compiler-run-001",
+  "institution_id": "synthetic-hospital",
+  "institution_version": "0.1.0",
+  "settings": {
+    "minimum_review_confidence": 0.9,
+    "require_normative_layer": true
+  },
+  "sources": [
+    {
+      "source_id": "medication-policy",
+      "version": "2026.1",
+      "truth_layer": "NORMATIVE",
+      "kind": "POLICY",
+      "format": "STRUCTURED_JSON",
+      "locator": "synthetic://policy/medication-release",
+      "content": {
+        "statements": [
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "AUTHORITY",
+            "subject": "medication_release",
+            "predicate": "authorized_role",
+            "value": "attending_physician",
+            "confidence": 0.99,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "EVIDENCE_REQUIREMENT",
+            "subject": "medication_release",
+            "predicate": "requires",
+            "value": "allergy_check",
+            "confidence": 0.99,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "WORKFLOW_STEP",
+            "subject": "medication_release",
+            "predicate": "step_1",
+            "value": "clinical_review",
+            "confidence": 0.99,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "DEADLINE",
+            "subject": "medication_release",
+            "predicate": "review_window",
+            "value": "30_minutes",
+            "confidence": 0.98,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "inventory-audit",
+            "primitive_type": "POLICY",
+            "subject": "inventory_audit",
+            "predicate": "schedule",
+            "value": "weekly",
+            "confidence": 0.99,
+            "risk_class": "LOW"
+          }
+        ]
+      }
+    },
+    {
+      "source_id": "ehr-configuration",
+      "version": "2026.08",
+      "truth_layer": "OPERATIONAL",
+      "kind": "SYSTEM_CONFIGURATION",
+      "format": "EDON_ANNOTATED_TEXT",
+      "locator": "synthetic://ehr/release-config",
+      "content": "# EDON annotated operational facts\nEDON|medication-release|AUTHORITY|medication_release|authorized_role|attending_physician_or_pharmacist|0.98|HIGH\nEDON|medication-release|EVIDENCE_REQUIREMENT|medication_release|requires|allergy_check|0.99|HIGH\nEDON|medication-release|WORKFLOW_STEP|medication_release|step_1|clinical_review|0.98|HIGH\nEDON|medication-release|DEADLINE|medication_release|review_window|45_minutes|0.97|HIGH\nEDON|inventory-audit|POLICY|inventory_audit|schedule|weekly|0.98|LOW"
+    },
+    {
+      "source_id": "synthetic-audit-log",
+      "version": "2026-08-01",
+      "truth_layer": "BEHAVIORAL",
+      "kind": "AUDIT_TRACE_SUMMARY",
+      "format": "STRUCTURED_JSON",
+      "locator": "synthetic://logs/medication-release",
+      "content": {
+        "statements": [
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "AUTHORITY",
+            "subject": "medication_release",
+            "predicate": "authorized_role",
+            "value": "pharmacist",
+            "confidence": 0.96,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "EVIDENCE_REQUIREMENT",
+            "subject": "medication_release",
+            "predicate": "requires",
+            "value": "allergy_check",
+            "confidence": 0.97,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "WORKFLOW_STEP",
+            "subject": "medication_release",
+            "predicate": "step_1",
+            "value": "clinical_review",
+            "confidence": 0.96,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "medication-release",
+            "primitive_type": "DEADLINE",
+            "subject": "medication_release",
+            "predicate": "review_window",
+            "value": "45_minutes",
+            "confidence": 0.95,
+            "risk_class": "HIGH"
+          },
+          {
+            "mechanism_id": "inventory-audit",
+            "primitive_type": "POLICY",
+            "subject": "inventory_audit",
+            "predicate": "schedule",
+            "value": "weekly",
+            "confidence": 0.97,
+            "risk_class": "LOW"
+          }
+        ]
+      }
+    }
+  ]
+}

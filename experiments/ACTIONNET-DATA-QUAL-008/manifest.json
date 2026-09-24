@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-008",
+  "version": "1.0.0",
+  "status": "READY_FOR_EXPERT_DOMAIN_AUTHORING",
+  "created": "2026-08-19",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-008-result-v1.0.0",
+    "sha256": "sha256:4b90f570412b37a24f14108ae95a1f7209f249ab7ecdeeb0a4076f23b8a2b772",
+    "storage_location": "archive://EDON Research/experiments/ACTIONNET-DATA-QUAL-008/results/result_manifest.json"
+  },
+  "qualification": {
+    "sha256": "sha256:16db72d37304ea8a8a2d0d7fa7da32c7a0cc87c3e04e3579d000423dedb1b88e",
+    "controls": "42/42",
+    "storage_location": "archive://EDON Research/experiments/ACTIONNET-DATA-QUAL-008/results/qualification_report.json"
+  },
+  "model": null,
+  "seeds": [26081908, 26081909],
+  "dataset": "ACTIONNET-GOVERNED-MULTIDOMAIN-AUTHORING-v8.0.0",
+  "license": "pending",
+  "claim_scope": "Synthetic multi-domain authoring and governance scaffold; no training, learned, external, or production result.",
+  "binding_authority": false
+}

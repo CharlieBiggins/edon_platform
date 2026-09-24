@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/gateway/receipt.schema.json",
+  "title": "EDON Agent Gateway receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "message_id", "connector_id", "tenant_id", "direction",
+    "status", "envelope_sha256", "delivered", "executed", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-agent-gateway-receipt.v1"},
+    "message_id": {"type": "string"},
+    "connector_id": {"type": "string"},
+    "tenant_id": {"type": "string"},
+    "direction": {"enum": ["INGRESS", "EGRESS"]},
+    "status": {"enum": ["ACCEPTED_SHADOW_ONLY", "STAGED_NOT_DELIVERED"]},
+    "envelope_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "delivered": {"const": false},
+    "executed": {"const": false},
+    "binding_authority": {"const": false}
+  }
+}

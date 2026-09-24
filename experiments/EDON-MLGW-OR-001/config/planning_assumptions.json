@@ -1,0 +1,35 @@
+{
+  "schema_version": "edon-mlgw-planning-assumptions.v1",
+  "event_id": "MEMPHIS-BOW-ECHO-2026-08-22",
+  "records": [
+    {
+      "metric": "bulk_restoration_hours",
+      "value": 120,
+      "evidence_class": "ESTIMATED",
+      "use": "scenario-planning baseline only",
+      "authoritative": false
+    },
+    {
+      "metric": "projected_customer_outage_hours",
+      "value_range": [5500000, 5900000],
+      "evidence_class": "ESTIMATED",
+      "use": "scenario-planning baseline only",
+      "authoritative": false
+    },
+    {
+      "metric": "direct_response_cost_usd",
+      "value_range": [8000000, 12000000],
+      "evidence_class": "ESTIMATED",
+      "use": "budget sensitivity only; excluded from confirmatory scoring until audited",
+      "authoritative": false
+    },
+    {
+      "metric": "stretch_bulk_restoration_hours",
+      "value_range": [72, 84],
+      "evidence_class": "TARGET",
+      "use": "stretch target, not expected result",
+      "authoritative": false
+    }
+  ],
+  "replacement_rule": "Pilot-measured and independently audited values supersede planning assumptions additively; estimates are never rewritten as observations."
+}

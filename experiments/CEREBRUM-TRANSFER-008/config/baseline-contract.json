@@ -1,0 +1,92 @@
+{
+  "schema_version": "cerebrum-transfer-008-baseline-contract.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "amendment_id": "CEREBRUM-TRANSFER-008-AMENDMENT-001-BASELINE-FAIRNESS",
+  "effective_protocol_version": "1.0.0+amendment.001",
+  "effective_on": "2026-09-01",
+  "status": "FROZEN_BEFORE_INSTRUMENT_MATERIALIZATION",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "conditions": [
+    {
+      "condition": "unmodified_base",
+      "class": "LEARNED_RAW_DIAGNOSTIC",
+      "schema_constraint": false,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": false
+    },
+    {
+      "condition": "interface_matched_base",
+      "class": "LEARNED_MATCHED_BASELINE",
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": true
+    },
+    {
+      "condition": "prompted_interface_matched_base",
+      "class": "LEARNED_MATCHED_BASELINE",
+      "schema_constraint": true,
+      "interface_demonstrations": true,
+      "primary_superiority_eligible": true
+    },
+    {
+      "condition": "transparent_rules_ceiling",
+      "class": "DETERMINISTIC_SOLVABILITY_CONTROL",
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": false
+    }
+  ],
+  "candidate_conditions": [
+    "rb1_seed_26082491",
+    "rb1_seed_26082492"
+  ],
+  "primary_comparator": {
+    "eligible_conditions": [
+      "interface_matched_base",
+      "prompted_interface_matched_base"
+    ],
+    "selection": "MAX_REGISTERED_EXECUTION_COMPOSITE",
+    "candidate_improvement_min": 0.15,
+    "raw_unmodified_base_is_diagnostic_only": true,
+    "rules_ceiling_is_not_a_learned_comparator": true
+  },
+  "shared_learned_resources": {
+    "same_base_revision": true,
+    "same_observations": true,
+    "same_task_instructions": true,
+    "same_task_token_limits": true,
+    "same_deterministic_compiler": true,
+    "same_hardware_class": true,
+    "same_case_order": true,
+    "deterministic_decoding": true,
+    "retry_budget_per_case": 0,
+    "schema_constraint_applies_to": [
+      "interface_matched_base",
+      "prompted_interface_matched_base",
+      "rb1_seed_26082491",
+      "rb1_seed_26082492"
+    ]
+  },
+  "prompt_pack": {
+    "required_for": "prompted_interface_matched_base",
+    "source_class": "PUBLIC_NON_PROTECTED_INTERFACE_ONLY",
+    "freeze_before_instrument_materialization": true,
+    "instrument_content_prohibited": true,
+    "answer_bearing_metadata_prohibited": true
+  },
+  "required_metric_views": [
+    "RAW_SCHEMA_VALIDITY",
+    "CONDITIONAL_DECISION_ACCURACY_GIVEN_VALID_OUTPUT",
+    "CONDITIONAL_SEMANTIC_ACCURACY_GIVEN_VALID_OUTPUT",
+    "FINAL_COMPILED_ACCURACY",
+    "UNSAFE_AUTHORIZATION",
+    "TRANSITION",
+    "POST_STATE",
+    "QUEUE",
+    "PAIR_CONTRAST",
+    "CAUSAL_PATH",
+    "TOKEN_AND_RETRY_USE"
+  ],
+  "instrument_materialized": false,
+  "binding_authority": false
+}

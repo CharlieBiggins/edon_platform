@@ -1,0 +1,69 @@
+{
+  "binding_authority": false,
+  "candidate_seeds": [
+    26082491,
+    26082492
+  ],
+  "claim_boundary": "Project-authored synthetic closed-loop development data and executable reference environment only; no learned result, independent transfer, protected capstone, real-institution, production, or IGI claim.",
+  "control_count": 28,
+  "controls": {
+    "capstone_material_prohibited": true,
+    "cross_episode_memory_disabled": true,
+    "episode_split_disjoint": true,
+    "institution_lineage_split_disjoint": true,
+    "kernel_only_commit": true,
+    "memory_reset": true,
+    "no_binding_authority": true,
+    "no_protected_material": true,
+    "no_real_institution_material": true,
+    "no_validation_target_in_inputs": true,
+    "profile_split_disjoint": true,
+    "protocol_identity": true,
+    "reference_all_success": true,
+    "reference_cycle_lengths": true,
+    "reference_zero_kernel_rejections": true,
+    "reference_zero_unsafe_proposals": true,
+    "renderer_split_disjoint": true,
+    "train_episode_count": true,
+    "train_pair_count": true,
+    "train_turn_count": true,
+    "training_rows_eligible": true,
+    "transfer_material_prohibited": true,
+    "two_candidate_seeds": true,
+    "validation_episode_count": true,
+    "validation_label_alignment": true,
+    "validation_pair_count": true,
+    "validation_rows_not_training_eligible": true,
+    "validation_turn_count": true
+  },
+  "controls_passed": 28,
+  "counts": {
+    "reference_cycle_lengths": {
+      "8": 240,
+      "10": 120
+    },
+    "train_episodes": 288,
+    "train_pairs": 144,
+    "train_turns": 2496,
+    "validation_episodes": 72,
+    "validation_pairs": 36,
+    "validation_turns": 624
+  },
+  "hashes": {
+    "dataset/train-episodes.jsonl": "sha256:61fdbcd4d11ebfb95f4da1d19ebcdb169ca5888a7055df418bd5eb9fe01404c3",
+    "dataset/train-turns.jsonl": "sha256:40501cc81bef5aef842fdb3094da7b6d2706bfd3b5716c732f590f39b6c53650",
+    "dataset/validation-episodes.jsonl": "sha256:77dd6bc5347fd582d0c96f18db0ba62f44a81854a9bfe3776d9bbd25d08f3106",
+    "dataset/validation-inputs.jsonl": "sha256:8a63fe93ab1d53b86a4572f6135771b317cdeaad51bdd57b44095610eaa2a779",
+    "oracle/train-oracle.jsonl": "sha256:000ebbf2a92c5623e36ae2d1a3f004b7a2ed9f5c890153e8db5bb93a15a8ff02",
+    "oracle/validation-labels.jsonl": "sha256:8785900e3298f26c4584cd9cabd5afb1d0dec2d092ad6a03f4c2bff41b4722d9",
+    "oracle/validation-oracle.jsonl": "sha256:62f72cd46d0c5368fc3a67d6a0d133fccc77490abf4c4f0b9a07311a1b452336",
+    "results/reference-runs.jsonl": "sha256:f4f297f2913de75b39626efa6f0129f3d622061bd0ec6302b3451f5146082a23"
+  },
+  "igi_claim_authorized": false,
+  "protected_scoring_authorized": false,
+  "protocol_id": "CEREBRUM-CLOSED-LOOP-DEV-001",
+  "schema_version": "cerebrum-closed-loop-dev-qualification.v1",
+  "status": "READY_FOR_TWO_SEED_LEARNED_CLOSED_LOOP_DEVELOPMENT",
+  "training_authorized": true,
+  "transfer_claim_authorized": false
+}

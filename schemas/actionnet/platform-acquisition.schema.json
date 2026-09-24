@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-acquisition.schema.json",
+  "title": "Non-binding ActionNet acquisition recommendation",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "recommendation_id", "target_mechanism_ids", "gap_dimensions", "rationale", "priority", "expected_information_gain", "evidence", "authoritative", "training_eligible", "record_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-acquisition-recommendation.v1"},
+    "tenant_id": {"type": "string"},
+    "recommendation_id": {"type": "string"},
+    "target_mechanism_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "gap_dimensions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "rationale": {"type": "string"},
+    "priority": {"type": "number", "minimum": 0, "maximum": 1},
+    "expected_information_gain": {"type": "number", "minimum": 0, "maximum": 1},
+    "evidence": {"type": "object"},
+    "created_by": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "authoritative": {"const": false},
+    "training_eligible": {"const": false},
+    "record_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "cerebrum-dev019-diagnostic-config.v1",
+  "protocol_id": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "primary_condition": "gold_intervention_failure_localization",
+  "source_dataset": "ACTIONNET-DATA-QUAL-019",
+  "training_steps": 0,
+  "training_authorized": false,
+  "model_parent_protocol": "CEREBRUM-DEV-017-CAUSAL",
+  "model_parent_candidate_id": "continuation-step-24",
+  "model_parent_step": 24,
+  "model_parent_adapter_tree_sha256": "sha256:3d774c4f63e29dc37917a38d7d65713f379fdfc4dc7caaa4599a668748bb2bb1",
+  "scientific_predecessor": "CEREBRUM-DEV-018-VERIFIED",
+  "scientific_predecessor_status": "VERIFIED_HYBRID_SYNTHETIC_SIGNAL",
+  "scientific_predecessor_result_sha256": "sha256:851f070b7bfbaf0f3b1640756df12e1dc3141340b201559756e9a9ea91c59bc7",
+  "scientific_predecessor_confirmation_model_predictions_sha256": "sha256:7aa6678c1e195315ea81d607d3eaa3654b2df283a2d1063419185386efa6711f",
+  "scientific_predecessor_confirmation_verification_audit_sha256": "sha256:2f299bc53473fa10407093b1059db4334521ab1d4565eee2f17d61c104c00aa4",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "diagnostic_conditions": [
+    "A_RAW",
+    "B_GOLD_TYPED_EVENTS",
+    "C_GOLD_EVENT_ORDER",
+    "D_GOLD_PREDECISION_STATE",
+    "E_GOLD_DECISION"
+  ],
+  "registered_scenarios": 32,
+  "registered_predictions": 160,
+  "primary_endpoint": "within_scenario_exact_certificate_recovery",
+  "secondary_endpoints": [
+    "within_scenario_decision_recovery",
+    "semantic_state_recovery",
+    "unsafe_authorization_by_condition",
+    "intervention_degradation",
+    "mechanism_specific_recovery"
+  ],
+  "causal_claim_boundary": "earliest demonstrated failure under cumulative distribution-matched interventions; not unique-cause identification",
+  "load_in_4bit": true,
+  "inference_max_input_tokens": 4096,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 2048,
+    "QUEUE_TRACE": 2048,
+    "PAIR_CONTRAST": 2048,
+    "QUEUE_ORDER": 512,
+    "QUEUE_PARTITION": 1024
+  },
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

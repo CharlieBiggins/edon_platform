@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-021-PROGRAM",
+  "version": "1.0.0",
+  "created": "2026-09-07",
+  "title": "Fresh executable temporal-program supervision",
+  "status": "READY_FOR_CEREBRUM_END2END_PROGRAM_001",
+  "result_id": "ACTIONNET-DATA-QUAL-021-PROGRAM-result-v1.0.0",
+  "dataset_id": "ACTIONNET-NATIVE-TEMPORAL-PROGRAM-v21.0.0",
+  "training_records": 1024,
+  "development_records": 128,
+  "confirmation_records": 256,
+  "selected_renderer": "FAMILIAR_AUGMENTED",
+  "program_schema": "ACTIONNET_TEMPORAL_PROGRAM_V1",
+  "binding_authority": false,
+  "transfer_authorized": false
+}

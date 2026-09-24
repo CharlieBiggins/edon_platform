@@ -1,0 +1,30 @@
+{
+  "schema_version": "edon-content-inventory.v1",
+  "vision_id": "CEREBRUM-PLATFORM-VISION-001",
+  "files": {
+    "README.md": "sha256:2c88c13e46a855c1bc4975accbdea1e381fdf92deb744398c308ac2db09b7505",
+    "platform-vision.json": "sha256:db1c64dccc4e0662ca63d0e5411299d3b855b8a372ba6f6c66c4532649fbbec4",
+    "preflight.py": "sha256:a3586a762cf5167e76d5b3b693597411e0a47f9702bdba3452c520dbc8bcb6f7",
+    "../../../docs/architecture/cerebrum-platform-vision.md": "sha256:927b761fec0dd55b7b1bf503dce62b2237434aa804104b259e90a81ff8d0940f",
+    "../../../docs/specifications/README.md": "sha256:56aa29d2eda6d385899bcb29c6d567e94ddfb6de218852bd639d2ab4ba8f2f10",
+    "../../../docs/specifications/action-lifecycle.md": "sha256:866ac8951d45153c502b819cfb31ba591217b17ef2346be53b34a8e6c3f8cf09",
+    "../../../docs/specifications/event-envelope.md": "sha256:4516975cc4bf63236fd76adf8ca26c9ec7bd3c134eaaa626720fd4a3d9cf56d8",
+    "../../../docs/specifications/first-qualified-operational-workflow.md": "sha256:783cdb5eccc2075a741c62c029dfc3426116f04da0080eb48c917d974940e7b7",
+    "../../../docs/specifications/institutional-ir-lifecycle.md": "sha256:4de22994bd3e380901a0f271268611c6666a9a262196180bfaa6280a066f4e37",
+    "../../../docs/specifications/institutional-state-model.md": "sha256:4fd49ea7da4da3e6fb8f81c694385afd437f2e68e91bd18941d5215f416b1e71",
+    "../../../docs/specifications/release-deployment-contract.md": "sha256:cc25ee03033674b5cadfc131c80e91ba4dcbc1a133a38a5eb215c7f7a9b594bc",
+    "../../../schemas/actions/action-proposal.schema.json": "sha256:a3bde6e3059cb8f60a44d223dcc2b5e995ea12373bdfbfce16ab5fba27900c04",
+    "../../../schemas/actions/authorization-decision.schema.json": "sha256:d9fb179e2a78b6c6b035fd3859a64add63ac3f499c7f59c5886db7c9423221fc",
+    "../../../schemas/actions/execution-record.schema.json": "sha256:b5e3d816234a0e2268a4ce7eb162af76cbf656fd165ee08ead5e199118255981",
+    "../../../schemas/actions/execution-request.schema.json": "sha256:55e697ddeccf15731beea3f0bf656c023b7642fd5215f1e2cddbbf0a9b7fd5cc",
+    "../../../schemas/domain-packs/manifest.schema.json": "sha256:60df8681e5b8ea32317d9b76e940a0bb06e8acd316e8740ea7ae643c303a4b7c",
+    "../../../schemas/events/event-envelope.schema.json": "sha256:2e0bfb6f67692665ec09dfa033e5580bdaa651501cf099405311992c3f1bb6dd",
+    "../../../schemas/institution/institutional-state.schema.json": "sha256:5f649811f318cc1a6ebdce381a84c09b300df1c5e4fd8a9de3f0832ad8a15b78",
+    "../../../schemas/institution/ir-lifecycle.schema.json": "sha256:ece0bd8d4fc670d12822d8d69d7f6f4d0ba251be7a64610c30dee38c28aed61a",
+    "../../../schemas/releases/deployment-approval.schema.json": "sha256:52006f83b8eb3d53693eec381af7a796d2378e28919719194124dbb9fb5cbf8e",
+    "../../../schemas/releases/release-contract.schema.json": "sha256:b992ec184c3c56bc0366aa1f1088e3042d8e5ac3c9c2342db4be5d3812992c61",
+    "../../../schemas/releases/runtime-attestation.schema.json": "sha256:3677040b5c05895f1e7fedd8e602a3bc11648ab1cd15905b906daff0eff5b586",
+    "../../../schemas/workflows/qualification.schema.json": "sha256:3c5cad36e2ce838fb9605408a8fcecf6eb854a8b3ab58181ede40d66f87f31eb"
+  },
+  "binding_authority": false
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/operations/plan.schema.json",
+  "title": "Validated institutional plan",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["plan_id", "goal_id", "revision", "status", "horizon_start", "step_order", "steps", "created_at", "updated_at"],
+  "properties": {
+    "plan_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "goal_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "revision": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["ACTIVE", "PAUSED", "NEEDS_REPLAN", "SUPERSEDED", "COMPLETED", "FAILED", "CANCELLED"]},
+    "horizon_start": {"type": "string", "format": "date-time"},
+    "horizon_end": {"type": ["string", "null"], "format": "date-time"},
+    "supersedes": {"type": ["string", "null"]},
+    "superseded_by": {"type": "string"},
+    "reason": {"type": "string"},
+    "step_order": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "steps": {"type": "object", "minProperties": 1, "additionalProperties": {"$ref": "#/$defs/step"}},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"}
+  },
+  "$defs": {
+    "step": {
+      "type": "object",
+      "required": ["step_id", "action", "dependencies", "required_capabilities", "resource_requests", "resource_allocation", "expected_outcomes", "command", "status", "assigned_agent_id"],
+      "additionalProperties": true,
+      "properties": {
+        "step_id": {"type": "string", "minLength": 1},
+        "action": {"type": "string", "minLength": 3},
+        "dependencies": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "required_capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "resource_requests": {"type": "object", "additionalProperties": {"type": "number", "exclusiveMinimum": 0}},
+        "resource_allocation": {"type": "object", "additionalProperties": {"type": "number", "exclusiveMinimum": 0}},
+        "earliest_start": {"type": ["string", "null"], "format": "date-time"},
+        "deadline": {"type": ["string", "null"], "format": "date-time"},
+        "expected_outcomes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+        "command": {"type": "object"},
+        "status": {"enum": ["PENDING", "ASSIGNED", "RUNNING", "SUCCEEDED", "FAILED", "CANCELLED"]},
+        "assigned_agent_id": {"type": ["string", "null"]},
+        "assigned_at": {"type": ["string", "null"], "format": "date-time"},
+        "started_at": {"type": ["string", "null"], "format": "date-time"},
+        "completed_at": {"type": ["string", "null"], "format": "date-time"}
+      }
+    }
+  }
+}

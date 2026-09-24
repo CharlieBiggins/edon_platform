@@ -1,0 +1,61 @@
+{
+  "schema_version": "cerebrum-validated-interface-spec.v1",
+  "interface_id": "FAMILIAR_AUGMENTED-v1",
+  "source_protocol": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "source_status": "INTERFACE_CALIBRATION_SIGNAL",
+  "selection_freeze_sha256": "sha256:927cbdc991098a73195572722ac360b16f6218ea5a7d31a708bdf6c8ede00aa2",
+  "media_type": "text/plain;profile=interface-calibration-augmented-docket-v1",
+  "single_source": true,
+  "template": [
+    "AUGMENTED_DOCKET<{domain}>",
+    "INITIAL_RECORD::{canonical_typed_state_json}",
+    "SCHEDULED_ENTRIES::{event_text joined by ' || '}",
+    "DISPOSITION_TIME::{decision_clock}",
+    "ORDER::time,priority,sequence,event_id",
+    "BOUNDARY::execute at or before disposition time; defer later events"
+  ],
+  "event_text_fields": [
+    "event_id",
+    "time",
+    "priority",
+    "sequence",
+    "actor_id",
+    "operation",
+    "target",
+    "typed_value"
+  ],
+  "calibration_evidence": {
+    "scenarios": 64,
+    "raw_correct_preservation": 53,
+    "raw_correct_total": 53,
+    "decision_agreement": 63,
+    "decision_agreement_total": 64,
+    "decision_degradations": 0,
+    "unsafe_authorization_delta": 0
+  },
+  "heldout_evidence": {
+    "scenarios": 64,
+    "raw_decision_correct": 53,
+    "interface_decision_correct": 53,
+    "decision_agreement": 64,
+    "decision_degradations": 0,
+    "raw_unsafe_authorizations": 9,
+    "interface_unsafe_authorizations": 9
+  },
+  "immutable_certificate_fidelity": {
+    "combined_scenarios": 128,
+    "decision_preserved": 128,
+    "exact_certificates": 127,
+    "unsafe_decision_changes": 0
+  },
+  "prohibited_variations": [
+    "nested raw and typed duplicates",
+    "gold or oracle labels in the model-visible representation",
+    "simultaneous unordered and ordered event views",
+    "supplied final state in a recomputation task",
+    "supplied mutable decision in a recomputation task"
+  ],
+  "interpretation": "Validated for behavioral stability, not for reasoning improvement or safety improvement.",
+  "transfer_authorized": false,
+  "binding_authority": false
+}

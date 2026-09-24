@@ -1,0 +1,25 @@
+{
+  "actual_cerebrum_result_exists": false,
+  "binding_authority": false,
+  "checks": {
+    "cuda_available": false,
+    "fresh_qwen_target_custody": false,
+    "matched_training_counts": true,
+    "protected_case_count": true,
+    "protected_generator_separate": true,
+    "qwen_runtime_dependencies": false,
+    "training_manifest_matched": true,
+    "zero_prompt_overlap": true
+  },
+  "current_target_confirmatory_eligible": false,
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "runtime_modules": {
+    "bitsandbytes": false,
+    "datasets": false,
+    "peft": false,
+    "torch": false,
+    "transformers": false
+  },
+  "schema_version": "cerebrum-platform-contrib-preflight.v1",
+  "status": "BLOCKED_MISSING_QWEN_GPU_AND_FRESH_TARGET_CUSTODY"
+}

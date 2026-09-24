@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-010",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV010_TRAINING",
+  "created": "2026-09-04",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-010-result-v1.0.0",
+    "sha256": "sha256:254049486f00474cfd705d64b0cbfc114d59e8de78064bb054b67196c55db995",
+    "storage_location": "results/qualification_report.json"
+  },
+  "model": "none",
+  "seeds": [26090410, 26090411, 26090412],
+  "dataset": "ACTIONNET-QUEUE-INTEGRITY-APPEAL-REPAIR-v10.0.0",
+  "license": "research-only synthetic development data",
+  "parent_failure": "CEREBRUM-DEV-009-RB1",
+  "training_records": 4032,
+  "validation_records": 192,
+  "training_pairs": 336,
+  "validation_pairs": 48,
+  "source_grounded": false,
+  "independent_generator_implementation": false,
+  "claim_scope": "Fresh-lineage project-authored synthetic queue and appeal repair data only.",
+  "binding_authority": false
+}

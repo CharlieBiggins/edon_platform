@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/runtime/shadow-supervisor-cycle.schema.json",
+  "title": "Immutable shadow-supervisor cycle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["cycle_id", "tenant_id", "world_id", "world_version", "world_state_sha256", "context_sha256", "proposal", "proposal_sha256", "status", "created_at", "binding_authority"],
+  "properties": {
+    "cycle_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "world_version": {"type": "integer", "minimum": 0},
+    "world_state_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "context_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "proposal": {"type": "object"},
+    "proposal_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "status": {"const": "SHADOW_ONLY"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-005",
+  "version": "1.0.0",
+  "status": "QUALIFIED",
+  "created": "2026-08-12",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-005-result-v1.0.0",
+    "sha256": "sha256:1b29ad694e222349e7d46e4406c1f2a51ed7e5267bd3b716f3742960477220fc",
+    "storage_location": "results/preserved_result_manifest.json"
+  },
+  "regenerated_artifact": {
+    "id": "ACTIONNET-DATA-QUAL-005-regenerated-result-v1.0.0",
+    "result_sha256": "sha256:66c27c98a1a181bed9b516e250b94bed3e65432c2aa8059e58e709cb47b589de",
+    "storage_location": "results/result_manifest.json"
+  },
+  "preservation_status": "DATA_AND_CONTROLS_REPRODUCE_SOURCE_MANIFEST_MISMATCH_RECORDED",
+  "model": null,
+  "seeds": [26081205, 26081206],
+  "dataset": "ACTIONNET-EVENTNET-REPAIR-DATASET-v5.0.0",
+  "license": "pending",
+  "claim_scope": "Fresh-lineage internal synthetic repair-data qualification only.",
+  "binding_authority": false
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/training-gate.v1.json",
+  "title": "ActionNet Training Eligibility Gate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tenant_permission", "source_permission", "privacy_review", "deidentification", "expert_review", "adjudication", "duplicate_check", "protected_case_excluded", "dataset_freeze", "release_approval", "eligible"],
+  "properties": {
+    "tenant_permission": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "PENDING"]},
+    "source_permission": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "PENDING"]},
+    "privacy_review": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "PENDING"]},
+    "deidentification": {"enum": ["PASS", "FAIL", "NOT_APPLICABLE", "PENDING"]},
+    "expert_review": {"enum": ["PASS", "FAIL", "PENDING"]},
+    "adjudication": {"enum": ["PASS", "FAIL", "NOT_REQUIRED", "PENDING"]},
+    "duplicate_check": {"enum": ["PASS", "FAIL", "PENDING"]},
+    "protected_case_excluded": {"enum": ["PASS", "FAIL", "PENDING"]},
+    "dataset_freeze": {"enum": ["PASS", "FAIL", "PENDING"]},
+    "release_approval": {"enum": ["PASS", "FAIL", "PENDING"]},
+    "eligible": {"type": "boolean"}
+  }
+}

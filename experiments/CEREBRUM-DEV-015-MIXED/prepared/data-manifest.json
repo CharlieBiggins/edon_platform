@@ -1,0 +1,102 @@
+{
+  "binding_authority": false,
+  "confirmation_single_use": true,
+  "dev014_cases_used_for_training": false,
+  "development_selection_is_adaptive": true,
+  "full_regression_confirmation": true,
+  "mixed_multitask_replay": true,
+  "prepared_hashes": {
+    "development_selection": "sha256:c7fb7f40311a1ebcef71826c3023956bdc1d73a3f6b244c3520aa1e4775b438b",
+    "train": "sha256:b5bae01601d4ff032abe7d73142e7b28111189fb21ad7d24046f3454d1d88b44",
+    "untouched_confirmation": "sha256:129870219bb765d210da3070c5574347f7255b99b2d96edc70cd8f86e25cc7eb"
+  },
+  "protocol_id": "CEREBRUM-DEV-015-MIXED",
+  "schema_version": "cerebrum-dev015-mixed-data-manifest.v1",
+  "source_hashes": {
+    "development_selection": "sha256:154eedd7e048d571c7b40cb71664dc88538f79c5380124e1375c5ff28f670b32",
+    "train": "sha256:c1c6a2161071075e0eb8da111403d585344bfaa7eb533575f6a30471a2ba8d58",
+    "untouched_confirmation": "sha256:0035afe1f33c0f6c84abe86883c9a722a38a982060bfe9c9270034ed42c0b2f7"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-015-result-v1.0.0",
+  "splits": {
+    "development_selection": {
+      "case_ids": 64,
+      "pair_ids": 16,
+      "profile_counts": {
+        "DEVELOPMENT_SELECTION": 64
+      },
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_RETENTION_SELECTION_PACKET": 64
+      },
+      "source_counts": {
+        "FRESH": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 16,
+        "PAIR_CONTRAST": 16,
+        "QUEUE_TRACE": 16,
+        "TRANSITION": 16
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    },
+    "train": {
+      "case_ids": 384,
+      "pair_ids": 243,
+      "profile_counts": {
+        "CLOCK_GRID": 178,
+        "CONTROL_SHEET": 174,
+        "NEAR_CLOCK_APPEAL_BOUNDARY": 32
+      },
+      "records": 384,
+      "renderer_counts": {
+        "APPEAL_PAIR_MATRIX": 8,
+        "BOUNDARY_DELTA_LEDGER": 9,
+        "DECISION_CLOCK_GRID": 83,
+        "EXECUTION_CUTOFF_CARD": 7,
+        "MULTI_SYSTEM_JOURNAL": 95,
+        "NEAR_CLOCK_MEMO": 8,
+        "QUEUE_CONTROL_SHEET": 103,
+        "STATE_DELTA_PACKET": 71
+      },
+      "source_counts": {
+        "ACTIONNET-DATA-QUAL-010": 352,
+        "ACTIONNET-DATA-QUAL-013": 32
+      },
+      "task_counts": {
+        "CERTIFICATE": 64,
+        "PAIR_CONTRAST": 64,
+        "QUEUE_ORDER": 32,
+        "QUEUE_PARTITION": 32,
+        "QUEUE_TRACE": 96,
+        "TRANSITION": 96
+      },
+      "weight_max": 10.0,
+      "weight_min": 6.0
+    },
+    "untouched_confirmation": {
+      "case_ids": 192,
+      "pair_ids": 48,
+      "profile_counts": {
+        "UNTOUCHED_CONFIRMATION": 192
+      },
+      "records": 192,
+      "renderer_counts": {
+        "HELDOUT_RETENTION_CONFIRMATION_DOCKET": 192
+      },
+      "source_counts": {
+        "FRESH": 192
+      },
+      "task_counts": {
+        "CERTIFICATE": 48,
+        "PAIR_CONTRAST": 48,
+        "QUEUE_TRACE": 48,
+        "TRANSITION": 48
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    }
+  },
+  "transfer_authorized": false
+}

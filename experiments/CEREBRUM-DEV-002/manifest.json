@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-002",
+  "version": "1.0.0",
+  "status": "PASSED_INTERNAL",
+  "created": "2026-08-10",
+  "artifact": {
+    "id": "full_multitask-two-seed-summary",
+    "sha256": "sha256:cda56c022918ce99be82ba3235f78b4f8e6b436960cd7fd1cccf9bb714e48056",
+    "storage_location": "legacy://EDON Research/experiments/CEREBRUM-DEV-002/runs/CEREBRUM-DEV-002-run-2026-08-10/results/full_multitask-two-seed-summary.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26080921, 26080922],
+  "dataset": "ACTIONNET-DATA-QUAL-003",
+  "license": "pending",
+  "claim_scope": "Two-seed same-program synthetic repair result only.",
+  "binding_authority": false
+}

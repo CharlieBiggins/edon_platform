@@ -1,0 +1,19 @@
+{
+  "schema_version": "edon-public-disclosure-register.v1",
+  "updated": "2026-08-29",
+  "status": "INVENTORY_REQUIRED",
+  "completeness_attested": false,
+  "search_scope": [
+    "PUBLIC_REPOSITORIES",
+    "PAPERS_AND_PREPRINTS",
+    "TALKS_AND_DEMONSTRATIONS",
+    "WEBSITES_AND_SOCIAL_MEDIA",
+    "PITCHES_OFFERS_AND_SALES",
+    "CUSTOMER_AND_PARTNER_ACCESS",
+    "NONCONFIDENTIAL_EMAIL_OR_FILE_SHARING"
+  ],
+  "entries": [],
+  "release_blocked_until_complete": true,
+  "notes": "An empty register does not mean no disclosures occurred.",
+  "binding_authority": false
+}

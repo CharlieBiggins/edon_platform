@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "alternative": {
+    "model_id": null,
+    "revision": null,
+    "weights_tree_sha256": null,
+    "license_review": null,
+    "selection_rationale_before_results": null
+  },
+  "interface": {
+    "output_format": "INHERITED_PROGRAM003_TRACE_AND_NATIVE_PROGRAM",
+    "prompt_pack_sha256": null,
+    "runner_source_sha256": null,
+    "runtime_lock_sha256": null,
+    "hardware_class": "NVIDIA L4",
+    "max_input_tokens": 4096,
+    "max_new_tokens": 4096,
+    "do_sample": false,
+    "retries": 0,
+    "tools_during_generation": [],
+    "reference_ir_visible": false,
+    "model_specific_chat_wrappers": "Document in the frozen runner; do not silently claim token-identical prompts."
+  },
+  "budget": {
+    "max_responses": 240,
+    "max_gpu_hours": null,
+    "max_cost_usd": null
+  },
+  "screening_justification": null,
+  "candidate_configuration_frozen": false,
+  "human_approval_to_register_screen": false
+}

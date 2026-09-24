@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/events/event-envelope.schema.json",
+  "title": "Cerebrum canonical event envelope",
+  "description": "Immutable non-authoritative evidence envelope for observations, reports, receipts, outcomes, governance events, and telemetry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "event_id",
+    "tenant_id",
+    "institution_id",
+    "event_type",
+    "source",
+    "subject_refs",
+    "occurred_at",
+    "observed_at",
+    "effective_at",
+    "recorded_at",
+    "available_to_controller_at",
+    "evidence_refs",
+    "state_version",
+    "trust",
+    "sensitivity",
+    "trace",
+    "payload",
+    "integrity",
+    "replay",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-event-envelope.v1"},
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "event_type": {"type": "string", "minLength": 1, "maxLength": 200},
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["source_type", "source_id", "actor_id", "schema_id"],
+      "properties": {
+        "source_type": {"enum": ["HUMAN", "SYSTEM", "AGENT", "SENSOR", "CONNECTOR", "CONTROL_PLANE", "KERNEL", "EXECUTION_ASSURANCE", "DEPLOYMENT_CONTROLLER", "MONITOR"]},
+        "source_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "actor_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "schema_id": {"type": "string", "minLength": 1, "maxLength": 500},
+        "authoritative_for": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 500}}
+      }
+    },
+    "subject_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 500}},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "effective_at": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "available_to_controller_at": {"type": "string", "format": "date-time"},
+    "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 1000}},
+    "state_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "trust": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "confidence", "instruction_separated"],
+      "properties": {
+        "classification": {"enum": ["UNTRUSTED", "REPORTED", "OBSERVED", "VERIFIED_SOURCE", "SYSTEM_INTERNAL"]},
+        "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+        "instruction_separated": {"const": true}
+      }
+    },
+    "sensitivity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "compartment_refs"],
+      "properties": {
+        "classification": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+        "compartment_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 200}}
+      }
+    },
+    "trace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trace_id", "span_id", "correlation_id"],
+      "properties": {
+        "trace_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "span_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "parent_span_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "correlation_id": {"type": "string", "minLength": 1, "maxLength": 200},
+        "causation_event_id": {"type": "string", "minLength": 1, "maxLength": 200}
+      }
+    },
+    "payload": {"type": "object"},
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["content_sha256", "signature_status"],
+      "properties": {
+        "content_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "signature_status": {"enum": ["UNSIGNED", "VALID", "INVALID", "NOT_CHECKED"]},
+        "signature_ref": {"type": "string", "minLength": 1, "maxLength": 1000},
+        "key_id": {"type": "string", "minLength": 1, "maxLength": 200}
+      }
+    },
+    "replay": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["idempotency_key", "sequence", "correction"],
+      "properties": {
+        "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 500},
+        "sequence": {"type": "integer", "minimum": 0},
+        "correction": {"type": "boolean"},
+        "corrects_event_id": {"type": "string", "minLength": 1, "maxLength": 200}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"correction": {"const": true}}, "required": ["correction"]},
+          "then": {"required": ["corrects_event_id"]}
+        }
+      ]
+    },
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-011",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV011_FOCUSED_CONTINUATION",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-011-result-v1.0.0",
+    "sha256": "sha256:1e1506463cc7303dec0a7a9509a4608680107a72d48415c7f2e30f61faa59894",
+    "storage_location": "results/result_manifest.json"
+  },
+  "model": "none",
+  "seeds": [26090510, 26090520],
+  "dataset": "ACTIONNET-UNRESOLVED-APPEAL-FOCUSED-v11.0.0",
+  "license": "research-only synthetic development data",
+  "parent_failure": "CEREBRUM-DEV-010",
+  "training_records": 768,
+  "validation_records": 64,
+  "training_pairs": 96,
+  "validation_pairs": 32,
+  "source_grounded": false,
+  "independent_generator_implementation": false,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Fresh project-authored synthetic unresolved-appeal failure-focused data only.",
+  "binding_authority": false
+}

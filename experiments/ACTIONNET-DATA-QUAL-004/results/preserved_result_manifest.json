@@ -1,0 +1,26 @@
+{
+  "artifacts": {
+    "CEREBRUM_EVENTNET_HANDOFF.md": "sha256:ec085132216e4897f4747b925a67b1d88a884376102ea31ef34e147a09d2eb8e",
+    "DATA_DESIGN.md": "sha256:5c5c2988e9c3ca77db0440811673cee55b906472bbb77ea0e7ae90144524e71a",
+    "PREREGISTRATION.md": "sha256:4cc7afe133fac62411ae061c144461a47a70bae043fa6cf58edc4d8099bd07bf",
+    "README.md": "sha256:d98ad20261e23bd984a2a59cbd7bc8c52c0c0d1942f90a2a99cca8e0f6ca537b",
+    "SCALING_ARCHITECTURE.md": "sha256:db44fb59b6ab75e2dcfb8f102d8e69e5a24feb3dd3ef80da4c2b0637d1b2fbb5",
+    "actionnet_eventnet.py": "sha256:d52de9cd888aed6f2fb85acb4039fd6b1e71b131a2e8df9de3b5177b37ff369e",
+    "dataset/repair_validation.jsonl": "sha256:3a036458e27733d84b53322a07e4d51da9d459f5966e5fd620b8764654fbd000",
+    "dataset/train.jsonl": "sha256:6e86052dae3a6708437da91b3843a281a2f2e94593325696e4ac101472f18d2b",
+    "lineage/lineages.json": "sha256:7929652b810feeb38a1f58e00ad0e3d2ed034760a202c983c2e3f9e205b96469",
+    "oracle/canonical_trajectories.jsonl": "sha256:71984f16a0209d70e292241fef4a18da9cd36bf89bf4587be5b1c68e38b37f08",
+    "oracle/mechanism_catalog.json": "sha256:ec70078b3af6773b2ca4694535d56d568b189d5a6b8f628bafa29d609345a5a9",
+    "oracle/reservation.json": "sha256:f2409851b86861146a4130f36e56efa1ac6c0965a9b8067e4740b189086b4a11",
+    "results/dataset_manifest.json": "sha256:426e741adfec52dc55f94a9fe157ac9e4871e01d964c0662f9bfef98b2046b27",
+    "results/qualification_report.json": "sha256:2204bcecfcd156088d9066db980c2c670dd1a98352a31dbcbf37bba5164e0cd1",
+    "run_campaign.py": "sha256:ef6b8cc61fb037743caa37cd4d6d66774b4ff988c846bd6a98036232460a075c",
+    "tests/test_eventnet.py": "sha256:d51736293260218ddd74a7a9ac89b83ea382e8feda379c43a2de2654a6066aa9"
+  },
+  "claim_boundary": "Qualified for a separate internal EventNet development campaign; no public, protected, real-institution, autonomous-authority, or production claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-004",
+  "result_hash": "sha256:f28c51b497d249f1d0d450a626198c232e83971f055c30f5f958b049ccb1b929",
+  "result_id": "ACTIONNET-DATA-QUAL-004-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_EVENTNET_DEVELOPMENT"
+}

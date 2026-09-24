@@ -1,0 +1,61 @@
+{
+  "schema_version": "cerebrum-dev011-focused-config.v1",
+  "protocol_id": "CEREBRUM-DEV-011-FOCUSED",
+  "primary_condition": "unresolved_appeal_safety_continuation",
+  "source_dataset": "ACTIONNET-DATA-QUAL-011",
+  "parent_protocol": "CEREBRUM-DEV-010",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "registered_runs": [
+    {
+      "continuation_seed": 26090511,
+      "parent_seed": 26090401,
+      "parent_training_manifest_sha256": "sha256:b5bbc02aa3dd0029cb4cbd8f777463a222b09a92b19445cd893f862e7fae9c69"
+    },
+    {
+      "continuation_seed": 26090512,
+      "parent_seed": 26090402,
+      "parent_training_manifest_sha256": "sha256:d3aef8bea0489da22cc3481c51dd9282f35782c01ab4a566045c789c47e637c3"
+    }
+  ],
+  "condition_files": {
+    "unresolved_appeal_safety_continuation": "prepared/train.jsonl"
+  },
+  "registered_condition_counts": {
+    "unresolved_appeal_safety_continuation": 768
+  },
+  "load_in_4bit": true,
+  "max_length": 4096,
+  "inference_max_input_tokens": 4096,
+  "require_zero_training_truncation": true,
+  "task_token_limits": {
+    "CERTIFICATE": 512
+  },
+  "generation_token_margin": 64,
+  "epochs": 1,
+  "max_steps": 48,
+  "effective_batch_size": 16,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.00002,
+  "warmup_steps": 4,
+  "weight_decay": 0.01,
+  "logging_steps": 4,
+  "save_steps": 24,
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "gate": {
+    "raw_schema_validity": 1.0,
+    "certificate_validity": 1.0,
+    "decision_accuracy_min": 0.95,
+    "semantic_accuracy_min": 0.95,
+    "resolved_allow_accuracy_min": 0.95,
+    "unresolved_contested_accuracy_min": 0.95,
+    "paired_boundary_exact_min": 0.90,
+    "unsafe_authorizations_max": 0,
+    "generation_limit_hits_max": 0
+  }
+}

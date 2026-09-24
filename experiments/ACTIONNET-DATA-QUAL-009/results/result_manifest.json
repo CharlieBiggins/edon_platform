@@ -1,0 +1,28 @@
+{
+  "artifacts": {
+    "CEREBRUM_EVENTNET_HANDOFF.md": "sha256:874a1cbc30f0126a00e3fa24f5ad8e24866b926139bf5cec8d2cd26be54430cb",
+    "DATA_DESIGN.md": "sha256:df7bd628034171a7cca7c2cf80dc9e4245ceef3472baea00c0f43cfc4265d168",
+    "PREREGISTRATION.md": "sha256:a5ec91414d1322b06a6ea5521e632d9d461f5c5b26cac656f2f5d4a9abaa7f32",
+    "README.md": "sha256:6a1ca3d03a5cb4ff45937107c7f268c2eda27bf934f9b35aa3c4fa903358209a",
+    "SCALING_ARCHITECTURE.md": "sha256:51cdd687a4222bc8d5c522499635826fee3ecd69aaf4206707e04d61e61f0263",
+    "actionnet_multigen.py": "sha256:b3ba5622c354de744894eaa6bd8e391c55f786a21a415e17683e656085e80f62",
+    "dataset/repair_validation.jsonl": "sha256:52ec137d68b317190a0691d878b04997989f59640e8b726e0983eabacbcf1d74",
+    "dataset/train.jsonl": "sha256:a791d13729e76b316349dd591ed3b13ab3e4e241235e9e6911c6b0a6c5b10247",
+    "freeze_predecessor_overlap.py": "sha256:c86e96d2120d5804d0a09a741e6f531c90f3544f9e3f71cf5ab295ef6d11083b",
+    "lineage/lineages.json": "sha256:cfadb3c5369313542e01a281d6c37a5afab2809dc29f844997807ee70a4276bf",
+    "oracle/actionnet007_overlap_reference.json": "sha256:a2c5a1fe79823c491a36ae0315f867452e4ced6921d1713892f3b96e24083cd5",
+    "oracle/canonical_trajectories.jsonl": "sha256:14c32a98d1293b53dd04e5278278e5ecd81b5ce1d1afcc2809adbde3a7254853",
+    "oracle/mechanism_catalog.json": "sha256:fc3494c3977fa7a42bc1be671f69e8ec4a1e8aa9b7844e4f4dbd0377fc3e2ba3",
+    "oracle/reservation.json": "sha256:bf4d27442e87fc0a35afa79f7b2d30baaaf89809363260c3a204cb5089d5189b",
+    "results/dataset_manifest.json": "sha256:e208f98e8d6ebf6e61316b3a073a2854dc1c65c480252e648d7bea83e140e163",
+    "results/qualification_report.json": "sha256:4dd30829c1efd9393cca58d5d61f288f35a8354396502beead16536e06310db3",
+    "run_campaign.py": "sha256:f5284030753bc6dc8d6cdc24ee56590943bba7d0c38d7de2c32f1837e7b4b6a6",
+    "tests/test_eventnet.py": "sha256:0c3989dc5c7eeda12548119760faefda9226d1b62132548140329e9cbfec6b64"
+  },
+  "claim_boundary": "Qualified for the separate CEREBRUM-DEV-009 multi-generator repair campaign; generator profiles remain project-authored and no public, protected, real-institution, autonomous-authority, or production claim is made.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-009",
+  "result_hash": "sha256:5c4ebee3cc5db6927a4ffa87a969bb51802eb3ea75e1cbdba3c22cfafe70c796",
+  "result_id": "ACTIONNET-DATA-QUAL-009-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_EVENTNET_DEVELOPMENT"
+}

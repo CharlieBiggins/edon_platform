@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "protocol_id": "CEREBRUM-ACTIONNET-TRANSFER-001",
+  "instrument_author_identity": null,
+  "instrument_author_independent_of_candidates": false,
+  "instrument_reviewer_identity": null,
+  "candidate_custodian_identity": null,
+  "scoring_custodian_identity": null,
+  "roles_are_distinct": false,
+  "three_unseen_institutions_committed": false,
+  "different_structures_not_just_renaming": false,
+  "hidden_oracle_and_hash_custody_committed": false,
+  "no_candidate_access_before_freeze": false,
+  "human_approval_to_materialize": false
+}

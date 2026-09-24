@@ -1,0 +1,24 @@
+{
+  "schema_version": "cerebrum-build-training-release.v1",
+  "release_id": "REPLACE_ME",
+  "status": "DRAFT_NOT_AUTHORIZED",
+  "created": null,
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "base_revision": null,
+  "tokenizer_revision": null,
+  "registered_seed": null,
+  "files": [],
+  "source_experiments": [],
+  "task_counts": {},
+  "mechanism_counts": {},
+  "overlap_audit": {
+    "protected_sets_checked": [],
+    "overlap_count": null,
+    "passed": false
+  },
+  "rights_and_privacy_reviewed": false,
+  "all_records_training_eligible": false,
+  "protected_labels_included": false,
+  "training_authorized": false,
+  "binding_authority": false
+}

@@ -1,0 +1,43 @@
+{
+  "schema_version": "cerebrum-mini-igi-capstone-candidates.v1",
+  "protocol_id": "CEREBRUM-MINI-IGI-CAPSTONE-001",
+  "status": "PENDING_ALL_PREREQUISITES",
+  "required_seed_ids": [26082491, 26082492],
+  "prerequisite_summaries": {
+    "rb1": {"path": null, "sha256": null, "verified": false},
+    "transfer008": {"path": null, "sha256": null, "verified": false},
+    "closed_loop": {"path": null, "sha256": null, "verified": false}
+  },
+  "candidates": [
+    {
+      "slot": "seed_a",
+      "seed": 26082491,
+      "model_generation": null,
+      "base_revision": null,
+      "adapter_sha256": null,
+      "manifest_sha256": null,
+      "frozen": false
+    },
+    {
+      "slot": "seed_b",
+      "seed": 26082492,
+      "model_generation": null,
+      "base_revision": null,
+      "adapter_sha256": null,
+      "manifest_sha256": null,
+      "frozen": false
+    }
+  ],
+  "baselines": [
+    {"condition": "transparent_rules_only", "revision": null, "sha256": null, "frozen": false},
+    {"condition": "optimization_only", "revision": null, "sha256": null, "frozen": false},
+    {"condition": "rules_plus_optimization", "revision": null, "sha256": null, "frozen": false},
+    {"condition": "unmodified_base_model", "revision": null, "sha256": null, "frozen": false},
+    {"condition": "prompted_interface_matched_base", "revision": null, "sha256": null, "frozen": false}
+  ],
+  "compiler_sha256": null,
+  "prompt_pack_sha256": null,
+  "tool_pack_sha256": null,
+  "runtime_image_digest": null,
+  "binding_authority": false
+}

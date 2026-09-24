@@ -1,0 +1,24 @@
+{
+  "schema_version": "edon-actionnet-learning-network-manifest.v1",
+  "product_id": "ACTIONNET-LEARNING-NETWORK-001",
+  "version": "0.8.0",
+  "release_date": "2026-08-30",
+  "status": "INTERNAL_GOVERNED_REFERENCE_NOT_PRODUCTION_AUTHORIZED",
+  "implemented_controls": [
+    "INSTITUTION_LOCAL_MEMORY_CONTEXT_ONLY",
+    "TENANT_LOCAL_ACTIONNET_CUSTODY",
+    "LOCAL_ELIGIBILITY_REVALIDATION",
+    "DEIDENTIFIED_RIGHTS_BOUND_GLOBAL_PROMOTION",
+    "GLOBAL_OFFLINE_TRAINING_RELEASE",
+    "IMMUTABLE_C1_VERSION_LINEAGE",
+    "EVIDENCE_GATED_C1_DISPOSITIONS",
+    "NO_AUTOMATIC_WEIGHT_UPDATE"
+  ],
+  "reference_tests": "9/9_PASS",
+  "real_institution_contribution_exists": false,
+  "federated_learning_implemented": false,
+  "model_trained_through_network": false,
+  "production_validated": false,
+  "production_readiness_checklist": "product/actionnet-learning-network/PRODUCTION_READINESS.md",
+  "binding_authority": false
+}

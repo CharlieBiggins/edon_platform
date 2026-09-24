@@ -1,0 +1,24 @@
+{
+  "schema_version": "edon-platform-release-gate.v1",
+  "release_id": "EDON-PLATFORM-MVP-001",
+  "date": "2026-08-14",
+  "checks": {
+    "compiler_output_non_binding": true,
+    "high_risk_dual_review_enforced": true,
+    "audit_chain_verified": true,
+    "approved_only_runtime_execution": true,
+    "actionnet_labels_separated": true,
+    "qualification_gate_required": true,
+    "seed_predictions_hash_frozen": true,
+    "shadow_mode_non_binding": true,
+    "gap_proposals_unapproved": true,
+    "role_bound_api_tokens": true,
+    "rollback_audited": true,
+    "end_to_end_synthetic_demo_passes": true,
+    "external_security_audit_complete": false,
+    "real_institution_validation_complete": false,
+    "production_authorization_granted": false
+  },
+  "disposition": "INTERNAL_MVP_ONLY",
+  "binding_authority": false
+}

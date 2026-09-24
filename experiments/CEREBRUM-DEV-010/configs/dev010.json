@@ -1,0 +1,61 @@
+{
+  "schema_version": "cerebrum-dev010-config.v1",
+  "protocol_id": "CEREBRUM-DEV-010",
+  "primary_condition": "queue_integrity_appeal_repair",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "condition_files": {
+    "queue_integrity_appeal_repair": "prepared/train.jsonl"
+  },
+  "registered_condition_counts": {
+    "queue_integrity_appeal_repair": 4032
+  },
+  "registered_seeds": [26090401, 26090402],
+  "load_in_4bit": true,
+  "max_length": 4096,
+  "inference_max_input_tokens": 4096,
+  "require_zero_training_truncation": true,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 1536,
+    "QUEUE_TRACE": 1536,
+    "PAIR_CONTRAST": 2048,
+    "QUEUE_ORDER": 512,
+    "QUEUE_PARTITION": 1024
+  },
+  "generation_token_margin": 64,
+  "epochs": 1,
+  "effective_batch_size": 16,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.0001,
+  "warmup_steps": 16,
+  "weight_decay": 0.01,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "target_modules": "all-linear",
+  "logging_steps": 10,
+  "save_steps": 63,
+  "gate": {
+    "certificate_decision_min": 0.85,
+    "certificate_semantic_min": 0.85,
+    "certificate_pivotal_min": 0.85,
+    "certificate_invariance_min": 0.75,
+    "certificate_contextual_min": 0.75,
+    "unresolved_appeal_certificate_min": 0.9,
+    "transition_exact_min": 0.7,
+    "transition_post_state_min": 0.9,
+    "transition_decision_min": 0.85,
+    "queue_exact_min": 0.65,
+    "queue_order_min": 0.85,
+    "queue_executed_min": 0.85,
+    "queue_deferred_min": 0.85,
+    "queue_steps_min": 0.75,
+    "queue_final_state_min": 0.85,
+    "pair_exact_min": 0.7,
+    "pair_decision_change_min": 0.9,
+    "pair_certificate_decisions_min": 0.85,
+    "pair_causal_paths_min": 0.9,
+    "pair_post_state_paths_min": 0.9
+  }
+}

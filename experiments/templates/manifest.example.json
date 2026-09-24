@@ -1,0 +1,15 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "EXPERIMENT-ID",
+  "version": "0.0.0",
+  "status": "DESIGN",
+  "artifact": {"id": "", "sha256": null, "storage_location": null},
+  "model": null,
+  "seeds": [],
+  "dataset": null,
+  "config": null,
+  "scorer": null,
+  "license": "pending",
+  "claim_scope": "No result claim.",
+  "binding_authority": false
+}

@@ -1,0 +1,28 @@
+{
+  "binding_authority": false,
+  "contextual_mechanism": "DECISIVE_CONTEXT_PRESERVATION",
+  "events_after_disposition_time": "deferred",
+  "invariance_mechanism": "QUEUE_ORDER_AND_ACTOR_RENAME",
+  "pivotal_mechanisms": [
+    "REVOCATION_PROPAGATION",
+    "DELAYED_EVIDENCE",
+    "APPROVAL_WITHDRAWAL",
+    "RESOURCE_CONTENTION",
+    "POLICY_CHANGE",
+    "ROUTING_REJECTION",
+    "JURISDICTION_SHIFT",
+    "CONFLICT_ASSERTION",
+    "MALFORMED_REQUEST",
+    "PRIORITY_RACE",
+    "EVIDENCE_EXPIRY",
+    "UNRESOLVED_APPEAL"
+  ],
+  "protocol_id": "ACTIONNET-DATA-QUAL-005",
+  "scheduler_order": [
+    "time",
+    "priority",
+    "sequence",
+    "event_id"
+  ],
+  "schema_version": "actionnet-event-mechanism-catalog.v1"
+}

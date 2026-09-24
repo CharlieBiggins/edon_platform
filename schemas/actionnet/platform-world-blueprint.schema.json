@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-world-blueprint.schema.json",
+  "title": "ActionNet procedural world blueprint",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "blueprint_id", "version", "blueprint", "adversarial", "protected", "record_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-world-blueprint.v1"},
+    "tenant_id": {"type": "string"},
+    "blueprint_id": {"type": "string"},
+    "version": {"type": "string"},
+    "blueprint": {"type": "object"},
+    "generator_seed": {"type": ["integer", "null"]},
+    "adversarial": {"type": "boolean"},
+    "protected": {"type": "boolean"},
+    "created_by": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

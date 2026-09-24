@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-coverage.schema.json",
+  "title": "Registered ActionNet coverage report",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "registered_universe", "mechanisms", "registered_coverage_score", "claim_boundary", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-coverage-report.v1"},
+    "tenant_id": {"type": "string"},
+    "registered_universe": {"type": "object"},
+    "mechanisms": {"type": "array", "items": {"type": "object"}},
+    "registered_coverage_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "claim_boundary": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-TRANSFER-006-EXPLORATORY",
+  "version": "1.0.0",
+  "status": "READY_FOR_EXPLORATORY_TRANSFER_EXECUTION",
+  "created": "2026-08-15",
+  "artifact": {
+    "id": "CEREBRUM-TRANSFER-006-EXPLORATORY-instrument-v1.0.0",
+    "sha256": "sha256:0f25fd5a50ed21b4a34136edd6fc659dd13a1f5066e24f13d9de09eb968fac1c",
+    "storage_location": "archive://EDON Research/experiments/CEREBRUM-TRANSFER-006-EXPLORATORY/results/instrument_manifest.json"
+  },
+  "runtime": {
+    "sha256": "sha256:eb282ba495c0ea4859fea984966da1356b5354cb60861f7baa567240647136f5",
+    "records": 560,
+    "storage_location": "archive://EDON Research/experiments/CEREBRUM-TRANSFER-006-EXPLORATORY/results/CEREBRUM-TRANSFER-006-EXPLORATORY-runtime.tar.gz"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26081241, 26081242],
+  "dataset": "CEREBRUM-TRANSFER-006-EXPLORATORY-instrument-v1.0.0",
+  "license": "pending",
+  "claim_scope": "Ready exploratory internal synthetic transfer protocol; no prediction, score, or confirmatory claim.",
+  "binding_authority": false
+}

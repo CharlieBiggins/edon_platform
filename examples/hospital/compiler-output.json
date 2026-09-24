@@ -1,0 +1,473 @@
+{
+  "binding_authority": false,
+  "candidates": [
+    {
+      "binding_authority": false,
+      "candidate_id": "candidate-9a696088815c9b22d2cf",
+      "confidence": 0.987,
+      "conflict_ids": [],
+      "facts": [
+        {
+          "agreement_state": "AGREED",
+          "confidence": 0.987,
+          "conflict_ids": [],
+          "observed_layers": [
+            "NORMATIVE",
+            "OPERATIONAL",
+            "BEHAVIORAL"
+          ],
+          "predicate": "schedule",
+          "primitive_type": "POLICY",
+          "selected_value": "weekly",
+          "source_references": [
+            {
+              "locator": "synthetic://ehr/release-config",
+              "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+              "source_id": "ehr-configuration",
+              "version": "2026.08"
+            },
+            {
+              "locator": "synthetic://policy/medication-release",
+              "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+              "source_id": "medication-policy",
+              "version": "2026.1"
+            },
+            {
+              "locator": "synthetic://logs/medication-release",
+              "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+              "source_id": "synthetic-audit-log",
+              "version": "2026-08-01"
+            }
+          ],
+          "statement_ids": [
+            "statement-86f12e0bf5e3f2be26ae",
+            "statement-96511b58bbbbebaaba27",
+            "statement-c1c825efc57dbe91d543"
+          ],
+          "subject": "inventory_audit"
+        }
+      ],
+      "failed_checks": [],
+      "focused_review_required": false,
+      "mechanism": {
+        "actors": [],
+        "approvals": [],
+        "approved": false,
+        "authority": [],
+        "consequences": [],
+        "deadlines": [],
+        "escalations": [],
+        "evidence_requirements": [],
+        "jurisdictions": [],
+        "mechanism_id": "inventory-audit",
+        "metadata": {
+          "compiler_version": "0.1.0",
+          "conflict_count": 0,
+          "fact_count": 1
+        },
+        "policies": [
+          "inventory_audit:schedule:weekly"
+        ],
+        "resources": [],
+        "revocations": [],
+        "risk_class": "LOW",
+        "roles": [],
+        "source_references": [
+          {
+            "locator": "synthetic://ehr/release-config",
+            "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+            "source_id": "ehr-configuration",
+            "version": "2026.08"
+          },
+          {
+            "locator": "synthetic://policy/medication-release",
+            "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+            "source_id": "medication-policy",
+            "version": "2026.1"
+          },
+          {
+            "locator": "synthetic://logs/medication-release",
+            "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+            "source_id": "synthetic-audit-log",
+            "version": "2026-08-01"
+          }
+        ],
+        "version": "0.1.0",
+        "workflow_steps": []
+      },
+      "observed_layers": [
+        "NORMATIVE",
+        "OPERATIONAL",
+        "BEHAVIORAL"
+      ],
+      "promotion_review_required": true,
+      "required_reviewer_role": "INSTITUTIONAL_REVIEWER"
+    },
+    {
+      "binding_authority": false,
+      "candidate_id": "candidate-e68154c86691e96367c5",
+      "confidence": 0.935542,
+      "conflict_ids": [
+        "conflict-a79fc0a577e8a40b7ed1",
+        "conflict-b952cfebaea74a323476"
+      ],
+      "facts": [
+        {
+          "agreement_state": "CONTESTED",
+          "confidence": 0.887333,
+          "conflict_ids": [
+            "conflict-a79fc0a577e8a40b7ed1"
+          ],
+          "observed_layers": [
+            "NORMATIVE",
+            "OPERATIONAL",
+            "BEHAVIORAL"
+          ],
+          "predicate": "authorized_role",
+          "primitive_type": "AUTHORITY",
+          "selected_value": "attending_physician",
+          "source_references": [
+            {
+              "locator": "synthetic://ehr/release-config",
+              "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+              "source_id": "ehr-configuration",
+              "version": "2026.08"
+            },
+            {
+              "locator": "synthetic://policy/medication-release",
+              "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+              "source_id": "medication-policy",
+              "version": "2026.1"
+            },
+            {
+              "locator": "synthetic://logs/medication-release",
+              "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+              "source_id": "synthetic-audit-log",
+              "version": "2026-08-01"
+            }
+          ],
+          "statement_ids": [
+            "statement-02091a339d65a39c13b8",
+            "statement-45eb481fd5fd24f3f898",
+            "statement-a2e290fc68e228db15f5"
+          ],
+          "subject": "medication_release"
+        },
+        {
+          "agreement_state": "CONTESTED",
+          "confidence": 0.880833,
+          "conflict_ids": [
+            "conflict-b952cfebaea74a323476"
+          ],
+          "observed_layers": [
+            "NORMATIVE",
+            "OPERATIONAL",
+            "BEHAVIORAL"
+          ],
+          "predicate": "review_window",
+          "primitive_type": "DEADLINE",
+          "selected_value": "30_minutes",
+          "source_references": [
+            {
+              "locator": "synthetic://ehr/release-config",
+              "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+              "source_id": "ehr-configuration",
+              "version": "2026.08"
+            },
+            {
+              "locator": "synthetic://policy/medication-release",
+              "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+              "source_id": "medication-policy",
+              "version": "2026.1"
+            },
+            {
+              "locator": "synthetic://logs/medication-release",
+              "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+              "source_id": "synthetic-audit-log",
+              "version": "2026-08-01"
+            }
+          ],
+          "statement_ids": [
+            "statement-2c6879829ae07497b469",
+            "statement-3754d78358713b3ca304",
+            "statement-53dfe902bcb8894ef732"
+          ],
+          "subject": "medication_release"
+        },
+        {
+          "agreement_state": "AGREED",
+          "confidence": 0.989167,
+          "conflict_ids": [],
+          "observed_layers": [
+            "NORMATIVE",
+            "OPERATIONAL",
+            "BEHAVIORAL"
+          ],
+          "predicate": "requires",
+          "primitive_type": "EVIDENCE_REQUIREMENT",
+          "selected_value": "allergy_check",
+          "source_references": [
+            {
+              "locator": "synthetic://ehr/release-config",
+              "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+              "source_id": "ehr-configuration",
+              "version": "2026.08"
+            },
+            {
+              "locator": "synthetic://policy/medication-release",
+              "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+              "source_id": "medication-policy",
+              "version": "2026.1"
+            },
+            {
+              "locator": "synthetic://logs/medication-release",
+              "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+              "source_id": "synthetic-audit-log",
+              "version": "2026-08-01"
+            }
+          ],
+          "statement_ids": [
+            "statement-3082e8d245cf8b0fcc40",
+            "statement-902855f1591995825c6f",
+            "statement-a97539b6fa3849e33810"
+          ],
+          "subject": "medication_release"
+        },
+        {
+          "agreement_state": "AGREED",
+          "confidence": 0.984833,
+          "conflict_ids": [],
+          "observed_layers": [
+            "NORMATIVE",
+            "OPERATIONAL",
+            "BEHAVIORAL"
+          ],
+          "predicate": "step_1",
+          "primitive_type": "WORKFLOW_STEP",
+          "selected_value": "clinical_review",
+          "source_references": [
+            {
+              "locator": "synthetic://ehr/release-config",
+              "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+              "source_id": "ehr-configuration",
+              "version": "2026.08"
+            },
+            {
+              "locator": "synthetic://policy/medication-release",
+              "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+              "source_id": "medication-policy",
+              "version": "2026.1"
+            },
+            {
+              "locator": "synthetic://logs/medication-release",
+              "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+              "source_id": "synthetic-audit-log",
+              "version": "2026-08-01"
+            }
+          ],
+          "statement_ids": [
+            "statement-027981922cc7a71cd8e7",
+            "statement-47a12b6abfd6f941494d",
+            "statement-8ffbd5a4d74551650f7b"
+          ],
+          "subject": "medication_release"
+        }
+      ],
+      "failed_checks": [
+        "CONFLICTS_REQUIRE_RESOLUTION",
+        "HIGH_RISK_REVIEW_MANDATORY"
+      ],
+      "focused_review_required": true,
+      "mechanism": {
+        "actors": [],
+        "approvals": [],
+        "approved": false,
+        "authority": [
+          "medication_release:authorized_role:attending_physician"
+        ],
+        "consequences": [],
+        "deadlines": [
+          "medication_release:review_window:30_minutes"
+        ],
+        "escalations": [],
+        "evidence_requirements": [
+          "medication_release:requires:allergy_check"
+        ],
+        "jurisdictions": [],
+        "mechanism_id": "medication-release",
+        "metadata": {
+          "compiler_version": "0.1.0",
+          "conflict_count": 2,
+          "fact_count": 4
+        },
+        "policies": [],
+        "resources": [],
+        "revocations": [],
+        "risk_class": "HIGH",
+        "roles": [],
+        "source_references": [
+          {
+            "locator": "synthetic://ehr/release-config",
+            "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+            "source_id": "ehr-configuration",
+            "version": "2026.08"
+          },
+          {
+            "locator": "synthetic://policy/medication-release",
+            "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+            "source_id": "medication-policy",
+            "version": "2026.1"
+          },
+          {
+            "locator": "synthetic://logs/medication-release",
+            "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+            "source_id": "synthetic-audit-log",
+            "version": "2026-08-01"
+          }
+        ],
+        "version": "0.1.0",
+        "workflow_steps": [
+          "medication_release:step_1:clinical_review"
+        ]
+      },
+      "observed_layers": [
+        "NORMATIVE",
+        "OPERATIONAL",
+        "BEHAVIORAL"
+      ],
+      "promotion_review_required": true,
+      "required_reviewer_role": "DOMAIN_AND_SAFETY_REVIEWER"
+    }
+  ],
+  "claim_boundary": "Deterministic compilation of explicitly structured or EDON-annotated sources into unapproved candidate IR; not validated natural-document extraction or deployment authority.",
+  "compiler_manifest": {
+    "compiled_payload_sha256": "sha256:ea01237e5acd5383c706c1d866e916096ea42808be798c42d5e6402ac2ee3f3a",
+    "deterministic": true,
+    "input_sha256": "sha256:d3544681c62756b6900ccd0cf9b04bd06ba1a9eaeaf601e031e78dd2629eaf63"
+  },
+  "compiler_run_id": "synthetic-hospital-compiler-run-001",
+  "compiler_version": "0.1.0",
+  "conflicts": [
+    {
+      "conflict_id": "conflict-a79fc0a577e8a40b7ed1",
+      "kind": "CROSS_LAYER_MISMATCH",
+      "mechanism_id": "medication-release",
+      "predicate": "authorized_role",
+      "primitive_type": "AUTHORITY",
+      "requires_review": true,
+      "severity": "HIGH",
+      "source_ids": [
+        "ehr-configuration",
+        "medication-policy",
+        "synthetic-audit-log"
+      ],
+      "subject": "medication_release",
+      "values_by_layer": {
+        "BEHAVIORAL": [
+          "pharmacist"
+        ],
+        "NORMATIVE": [
+          "attending_physician"
+        ],
+        "OPERATIONAL": [
+          "attending_physician_or_pharmacist"
+        ]
+      }
+    },
+    {
+      "conflict_id": "conflict-b952cfebaea74a323476",
+      "kind": "CROSS_LAYER_MISMATCH",
+      "mechanism_id": "medication-release",
+      "predicate": "review_window",
+      "primitive_type": "DEADLINE",
+      "requires_review": true,
+      "severity": "MODERATE",
+      "source_ids": [
+        "ehr-configuration",
+        "medication-policy",
+        "synthetic-audit-log"
+      ],
+      "subject": "medication_release",
+      "values_by_layer": {
+        "BEHAVIORAL": [
+          "45_minutes"
+        ],
+        "NORMATIVE": [
+          "30_minutes"
+        ],
+        "OPERATIONAL": [
+          "45_minutes"
+        ]
+      }
+    }
+  ],
+  "extraction_summary": {
+    "conflict_count": 2,
+    "focused_review_count": 1,
+    "mechanism_count": 2,
+    "primitive_count": 15,
+    "source_count": 3
+  },
+  "institution_id": "synthetic-hospital",
+  "institution_version": "0.1.0",
+  "qualification": {
+    "checks": {
+      "all_candidates_unapproved": true,
+      "binding_authority_false": true,
+      "candidates_emitted": true,
+      "conflicts_preserved": true,
+      "focused_review_items_routed": true,
+      "primitives_extracted": true,
+      "source_hashes_valid": true,
+      "sources_present": true
+    },
+    "passed": true,
+    "status": "COMPILER_OUTPUT_QUALIFIED"
+  },
+  "review_queue": [
+    {
+      "candidate_id": "candidate-e68154c86691e96367c5",
+      "conflict_ids": [
+        "conflict-a79fc0a577e8a40b7ed1",
+        "conflict-b952cfebaea74a323476"
+      ],
+      "mechanism_id": "medication-release",
+      "reasons": [
+        "CONFLICTS_REQUIRE_RESOLUTION",
+        "HIGH_RISK_REVIEW_MANDATORY"
+      ],
+      "reviewer_role": "DOMAIN_AND_SAFETY_REVIEWER",
+      "status": "PENDING_AUTHORIZED_REVIEW"
+    }
+  ],
+  "schema_version": "edon-institution-compiler-output.v1",
+  "source_manifest": [
+    {
+      "format": "STRUCTURED_JSON",
+      "kind": "POLICY",
+      "locator": "synthetic://policy/medication-release",
+      "sha256": "sha256:6887bc6a232607d92fb47464df12bb6560ebe4d21929dc8a2ea730ebb4895092",
+      "source_id": "medication-policy",
+      "truth_layer": "NORMATIVE",
+      "version": "2026.1"
+    },
+    {
+      "format": "EDON_ANNOTATED_TEXT",
+      "kind": "SYSTEM_CONFIGURATION",
+      "locator": "synthetic://ehr/release-config",
+      "sha256": "sha256:2bb55d4c3ed9fcf287c3ff65404e4805671117ef03a4aa2c4af3bdc3b0c32b9b",
+      "source_id": "ehr-configuration",
+      "truth_layer": "OPERATIONAL",
+      "version": "2026.08"
+    },
+    {
+      "format": "STRUCTURED_JSON",
+      "kind": "AUDIT_TRACE_SUMMARY",
+      "locator": "synthetic://logs/medication-release",
+      "sha256": "sha256:09d959675a0d2312ed3b34be88ed3ca38b3537d15559b56cac3a7b70033e6155",
+      "source_id": "synthetic-audit-log",
+      "truth_layer": "BEHAVIORAL",
+      "version": "2026-08-01"
+    }
+  ]
+}

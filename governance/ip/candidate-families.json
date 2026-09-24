@@ -1,0 +1,98 @@
+{
+  "schema_version": "edon-ip-candidate-family-registry.v1",
+  "updated": "2026-08-30",
+  "status": "INVENTION_HARVESTING_REQUIRED",
+  "candidate_families": [
+    {
+      "id": "EDON-IP-FAM-001",
+      "name": "Institution Compiler and typed Institutional IR",
+      "disposition": "COUNSEL_REVIEW_CANDIDATE",
+      "implementation_status": "IMPLEMENTED_BOUNDED_INTERNAL",
+      "patentability_determined": false,
+      "prior_art_search_status": "REQUIRED",
+      "ownership_review_status": "REQUIRED",
+      "inventorship_review_status": "REQUIRED",
+      "filing_status": "NOT_FILED",
+      "patent_pending": false,
+      "scientific_result_status": "SEPARATE_BOUNDED_INTERNAL_EVIDENCE",
+      "public_sources": [
+        "docs/architecture/institution-compiler.md",
+        "docs/architecture/institutional-ir.md",
+        "schemas/institution",
+        "src/edon/compiler",
+        "src/edon/ir"
+      ]
+    },
+    {
+      "id": "EDON-IP-FAM-002",
+      "name": "ActionNet governed institutional experience",
+      "disposition": "COUNSEL_REVIEW_CANDIDATE",
+      "implementation_status": "IMPLEMENTED_BOUNDED_INTERNAL",
+      "patentability_determined": false,
+      "prior_art_search_status": "REQUIRED",
+      "ownership_review_status": "REQUIRED",
+      "inventorship_review_status": "REQUIRED",
+      "filing_status": "NOT_FILED",
+      "patent_pending": false,
+      "scientific_result_status": "SEPARATE_BOUNDED_INTERNAL_EVIDENCE",
+      "public_sources": [
+        "docs/architecture/actionnet.md",
+        "product/actionnet-platform",
+        "product/actionnet-learning-network",
+        "src/edon/actionnet",
+        "evaluations/ACTIONNET-PLATFORM-001",
+        "evaluations/ACTIONNET-PLATFORM-002"
+      ]
+    },
+    {
+      "id": "EDON-IP-FAM-003",
+      "name": "Cerebrum System, C1, and Kernel governed operation",
+      "disposition": "COUNSEL_REVIEW_CANDIDATE",
+      "implementation_status": "REFERENCE_SYSTEM_BOUNDARIES_IMPLEMENTED_LEARNED_LOOP_NOT_TESTED",
+      "patentability_determined": false,
+      "prior_art_search_status": "REQUIRED",
+      "ownership_review_status": "REQUIRED",
+      "inventorship_review_status": "REQUIRED",
+      "filing_status": "NOT_FILED",
+      "patent_pending": false,
+      "scientific_result_status": "LEARNED_CLOSED_LOOP_NOT_ESTABLISHED",
+      "public_sources": [
+        "docs/architecture/cerebrum.md",
+        "docs/architecture/cerebrum-system.md",
+        "docs/architecture/c1-model-layer.md",
+        "docs/architecture/kernel-outbox-supervisor.md",
+        "docs/architecture/operations-loop.md",
+        "docs/architecture/institutional-environment-gateway.md",
+        "product/institutional-environment-gateway",
+        "product/cerebrum-system",
+        "schemas/cerebrum",
+        "schemas/provenance/causal-graph.schema.json",
+        "schemas/kernel",
+        "schemas/outbox",
+        "src/edon/cerebrum",
+        "src/edon/kernel",
+        "src/edon/supervisor",
+        "experiments/CEREBRUM-BUILD-001"
+      ]
+    },
+    {
+      "id": "EDON-IP-FAM-004",
+      "name": "Federated institutional coordination",
+      "disposition": "DEFERRED_FOLLOW_ON_REVIEW",
+      "implementation_status": "INTERNAL_REFERENCE_ONLY",
+      "patentability_determined": false,
+      "prior_art_search_status": "REQUIRED_BEFORE_ADVANCEMENT",
+      "ownership_review_status": "REQUIRED_BEFORE_ADVANCEMENT",
+      "inventorship_review_status": "REQUIRED_BEFORE_ADVANCEMENT",
+      "filing_status": "NOT_FILED",
+      "patent_pending": false,
+      "scientific_result_status": "REAL_FEDERATED_OPERATION_NOT_ESTABLISHED",
+      "public_sources": [
+        "docs/architecture/hierarchical-federation.md",
+        "schemas/federation",
+        "src/edon/federation"
+      ]
+    }
+  ],
+  "binding_authority": false
+}

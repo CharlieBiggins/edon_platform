@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-010-protected-prediction.v1",
+  "type": "object",
+  "required": ["case_id", "task", "prediction", "binding_authority"],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^case-[a-f0-9]{16,}$"},
+    "task": {"enum": ["CERTIFICATE", "TRANSITION", "QUEUE_TRACE", "PAIR_CONTRAST"]},
+    "prediction": {"type": "object"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

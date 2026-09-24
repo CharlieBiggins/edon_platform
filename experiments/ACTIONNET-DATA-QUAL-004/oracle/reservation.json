@@ -1,0 +1,43 @@
+{
+  "eventnet_repair_validation_semantic_families": [
+    50,
+    51,
+    52,
+    53
+  ],
+  "eventnet_train_semantic_families": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "future_public_semantic_families": [
+    54,
+    55,
+    56,
+    57
+  ],
+  "predecessor_validation_semantic_families": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "protected_materialized": false,
+  "protected_semantic_families": [
+    58,
+    59,
+    60,
+    61
+  ],
+  "public_materialized": false,
+  "real_institution_materialized": false
+}

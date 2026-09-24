@@ -1,0 +1,12 @@
+# Base runtime dependency lock
+
+The base EDON reference runtime uses the Python standard library only.
+
+Optional CEREBRUM-BUILD-001 GPU dependencies are version-ranged in:
+
+```text
+experiments/CEREBRUM-BUILD-001/requirements-gpu.txt
+```
+
+Freeze a deployment-specific lock after selecting the CUDA, PyTorch, GPU, and
+inference environment. Do not claim reproducibility from this placeholder.

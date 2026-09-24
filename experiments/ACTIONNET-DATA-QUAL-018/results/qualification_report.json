@@ -1,0 +1,253 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:83dc37d75a57a8d96221c0ebec466dfcbbc7a5f801cf4493f6af9321c256a762",
+    "confirmation_generator": {
+      "aggregate_outcome_sha256": "sha256:456c45ae615bc769253182abc8ba924c99236aaf6ce102940972b51567b90eb1",
+      "aggregation_equivalence_checks": 6,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 48,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 8,
+        "ALLOW": 48,
+        "CONTESTED": 5,
+        "DENY": 17,
+        "INVALID": 18
+      },
+      "deferred_event_count_distribution": {
+        "1": 32,
+        "2": 39,
+        "3": 22,
+        "4": 1,
+        "5": 2
+      },
+      "deferred_event_trajectories": 96,
+      "engine_comparisons": 694,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 3,
+        "6": 68,
+        "7": 25
+      },
+      "families": [
+        1020,
+        1021,
+        1022,
+        1023
+      ],
+      "generator_lineage": "generator-172f935812ad3949",
+      "generator_profile": "UNTOUCHED_CONFIRMATION",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 2,
+        "CONFLICT_ASSERTION": 2,
+        "DECISIVE_CONTEXT_PRESERVATION": 8,
+        "DELAYED_EVIDENCE": 3,
+        "EVIDENCE_EXPIRY": 3,
+        "EVIDENCE_RESOURCE_COMPOSITION": 1,
+        "JURISDICTION_CONFLICT_COMPOSITION": 1,
+        "JURISDICTION_SHIFT": 2,
+        "MALFORMED_REQUEST": 2,
+        "POLICY_APPROVAL_COMPOSITION": 1,
+        "POLICY_CHANGE": 2,
+        "PRIORITY_RACE": 3,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 8,
+        "RESOURCE_CONTENTION": 3,
+        "REVOCATION_PROPAGATION": 2,
+        "REVOCATION_RESOURCE_COMPOSITION": 1,
+        "ROUTING_REJECTION": 2,
+        "UNRESOLVED_APPEAL": 2
+      },
+      "multi_actor_trajectories": 96,
+      "mutation_path_count_distribution": {
+        "2": 63,
+        "3": 29,
+        "4": 4
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 8,
+        "INVARIANCE": 8,
+        "PIVOTAL": 32
+      },
+      "pivotal_pair_changes": 32,
+      "query_time_distribution": {
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 18,
+        "12": 18
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 96,
+      "transition_disagreements": 0
+    },
+    "confirmation_state_pair_count": 24,
+    "development_generator": {
+      "aggregate_outcome_sha256": "sha256:db66673254d5091827f95311abfe1c64806ad255a8971da2e3abbb65405c5c77",
+      "aggregation_equivalence_checks": 2,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 16,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 3,
+        "ALLOW": 16,
+        "CONTESTED": 2,
+        "DENY": 6,
+        "INVALID": 5
+      },
+      "deferred_event_count_distribution": {
+        "1": 10,
+        "2": 9,
+        "3": 12,
+        "5": 1
+      },
+      "deferred_event_trajectories": 32,
+      "engine_comparisons": 229,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 1,
+        "6": 25,
+        "7": 6
+      },
+      "families": [
+        1000,
+        1001
+      ],
+      "generator_lineage": "generator-51e3eea64ce55a05",
+      "generator_profile": "DEVELOPMENT_SELECTION",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 1,
+        "CONFLICT_ASSERTION": 1,
+        "DECISIVE_CONTEXT_PRESERVATION": 2,
+        "DELAYED_EVIDENCE": 1,
+        "EVIDENCE_EXPIRY": 1,
+        "JURISDICTION_SHIFT": 1,
+        "MALFORMED_REQUEST": 1,
+        "POLICY_CHANGE": 1,
+        "PRIORITY_RACE": 1,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 2,
+        "RESOURCE_CONTENTION": 1,
+        "REVOCATION_PROPAGATION": 1,
+        "ROUTING_REJECTION": 1,
+        "UNRESOLVED_APPEAL": 1
+      },
+      "multi_actor_trajectories": 32,
+      "mutation_path_count_distribution": {
+        "2": 20,
+        "3": 11,
+        "4": 1
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 2,
+        "INVARIANCE": 2,
+        "PIVOTAL": 12
+      },
+      "pivotal_pair_changes": 12,
+      "query_time_distribution": {
+        "8": 8,
+        "9": 6,
+        "10": 6,
+        "11": 6,
+        "12": 6
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 32,
+      "transition_disagreements": 0
+    },
+    "development_selection": {
+      "case_ids": 64,
+      "pair_ids": 16,
+      "profile_counts": {
+        "DEVELOPMENT_SELECTION": 64
+      },
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_VERIFIED_DEVELOPMENT_REGISTER": 64
+      },
+      "source_counts": {
+        "FRESH": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 16,
+        "PAIR_CONTRAST": 16,
+        "QUEUE_TRACE": 16,
+        "TRANSITION": 16
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    },
+    "development_state_pair_count": 8,
+    "untouched_confirmation": {
+      "case_ids": 192,
+      "pair_ids": 48,
+      "profile_counts": {
+        "UNTOUCHED_CONFIRMATION": 192
+      },
+      "records": 192,
+      "renderer_counts": {
+        "HELDOUT_VERIFIED_CONFIRMATION_DOCKET": 192
+      },
+      "source_counts": {
+        "FRESH": 192
+      },
+      "task_counts": {
+        "CERTIFICATE": 48,
+        "PAIR_CONTRAST": 48,
+        "QUEUE_TRACE": 48,
+        "TRANSITION": 48
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh project-authored synthetic development and sealed confirmation for target-blind verified-hybrid integration only; no learned-capability, independent-transfer, production, authority, or IGI claim.",
+  "control_count": 33,
+  "controls": {
+    "all_pivotal_mechanisms_in_confirmation": true,
+    "all_records_fresh": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "confirmation_single_use": true,
+    "confirmation_state_pair_count_24": true,
+    "confirmation_task_balance": true,
+    "decision_clock_exact": true,
+    "development_confirmation_case_ids_disjoint": true,
+    "development_confirmation_families_disjoint": true,
+    "development_confirmation_pair_ids_disjoint": true,
+    "development_contains_all_targeted_mechanisms": true,
+    "development_delayed_evidence_both_sides": true,
+    "development_state_pair_count_8": true,
+    "development_task_balance": true,
+    "event_operands_visible": true,
+    "fresh_seed_registration": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "lineage_ids_unique": true,
+    "model_and_hybrid_scored_separately": true,
+    "model_inputs_only_observation_query": true,
+    "no_training_split": true,
+    "prior_validation_families_disjoint": true,
+    "prior_validation_renderers_disjoint": true,
+    "queue_integrity_exact": true,
+    "registered_counts": true,
+    "registered_family_allocation": true,
+    "reserved_future_families_unmaterialized": true,
+    "target_blind_verification_required": true,
+    "transfer_authorization_disabled": true,
+    "transition_engines_exact": true,
+    "verifier_inputs_constructible_without_target": true
+  },
+  "controls_passed": 33,
+  "dataset_id": "ACTIONNET-VERIFIED-HYBRID-v18.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-018",
+  "result_id": "ACTIONNET-DATA-QUAL-018-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v18",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV018_VERIFIED_HYBRID"
+}

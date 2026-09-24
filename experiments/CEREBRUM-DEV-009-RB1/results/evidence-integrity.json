@@ -1,0 +1,35 @@
+{
+  "schema_version": "cerebrum-dev009-rb1-evidence-integrity.v1",
+  "protocol_id": "CEREBRUM-DEV-009-RB1",
+  "verified": "2026-09-04",
+  "archive": {
+    "filename": "rb1-frozen-result-2026-09-04.tar.gz",
+    "sha256": "sha256:8631d51a382adf29abaed01759e5e5aa1db09f78ecd14ba24cc6f36fd1457299",
+    "bytes": 1173324
+  },
+  "config_sha256": "sha256:2ebdcb8aed9f21dd90f2070ce0294651c11371af86011d0c3207da22006a40a2",
+  "train_sha256": "sha256:9dd29e2bbdfcae4cbdcdda28f57b4ab35fc0b9a616ac889a52b339ca3564b8bc",
+  "validation_sha256": "sha256:bec1faa6d76a7ab11facf8e8f3cf72674406dee123e9947c237ca18b4806e361",
+  "summary_sha256": "sha256:35e6a0b54fd1a5d885e741eea5163c688198836c7e57703d78d295826711d60b",
+  "seeds": {
+    "26082491": {
+      "training_manifest_sha256": "sha256:d75ca424fcceca9cbae06b3c8a56f0436cc111132cc619462621a436ecaf6dbf",
+      "training_manifest_matches_prediction_freeze": true,
+      "predictions_sha256": "sha256:b8e3593ee6252a9b2adb6bcbb8400c49066affdc69c07d89393e1d9f0a4acee8",
+      "predictions_match_prediction_freeze": true,
+      "evaluation_sha256": "sha256:fd354e3c28a7e847ed86d2e61ffb2f706637a6402a0dad6ade92faaece50f224"
+    },
+    "26082492": {
+      "training_manifest_sha256": "sha256:5b8266a3bd62869838ac9dc7d9dda250c4b8297d4cc2adc9f55428de7dd74a51",
+      "training_manifest_matches_prediction_freeze": true,
+      "predictions_sha256": "sha256:de98afd7d18153acb1993a32b863080c2665379af44d30d538e8ee83c58bfe11",
+      "predictions_match_prediction_freeze": true,
+      "evaluation_sha256": "sha256:f0cb0852f10171f1ea08d731169f0b4516559c4ccf4013f19c42d5f2155ce8a2"
+    }
+  },
+  "common_base_model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "common_validation_instrument": true,
+  "all_registered_predictions_complete": true,
+  "all_hash_checks_pass": true,
+  "binding_authority": false
+}

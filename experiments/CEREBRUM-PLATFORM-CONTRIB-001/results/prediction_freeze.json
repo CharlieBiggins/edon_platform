@@ -1,0 +1,38 @@
+{
+  "all_predictions_frozen_before_scoring": true,
+  "binding_authority": false,
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "predictions": [
+    {
+      "condition": "control",
+      "labels_opened": false,
+      "path": "predictions/control-seed-26082341.jsonl",
+      "prediction_sha256": "sha256:f002f0f2782f685243cb97ca201522fc3d28dd1fc4309d3b2528d3b4770bcd6a",
+      "seed": 26082341
+    },
+    {
+      "condition": "control",
+      "labels_opened": false,
+      "path": "predictions/control-seed-26082342.jsonl",
+      "prediction_sha256": "sha256:f002f0f2782f685243cb97ca201522fc3d28dd1fc4309d3b2528d3b4770bcd6a",
+      "seed": 26082342
+    },
+    {
+      "condition": "platform002",
+      "labels_opened": false,
+      "path": "predictions/platform002-seed-26082341.jsonl",
+      "prediction_sha256": "sha256:0d08980fe134a74e19205fa5747c98746e21658351f2c41ecf153018999742ed",
+      "seed": 26082341
+    },
+    {
+      "condition": "platform002",
+      "labels_opened": false,
+      "path": "predictions/platform002-seed-26082342.jsonl",
+      "prediction_sha256": "sha256:0d08980fe134a74e19205fa5747c98746e21658351f2c41ecf153018999742ed",
+      "seed": 26082342
+    }
+  ],
+  "prompt_overlap_count": 0,
+  "protected_inputs_sha256": "sha256:613ec9149aa752bb37eb6aa91083e9018e090e95e49b7fd2ab18de0f77a9e13c",
+  "schema_version": "cerebrum-platform-contrib-prediction-freeze.v1"
+}

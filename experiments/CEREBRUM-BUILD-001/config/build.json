@@ -1,0 +1,43 @@
+{
+  "schema_version": "cerebrum-build-001-config.v1",
+  "program_id": "CEREBRUM-BUILD-001",
+  "mode": "EXPLORATORY_ENGINEERING",
+  "status": "ENGINEERING_SHELL_READY_MODEL_EXECUTION_NOT_RUN",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_method": "QLoRA",
+  "runtime": {
+    "provider": "qwen-transformers",
+    "mode": "SHADOW",
+    "deterministic_decoding": true,
+    "fail_closed_to_abstain": true,
+    "model_lineage_required": true,
+    "kernel_authorization_required_for_any_commit": true,
+    "binding_authority": false
+  },
+  "training": {
+    "started": false,
+    "training_release_required": true,
+    "protected_labels_allowed": false,
+    "training_ineligible_records_allowed": false,
+    "real_institution_raw_data_allowed": false,
+    "artifact_namespace": "models/cerebrum-build-001",
+    "registered_seed": null
+  },
+  "research_separation": {
+    "rb1_required_for_build": false,
+    "transfer008_required_for_build": false,
+    "may_modify_rb1": false,
+    "may_modify_transfer008": false,
+    "may_use_transfer008_material": false,
+    "confirmatory_claims_enabled": false
+  },
+  "benchmark": "config/benchmark.json",
+  "deployment": {
+    "internal_shadow_only": true,
+    "direct_tool_execution": false,
+    "automatic_kernel_token_issue": false,
+    "production_authorized": false,
+    "external_pilot_authorized": false
+  },
+  "binding_authority": false
+}

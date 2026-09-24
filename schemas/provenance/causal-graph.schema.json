@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/provenance/causal-graph.schema.json",
+  "title": "Append-only Cerebrum System causal/provenance graph",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "world_id", "nodes", "edges",
+    "causal_claim_boundary", "binding_authority", "graph_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-causal-provenance-graph.v1"},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "nodes": {"type": "array", "items": {"$ref": "#/$defs/node"}},
+    "edges": {"type": "array", "items": {"$ref": "#/$defs/edge"}},
+    "causal_claim_boundary": {"type": "string", "minLength": 1},
+    "binding_authority": {"const": false},
+    "graph_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "$defs": {
+    "node": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "node_id", "tenant_id", "world_id", "node_type", "payload_sha256", "occurred_at", "available_to_controller_at", "metadata", "binding_authority", "node_sha256"],
+      "properties": {
+        "schema_version": {"const": "edon-causal-provenance-node.v1"},
+        "node_id": {"type": "string", "minLength": 1},
+        "tenant_id": {"type": "string", "minLength": 1},
+        "world_id": {"type": "string", "minLength": 1},
+        "node_type": {"enum": ["SOURCE", "STATE_ASSERTION", "STATE_PROJECTION", "C1_INFERENCE", "PLAN", "OPTIMIZATION_CANDIDATE", "AUTHORIZATION", "COMMIT", "OUTCOME", "ACTIONNET_EXPERIENCE", "ARTIFACT"]},
+        "payload_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "occurred_at": {"type": "string", "format": "date-time"},
+        "available_to_controller_at": {"type": "string", "format": "date-time"},
+        "metadata": {"type": "object"},
+        "binding_authority": {"const": false},
+        "node_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_version", "edge_id", "tenant_id", "world_id", "source_node_id", "target_node_id", "relation", "evidence_status", "evidence_refs", "recorded_at", "binding_authority", "edge_sha256"],
+      "properties": {
+        "schema_version": {"const": "edon-causal-provenance-edge.v1"},
+        "edge_id": {"type": "string", "minLength": 1},
+        "tenant_id": {"type": "string", "minLength": 1},
+        "world_id": {"type": "string", "minLength": 1},
+        "source_node_id": {"type": "string", "minLength": 1},
+        "target_node_id": {"type": "string", "minLength": 1},
+        "relation": {"enum": ["DERIVED_FROM", "INFORMED", "PROPOSED", "OPTIMIZED", "AUTHORIZED", "COMMITTED", "RESULTED_IN", "CAPTURED_AS", "CONTESTS"]},
+        "evidence_status": {"enum": ["DECLARED", "OBSERVED_ORDER", "INTERVENTION_VERIFIED", "CONTESTED"]},
+        "evidence_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "recorded_at": {"type": "string", "format": "date-time"},
+        "binding_authority": {"const": false},
+        "edge_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    }
+  }
+}

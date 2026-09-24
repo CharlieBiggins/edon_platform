@@ -1,0 +1,38 @@
+{
+  "schema_version": "edon-ip-policy.v1",
+  "updated": "2026-08-29",
+  "status": "INTERNAL_PROCESS_READY_COUNSEL_REVIEW_REQUIRED",
+  "legal_opinion": false,
+  "patent_filing_verified": false,
+  "patent_pending_language_authorized": false,
+  "registered_trademark_language_authorized": false,
+  "scientific_claims_changed": false,
+  "public_repository_rules": {
+    "confidential_invention_disclosures_allowed": false,
+    "attorney_client_communications_allowed": false,
+    "trade_secret_values_allowed": false,
+    "signed_assignments_allowed": false,
+    "personal_filing_data_allowed": false,
+    "protected_benchmark_contents_allowed": false,
+    "sanitized_status_and_hashes_allowed_after_review": true
+  },
+  "required_release_gates": [
+    "DISCLOSURE_INVENTORY_COMPLETE",
+    "AFFECTED_FAMILIES_IDENTIFIED",
+    "COUNSEL_DISPOSITION_RECORDED",
+    "FILING_SCOPE_OR_PUBLICATION_DECISION_RECORDED",
+    "TRADE_SECRET_REVIEW_COMPLETE",
+    "INVENTORSHIP_AND_OWNERSHIP_REVIEW_COMPLETE",
+    "LICENSE_AND_DATA_RIGHTS_REVIEW_COMPLETE",
+    "TRADEMARK_REVIEW_COMPLETE",
+    "SCIENTIFIC_CLAIM_REVIEW_COMPLETE",
+    "PRIVACY_SECURITY_AND_PARTNER_REVIEW_COMPLETE"
+  ],
+  "official_guidance": [
+    "https://www.uspto.gov/patents/basics/apply/provisional-application",
+    "https://www.uspto.gov/web/offices/pac/mpep/s2106.html",
+    "https://www.uspto.gov/trademarks/basics/what-trademark",
+    "https://www.uspto.gov/ip-policy/trade-secret-policy"
+  ],
+  "binding_authority": false
+}

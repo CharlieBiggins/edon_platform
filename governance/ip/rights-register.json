@@ -1,0 +1,21 @@
+{
+  "schema_version": "edon-ip-rights-audit.v1",
+  "updated": "2026-08-29",
+  "status": "AUDIT_REQUIRED",
+  "contains_personal_or_signed_records": false,
+  "audit_areas": {
+    "legal_entity_and_owner_identity": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "founder_assignments": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "employee_assignments": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "contractor_assignments": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "advisor_and_joint_development_terms": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "funding_sponsor_and_university_obligations": "NOT_VERIFIED_IN_PUBLIC_RECORD",
+    "software_bill_of_materials": "PARTIAL_REPOSITORY_METADATA_ONLY",
+    "model_and_weight_licenses": "REGISTRATION_REQUIRED_PER_ARTIFACT",
+    "dataset_and_source_rights": "REGISTRATION_REQUIRED_PER_ARTIFACT",
+    "customer_data_and_derived_learning_terms": "TEMPLATE_AND_COUNSEL_REVIEW_REQUIRED",
+    "copyright_registration_strategy": "NOT_REVIEWED"
+  },
+  "filing_ownership_gate_passed": false,
+  "binding_authority": false
+}

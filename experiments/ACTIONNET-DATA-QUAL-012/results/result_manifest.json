@@ -1,0 +1,16 @@
+{
+  "artifacts": {
+    "dataset/focused_validation.jsonl": "sha256:f7111c394be05c9b5555dc131eb7d73724f92509b333e925b8526ee956f6c9c8",
+    "dataset/train.jsonl": "sha256:0f1c18eb9dd139fefa10c88951ab91a26433487e9818e03eb13935056dffaba2",
+    "lineage/lineages.json": "sha256:cf40e221542280f307def590f2043bb912ec188961aa7ceb0c37a1b403b2b849",
+    "oracle/canonical_trajectories.jsonl": "sha256:fa296929367749a93b3e3a51413ee0c11a6a5b589eb11f9bd5b0693a211a1871",
+    "oracle/reservation.json": "sha256:e681d558eeb43b7ca76289fd770e1ffc0eaf7fbffb0b4af8a77e0f07734a97b9",
+    "results/qualification_report.json": "sha256:5ff1a34d6d859635405569a4a22ed456f8ef1ac8f8660758031d2a8b0e7e40f9"
+  },
+  "claim_boundary": "Fresh-lineage project-authored synthetic resolved/unresolved appeal calibration data only; no full regression, independent transfer, real-institution, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-012",
+  "result_hash": "sha256:8c29758ff30418e38374fa055872e3ffe54374ac164f11fd062805d1aac70687",
+  "result_id": "ACTIONNET-DATA-QUAL-012-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV012_BALANCE_CONTINUATION"
+}

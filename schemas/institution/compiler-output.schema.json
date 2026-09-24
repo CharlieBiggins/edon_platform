@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/institution/compiler-output.schema.json",
+  "title": "EDON Institution Compiler output",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "compiler_version",
+    "compiler_run_id",
+    "institution_id",
+    "institution_version",
+    "source_manifest",
+    "extraction_summary",
+    "candidates",
+    "conflicts",
+    "review_queue",
+    "qualification",
+    "compiler_manifest",
+    "binding_authority",
+    "claim_boundary"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-institution-compiler-output.v1"},
+    "compiler_version": {"type": "string"},
+    "compiler_run_id": {"type": "string"},
+    "institution_id": {"type": "string"},
+    "institution_version": {"type": "string"},
+    "source_manifest": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "extraction_summary": {"type": "object"},
+    "candidates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "candidate_id",
+          "mechanism",
+          "facts",
+          "focused_review_required",
+          "promotion_review_required",
+          "binding_authority"
+        ],
+        "properties": {
+          "candidate_id": {"type": "string"},
+          "mechanism": {"$ref": "mechanism.schema.json"},
+          "facts": {"type": "array"},
+          "observed_layers": {"type": "array", "items": {"type": "string"}},
+          "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+          "conflict_ids": {"type": "array", "items": {"type": "string"}},
+          "focused_review_required": {"type": "boolean"},
+          "promotion_review_required": {"const": true},
+          "required_reviewer_role": {"type": "string"},
+          "failed_checks": {"type": "array", "items": {"type": "string"}},
+          "binding_authority": {"const": false}
+        },
+        "additionalProperties": false
+      }
+    },
+    "conflicts": {"type": "array", "items": {"type": "object"}},
+    "review_queue": {"type": "array", "items": {"type": "object"}},
+    "qualification": {"type": "object"},
+    "compiler_manifest": {"type": "object"},
+    "binding_authority": {"const": false},
+    "claim_boundary": {"type": "string"}
+  },
+  "additionalProperties": false
+}

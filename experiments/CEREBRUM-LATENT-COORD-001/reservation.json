@@ -1,0 +1,37 @@
+{
+  "schema_version": "cerebrum-latent-coord-001-reservation.v1",
+  "protocol_id": "CEREBRUM-LATENT-COORD-001",
+  "reserved_on": "2026-08-30",
+  "candidate": {
+    "model_family": null,
+    "base_revision": null,
+    "seed_ids": [],
+    "model_hashes": [],
+    "state_projector_hash": null,
+    "prompt_hash": null,
+    "parser_hash": null,
+    "frozen": false
+  },
+  "instrument": {
+    "case_count": 480,
+    "pair_count": 240,
+    "institution_count": null,
+    "generator_seed_commitment": null,
+    "generator_source_commitment": null,
+    "oracle_source_commitment": null,
+    "input_commitment": null,
+    "label_commitment": null,
+    "overlap_audit_commitment": null,
+    "custodian_commitment": null
+  },
+  "cases_materialized": false,
+  "labels_materialized": false,
+  "generator_materialized": false,
+  "oracle_materialized": false,
+  "runtime_materialized": false,
+  "predictions_materialized": false,
+  "scorer_materialized": false,
+  "score_materialized": false,
+  "score_authorized": false,
+  "binding_authority": false
+}

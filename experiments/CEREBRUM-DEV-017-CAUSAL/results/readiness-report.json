@@ -1,0 +1,158 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Complete-exposure causal-chain repair readiness only; no learned checkpoint, confirmation, seed reproducibility, transfer, production, authority, or IGI result.",
+  "config_sha256": "sha256:90951f807da0a96d980c123a47855dbdd011335e1d41c88ac17934a0b57edfae",
+  "core_control_count": 41,
+  "core_controls": {
+    "all_training_records_fresh": true,
+    "complete_causal_chain_per_pair": true,
+    "confirmation_count_192": true,
+    "confirmation_rules_ceiling_passes_26": true,
+    "confirmation_single_use": true,
+    "confirmation_task_balance": true,
+    "curriculum_order_preserved": true,
+    "delayed_evidence_certificate_balance": true,
+    "deterministic_selection_ranking": true,
+    "development_count_64": true,
+    "development_rules_ceiling_passes_26": true,
+    "development_task_balance": true,
+    "effective_batch_16": true,
+    "fresh_continuation_seed": true,
+    "frozen_base_revision": true,
+    "full_regression_confirmation": true,
+    "low_continuation_learning_rate": true,
+    "mutation_locality_targets": true,
+    "one_complete_registered_epoch": true,
+    "operator_reported_dev015_hold_frozen": true,
+    "operator_reported_dev016_confirmation_sealed": true,
+    "operator_reported_dev016_hold_frozen": true,
+    "operator_reported_dev016_underexposure_frozen": true,
+    "operator_reported_shared_failure_signature": true,
+    "previous_validation_excluded_from_training": true,
+    "qualified_source_all_controls": true,
+    "registered_24_optimizer_steps": true,
+    "registered_checkpoints_12_and_24": true,
+    "registered_exposure_count_384": true,
+    "registered_protocol_identity": true,
+    "registered_training_parent_hashes": true,
+    "registered_training_parent_identity": true,
+    "registered_training_task_mix": true,
+    "splits_case_disjoint": true,
+    "splits_pair_disjoint": true,
+    "targeted_mechanism_pair_allocation": true,
+    "three_training_renderers": true,
+    "train_count_384": true,
+    "transfer_authorization_disabled": true,
+    "transition_and_queue_trace_emphasized": true,
+    "two_registered_candidates": true
+  },
+  "core_controls_passed": 41,
+  "expected_confirmation_predictions_if_selected": 192,
+  "expected_development_predictions": 128,
+  "expected_effective_sample_exposures": 384,
+  "expected_full_dataset_exposure_fraction": 1.0,
+  "expected_optimizer_steps": 24,
+  "full_regression_confirmation": true,
+  "parent_control_count": 16,
+  "parent_controls": {
+    "predecessor_candidate_prediction_hashes": false,
+    "predecessor_candidate_predictions_present": false,
+    "predecessor_case_level_audit_complete": false,
+    "predecessor_case_level_failure_signature": false,
+    "predecessor_checkpoint_change_count": false,
+    "predecessor_development_input_present": false,
+    "predecessor_result_confirmation_sealed": false,
+    "predecessor_selection_failed_closed": false,
+    "training_parent_adapter_hash": false,
+    "training_parent_adapter_present": false,
+    "training_parent_manifest_identity": false,
+    "training_parent_manifest_present": false,
+    "training_parent_predictions_hash": false,
+    "training_parent_predictions_present": false,
+    "training_parent_result_confirmation_sealed": false,
+    "training_parent_selection_failed_closed": false
+  },
+  "parent_controls_passed": 0,
+  "prepared_hashes": {
+    "development_selection": "sha256:d2d7261e0292f8e1ed242b71db83fcd75c09570cc4495c72c352c56b526aa9d8",
+    "train": "sha256:022236c8d7b5173ec5f03632b09342c33bbbd0109fb21f414c7c123a8f3582d6",
+    "untouched_confirmation": "sha256:aee628b078fdede15789745ac3532dacbbbaff905c47e57e6708b4017846c5db"
+  },
+  "protocol_id": "CEREBRUM-DEV-017-CAUSAL",
+  "public_scored": false,
+  "schema_version": "cerebrum-dev017-causal-readiness.v1",
+  "splits": {
+    "development_selection": {
+      "case_ids": 64,
+      "pair_ids": 16,
+      "profile_counts": {
+        "DEVELOPMENT_SELECTION": 64
+      },
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_COMPLETE_EXPOSURE_SELECTION_REGISTER": 64
+      },
+      "source_counts": {
+        "FRESH": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 16,
+        "PAIR_CONTRAST": 16,
+        "QUEUE_TRACE": 16,
+        "TRANSITION": 16
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    },
+    "train": {
+      "case_ids": 384,
+      "pair_ids": 48,
+      "profile_counts": {
+        "CAUSAL_CHAIN_CURRICULUM": 384
+      },
+      "records": 384,
+      "renderer_counts": {
+        "CAUSAL_EVENT_LEDGER": 152,
+        "DECISION_BOUNDARY_MEMO": 144,
+        "MUTATION_LOCALITY_PACKET": 88
+      },
+      "source_counts": {
+        "FRESH": 384
+      },
+      "task_counts": {
+        "CERTIFICATE": 96,
+        "PAIR_CONTRAST": 48,
+        "QUEUE_ORDER": 24,
+        "QUEUE_PARTITION": 24,
+        "QUEUE_TRACE": 96,
+        "TRANSITION": 96
+      },
+      "weight_max": 25.2,
+      "weight_min": 9.2
+    },
+    "untouched_confirmation": {
+      "case_ids": 192,
+      "pair_ids": 48,
+      "profile_counts": {
+        "UNTOUCHED_CONFIRMATION": 192
+      },
+      "records": 192,
+      "renderer_counts": {
+        "HELDOUT_COMPLETE_EXPOSURE_CONFIRMATION_DOCKET": 192
+      },
+      "source_counts": {
+        "FRESH": 192
+      },
+      "task_counts": {
+        "CERTIFICATE": 48,
+        "PAIR_CONTRAST": 48,
+        "QUEUE_TRACE": 48,
+        "TRANSITION": 48
+      },
+      "weight_max": 24.0,
+      "weight_min": 3.0
+    }
+  },
+  "status": "READY_PENDING_DEV015_CHECKPOINT12_AND_DEV016_AUDIT_IMPORT",
+  "transfer_authorized": false
+}

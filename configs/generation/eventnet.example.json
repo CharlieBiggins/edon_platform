@@ -1,0 +1,6 @@
+{
+  "ordering": ["time", "priority", "sequence", "event_id"],
+  "defer_after_query_time": true,
+  "pair_classes": ["PIVOTAL", "INVARIANCE", "CONTEXTUAL"],
+  "independent_reference_execution_required": true
+}

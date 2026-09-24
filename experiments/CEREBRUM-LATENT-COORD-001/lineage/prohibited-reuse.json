@@ -1,0 +1,38 @@
+{
+  "schema_version": "cerebrum-latent-coord-001-prohibited-reuse.v1",
+  "protocol_id": "CEREBRUM-LATENT-COORD-001",
+  "prohibited_case_sources": [
+    "ACTIONNET-DATA-QUAL-001",
+    "ACTIONNET-DATA-QUAL-002",
+    "ACTIONNET-DATA-QUAL-003",
+    "ACTIONNET-DATA-QUAL-004",
+    "ACTIONNET-DATA-QUAL-005",
+    "ACTIONNET-DATA-QUAL-006",
+    "ACTIONNET-DATA-QUAL-007",
+    "ACTIONNET-DATA-QUAL-008",
+    "ACTIONNET-DATA-QUAL-009",
+    "CEREBRUM-TRANSFER-003",
+    "CEREBRUM-TRANSFER-005",
+    "CEREBRUM-TRANSFER-006-EXPLORATORY",
+    "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC",
+    "CEREBRUM-TRANSFER-008"
+  ],
+  "prohibited_protected_reuse": [
+    "case_id",
+    "institution_identity",
+    "entity_identity",
+    "causal_graph",
+    "exact_prompt",
+    "normalized_prompt",
+    "renderer",
+    "timing_profile",
+    "generator_source",
+    "oracle_source",
+    "prediction",
+    "label",
+    "threshold_tuning",
+    "case_specific_parser_repair"
+  ],
+  "action_on_overlap": "ABORT_AND_RESERVE_NEW_PROTECTED_IDENTITY",
+  "binding_authority": false
+}

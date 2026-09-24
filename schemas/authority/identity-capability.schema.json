@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/authority/identity-capability.schema.json",
+  "title": "Identity and capability registry record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "record_id", "tenant_id", "institution_id", "subject_id",
+    "subject_type", "identity_status", "credential_refs", "capabilities",
+    "effective_from", "recorded_at", "record_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-identity-capability.v1"},
+    "record_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "subject_id": {"type": "string", "minLength": 1},
+    "subject_type": {"enum": ["HUMAN", "ORGANIZATION", "SERVICE", "AGENT", "ROBOT", "SYSTEM"]},
+    "identity_status": {"enum": ["PENDING", "VERIFIED", "SUSPENDED", "REVOKED", "EXPIRED"]},
+    "credential_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capability_id", "action_type", "scope", "status", "preconditions"],
+        "properties": {
+          "capability_id": {"type": "string", "minLength": 1},
+          "action_type": {"type": "string", "minLength": 1},
+          "scope": {"type": "object"},
+          "status": {"enum": ["AVAILABLE", "DEGRADED", "UNAVAILABLE", "SUSPENDED"]},
+          "preconditions": {"type": "array", "items": {"type": "object"}},
+          "capacity": {"type": "object"},
+          "reliability": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "effective_from": {"type": "string", "format": "date-time"},
+    "effective_until": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

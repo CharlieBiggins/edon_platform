@@ -1,0 +1,20 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-018",
+  "version": "1.0.0",
+  "created": "2026-09-06",
+  "title": "Fresh verified-hybrid evaluation data qualification",
+  "status": "READY_FOR_CEREBRUM_DEV018_VERIFIED_HYBRID",
+  "result_id": "ACTIONNET-DATA-QUAL-018-result-v1.0.0",
+  "dataset_id": "ACTIONNET-VERIFIED-HYBRID-v18.0.0",
+  "training_records": 0,
+  "development_records": 64,
+  "confirmation_records": 192,
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-018-result-v1.0.0",
+    "sha256": "sha256:5a5b617a1e39f99aebc817bb75b34087f5e7f09504f4ec64340b8b94aed45a27",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false,
+  "transfer_authorized": false
+}

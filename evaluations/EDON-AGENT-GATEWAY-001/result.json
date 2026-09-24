@@ -1,0 +1,31 @@
+{
+  "binding_authority": false,
+  "check_count": 19,
+  "checks_passed": 19,
+  "claim_scope": "Internal protocol normalization, custody, tenancy, and authority-boundary evidence only",
+  "evaluation_id": "EDON-AGENT-GATEWAY-001",
+  "gates": {
+    "a2a_version_pinned": true,
+    "audit_chain_valid": true,
+    "authority_smuggling_rejected": true,
+    "connector_registered_disabled": true,
+    "delivery_worker_disabled": true,
+    "disabled_connector_rejected": true,
+    "enablement_requires_recorded_review": true,
+    "fhir_writes_rejected": true,
+    "gateway_has_no_direct_execution": true,
+    "idempotency_rebinding_rejected": true,
+    "idempotent_replay_is_stable": true,
+    "ingress_is_non_binding": true,
+    "ingress_is_not_execution": true,
+    "ingress_is_shadow_only": true,
+    "mcp_version_pinned": true,
+    "message_records_immutable": true,
+    "telemetry_excludes_message_content": true,
+    "tenant_isolation": true,
+    "vendor_profiles_are_not_certification_claims": true
+  },
+  "production_ready": false,
+  "schema_version": "edon-agent-gateway-001-evaluation.v1",
+  "status": "PASS"
+}

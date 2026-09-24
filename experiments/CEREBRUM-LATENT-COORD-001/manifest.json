@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-LATENT-COORD-001",
+  "version": "1.0.0",
+  "status": "SHELL_READY_INSTRUMENT_AND_CANDIDATE_UNMATERIALIZED",
+  "created": "2026-08-30",
+  "artifact": {
+    "id": "CEREBRUM-LATENT-COORD-001-shell-v1.0.0",
+    "sha256": "sha256:44f7ca1329448ccd51f2b2ca52687d1d328c89147218667f7ca22d210e34a1b0",
+    "storage_location": "experiments/CEREBRUM-LATENT-COORD-001/results/readiness_report.json"
+  },
+  "model": "Unfrozen two-seed Cerebrum candidate",
+  "seeds": [],
+  "dataset": "Unmaterialized independently custodied 480-case synthetic coordination instrument",
+  "config": "config/gates.json",
+  "scorer": null,
+  "cases_materialized": false,
+  "labels_materialized": false,
+  "candidate_frozen": false,
+  "predictions_materialized": false,
+  "score_authorized": false,
+  "license": "pending independent protected instrument construction",
+  "claim_scope": "Protocol shell, state representation, output contract, and frozen evaluation design only; no detector, candidate, protected instrument, prediction, score, or capability result.",
+  "binding_authority": false
+}

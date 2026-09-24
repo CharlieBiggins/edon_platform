@@ -1,0 +1,23 @@
+{
+  "binding_authority": false,
+  "condition_counts": {
+    "A_RAW": 32,
+    "B_GOLD_TYPED_EVENTS": 32,
+    "C_GOLD_EVENT_ORDER": 32,
+    "D_GOLD_PREDECISION_STATE": 32,
+    "E_GOLD_DECISION": 32
+  },
+  "dev018_confirmation_reused": false,
+  "prepared_sha256": "sha256:2c16efe4c03f10f1c9aad2ed6d02b5d6beeb620d1e77421cde32cdb5fa0183ed",
+  "protocol_id": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "records": 160,
+  "repeated_measures": true,
+  "scenarios": 32,
+  "schema_version": "cerebrum-dev019-diagnostic-data-manifest.v1",
+  "source_result": "ACTIONNET-DATA-QUAL-019-result-v1.0.0",
+  "source_sha256": "sha256:b60dc2d55389af58bd4805c6c1ea07bf8726c1aa2d4a1394012852b22c6684e1",
+  "targets_identical_within_scenario": true,
+  "training_authorized": false,
+  "training_records": 0,
+  "transfer_authorized": false
+}

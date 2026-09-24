@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/releases/runtime-attestation.schema.json",
+  "title": "Cerebrum runtime attestation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "attestation_id",
+    "environment_id",
+    "runtime_sha256",
+    "loaded_release_id",
+    "loaded_artifact_hashes",
+    "ir_version",
+    "domain_pack_versions",
+    "connector_versions",
+    "monitoring_active",
+    "rollback_ready",
+    "attested_at",
+    "attestor",
+    "attestation_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-runtime-attestation.v1"},
+    "attestation_id": {"type": "string", "minLength": 1},
+    "environment_id": {"type": "string", "minLength": 1},
+    "runtime_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "loaded_release_id": {"type": "string", "minLength": 1},
+    "loaded_artifact_hashes": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "ir_version": {"type": "string", "minLength": 1},
+    "domain_pack_versions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "connector_versions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "monitoring_active": {"type": "boolean"},
+    "rollback_ready": {"type": "boolean"},
+    "attested_at": {"type": "string", "format": "date-time"},
+    "attestor": {"type": "string", "minLength": 1},
+    "attestation_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

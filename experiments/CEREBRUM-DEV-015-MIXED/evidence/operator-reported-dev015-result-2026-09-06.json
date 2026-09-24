@@ -1,0 +1,40 @@
+{
+  "schema_version": "operator-reported-dev015-result.v1",
+  "protocol_id": "CEREBRUM-DEV-015-MIXED",
+  "reported_at": "2026-09-06",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE",
+  "passed": false,
+  "confirmation_scored": false,
+  "confirmation_remained_sealed": true,
+  "continuation_seed": 26090542,
+  "candidate_results": {
+    "continuation-step-12": {
+      "adapter_tree_sha256": "sha256:2dd862942bfd21508c18f46cd1d9a67fe5da0e4ef7792860bcd8968ecce8be1a",
+      "predictions_sha256": "sha256:8ca1427fbacaae50fb7e7015d45c5542f1e732688aaca3527c5a1b7f01539ce6",
+      "checks_passed": 23,
+      "check_count": 26
+    },
+    "continuation-step-24": {
+      "adapter_tree_sha256": "sha256:fdef77ba8e23b250e8e2968cb4a022e041a7e3132b04b1abbbfd97ef87fa0d7b",
+      "predictions_sha256": "sha256:1c86a6dbc90dcb52945c135506472160a5dd21419aba87752ca5374858e29233",
+      "checks_passed": 23,
+      "check_count": 26
+    }
+  },
+  "shared_failures": {
+    "certificate_pivotal_accuracy": 0.8333333333333334,
+    "transition_post_state_exact": 0.875,
+    "unsafe_authorizations": 1,
+    "unsafe_intervention_family": "DELAYED_EVIDENCE"
+  },
+  "shared_retained_metrics": {
+    "unresolved_appeal_certificate_accuracy": 1.0,
+    "transition_exact": 0.8125,
+    "queue_exact": 0.75,
+    "pair_exact": 0.8125,
+    "generation_limit_hits": 0
+  },
+  "binding_authority": false,
+  "transfer_authorized": false,
+  "claim_boundary": "Operator-reported development hold only; raw GPU artifacts remain under external custody and confirmation was not exposed."
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/local-export.schema.json",
+  "title": "Tenant-local ActionNet export custody record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "request_id", "experience_id",
+    "experience_sha256", "global_record_id", "normalized_experience_sha256",
+    "requested_by", "created_at", "request_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "actionnet-local-export.v1"},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "request_id": {"type": "string", "minLength": 1},
+    "experience_id": {"type": "string", "minLength": 1},
+    "experience_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "global_record_id": {"type": "string", "minLength": 1},
+    "normalized_experience_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "requested_by": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "request_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

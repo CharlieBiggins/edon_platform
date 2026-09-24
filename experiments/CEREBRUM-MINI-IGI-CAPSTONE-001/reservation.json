@@ -1,0 +1,46 @@
+{
+  "schema_version": "cerebrum-mini-igi-capstone-reservation.v1",
+  "protocol_id": "CEREBRUM-MINI-IGI-CAPSTONE-001",
+  "status": "RESERVED_BLOCKED_PENDING_PREREQUISITES",
+  "prerequisites": {
+    "rb1_two_seed_pass_verified": false,
+    "rb1_summary_sha256": null,
+    "transfer008_two_seed_pass_verified": false,
+    "transfer008_summary_sha256": null,
+    "closed_loop_two_seed_pass_verified": false,
+    "closed_loop_summary_sha256": null
+  },
+  "instrument": {
+    "institution_count": 3,
+    "episode_count": 72,
+    "pair_count": 36,
+    "author_roles": [
+      "internal_instrument_author_a",
+      "internal_instrument_author_b",
+      "internal_instrument_author_c"
+    ],
+    "author_assignments": [null, null, null],
+    "generator_commitments": [null, null, null],
+    "input_commitments": [null, null, null],
+    "label_commitments": [null, null, null],
+    "oracle_commitments": [null, null, null],
+    "semantic_family_commitments": [null, null, null],
+    "overlap_audit_commitment": null,
+    "scorer_assignment": null,
+    "scorer_commitment": null
+  },
+  "cases_materialized": false,
+  "prompts_materialized": false,
+  "labels_materialized": false,
+  "generators_materialized": false,
+  "oracles_materialized": false,
+  "runtime_materialized": false,
+  "scorer_materialized": false,
+  "predictions_materialized": false,
+  "score_materialized": false,
+  "materialization_authorized": false,
+  "prediction_authorized": false,
+  "scoring_authorized": false,
+  "publication_authorized": false,
+  "binding_authority": false
+}

@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/coordination-hypothesis.schema.json",
+  "title": "Non-binding Cerebrum latent-coordination hypothesis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "hypothesis_id",
+    "input_state_sha256",
+    "detection",
+    "coordination_mode",
+    "direct_communication_observed",
+    "objective_hypothesis",
+    "participants",
+    "causal_path",
+    "predicted_effects",
+    "competing_explanations",
+    "risk_band",
+    "governance_recommendation",
+    "confidence",
+    "uncertainty",
+    "model_lineage",
+    "hypothesis_sha256",
+    "binding_authority",
+    "executed"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-cerebrum-coordination-hypothesis.v1"},
+    "hypothesis_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "input_state_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "detection": {"enum": ["NO_COORDINATION", "DIRECT_COORDINATION", "LATENT_STATE_MEDIATED_COORDINATION", "AMBIGUOUS", "INSUFFICIENT_EVIDENCE"]},
+    "coordination_mode": {"enum": ["NONE", "DIRECT_MESSAGE", "SHARED_QUEUE", "SHARED_ARTIFACT", "RESOURCE_MEDIATED", "DATABASE_MUTATION", "CONFIGURATION_MEDIATED", "MULTIHOP_MIXED", "UNKNOWN"]},
+    "direct_communication_observed": {"type": "boolean"},
+    "objective_hypothesis": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["description", "outcome_ref", "supporting_evidence_refs"],
+      "properties": {
+        "description": {"type": "string", "minLength": 1, "maxLength": 4000},
+        "outcome_ref": {"type": ["string", "null"], "maxLength": 2048},
+        "supporting_evidence_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1, "maxLength": 2048}
+        }
+      }
+    },
+    "participants": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["entity_ref", "role", "evidence_refs"],
+        "properties": {
+          "entity_ref": {"type": "string", "minLength": 1},
+          "role": {"enum": ["INITIATOR", "MEDIATOR", "RESPONDER", "BENEFICIARY", "AFFECTED", "UNKNOWN"]},
+          "evidence_refs": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          }
+        }
+      }
+    },
+    "causal_path": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1, "maxLength": 200},
+      "uniqueItems": true
+    },
+    "predicted_effects": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["state_path", "direction", "horizon", "probability"],
+        "properties": {
+          "state_path": {"type": "string", "minLength": 1},
+          "direction": {"enum": ["INCREASE", "DECREASE", "SET", "DELETE", "BLOCK", "RELEASE", "UNKNOWN"]},
+          "horizon": {"type": "string", "minLength": 1},
+          "probability": {"type": "number", "minimum": 0, "maximum": 1}
+        }
+      }
+    },
+    "competing_explanations": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1, "maxLength": 4000}
+    },
+    "risk_band": {"enum": ["LOW", "MODERATE", "HIGH", "CRITICAL", "UNKNOWN"]},
+    "governance_recommendation": {"enum": ["NO_ACTION", "MONITOR", "REQUEST_EVIDENCE", "ESCALATE", "EVALUATE_PAUSE", "EVALUATE_DENIAL", "ABSTAIN"]},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "uncertainty": {"type": "string", "minLength": 1, "maxLength": 4000},
+    "model_lineage": {"type": "string", "minLength": 1, "maxLength": 2048},
+    "hypothesis_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false},
+    "executed": {"const": false}
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "protocol_id": "CEREBRUM-ACTIONNET-MATCHED-001",
+  "framework_version": "0.2.0",
+  "created": "2026-09-19",
+  "status": "IMPLEMENTED_DRAFT_NOT_REGISTERED",
+  "stage": "A_DEVELOPMENT_SCREEN",
+  "arms": ["ordinary", "actionnet"],
+  "fresh_adapter_from_base": true,
+  "parent_adapter": null,
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "shared_output_format": "ACTIONNET_TEMPORAL_PROGRAM_V1_NATIVE_ONLY",
+  "training_records": 384,
+  "training_pairs": 192,
+  "training_ordinary_records": 288,
+  "training_targeted_records": 96,
+  "screen_records": 24,
+  "screen_pairs": 12,
+  "screen_ordinary_records": 12,
+  "screen_targeted_records": 12,
+  "generation": {
+    "train_seed": 26091921,
+    "train_ordinary_start": 100000,
+    "train_ordinary_families": 36,
+    "train_targeted_start": 101000,
+    "train_targeted_families": 8,
+    "screen_seed": 26091922,
+    "screen_targeted_seed": 26091900,
+    "screen_ordinary_start": 102000,
+    "screen_ordinary_families": 2,
+    "screen_targeted_start": 103000,
+    "screen_targeted_families": 1
+  },
+  "seed_pairs": {
+    "A": 26091931,
+    "B": 26091932
+  },
+  "max_length": 8192,
+  "max_input_tokens": 4096,
+  "max_new_tokens": 4096,
+  "generation_token_margin": 8,
+  "per_device_train_batch_size": 1,
+  "gradient_accumulation_steps": 1,
+  "learning_rate": 0.0001,
+  "lr_scheduler_type": "constant",
+  "warmup_steps": 0,
+  "weight_decay": 0.01,
+  "loss_token_chunk_size": 128,
+  "checkpoint_every_steps": 16,
+  "lora": {
+    "r": 32,
+    "alpha": 64,
+    "dropout": 0.05,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  },
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "hardware": {
+    "gpu": "NVIDIA L4",
+    "torch": "2.8.0+cu129",
+    "cuda": "12.9",
+    "visible_gpus": 1
+  },
+  "development_only": true,
+  "confirmation_authorized": false,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

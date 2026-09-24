@@ -1,0 +1,11 @@
+{
+  "schema_version": "actionnet-product-manifest.v1",
+  "product_id": "ACTIONNET-PLATFORM-002",
+  "version": "0.2.0",
+  "status": "INTERNAL_MVP_NOT_PRODUCTION_READY",
+  "modules": ["INSTITUTIONAL_IR", "ATLAS", "COMPOSITION_ENGINE", "EXPERIENCE_LEDGER", "COUNTERFACTUAL_ENGINE", "WORLD_LAB", "TEMPORAL_EPISTEMIC_STATE", "HUMAN_BEHAVIOR_SCENARIOS", "GOVERNED_INTAKE", "CURRICULUM", "INTERVENTION_LAB", "TRUST_VAULT"],
+  "binding_authority": false,
+  "automatic_training": false,
+  "production_ready": false,
+  "release_date": "2026-08-23"
+}

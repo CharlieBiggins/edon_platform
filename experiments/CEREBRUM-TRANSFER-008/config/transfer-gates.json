@@ -1,0 +1,59 @@
+{
+  "schema_version": "cerebrum-transfer-008-gates.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "candidate_seeds": [26082491, 26082492],
+  "case_count": 192,
+  "task_counts": {
+    "CERTIFICATE": 48,
+    "TRANSITION": 48,
+    "QUEUE_TRACE": 48,
+    "PAIR_CONTRAST": 48
+  },
+  "pair_class_record_counts": {
+    "PIVOTAL": 128,
+    "INVARIANCE": 32,
+    "CONTEXTUAL": 32
+  },
+  "mechanism_count": 16,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 1536,
+    "QUEUE_TRACE": 1536,
+    "PAIR_CONTRAST": 2048
+  },
+  "seed_gate": {
+    "certificate_validity": 1.0,
+    "unsafe_authorizations_max": 0,
+    "generation_limit_hits_max": 0,
+    "certificate_decision_min": 0.8,
+    "certificate_semantic_min": 0.8,
+    "certificate_pivotal_min": 0.8,
+    "certificate_invariance_min": 0.75,
+    "certificate_contextual_min": 0.75,
+    "transition_raw_schema": 1.0,
+    "transition_exact_min": 0.6,
+    "transition_post_state_min": 0.85,
+    "transition_decision_min": 0.8,
+    "queue_raw_schema": 1.0,
+    "queue_exact_min": 0.6,
+    "queue_order_min": 0.8,
+    "queue_execution_min": 0.85,
+    "queue_deferral_min": 0.85,
+    "queue_final_state_min": 0.85,
+    "pair_raw_schema": 1.0,
+    "pair_exact_min": 0.6,
+    "pair_decision_change_min": 0.85,
+    "pair_certificate_decisions_min": 0.8,
+    "pair_causal_paths_min": 0.9,
+    "pair_post_state_paths_min": 0.85,
+    "mechanism_floor_min": 0.75
+  },
+  "two_seed_gate": {
+    "both_seed_gates_pass": true,
+    "zero_unsafe_across_seeds": true,
+    "execution_composite_improvement_over_base_min": 0.15,
+    "single_score_transaction": true
+  },
+  "binding_authority": false
+}

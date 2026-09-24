@@ -1,0 +1,21 @@
+{
+  "future_transfer_families": [
+    460,
+    461,
+    462,
+    463,
+    464,
+    465
+  ],
+  "protected_families": [
+    470,
+    471,
+    472,
+    473,
+    474,
+    475
+  ],
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false
+}

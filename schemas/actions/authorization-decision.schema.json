@@ -1,0 +1,80 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actions/authorization-decision.schema.json",
+  "title": "Independent Kernel authorization decision",
+  "description": "Kernel-issued decision over an exact action proposal. This is an output contract, not a public authorization request.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authorization_decision_id",
+    "issuer_type",
+    "kernel_id",
+    "tenant_id",
+    "institution_id",
+    "action_proposal_id",
+    "action_proposal_sha256",
+    "expected_state_version",
+    "ir_version",
+    "policy_version",
+    "authority_version",
+    "decision",
+    "evaluations",
+    "evidence_refs",
+    "approval_evidence_refs",
+    "scope",
+    "issued_at",
+    "expires_at",
+    "signature",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-authorization-decision.v1"},
+    "authorization_decision_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "issuer_type": {"const": "INDEPENDENT_KERNEL"},
+    "kernel_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "action_proposal_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "action_proposal_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "expected_state_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "ir_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "policy_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "authority_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "ESCALATE", "REVISE", "REASSIGN", "APPROVAL_REQUIRED"]},
+    "evaluations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "authority", "policy", "evidence_freshness", "preconditions", "resources", "conflicts", "jurisdiction", "risk_limits", "approvals"],
+      "properties": {
+        "identity": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "authority": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "policy": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "evidence_freshness": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "preconditions": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "resources": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "conflicts": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "jurisdiction": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "risk_limits": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "approvals": {"enum": ["PASS", "FAIL", "UNKNOWN", "NOT_REQUIRED"]}
+      }
+    },
+    "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 1000}},
+    "approval_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 1000}},
+    "conditions": {"type": "array", "items": {"type": "object"}},
+    "scope": {"type": "object"},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "signed_sha256"],
+      "properties": {
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "minLength": 1},
+        "signed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "binding_authority": {"const": true}
+  }
+}

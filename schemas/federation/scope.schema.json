@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/federation/scope.schema.json",
+  "title": "Institutional federation scope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tenant_id", "scope_id", "scope_type", "name", "authority_domain", "decision_latency_class", "data_policy", "binding_authority"],
+  "properties": {
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "scope_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "parent_scope_id": {"type": ["string", "null"], "maxLength": 200},
+    "scope_type": {"enum": ["GLOBAL", "DOMAIN", "REGION", "FACILITY", "EDGE"]},
+    "world_id": {"type": ["string", "null"], "maxLength": 200},
+    "name": {"type": "string", "minLength": 1, "maxLength": 200},
+    "authority_domain": {"type": "string", "minLength": 1, "maxLength": 200},
+    "decision_latency_class": {"enum": ["MILLISECONDS", "SECONDS", "MINUTES", "HOURS", "DAYS"]},
+    "data_policy": {
+      "type": "object",
+      "required": ["share_raw_records"],
+      "properties": {"share_raw_records": {"const": false}}
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

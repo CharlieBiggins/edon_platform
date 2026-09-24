@@ -1,0 +1,15 @@
+{
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false,
+  "reserved_future_families": [
+    680,
+    681,
+    682,
+    683,
+    684,
+    685,
+    686,
+    687
+  ]
+}

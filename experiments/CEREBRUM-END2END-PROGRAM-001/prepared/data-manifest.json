@@ -1,0 +1,123 @@
+{
+  "binding_authority": false,
+  "confirmation_single_use": true,
+  "fresh_adapter_from_base": true,
+  "independent_interpreter_scoring": true,
+  "native_program_supervision": true,
+  "prepared_hashes": {
+    "development_selection": "sha256:43f6ed6a370b39f3a7e3bc8d2a5629cfad743a27d4c784a24e74ba517aaa8aaf",
+    "train": "sha256:8f50a2790a015c578b63a8b265cdbd4334a9272c623fd06e618a3e2cb0d70343",
+    "untouched_confirmation": "sha256:220febdaffe33129b20dcea82eb9b7e9c226ec089c748fc1dc6314a27a97c26c"
+  },
+  "protocol_id": "CEREBRUM-END2END-PROGRAM-001",
+  "registered_complete_dataset_passes": 2.0,
+  "registered_effective_sample_exposures": 2048,
+  "schema_version": "cerebrum-program-001-data-manifest.v1",
+  "source_hashes": {
+    "development_selection": "sha256:6f28cad631a5ec63ac0c5d6a89386c981dc41fe0efcd95026b7a308451d49646",
+    "train": "sha256:f0579c670e56bae25027cafab9560ccfb4ed73a8d39b9bd6e184c6c90ba5c161",
+    "untouched_confirmation": "sha256:5ade6ec796eabee989f2ba6c818bed68def90cbf7e5ff428d408b0c70f36febe"
+  },
+  "source_result_id": "ACTIONNET-DATA-QUAL-021-PROGRAM-result-v1.0.0",
+  "splits": {
+    "development_selection": {
+      "mechanism_counts": {
+        "APPROVAL_WITHDRAWAL": 4,
+        "CONFLICT_ASSERTION": 4,
+        "DECISIVE_CONTEXT_PRESERVATION": 20,
+        "DELAYED_EVIDENCE": 10,
+        "EVIDENCE_EXPIRY": 8,
+        "EVIDENCE_RESOURCE_COMPOSITION": 4,
+        "JURISDICTION_CONFLICT_COMPOSITION": 4,
+        "JURISDICTION_SHIFT": 4,
+        "MALFORMED_REQUEST": 4,
+        "POLICY_APPROVAL_COMPOSITION": 4,
+        "POLICY_CHANGE": 4,
+        "PRIORITY_RACE": 8,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 20,
+        "RESOURCE_CONTENTION": 8,
+        "REVOCATION_PROPAGATION": 6,
+        "REVOCATION_RESOURCE_COMPOSITION": 4,
+        "ROUTING_REJECTION": 4,
+        "UNRESOLVED_APPEAL": 8
+      },
+      "records": 128,
+      "renderer_counts": {
+        "FAMILIAR_AUGMENTED": 128
+      },
+      "source_counts": {
+        "FRESH": 128
+      },
+      "task_counts": {
+        "TEMPORAL_PROGRAM": 128
+      }
+    },
+    "train": {
+      "mechanism_counts": {
+        "APPROVAL_WITHDRAWAL": 34,
+        "CONFLICT_ASSERTION": 32,
+        "DECISIVE_CONTEXT_PRESERVATION": 170,
+        "DELAYED_EVIDENCE": 66,
+        "EVIDENCE_EXPIRY": 64,
+        "EVIDENCE_RESOURCE_COMPOSITION": 32,
+        "JURISDICTION_CONFLICT_COMPOSITION": 32,
+        "JURISDICTION_SHIFT": 32,
+        "MALFORMED_REQUEST": 32,
+        "POLICY_APPROVAL_COMPOSITION": 32,
+        "POLICY_CHANGE": 34,
+        "PRIORITY_RACE": 64,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 170,
+        "RESOURCE_CONTENTION": 66,
+        "REVOCATION_PROPAGATION": 34,
+        "REVOCATION_RESOURCE_COMPOSITION": 32,
+        "ROUTING_REJECTION": 34,
+        "UNRESOLVED_APPEAL": 64
+      },
+      "records": 1024,
+      "renderer_counts": {
+        "FAMILIAR_AUGMENTED": 1024
+      },
+      "source_counts": {
+        "FRESH": 1024
+      },
+      "task_counts": {
+        "TEMPORAL_PROGRAM": 1024
+      }
+    },
+    "untouched_confirmation": {
+      "mechanism_counts": {
+        "APPROVAL_WITHDRAWAL": 8,
+        "CONFLICT_ASSERTION": 8,
+        "DECISIVE_CONTEXT_PRESERVATION": 42,
+        "DELAYED_EVIDENCE": 18,
+        "EVIDENCE_EXPIRY": 16,
+        "EVIDENCE_RESOURCE_COMPOSITION": 8,
+        "JURISDICTION_CONFLICT_COMPOSITION": 8,
+        "JURISDICTION_SHIFT": 8,
+        "MALFORMED_REQUEST": 8,
+        "POLICY_APPROVAL_COMPOSITION": 8,
+        "POLICY_CHANGE": 8,
+        "PRIORITY_RACE": 16,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 42,
+        "RESOURCE_CONTENTION": 16,
+        "REVOCATION_PROPAGATION": 10,
+        "REVOCATION_RESOURCE_COMPOSITION": 8,
+        "ROUTING_REJECTION": 8,
+        "UNRESOLVED_APPEAL": 16
+      },
+      "records": 256,
+      "renderer_counts": {
+        "FAMILIAR_AUGMENTED": 256
+      },
+      "source_counts": {
+        "FRESH": 256
+      },
+      "task_counts": {
+        "TEMPORAL_PROGRAM": 256
+      }
+    }
+  },
+  "training_records": 1024,
+  "transfer_authorized": false,
+  "validated_interface": "FAMILIAR_AUGMENTED"
+}

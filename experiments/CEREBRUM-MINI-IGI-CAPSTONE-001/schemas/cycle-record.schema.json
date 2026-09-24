@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum-mini-igi-capstone-cycle-record.v1.json",
+  "title": "Protected capstone cycle record",
+  "type": "object",
+  "required": ["protocol_id", "institution_id", "episode_id", "condition", "cycle", "decision_time", "available_evidence_hash", "state_estimate", "proposal", "kernel_decision", "committed_transition", "binding_authority"],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-MINI-IGI-CAPSTONE-001"},
+    "institution_id": {"type": "string", "minLength": 1},
+    "episode_id": {"type": "string", "minLength": 1},
+    "condition": {"type": "string", "minLength": 1},
+    "cycle": {"type": "integer", "minimum": 0},
+    "decision_time": {"type": "integer", "minimum": 0},
+    "available_evidence_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "state_estimate": {"type": "object"},
+    "proposal": {"type": ["object", "null"]},
+    "kernel_decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "NO_PROPOSAL"]},
+    "committed_transition": {"type": ["object", "null"]},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

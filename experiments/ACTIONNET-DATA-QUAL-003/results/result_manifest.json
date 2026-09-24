@@ -1,0 +1,23 @@
+{
+  "artifacts": {
+    "CEREBRUM_REPAIR_HANDOFF.md": "sha256:1a41137808fd4466db788d4482ea88d10a87fa5dfc358c0c018db9282a5adc02",
+    "DATA_DESIGN.md": "sha256:0f903693a2e312f78bd915927204b7bcc47d1b52bd42337cadf64011193410f7",
+    "PREREGISTRATION.md": "sha256:c39f9f1ecb4cb848b215e5bcb9950ddf141281571106ff257ad9432282cf6224",
+    "README.md": "sha256:4ca9fa39b2cd945008ee644d1afcba77358ab880a631d839b26170c497d440e0",
+    "actionnet_multiview.py": "sha256:57eaf70ff7d19f642182246f2643618dd56fdd4dfeda9f3534525e041c7a73dd",
+    "dataset/repair_validation.jsonl": "sha256:280c85b8817fc2359d1f8fc2f644b6f9ba8c45c12340c8510eb4e22ad63d0981",
+    "dataset/train.jsonl": "sha256:aed6a4faf354c63ba3674dbe5e1a571d29333ac3f3066c5fe8ea87f951a8bb13",
+    "lineage/lineages.json": "sha256:e5e39c3bb4826921522fb4eccb3bec4150fcd004a7b36d530b5ef678622b2668",
+    "oracle/canonical_trajectories.jsonl": "sha256:e1a4c31e2f9a96c0b825dbff44d4471d2d5478ea76fda34d1841603fcda46aae",
+    "oracle/reservation.json": "sha256:28bf489d24f2ac64d7c8fccd51ad5ed0085dd47b35417b024cea03a60b48bb5f",
+    "results/dataset_manifest.json": "sha256:b8a57fd7ca4a9c4dc45e40b46b951e5b0dab8f34ff6c71b6a696334afcb7bdf5",
+    "results/qualification_report.json": "sha256:0e7a402ff937c2bd8f753aacd5cca6fc939e794b4f4839caf946184126fc5def",
+    "run_campaign.py": "sha256:d3afe44f5ba532ec8da37b2c8a9dadfe827536f12c39b781057c1d059b670103"
+  },
+  "claim_boundary": "Qualified only for a new internal Cerebrum repair campaign; no public, protected, real-institution, or production claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-003",
+  "result_hash": "sha256:d51fdd2d5df418d798e494db4b788420e82c83779a563d4e1360c91205f8651c",
+  "result_id": "ACTIONNET-DATA-QUAL-003-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_REPAIR_TRAINING"
+}

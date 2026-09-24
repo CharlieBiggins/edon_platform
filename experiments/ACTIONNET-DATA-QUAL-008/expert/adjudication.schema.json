@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/adjudication.v1.json",
+  "title": "ActionNet Expert Adjudication",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["adjudication_id", "candidate_pair_id", "adjudicator_id", "review_ids", "final_decision", "final_failed_conditions", "evidence_references", "disagreement_resolution", "conflict_attestation", "submitted_at"],
+  "properties": {
+    "adjudication_id": {"type": "string"},
+    "candidate_pair_id": {"type": "string"},
+    "adjudicator_id": {"type": "string"},
+    "review_ids": {"type": "array", "items": {"type": "string"}, "minItems": 2, "uniqueItems": true},
+    "final_decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "CONTESTED", "INVALID"]},
+    "final_failed_conditions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "evidence_references": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "disagreement_resolution": {"type": "string", "minLength": 1},
+    "conflict_attestation": {"const": true},
+    "submitted_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

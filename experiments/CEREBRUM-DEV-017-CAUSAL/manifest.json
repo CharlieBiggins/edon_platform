@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-017-CAUSAL",
+  "version": "1.0.0",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE",
+  "created": "2026-09-06",
+  "dataset": "ACTIONNET-DATA-QUAL-017",
+  "training_parent": "CEREBRUM-DEV-015-MIXED",
+  "parent_checkpoint_step": 12,
+  "scientific_predecessor": "CEREBRUM-DEV-016-NARROW",
+  "continuation_seed": 26090642,
+  "training_records": 384,
+  "effective_sample_exposures": 384,
+  "optimizer_steps": 24,
+  "development_records_per_candidate": 64,
+  "development_candidates": 2,
+  "confirmation_records": 192,
+  "artifact": {
+    "id": "CEREBRUM-DEV-017-CAUSAL-operator-result-v1.0.0",
+    "sha256": "sha256:a1af25087c0593f3f7ff724d7b4ce861fa6a7e4122191bf14776a455d7dfc2f5",
+    "storage_location": "evidence/operator-reported-dev017-result-2026-09-06.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

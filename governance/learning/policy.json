@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-learning-governance-policy.v1",
+  "policy_id": "EDON-LEARNING-GOVERNANCE-001",
+  "effective_date": "2026-08-30",
+  "memory_scope": "INSTITUTION_LOCAL_CONTEXT_ONLY",
+  "local_actionnet_default": "PRIVATE_REVIEW_REQUIRED_TRAINING_INELIGIBLE",
+  "global_actionnet_default": "NO_RECORD_WITHOUT_PROMOTION_GATE",
+  "weight_update_mode": "OFFLINE_VERSIONED_ONLY",
+  "model_version_convention": "C1-vN",
+  "automatic_weight_updates": false,
+  "institution_specific_weight_updates_required": false,
+  "protected_evaluation_training_use": false,
+  "raw_tenant_data_globalized": false,
+  "federated_learning_implemented": false,
+  "production_authorized": false,
+  "binding_authority": false
+}

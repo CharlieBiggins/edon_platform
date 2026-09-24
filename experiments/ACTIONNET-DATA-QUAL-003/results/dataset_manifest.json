@@ -1,0 +1,23 @@
+{
+  "claim_boundary": "Fresh-lineage synthetic repair corpus for event-sensitive multi-view development only.",
+  "confirmatory_ready": false,
+  "counts": {
+    "canonical_trajectories": 600,
+    "repair_validation_records": 300,
+    "train_records": 3600
+  },
+  "dataset_id": "ACTIONNET-REPAIR-DATASET-v3.0.0",
+  "files": {
+    "dataset/repair_validation.jsonl": "sha256:280c85b8817fc2359d1f8fc2f644b6f9ba8c45c12340c8510eb4e22ad63d0981",
+    "dataset/train.jsonl": "sha256:aed6a4faf354c63ba3674dbe5e1a571d29333ac3f3066c5fe8ea87f951a8bb13",
+    "lineage/lineages.json": "sha256:e5e39c3bb4826921522fb4eccb3bec4150fcd004a7b36d530b5ef678622b2668",
+    "oracle/canonical_trajectories.jsonl": "sha256:e1a4c31e2f9a96c0b825dbff44d4471d2d5478ea76fda34d1841603fcda46aae",
+    "oracle/reservation.json": "sha256:28bf489d24f2ac64d7c8fccd51ad5ed0085dd47b35417b024cea03a60b48bb5f"
+  },
+  "parent_result": "ACTIONNET-DATA-QUAL-002-result-v1.0.0",
+  "protected_materialized": false,
+  "public_materialized": false,
+  "schema_version": "actionnet-repair-dataset-manifest.v3",
+  "source_grounded": false,
+  "trigger_result": "CEREBRUM-DEV-001-run-2026-08-09-v1.0.0"
+}

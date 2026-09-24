@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-004",
+  "version": "1.0.0",
+  "status": "HOLD_FOR_ADDITIVE_REPAIR",
+  "created": "2026-08-12",
+  "artifact": {
+    "id": "CEREBRUM-DEV-004-protocol-manifest",
+    "sha256": "sha256:24667883739337263d30cd396ab01bd53f18565cbf7bf8cecb9b26f9f2f0d4f7",
+    "storage_location": "legacy://EDON Research/experiments/CEREBRUM-DEV-004/results/protocol_manifest.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26081241, 26081242],
+  "dataset": "ACTIONNET-DATA-QUAL-005",
+  "license": "pending",
+  "observed_result": {
+    "seed_26081241_gate": "17/17",
+    "seed_26081242_gate": "16/17",
+    "seed_26081242_predictions_sha256": "sha256:5ce131885c14a30b4b1e230752fec896a5a5016fbb35f7f861a3cd9ba771c5a7",
+    "failed_check": "pivotal_mechanism_floor_at_least_0_80",
+    "failed_mechanism": "UNRESOLVED_APPEAL"
+  },
+  "claim_scope": "Completed same-program synthetic development hold; independent transfer remains unauthorized.",
+  "binding_authority": false
+}

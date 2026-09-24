@@ -1,0 +1,49 @@
+{
+  "schema_version": "edon-trademark-register.v1",
+  "updated": "2026-08-29",
+  "status": "CLEARANCE_REQUIRED",
+  "marks": [
+    {
+      "id": "EDON-MARK-001",
+      "mark": "EDON",
+      "role": "MASTER_BRAND_CANDIDATE",
+      "clearance_status": "NOT_COMPLETED",
+      "filing_status": "NOT_FILED_IN_REPOSITORY_RECORD",
+      "registration_status": "NOT_VERIFIED",
+      "approved_symbol": "PLAIN_TEXT",
+      "owner_verified": false
+    },
+    {
+      "id": "EDON-MARK-002",
+      "mark": "CEREBRUM",
+      "role": "PRODUCT_BRAND_CANDIDATE",
+      "clearance_status": "NOT_COMPLETED_CROWDED_TERM_REVIEW_REQUIRED",
+      "filing_status": "NOT_FILED_IN_REPOSITORY_RECORD",
+      "registration_status": "NOT_VERIFIED",
+      "approved_symbol": "PLAIN_TEXT",
+      "owner_verified": false
+    },
+    {
+      "id": "EDON-MARK-003",
+      "mark": "ACTIONNET",
+      "role": "PLATFORM_BRAND_CANDIDATE",
+      "clearance_status": "NOT_COMPLETED",
+      "filing_status": "NOT_FILED_IN_REPOSITORY_RECORD",
+      "registration_status": "NOT_VERIFIED",
+      "approved_symbol": "PLAIN_TEXT",
+      "owner_verified": false
+    },
+    {
+      "id": "EDON-MARK-004",
+      "mark": "INSTITUTIONAL GENERAL INTELLIGENCE",
+      "role": "DESCRIPTIVE_RESEARCH_CATEGORY",
+      "clearance_status": "CATEGORY_USE_ONLY_PENDING_COUNSEL",
+      "filing_status": "NO_FILING_PLANNED_IN_REPOSITORY_RECORD",
+      "registration_status": "NOT_VERIFIED",
+      "approved_symbol": "PLAIN_TEXT",
+      "owner_verified": false
+    }
+  ],
+  "registered_symbol_authorized": false,
+  "binding_authority": false
+}

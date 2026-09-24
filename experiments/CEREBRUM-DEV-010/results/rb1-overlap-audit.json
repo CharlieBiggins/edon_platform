@@ -1,0 +1,19 @@
+{
+  "schema_version": "cerebrum-dev010-rb1-overlap-audit.v1",
+  "audit_date": "2026-09-04",
+  "source_archive_sha256": "sha256:8631d51a382adf29abaed01759e5e5aa1db09f78ecd14ba24cc6f36fd1457299",
+  "rb1_records_compared": 2880,
+  "dev010_records_compared": 4224,
+  "rb1_case_ids": 2880,
+  "dev010_case_ids": 4224,
+  "case_id_overlap": 0,
+  "model_prompt_overlap": 0,
+  "rb1_case_set_sha256": "sha256:cd36345b657c2614e372e53fcf3f6c904b54adc3a14c23dc80f1e13ec0a96c9e",
+  "dev010_case_set_sha256": "sha256:967b1c7df51a36d8aff866342187308f0ecfda33dd648687167cc76695a0993e",
+  "rb1_prompt_set_sha256": "sha256:4218d1e71fe9cc636d1500ce39a74dc3b755168fb724986f5046cdf2877ff63d",
+  "dev010_prompt_set_sha256": "sha256:61de9049cd4204110c2826ea02aadeabadb7657f94666fc4ce87008da9e38207",
+  "semantic_family_overlap": 0,
+  "renderer_overlap": 0,
+  "passed": true,
+  "binding_authority": false
+}

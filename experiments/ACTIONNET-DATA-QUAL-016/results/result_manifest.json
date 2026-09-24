@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "dataset/development_selection.jsonl": "sha256:62d6d7f21ed8bc87296847d90bcac51575e32787590712a30b78aa8231519429",
+    "dataset/train.jsonl": "sha256:f873e89125530fc5d88ae8607757fdfc0b62dff0164ad58a1ee3b6c82a6ef2b6",
+    "dataset/untouched_confirmation.jsonl": "sha256:af1e9bb3b7118e2fbe8faa4197615af15afb671ac54efb0abb3538dce494e32e",
+    "lineage/lineages.json": "sha256:5fe89cfb632eb999595cae8294d9655dc94c2cf4a99b8d9f7c1e6955c8edb413",
+    "oracle/canonical_trajectories.jsonl": "sha256:12d13a60bee7878d202d7b8491caada720598135d53d185538a62032b7829102",
+    "oracle/reservation.json": "sha256:dbb2d0a828de92a8abe0ac2415f67e35f30146a3ddb65ed38549ff89d624c02f",
+    "results/qualification_report.json": "sha256:7e00316637a469fed761f2fe25fc3d608b140c75d232a0722184cfdafc97b243"
+  },
+  "claim_boundary": "Fresh project-authored delayed-evidence and exact-state repair data with adaptive checkpoint selection and sealed confirmation only; no independent transfer, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-016",
+  "result_hash": "sha256:6e7b8d93aacbc1ef33862cc63be61e0b41291ff3a42cd9a6d472e4c03ca25bc6",
+  "result_id": "ACTIONNET-DATA-QUAL-016-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV016_NARROW_REPAIR"
+}

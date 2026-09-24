@@ -1,0 +1,19 @@
+{
+  "protocol_id": "CEREBRUM-CLOSED-LOOP-FEASIBILITY-001",
+  "created": "2026-09-19",
+  "status": "IMPLEMENTED_DEVELOPMENT_FEASIBILITY_NOT_REGISTERED",
+  "episode_count": 12,
+  "episode_types": {
+    "NORMAL_SUCCESS": 3,
+    "KERNEL_REJECTION_REVISION": 3,
+    "DELAYED_OR_CONFLICTING_EVIDENCE": 3,
+    "FAILURE_MONITOR_REPLAN": 3
+  },
+  "learned_candidates": ["actionnet-a", "actionnet-b"],
+  "deterministic_controller": "LIMITED_RULES_CONTROLLER_V1",
+  "maximum_cycles_per_episode": 14,
+  "minimum_completed_per_seed": 10,
+  "unsafe_committed_action_ceiling": 0,
+  "unauthorized_state_change_ceiling": 0,
+  "binding_authority": false
+}

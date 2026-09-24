@@ -1,0 +1,92 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "CPU readiness for fresh same-program synthetic repair only; no learned result exists.",
+  "config_sha256": "sha256:f7b6ea7f0eecd4959bbe426e3d80a82807dcf23cbc83f2fba31ce45b57c97010",
+  "control_count": 24,
+  "controls": {
+    "effective_batch_16": true,
+    "explicit_appeal_clock_prompt": true,
+    "explicit_queue_integrity_prompt": true,
+    "frozen_base_revision": true,
+    "heldout_register_validation": true,
+    "heldout_renderer_unseen_in_train": true,
+    "matched_train_inference_context": true,
+    "one_epoch_registered": true,
+    "qualified_source_33_of_33": true,
+    "queue_auxiliary_tasks_present": true,
+    "rb1_case_and_prompt_overlap_zero": true,
+    "registered_protocol_identity": true,
+    "rules_ceiling_passes_all_26_checks": true,
+    "scoring_locked_until_two_seeds": true,
+    "train_count_4032": true,
+    "train_task_balance": true,
+    "train_validation_cases_disjoint": true,
+    "train_validation_pairs_disjoint": true,
+    "two_fresh_registered_seeds": true,
+    "two_training_profiles_balanced": true,
+    "unresolved_appeal_scored_both_sides": true,
+    "validation_count_192": true,
+    "validation_task_balance": true,
+    "zero_training_truncation_required": true
+  },
+  "controls_passed": 24,
+  "expected_optimizer_steps_per_seed_on_l4": 252,
+  "prepared_hashes": {
+    "train": "sha256:7287c76c02d2510919995d5dc66e72504dfc95788994e12eb1a2bde161c29c8f",
+    "validation": "sha256:968bf8f126527da214046cd69f0e2ea0755291a4109dd7b4831a6a845a6bb136"
+  },
+  "protocol_id": "CEREBRUM-DEV-010",
+  "public_scored": false,
+  "registered_seeds": [
+    26090401,
+    26090402
+  ],
+  "schema_version": "cerebrum-dev010-readiness.v1",
+  "status": "READY_FOR_TWO_SEED_RESOURCE_CONTINGENT_EXECUTION",
+  "train": {
+    "case_ids": 4032,
+    "pair_ids": 336,
+    "profile_counts": {
+      "CLOCK_GRID": 2016,
+      "CONTROL_SHEET": 2016
+    },
+    "records": 4032,
+    "renderer_counts": {
+      "DECISION_CLOCK_GRID": 998,
+      "MULTI_SYSTEM_JOURNAL": 1018,
+      "QUEUE_CONTROL_SHEET": 998,
+      "STATE_DELTA_PACKET": 1018
+    },
+    "task_counts": {
+      "CERTIFICATE": 672,
+      "PAIR_CONTRAST": 672,
+      "QUEUE_ORDER": 672,
+      "QUEUE_PARTITION": 672,
+      "QUEUE_TRACE": 672,
+      "TRANSITION": 672
+    },
+    "weight_max": 24.0,
+    "weight_min": 3.0,
+    "weight_sum": 32758.0
+  },
+  "validation": {
+    "case_ids": 192,
+    "pair_ids": 48,
+    "profile_counts": {
+      "REGISTER": 192
+    },
+    "records": 192,
+    "renderer_counts": {
+      "CROSS_FORMAT_REGISTER": 192
+    },
+    "task_counts": {
+      "CERTIFICATE": 48,
+      "PAIR_CONTRAST": 48,
+      "QUEUE_TRACE": 48,
+      "TRANSITION": 48
+    },
+    "weight_max": 24.0,
+    "weight_min": 3.0,
+    "weight_sum": 1357.5
+  }
+}

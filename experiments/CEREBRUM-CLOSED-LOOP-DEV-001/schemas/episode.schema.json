@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum-closed-loop-episode.v1.json",
+  "title": "Cerebrum closed-loop development episode",
+  "type": "object",
+  "required": [
+    "schema_version", "protocol_id", "split", "episode_id", "pair_id",
+    "pair_class", "variant", "institution", "source_packet", "objective",
+    "workflow", "agents", "resources",
+    "training_eligible", "protected", "real_institution", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "cerebrum-closed-loop-episode.v1"},
+    "protocol_id": {"const": "CEREBRUM-CLOSED-LOOP-DEV-001"},
+    "split": {"enum": ["TRAIN", "VALIDATION"]},
+    "pair_class": {"enum": ["PIVOTAL", "INVARIANCE", "CONTEXTUAL"]},
+    "variant": {"enum": ["BASE", "CHANGED"]},
+    "protected": {"const": false},
+    "real_institution": {"const": false},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

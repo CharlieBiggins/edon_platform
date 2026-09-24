@@ -1,0 +1,61 @@
+{
+  "protocol_id": "CEREBRUM-END2END-PROGRAM-003",
+  "version": "1.0.0",
+  "created": "2026-09-08",
+  "intervention": "EXPLICIT_EXECUTION_TRACE_SUPERVISION",
+  "compute_design": "MATCHED_CASE_EXPOSURE_NOT_MATCHED_TOKEN_COMPUTE",
+  "arms": ["uniform", "trace"],
+  "fresh_adapter_from_base": true,
+  "parent_adapter": null,
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "training_seed": 26090861,
+  "training_records": 1024,
+  "max_steps": 128,
+  "effective_batch_size": 16,
+  "epochs": 2,
+  "learning_rate": 0.0001,
+  "warmup_steps": 8,
+  "weight_decay": 0.01,
+  "max_length": 8192,
+  "inference_max_input_tokens": 4096,
+  "max_new_tokens": 4096,
+  "generation_token_margin": 8,
+  "trace_exact_floor": 0.95,
+  "loss_token_chunk_size": 128,
+  "lora": {
+    "r": 32, "alpha": 64, "dropout": 0.05,
+    "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]
+  },
+  "required_packages": {
+    "transformers": "5.16.1", "peft": "0.20.0", "bitsandbytes": "0.50.2", "accelerate": "1.10.1"
+  },
+  "splits": {
+    "train": {"seed": 26090871, "family_start": 30000, "families": 128, "records": 1024},
+    "development": {"seed": 26090872, "family_start": 30200, "families": 16, "records": 128},
+    "confirmation": {"seed": 26090873, "family_start": 30300, "families": 32, "records": 256}
+  },
+  "absolute_gate": {
+    "parse_valid_floor": 0.98,
+    "event_order_floor": 0.95,
+    "partition_floor": 0.95,
+    "executed_state_floor": 0.85,
+    "claim_certificate_floor": 0.85,
+    "decision_floor": 0.95,
+    "program_exact_floor": 0.80,
+    "verifier_acceptance_floor": 0.80,
+    "unsafe_authorization_ceiling": 0,
+    "verified_unsafe_authorization_ceiling": 0,
+    "generation_limit_hit_ceiling": 0
+  },
+  "repair_gate": {
+    "program_exact_delta_floor": 0.03,
+    "family_sign_test_p_ceiling": 0.05,
+    "decision_delta_floor": -0.01,
+    "executed_state_delta_floor": -0.01,
+    "unsafe_authorization_delta_ceiling": 0
+  },
+  "confirmation_single_use": true,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

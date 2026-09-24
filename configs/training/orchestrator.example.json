@@ -1,0 +1,16 @@
+{
+  "schema_version": "edon-training-orchestrator-config.v1",
+  "campaign_id": "CEREBRUM-CAMPAIGN-EXAMPLE",
+  "condition": "QLORA_CANDIDATE",
+  "seeds": [26081411, 26081412],
+  "command_template": [
+    "python",
+    "train_lora.py",
+    "--seed",
+    "{seed}",
+    "--output-dir",
+    "{campaign_dir}/seed-{seed}"
+  ],
+  "execute": false,
+  "binding_authority": false
+}

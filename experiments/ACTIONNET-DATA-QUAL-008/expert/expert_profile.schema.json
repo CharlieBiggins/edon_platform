@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/expert-profile.v1.json",
+  "title": "ActionNet Verified Expert Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["expert_id", "affiliation_id", "profile_status", "verified_domains", "verified_specialties", "verified_jurisdictions", "credential_expires_on", "calibration_score", "conflict_attestation_current"],
+  "properties": {
+    "expert_id": {"type": "string", "minLength": 1},
+    "affiliation_id": {"type": "string", "minLength": 1},
+    "profile_status": {"enum": ["APPLICANT", "VERIFICATION_PENDING", "VERIFIED", "SUSPENDED", "EXPIRED", "REJECTED"]},
+    "verified_domains": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "verified_specialties": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "verified_jurisdictions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "credential_references": {"type": "array", "items": {"type": "string"}},
+    "credential_expires_on": {"type": "string", "format": "date"},
+    "calibration_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "conflict_attestation_current": {"type": "boolean"},
+    "permitted_tenants": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "authored_candidate_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "completed_reviews": {"type": "integer", "minimum": 0}
+  }
+}

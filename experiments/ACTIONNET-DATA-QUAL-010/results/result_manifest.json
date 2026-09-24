@@ -1,0 +1,16 @@
+{
+  "artifacts": {
+    "dataset/repair_validation.jsonl": "sha256:9f515515ad45453f35ed73863a73ba5cf113c565aab22114306e70e6b0761793",
+    "dataset/train.jsonl": "sha256:be8f63563358b5b64272f108447c9fd16227ea5fc3f57a1f6688e54af7533129",
+    "lineage/lineages.json": "sha256:d509366f5ce15c306035ce50eb215830796a0e7b038c5cfedba3832ec99bf74b",
+    "oracle/canonical_trajectories.jsonl": "sha256:02e5fe198aaea8e2ea8dbcaf1d6a5f4380a00208da723658ccd99e74e2425387",
+    "oracle/reservation.json": "sha256:989271343317bc0c0252672050312768138abbf5c6316e26aa64e92e85fd9291",
+    "results/qualification_report.json": "sha256:254049486f00474cfd705d64b0cbfc114d59e8de78064bb054b67196c55db995"
+  },
+  "claim_boundary": "Fresh-lineage project-authored synthetic queue-integrity and appeal repair data only; no learned, independent-transfer, real-institution, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-010",
+  "result_hash": "sha256:7b986b68fa862b1fa715e2a914435a7ab055aa86e4df6385416d77069f5e8f5f",
+  "result_id": "ACTIONNET-DATA-QUAL-010-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV010_TRAINING"
+}

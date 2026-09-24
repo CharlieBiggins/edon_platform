@@ -1,0 +1,25 @@
+{
+  "artifacts": {
+    "DATA_CARD.md": "sha256:6f99c3f10cc0cef943e9f6259432fb92dd07a6bde9880bbbcc0b6b60f325b404",
+    "DEVELOPMENT_TRAINING_HANDOFF.md": "sha256:e50d1c73742c87ef89012c8e744022eb6be72434aea11ad1aa4cfb744c32ae19",
+    "PREREGISTRATION.md": "sha256:d009841faa975ec05c44987b5eaf9be595cda826cb7676176f95f0e917b006b8",
+    "README.md": "sha256:e9d1871137ac3972b0a9ae27c46509737a155a46b6abc352ef16512597679a87",
+    "actionnet.py": "sha256:efa79e4160beffbc333f3c357728649afd49945447d86865ec5ed272732f8c9f",
+    "dataset/development.jsonl": "sha256:921c788188b1eb350ab9402d8513967e7598141aba360ebb910f761ffe27ae91",
+    "dataset/public_holdout_inputs.jsonl": "sha256:a46bff222d683c80130cc0be8d54c16f74b3ce884b2888b0fc5ae0789ab6fef1",
+    "dataset/train.jsonl": "sha256:b2ff207439f1a5e58f6f4583c3f1ac8fd8f116b0238dbb2783d31832122d4107",
+    "lineage/lineages.json": "sha256:3caa9e4c16ea3a522f6f4c307ef8e2c8f36ca0c54de6b3cd61e320b5a11feb0d",
+    "oracle/canonical_trajectories.jsonl": "sha256:55de7cfe8003887fb844cc28968f2b7fe488703fcfbf7c721400bed4d3c4d1f9",
+    "oracle/protected_reservation.json": "sha256:586b0e509884d15251cf356758f03f5d5d65fcca66e656a383069889319ad5e4",
+    "oracle/public_holdout_labels.jsonl": "sha256:61ecf8870e025212fb440dc044dfce588ddc249ea054928e93ef0b3778e4c254",
+    "results/dataset_manifest.json": "sha256:c64fcbe361d7103638a29a24d63c18cb637accdc891033df3aa6ad7b329611a4",
+    "results/qualification_report.json": "sha256:99ce8ace0776bea5dd7922a2433400fd5edaaca47e2f614958188a4635d09956",
+    "run_campaign.py": "sha256:eb4004611dc43f2715d00d1dc99e8f842eb5cd13db8be8659a9213b311644250"
+  },
+  "claim_boundary": "Qualified for internal development LoRA pipeline testing only; not protected learning evidence, cross-institution transfer, or real-institution validity.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-001",
+  "result_hash": "sha256:3189e100f79135fbcda162d00e3703713a32b736e1b05ade7ecab7a73f8af08d",
+  "result_id": "ACTIONNET-DATA-QUAL-001-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_DEVELOPMENT_TRAINING"
+}

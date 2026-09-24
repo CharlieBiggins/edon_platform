@@ -1,0 +1,47 @@
+{
+  "protocol_id": "CEREBRUM-ACTIONNET-MATCHED-001",
+  "framework_version": "0.2.0",
+  "built": "2026-09-19",
+  "status": "IMPLEMENTED_DRAFT_NOT_REGISTERED",
+  "framework_source_inventory_sha256": "sha256:6daaf56c33df63ade63534adf3c6f8598f9d84f36d0ca26a972853017cf71173",
+  "test_command": "python -B -m unittest discover -s edon/experiments/CEREBRUM-ACTIONNET-MATCHED-001/tests -v",
+  "tests_passed": 16,
+  "tests_failed": 0,
+  "test_runtime_seconds": 46.171,
+  "inherited_generation_integration": {
+    "program003_program004_program005_exposures_reconstructed": true,
+    "fresh_training_scenarios": 384,
+    "fresh_training_pairs": 192,
+    "ordinary_examples_before_token_plan": 384,
+    "actionnet_examples_before_token_plan": 960,
+    "fresh_screen_records": 24,
+    "fresh_screen_pairs": 12
+  },
+  "implemented": [
+    "strict immutable preparation and registration",
+    "shared-scenario ordinary and ActionNet serializers",
+    "complete-pair processed-nonpadding-token planning",
+    "local-snapshot identity checks",
+    "fresh-base resumable QLoRA training dispatch",
+    "shared native-program prediction",
+    "offline paired scoring with three-way disposition",
+    "separate paid-execution approval",
+    "actual provider billing receipt gate"
+  ],
+  "not_performed": [
+    "Program-005 final audit",
+    "base snapshot download or network access",
+    "real tokenizer token-plan materialization",
+    "registration",
+    "GPU runtime rehearsal",
+    "training",
+    "prediction",
+    "scoring of model outputs",
+    "transfer or customer evaluation"
+  ],
+  "authority": {
+    "confirmation_authorized": false,
+    "transfer_authorized": false,
+    "binding_authority": false
+  }
+}

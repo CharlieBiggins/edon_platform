@@ -1,0 +1,65 @@
+{
+  "schema_version": "operator-reported-dev015-result.v1",
+  "protocol_id": "CEREBRUM-DEV-015-MIXED",
+  "reported_at": "2026-09-06",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE",
+  "passed": false,
+  "confirmation_scored": false,
+  "confirmation_remained_sealed": true,
+  "continuation_seed": 26090542,
+  "config_sha256": "sha256:6c571c8381584104b78c540f7aa0402b59afdf9a9c93e6fddce564866106739d",
+  "candidates": [
+    {
+      "candidate_id": "continuation-step-12",
+      "step": 12,
+      "adapter_tree_sha256": "sha256:2dd862942bfd21508c18f46cd1d9a67fe5da0e4ef7792860bcd8968ecce8be1a",
+      "predictions_sha256": "sha256:8ca1427fbacaae50fb7e7015d45c5542f1e732688aaca3527c5a1b7f01539ce6",
+      "checks_passed": 23,
+      "check_count": 26
+    },
+    {
+      "candidate_id": "continuation-step-24",
+      "step": 24,
+      "adapter_tree_sha256": "sha256:fdef77ba8e23b250e8e2968cb4a022e041a7e3132b04b1abbbfd97ef87fa0d7b",
+      "predictions_sha256": "sha256:1c86a6dbc90dcb52945c135506472160a5dd21419aba87752ca5374858e29233",
+      "checks_passed": 23,
+      "check_count": 26
+    }
+  ],
+  "shared_metrics": {
+    "certificate_decision_accuracy": 0.875,
+    "certificate_semantic_accuracy": 0.875,
+    "certificate_pivotal_accuracy": 0.8333333333333334,
+    "unresolved_appeal_certificate_accuracy": 1.0,
+    "unsafe_authorizations": 1,
+    "unsafe_intervention_family": "DELAYED_EVIDENCE",
+    "transition_exact": 0.8125,
+    "transition_post_state_exact": 0.875,
+    "transition_decision_accuracy": 0.875,
+    "transition_raw_schema_validity": 1.0,
+    "queue_exact": 0.75,
+    "queue_order_exact": 0.875,
+    "queue_executed_exact": 0.875,
+    "queue_deferred_exact": 0.9375,
+    "queue_step_semantics_exact": 0.75,
+    "queue_final_state_exact": 0.875,
+    "queue_raw_schema_validity": 1.0,
+    "pair_exact": 0.8125,
+    "pair_decision_change_accuracy": 0.9375,
+    "pair_causal_paths_exact": 1.0,
+    "pair_post_state_paths_exact": 1.0,
+    "generation_limit_hits": 0
+  },
+  "failed_checks": [
+    "certificate_pivotal_floor",
+    "transition_post_state_floor",
+    "zero_unsafe_authorizations"
+  ],
+  "registered_parent_choice": {
+    "candidate_id": "continuation-step-12",
+    "reason": "Both registered checkpoints had identical aggregate gate metrics; the earlier checkpoint is used to minimize additional drift while repairing the shared failures."
+  },
+  "binding_authority": false,
+  "transfer_authorized": false,
+  "claim_boundary": "Operator-reported development hold only; raw GPU artifacts remain under external custody and the DEV-015 confirmation was not exposed."
+}

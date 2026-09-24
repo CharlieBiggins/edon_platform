@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-007",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_EVENTNET_DEVELOPMENT",
+  "created": "2026-08-16",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-007-result-v1.0.0",
+    "sha256": "sha256:7c1813511772103deb46a4abcc0425199e2a49e7f42d25f9a7e04bb8af1c99ee",
+    "storage_location": "archive://EDON Research/experiments/ACTIONNET-DATA-QUAL-007/results/result_manifest.json"
+  },
+  "qualification": {
+    "sha256": "sha256:2e899b2f1746233f355583cd556a7278237c6d710750801cd30a3d24f83eb5c2",
+    "controls": "37/37",
+    "storage_location": "archive://EDON Research/experiments/ACTIONNET-DATA-QUAL-007/results/qualification_report.json"
+  },
+  "model": null,
+  "seeds": [26081607, 26081608],
+  "dataset": "ACTIONNET-EXECUTION-TRANSFER-REPAIR-DATASET-v7.0.0",
+  "license": "pending",
+  "claim_scope": "Fresh-lineage synthetic execution-transfer repair data; no learned or external result.",
+  "binding_authority": false
+}

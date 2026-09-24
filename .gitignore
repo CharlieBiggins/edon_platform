@@ -1,0 +1,12 @@
+# Generated frontend/runtime artifacts
+command-center/node_modules/
+command-center/dist/
+command-center/test-results/
+command-center/playwright-report/
+command-center/*.tsbuildinfo
+github-edon_platform/
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example

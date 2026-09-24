@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "protocol_id": "CEREBRUM-ACTIONNET-MATCHED-001",
+  "registration_sha256": null,
+  "provider": "Lightning AI",
+  "account_profile": null,
+  "included_stages": [
+    "runtime",
+    "train-ordinary",
+    "train-actionnet",
+    "predict-ordinary",
+    "predict-actionnet"
+  ],
+  "actual_gpu_hours": null,
+  "actual_cost_usd": null,
+  "provider_evidence_sha256": null,
+  "reported_by": null,
+  "reported_date": null,
+  "provider_billing_attested": false
+}

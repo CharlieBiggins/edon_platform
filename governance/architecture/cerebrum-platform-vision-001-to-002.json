@@ -1,0 +1,31 @@
+{
+  "schema_version": "edon-architecture-vision-migration.v1",
+  "migration_id": "CEREBRUM-PLATFORM-VISION-001-TO-002",
+  "effective_date": "2026-09-21",
+  "status": "ADDITIVE_SUCCESSOR_MIGRATION",
+  "predecessor": {
+    "vision_id": "CEREBRUM-PLATFORM-VISION-001",
+    "artifact_sha256": "sha256:db1c64dccc4e0662ca63d0e5411299d3b855b8a372ba6f6c66c4532649fbbec4",
+    "rewritten": false
+  },
+  "successor": {
+    "vision_id": "CEREBRUM-PLATFORM-VISION-002",
+    "status": "FROZEN_CONTROLLING_VISION_NOT_IMPLEMENTED"
+  },
+  "additions": [
+    "INSTITUTIONAL_CONTROL_GRAPH",
+    "DELEGATED_AUTHORITY_AND_COMMITMENT_LAYER",
+    "DECISION_EXECUTION_AND_COMPENSATION_RECEIPTS"
+  ],
+  "clarifications": [
+    "CAPABILITY_DOES_NOT_IMPLY_AUTHORITY",
+    "HUMAN_APPROVAL_REQUIRES_KERNEL_REEVALUATION",
+    "COMPENSATION_REQUIRES_NEW_KERNEL_AUTHORIZATION",
+    "EVALUATION_AND_RELEASE_REGISTRY_CANNOT_UPDATE_RUNTIME_DIRECTLY",
+    "DEPLOYMENT_CONTROLLER_PRECEDES_REASONING_RUNTIME_INSTALLATION"
+  ],
+  "historical_experiments_rewritten": false,
+  "scientific_result": false,
+  "production_authorized": false,
+  "binding_authority": false
+}

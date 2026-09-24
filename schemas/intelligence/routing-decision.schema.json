@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/intelligence/routing-decision.schema.json",
+  "title": "Enforceable intelligence routing decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "routing_decision_id", "tenant_id", "institution_id",
+    "requested_capability", "graph_version", "state_version", "candidate_checks",
+    "selected_component_id", "fallback_sequence", "routing_policy_version",
+    "data_access_compatible", "estimated_cost", "estimated_latency_ms",
+    "reliability_requirement", "created_at", "trace_id", "decision_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-intelligence-routing-decision.v1"},
+    "routing_decision_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "requested_capability": {"type": "object"},
+    "graph_version": {"type": "string", "minLength": 1},
+    "state_version": {"type": "string", "minLength": 1},
+    "candidate_checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["component_id", "deployed", "workflow_qualified", "schema_compatible", "data_compatible", "within_budget", "eligible", "evidence_refs"],
+        "properties": {
+          "component_id": {"type": "string", "minLength": 1},
+          "deployed": {"type": "boolean"},
+          "workflow_qualified": {"type": "boolean"},
+          "schema_compatible": {"type": "boolean"},
+          "data_compatible": {"type": "boolean"},
+          "within_budget": {"type": "boolean"},
+          "eligible": {"type": "boolean"},
+          "evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}}
+        }
+      }
+    },
+    "advisory_router_ref": {"type": "string", "minLength": 1},
+    "selected_component_id": {"type": "string", "minLength": 1},
+    "fallback_sequence": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "routing_policy_version": {"type": "string", "minLength": 1},
+    "data_access_compatible": {"const": true},
+    "estimated_cost": {"type": "number", "minimum": 0},
+    "estimated_latency_ms": {"type": "integer", "minimum": 0},
+    "reliability_requirement": {"type": "number", "minimum": 0, "maximum": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "trace_id": {"type": "string", "minLength": 1},
+    "decision_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

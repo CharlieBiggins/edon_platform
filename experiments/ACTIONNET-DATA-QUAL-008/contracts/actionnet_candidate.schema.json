@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/candidate.v1.json",
+  "title": "Governed ActionNet Candidate",
+  "type": "object",
+  "required": ["candidate_id", "origin", "domain_id", "jurisdiction", "current_state", "governing_conditions", "expected_decision", "failed_conditions", "evidence_path", "provenance", "review", "training_gate"],
+  "properties": {
+    "candidate_id": {"type": "string"},
+    "origin": {"enum": ["synthetic", "institution_feedback", "expert_authored", "source_compiled"]},
+    "domain_id": {"type": "string"},
+    "jurisdiction": {"type": "string"},
+    "current_state": {"type": "object"},
+    "governing_conditions": {"type": "array", "items": {"type": "string"}},
+    "expected_decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "CONTESTED", "INVALID"]},
+    "expected_post_state": {"type": ["object", "null"]},
+    "failed_conditions": {"type": "array", "items": {"type": "string"}},
+    "evidence_path": {"type": "array", "items": {"type": "string"}},
+    "provenance": {"type": "object"},
+    "review": {"type": "object"},
+    "training_gate": {"type": "object"},
+    "binding_authority": {"const": false}
+  }
+}

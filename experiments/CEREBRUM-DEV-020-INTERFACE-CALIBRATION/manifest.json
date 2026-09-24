@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "version": "1.0.0",
+  "created": "2026-09-07",
+  "status": "READY_PENDING_DEV019_RESULT_AND_DEV017_ADAPTER_IMPORT",
+  "dataset": "ACTIONNET-DATA-QUAL-020",
+  "model_parent": "CEREBRUM-DEV-017-CAUSAL",
+  "scientific_predecessor": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "training_records": 0,
+  "optimizer_steps": 0,
+  "calibration_scenarios": 64,
+  "calibration_predictions": 384,
+  "heldout_scenarios": 64,
+  "heldout_predictions_if_selected": 192,
+  "artifact": {
+    "id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION-readiness-v1.0.0",
+    "sha256": "sha256:1049301a53a7b90b5128af06eee78cba29255a53ec3bc5fe5a089bf57c97e091",
+    "storage_location": "results/readiness-report.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

@@ -1,0 +1,40 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "version": "1.0.0",
+  "status": "PROXY_SIGNAL_ESTABLISHED_CONFIRMATORY_QWEN_BLOCKED",
+  "created": "2026-08-23",
+  "artifact": {
+    "id": "CEREBRUM-PLATFORM-CONTRIB-001-readiness-v1.0.0",
+    "sha256": "sha256:f2c3e492e91ac4231e5efc6e9aa74660bd0dd7e8411756e23a1ef707eaa26550",
+    "storage_location": "experiments/CEREBRUM-PLATFORM-CONTRIB-001/results/readiness_report.json"
+  },
+  "training": {
+    "manifest_sha256": "sha256:1303ed413a3b5d3ab6c9deb1e7e9cd4a32a0c5d86d1f152e84371934825bb3b0",
+    "conditions": ["control", "platform002"],
+    "records_per_condition": 800
+  },
+  "protected_instrument": {
+    "manifest_sha256": "sha256:17799859408d188f8f9d147798b87e43eaf4f037aabd5e47e8ce3bb9e0055625",
+    "cases": 320,
+    "target_institution": "ORBITAL_LAUNCH_RANGE",
+    "independence_scope": "separately implemented project-authored synthetic target"
+  },
+  "proxy_result": {
+    "sha256": "sha256:7b062e09fb840fe202266af05fdbf9abdd5f95f4407de148be1d9fc3122c3b7a",
+    "status": "PROXY_SIGNAL_ESTABLISHED",
+    "actual_cerebrum_executed": false
+  },
+  "readiness": {
+    "sha256": "sha256:f68d8a22480744ab3ba9205fdcf220725cb031ce691a2ff864d2c5af8a106a16",
+    "controls": "22/22"
+  },
+  "qwen_config_sha256": "sha256:025e713332a52513b8f16573007f4392c2799bccea87c70e58bb4966ba2ed763",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26082341, 26082342],
+  "dataset": "CEREBRUM-PLATFORM-CONTRIB-001 matched control/treatment plus protected target",
+  "qwen_status": "NOT_EXECUTED_BLOCKED_MISSING_QWEN_GPU_AND_FRESH_TARGET_CUSTODY",
+  "license": "pending",
+  "claim_scope": "Strong transparent proxy contribution signal and Qwen development rehearsal; confirmatory Cerebrum contribution requires a fresh independently custodied target and GPU runtime.",
+  "binding_authority": false
+}

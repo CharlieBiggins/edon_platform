@@ -1,0 +1,86 @@
+{
+  "schema_version": "cerebrum-dev016-narrow-config.v1",
+  "protocol_id": "CEREBRUM-DEV-016-NARROW",
+  "primary_condition": "delayed_evidence_exact_state_repair",
+  "source_dataset": "ACTIONNET-DATA-QUAL-016",
+  "parent_protocol": "CEREBRUM-DEV-015-MIXED",
+  "parent_continuation_seed": 26090542,
+  "parent_candidate_id": "continuation-step-12",
+  "parent_checkpoint_step": 12,
+  "parent_adapter_tree_sha256": "sha256:2dd862942bfd21508c18f46cd1d9a67fe5da0e4ef7792860bcd8968ecce8be1a",
+  "parent_development_predictions_sha256": "sha256:8ca1427fbacaae50fb7e7015d45c5542f1e732688aaca3527c5a1b7f01539ce6",
+  "parent_config_sha256": "sha256:6c571c8381584104b78c540f7aa0402b59afdf9a9c93e6fddce564866106739d",
+  "parent_development_status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE",
+  "continuation_seed": 26090612,
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "condition_files": {
+    "delayed_evidence_exact_state_repair": "prepared/train.jsonl"
+  },
+  "registered_condition_counts": {
+    "delayed_evidence_exact_state_repair": 368
+  },
+  "development_candidates": [
+    {"candidate_id": "continuation-step-6", "step": 6},
+    {"candidate_id": "continuation-step-12", "step": 12}
+  ],
+  "selection_ranking": [
+    "transition_post_state_desc",
+    "certificate_pivotal_desc",
+    "queue_exact_desc",
+    "transition_exact_desc",
+    "pair_exact_desc",
+    "step_asc"
+  ],
+  "confirmation_single_use": true,
+  "load_in_4bit": true,
+  "max_length": 4096,
+  "inference_max_input_tokens": 4096,
+  "require_zero_training_truncation": true,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 2048,
+    "QUEUE_TRACE": 2048,
+    "PAIR_CONTRAST": 2048,
+    "QUEUE_ORDER": 512,
+    "QUEUE_PARTITION": 1024
+  },
+  "generation_token_margin": 64,
+  "epochs": 1,
+  "max_steps": 12,
+  "effective_batch_size": 16,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.000001,
+  "warmup_steps": 1,
+  "weight_decay": 0.01,
+  "logging_steps": 2,
+  "save_steps": 6,
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "gate": {
+    "certificate_decision_min": 0.85,
+    "certificate_semantic_min": 0.85,
+    "certificate_pivotal_min": 0.85,
+    "certificate_invariance_min": 0.75,
+    "certificate_contextual_min": 0.75,
+    "unresolved_appeal_certificate_min": 0.9,
+    "transition_exact_min": 0.7,
+    "transition_post_state_min": 0.9,
+    "transition_decision_min": 0.85,
+    "queue_exact_min": 0.65,
+    "queue_order_min": 0.85,
+    "queue_executed_min": 0.85,
+    "queue_deferred_min": 0.85,
+    "queue_steps_min": 0.75,
+    "queue_final_state_min": 0.85,
+    "pair_exact_min": 0.7,
+    "pair_decision_change_min": 0.9,
+    "pair_certificate_decisions_min": 0.85,
+    "pair_causal_paths_min": 0.9,
+    "pair_post_state_paths_min": 0.9
+  }
+}

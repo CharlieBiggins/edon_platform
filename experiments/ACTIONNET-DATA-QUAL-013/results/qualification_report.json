@@ -1,0 +1,312 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:778bc51612a8d78a0a8b5b87b02737ee4ab46e92a635dab2d52174b0780d5442",
+    "confirmation_generator": {
+      "aggregate_outcome_sha256": "sha256:cb3b1b387043cbc4dfb284ca585ce71e6742390a1da3289677e42a5f971c8773",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 48,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 48,
+        "CONTESTED": 32,
+        "INVALID": 16
+      },
+      "deferred_event_count_distribution": {
+        "1": 26,
+        "2": 26,
+        "3": 34,
+        "4": 10
+      },
+      "deferred_event_trajectories": 96,
+      "engine_comparisons": 704,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 64,
+        "7": 32
+      },
+      "families": [
+        740,
+        741,
+        742,
+        743,
+        744,
+        745,
+        746,
+        747
+      ],
+      "generator_lineage": "generator-1c79d33eda3d52f2",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 8,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 8,
+        "UNRESOLVED_APPEAL": 32
+      },
+      "multi_actor_trajectories": 96,
+      "mutation_path_count_distribution": {
+        "2": 64,
+        "4": 32
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 8,
+        "INVARIANCE": 8,
+        "PIVOTAL": 32
+      },
+      "pivotal_pair_changes": 32,
+      "query_time_distribution": {
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 18,
+        "12": 18
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 96,
+      "transition_disagreements": 0
+    },
+    "development_selection": {
+      "boundary_offset_counts": {
+        "-1": 16,
+        "1": 16
+      },
+      "case_ids": 32,
+      "decision_counts": {
+        "ALLOW": 16,
+        "CONTESTED": 16
+      },
+      "pair_ids": 16,
+      "records": 32,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_SELECTION_REGISTER": 32
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "selection_generator": {
+      "aggregate_outcome_sha256": "sha256:2b200019a66eb0fdd0a1c9ff7e2d101a0caa3f6fd43cfc20d37fc96f30809f9a",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 24,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 24,
+        "CONTESTED": 16,
+        "INVALID": 8
+      },
+      "deferred_event_count_distribution": {
+        "1": 13,
+        "2": 12,
+        "3": 15,
+        "4": 8
+      },
+      "deferred_event_trajectories": 48,
+      "engine_comparisons": 352,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 32,
+        "7": 16
+      },
+      "families": [
+        720,
+        721,
+        722,
+        723
+      ],
+      "generator_lineage": "generator-c55e936ce338708d",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 4,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 4,
+        "UNRESOLVED_APPEAL": 16
+      },
+      "multi_actor_trajectories": 48,
+      "mutation_path_count_distribution": {
+        "2": 32,
+        "4": 16
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 4,
+        "INVARIANCE": 4,
+        "PIVOTAL": 16
+      },
+      "pivotal_pair_changes": 16,
+      "query_time_distribution": {
+        "8": 10,
+        "9": 10,
+        "10": 10,
+        "11": 10,
+        "12": 8
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 48,
+      "transition_disagreements": 0
+    },
+    "train": {
+      "boundary_offset_counts": {
+        "-1": 96,
+        "1": 96
+      },
+      "case_ids": 192,
+      "decision_counts": {
+        "ALLOW": 96,
+        "CONTESTED": 96
+      },
+      "pair_ids": 24,
+      "records": 192,
+      "renderer_counts": {
+        "APPEAL_PAIR_MATRIX": 48,
+        "BOUNDARY_DELTA_LEDGER": 48,
+        "EXECUTION_CUTOFF_CARD": 48,
+        "NEAR_CLOCK_MEMO": 48
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    },
+    "train_generator": {
+      "aggregate_outcome_sha256": "sha256:48e362f88d8235de5303e377aba1fd4166c37a1e1476dbe488956b41c1792741",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 36,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 36,
+        "CONTESTED": 24,
+        "INVALID": 12
+      },
+      "deferred_event_count_distribution": {
+        "1": 12,
+        "2": 24,
+        "3": 30,
+        "4": 6
+      },
+      "deferred_event_trajectories": 72,
+      "engine_comparisons": 528,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 48,
+        "7": 24
+      },
+      "families": [
+        700,
+        701,
+        702,
+        703,
+        704,
+        705
+      ],
+      "generator_lineage": "generator-ab4da0c0bcb322fe",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 6,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 6,
+        "UNRESOLVED_APPEAL": 24
+      },
+      "multi_actor_trajectories": 72,
+      "mutation_path_count_distribution": {
+        "2": 48,
+        "4": 24
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 6,
+        "INVARIANCE": 6,
+        "PIVOTAL": 24
+      },
+      "pivotal_pair_changes": 24,
+      "query_time_distribution": {
+        "8": 16,
+        "9": 14,
+        "10": 14,
+        "11": 14,
+        "12": 14
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 72,
+      "transition_disagreements": 0
+    },
+    "untouched_confirmation": {
+      "boundary_offset_counts": {
+        "-1": 32,
+        "1": 32
+      },
+      "case_ids": 64,
+      "decision_counts": {
+        "ALLOW": 32,
+        "CONTESTED": 32
+      },
+      "pair_ids": 32,
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_BOUNDARY_CONFIRMATION_DOCKET": 64
+      },
+      "weight_by_decision": {
+        "ALLOW": [
+          8.0
+        ],
+        "CONTESTED": [
+          9.0
+        ]
+      }
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh project-authored synthetic near-clock development selection and untouched confirmation data only; no full regression, independent transfer, real-institution, production, authority, or IGI claim.",
+  "control_count": 29,
+  "controls": {
+    "all_pairs_clock_minus_one_vs_plus_one": true,
+    "all_splits_balanced": true,
+    "all_splits_offsets_balanced": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "certificate_only": true,
+    "confirmation_renderer_confirmation_only": true,
+    "decision_clock_exact": true,
+    "event_operands_visible": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "model_inputs_only_observation_query": true,
+    "new_protocol_namespace": true,
+    "pivotal_only": true,
+    "predecessor_families_disjoint": true,
+    "predecessor_renderers_disjoint": true,
+    "registered_counts": true,
+    "registered_pair_counts": true,
+    "released_lineage_ids_unique": true,
+    "reserved_future_families_unmaterialized": true,
+    "safety_weight_exceeds_allow_weight": true,
+    "selection_renderer_development_only": true,
+    "split_cases_disjoint": true,
+    "split_families_disjoint": true,
+    "split_pairs_disjoint": true,
+    "split_renderers_disjoint": true,
+    "transition_engines_exact": true,
+    "unique_case_ids": true,
+    "unresolved_appeal_mechanism_only": true
+  },
+  "controls_passed": 29,
+  "dataset_id": "ACTIONNET-NEAR-CLOCK-APPEAL-BOUNDARY-v13.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-013",
+  "result_id": "ACTIONNET-DATA-QUAL-013-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v13",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV013_BOUNDARY_SELECTION"
+}

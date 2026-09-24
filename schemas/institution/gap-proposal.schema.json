@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/institution/gap-proposal.schema.json",
+  "title": "Unapproved institutional gap proposal",
+  "type": "object",
+  "required": [
+    "proposal_id", "mechanism_id", "gap_type", "evidence_shadow_ids",
+    "occurrences", "recommended_action", "approved", "binding_authority"
+  ],
+  "properties": {
+    "proposal_id": {"type": "string"},
+    "mechanism_id": {"type": "string"},
+    "gap_type": {"type": "string"},
+    "evidence_shadow_ids": {"type": "array", "items": {"type": "string"}},
+    "occurrences": {"type": "integer", "minimum": 1},
+    "recommended_action": {"const": "REVIEW_AND_PROPOSE_IR_AMENDMENT"},
+    "approved": {"const": false},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

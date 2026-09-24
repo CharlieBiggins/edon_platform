@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/receipts/execution-receipt.schema.json",
+  "title": "Execution Assurance receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "receipt_id", "sequence", "tenant_id", "institution_id",
+    "execution_id", "proposal_id", "decision_receipt_id", "graph_version_before",
+    "validated_state_version", "connector_profile_ref", "idempotency_key",
+    "lifecycle_status", "validation_checks", "request_sha256", "event_refs",
+    "recorded_at", "trace_id", "receipt_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-execution-receipt.v1"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 0},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "execution_id": {"type": "string", "minLength": 1},
+    "proposal_id": {"type": "string", "minLength": 1},
+    "decision_receipt_id": {"type": "string", "minLength": 1},
+    "graph_version_before": {"type": "string", "minLength": 1},
+    "graph_version_after": {"type": "string", "minLength": 1},
+    "validated_state_version": {"type": "string", "minLength": 1},
+    "connector_profile_ref": {"type": "string", "minLength": 1},
+    "idempotency_key": {"type": "string", "minLength": 1},
+    "lifecycle_status": {"enum": ["VALIDATION_FAILED", "VERIFIED", "RESERVED", "DISPATCHED", "ACKNOWLEDGED", "PARTIAL", "COMPLETED", "FAILED", "CANCELLED", "COMPENSATION_REQUIRED", "COMPENSATED"]},
+    "validation_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization", "proposal_unchanged", "graph_current", "preconditions", "mandate", "resources", "connector", "idempotency"],
+      "properties": {
+        "authorization": {"enum": ["PASS", "FAIL"]},
+        "proposal_unchanged": {"enum": ["PASS", "FAIL"]},
+        "graph_current": {"enum": ["PASS", "FAIL"]},
+        "preconditions": {"enum": ["PASS", "FAIL"]},
+        "mandate": {"enum": ["PASS", "FAIL"]},
+        "resources": {"enum": ["PASS", "FAIL"]},
+        "connector": {"enum": ["PASS", "FAIL"]},
+        "idempotency": {"enum": ["PASS", "FAIL"]}
+      }
+    },
+    "reservation_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "request_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "response_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "acknowledgement_ref": {"type": "string", "minLength": 1},
+    "partial_effect_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "outcome_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "outcome_status": {"enum": ["NOT_OBSERVED", "REPORTED", "OBSERVED", "VERIFIED", "CONTESTED", "FAILED"]},
+    "compensation_record_ref": {"type": "string", "minLength": 1},
+    "event_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "trace_id": {"type": "string", "minLength": 1},
+    "receipt_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

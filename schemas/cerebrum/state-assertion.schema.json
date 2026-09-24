@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/state-assertion.schema.json",
+  "title": "Separated Cerebrum System state assertion",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "assertion_id", "tenant_id", "world_id", "state_class",
+    "state_path", "value", "occurred_at", "recorded_at",
+    "available_to_controller_at", "source_ref", "confidence", "provenance",
+    "assertion_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-cerebrum-state-assertion.v1"},
+    "assertion_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "world_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "state_class": {"enum": ["OBSERVED", "REPORTED", "INFERRED", "AUTHORIZED", "COMMITTED"]},
+    "state_path": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+    "value": {},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "available_to_controller_at": {"type": "string", "format": "date-time"},
+    "source_ref": {"type": "string", "minLength": 1, "maxLength": 200},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "provenance": {"type": "object"},
+    "model_lineage": {"type": "string", "minLength": 1, "maxLength": 200},
+    "authorization_ref_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "world_version": {"type": "integer", "minimum": 0},
+    "committed_state_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "assertion_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"state_class": {"const": "INFERRED"}}},
+      "then": {"required": ["model_lineage"]}
+    },
+    {
+      "if": {"properties": {"state_class": {"enum": ["AUTHORIZED", "COMMITTED"]}}},
+      "then": {"required": ["authorization_ref_sha256"]}
+    },
+    {
+      "if": {"properties": {"state_class": {"const": "COMMITTED"}}},
+      "then": {"required": ["world_version", "committed_state_sha256"]}
+    }
+  ]
+}

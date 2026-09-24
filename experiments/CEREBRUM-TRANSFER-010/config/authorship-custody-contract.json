@@ -1,0 +1,26 @@
+{
+  "schema_version": "cerebrum-transfer-010-authorship-custody-contract.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "required_roles": [
+    "candidate_developer",
+    "independent_instrument_author",
+    "independent_generator_oracle_implementer",
+    "independent_custodian"
+  ],
+  "separation_requirements": {
+    "instrument_author_not_actionnet009_or_010_author": true,
+    "instrument_author_not_dev009_or_010_author": true,
+    "generator_implementer_not_candidate_developer": true,
+    "custodian_not_candidate_developer": true,
+    "custodian_not_instrument_author": true,
+    "protected_content_unseen_by_candidate_developers_before_freeze": true
+  },
+  "implementation_requirements": {
+    "no_actionnet001_through_010_import": true,
+    "no_predecessor_case_or_prompt_reuse": true,
+    "separate_generator_and_execution_oracle_paths": true,
+    "labels_retained_by_custodian": true,
+    "single_score_transaction": true
+  },
+  "binding_authority": false
+}

@@ -1,0 +1,16 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-014",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV014_FULL_REGRESSION",
+  "created": "2026-09-05",
+  "validation_records": 192,
+  "training_records": 0,
+  "consumer": "CEREBRUM-DEV-014-FULL",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-014-result-v1.0.0",
+    "sha256": "sha256:5154abf3213abdb508708751257b4199fbea9160ef72971e67bded68e1b68f64",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false
+}

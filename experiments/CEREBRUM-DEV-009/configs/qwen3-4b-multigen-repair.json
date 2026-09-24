@@ -1,0 +1,38 @@
+{
+  "schema_version": "cerebrum-execution-transfer-repair-training-config.v1",
+  "primary_condition": "multi_generator_execution_repair",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "condition_files": {
+    "multi_generator_execution_repair": "prepared/train-execution-repair.jsonl"
+  },
+  "registered_condition_counts": {
+    "multi_generator_execution_repair": 10752
+  },
+  "registered_seeds": [
+    26082491,
+    26082492
+  ],
+  "load_in_4bit": true,
+  "max_length": 4096,
+  "inference_max_input_tokens": 4096,
+  "require_zero_training_truncation": true,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 1536,
+    "QUEUE_TRACE": 1536,
+    "PAIR_CONTRAST": 2048
+  },
+  "generation_token_margin": 64,
+  "epochs": 3,
+  "effective_batch_size": 16,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.0001,
+  "warmup_steps": 25,
+  "weight_decay": 0.01,
+  "lora_r": 16,
+  "lora_alpha": 32,
+  "lora_dropout": 0.05,
+  "target_modules": "all-linear",
+  "logging_steps": 10,
+  "save_steps": 25
+}

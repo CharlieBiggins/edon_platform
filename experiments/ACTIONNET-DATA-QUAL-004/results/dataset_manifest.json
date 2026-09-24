@@ -1,0 +1,31 @@
+{
+  "claim_boundary": "Project-authored synthetic event-queue corpus for internal multi-actor institutional learning only.",
+  "confirmatory_ready": false,
+  "counts": {
+    "canonical_trajectories": 600,
+    "counterfactual_pairs": 300,
+    "repair_validation_records": 420,
+    "train_records": 5040
+  },
+  "dataset_id": "ACTIONNET-EVENTNET-DATASET-v4.0.0",
+  "files": {
+    "dataset/repair_validation.jsonl": "sha256:3a036458e27733d84b53322a07e4d51da9d459f5966e5fd620b8764654fbd000",
+    "dataset/train.jsonl": "sha256:6e86052dae3a6708437da91b3843a281a2f2e94593325696e4ac101472f18d2b",
+    "lineage/lineages.json": "sha256:7929652b810feeb38a1f58e00ad0e3d2ed034760a202c983c2e3f9e205b96469",
+    "oracle/canonical_trajectories.jsonl": "sha256:71984f16a0209d70e292241fef4a18da9cd36bf89bf4587be5b1c68e38b37f08",
+    "oracle/mechanism_catalog.json": "sha256:ec70078b3af6773b2ca4694535d56d568b189d5a6b8f628bafa29d609345a5a9",
+    "oracle/reservation.json": "sha256:f2409851b86861146a4130f36e56efa1ac6c0965a9b8067e4740b189086b4a11"
+  },
+  "human_domain_review": false,
+  "parent_result": "ACTIONNET-DATA-QUAL-003-result-v1.0.0",
+  "protected_materialized": false,
+  "public_materialized": false,
+  "schema_version": "actionnet-eventnet-dataset-manifest.v4",
+  "source_grounded": false,
+  "task_types": [
+    "CERTIFICATE",
+    "TRANSITION",
+    "QUEUE_TRACE",
+    "PAIR_CONTRAST"
+  ]
+}

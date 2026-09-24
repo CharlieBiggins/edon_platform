@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "protocol_id": "CEREBRUM-ACTIONNET-MATCHED-001",
+  "registration_sha256": null,
+  "study_sha256": null,
+  "maximum_gpu_hours_per_run": null,
+  "maximum_total_gpu_hours": null,
+  "gpu_hourly_price_usd": null,
+  "maximum_cost_usd_per_run": null,
+  "maximum_total_cost_usd": null,
+  "approval_identity": null,
+  "approval_date": null,
+  "paid_execution_approved": false,
+  "scope": "MATCHED001_RUNTIME_TRAIN_BOTH_ARMS_AND_OPTIONAL_24_CASE_SCREEN_FOR_DECLARED_SEED_ONLY"
+}

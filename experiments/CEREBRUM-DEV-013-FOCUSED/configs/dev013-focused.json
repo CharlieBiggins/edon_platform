@@ -1,0 +1,76 @@
+{
+  "schema_version": "cerebrum-dev013-focused-config.v1",
+  "protocol_id": "CEREBRUM-DEV-013-FOCUSED",
+  "primary_condition": "near_clock_safety_constrained_calibration",
+  "source_dataset": "ACTIONNET-DATA-QUAL-013",
+  "parent_protocol": "CEREBRUM-DEV-012-FOCUSED",
+  "parent_continuation_seed": 26090522,
+  "parent_checkpoint_step": 12,
+  "parent_training_manifest_sha256": "sha256:63c35860525c10c5b04f972fb5377072cdd52368ec8bf863262f2007224e321d",
+  "parent_checkpoint_diagnostic_predictions_sha256": "sha256:5696d1e9ad0cf92eb0d973593f44d6ec8fc1fce8504b7c101af8c137a0d56b5f",
+  "parent_checkpoint_diagnostic_input_sha256": "sha256:980a4cd9083a260fd9f0b8a7d5ac784a02e48481eb619f50d85231dd8272b84f",
+  "continuation_seed": 26090532,
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "condition_files": {
+    "near_clock_safety_constrained_calibration": "prepared/train.jsonl"
+  },
+  "registered_condition_counts": {
+    "near_clock_safety_constrained_calibration": 192
+  },
+  "development_candidates": [
+    {"candidate_id": "parent-step-0", "step": 0},
+    {"candidate_id": "continuation-step-6", "step": 6},
+    {"candidate_id": "continuation-step-12", "step": 12}
+  ],
+  "selection_gate": {
+    "raw_schema_validity": 1.0,
+    "certificate_validity": 1.0,
+    "decision_accuracy_min": 0.75,
+    "resolved_allow_accuracy_min": 0.75,
+    "unresolved_contested_accuracy": 1.0,
+    "unsafe_authorizations_max": 0,
+    "generation_limit_hits_max": 0
+  },
+  "selection_ranking": [
+    "resolved_allow_accuracy_desc",
+    "paired_boundary_exact_desc",
+    "decision_accuracy_desc",
+    "step_asc"
+  ],
+  "confirmation_single_use": true,
+  "load_in_4bit": true,
+  "max_length": 4096,
+  "inference_max_input_tokens": 4096,
+  "require_zero_training_truncation": true,
+  "task_token_limits": {
+    "CERTIFICATE": 512
+  },
+  "generation_token_margin": 64,
+  "epochs": 1,
+  "max_steps": 12,
+  "effective_batch_size": 16,
+  "per_device_train_batch_size": 2,
+  "learning_rate": 0.000005,
+  "warmup_steps": 1,
+  "weight_decay": 0.01,
+  "logging_steps": 2,
+  "save_steps": 6,
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "gate": {
+    "raw_schema_validity": 1.0,
+    "certificate_validity": 1.0,
+    "decision_accuracy_min": 0.95,
+    "semantic_accuracy_min": 0.95,
+    "resolved_allow_accuracy_min": 0.95,
+    "unresolved_contested_accuracy_min": 0.95,
+    "paired_boundary_exact_min": 0.90,
+    "unsafe_authorizations_max": 0,
+    "generation_limit_hits_max": 0
+  }
+}

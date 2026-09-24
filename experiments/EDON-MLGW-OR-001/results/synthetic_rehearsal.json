@@ -1,0 +1,210 @@
+{
+  "actual_replay": {
+    "assignments": [
+      {
+        "crew_id": "crew-a-tree",
+        "critical_weight": 0.0,
+        "customers_restored": 0,
+        "duration_minutes": 60.0,
+        "finish_minute": 60.0,
+        "job_id": "tree-clearance",
+        "ready_minute": 0.0,
+        "start_minute": 0.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 0.0,
+        "customers_restored": 20,
+        "duration_minutes": 180.0,
+        "finish_minute": 240.0,
+        "job_id": "small-service",
+        "ready_minute": 60.0,
+        "start_minute": 60.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 2.0,
+        "customers_restored": 700,
+        "duration_minutes": 120.0,
+        "finish_minute": 360.0,
+        "job_id": "main-feeder",
+        "ready_minute": 60.0,
+        "start_minute": 240.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 5.0,
+        "customers_restored": 100,
+        "duration_minutes": 60.0,
+        "finish_minute": 420.0,
+        "job_id": "critical-pump",
+        "ready_minute": 60.0,
+        "start_minute": 360.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 0.0,
+        "customers_restored": 180,
+        "duration_minutes": 60.0,
+        "finish_minute": 480.0,
+        "job_id": "downstream-lateral",
+        "ready_minute": 360.0,
+        "start_minute": 420.0
+      }
+    ],
+    "binding_authority": false,
+    "claim_boundary": "Synthetic integration rehearsal only; not MLGW data or performance evidence.",
+    "controller_id": "actual_mlgw_replay",
+    "coordination_latency_minutes": {
+      "ready_to_assignment": 540.0
+    },
+    "crew_hours": 8.0,
+    "critical_outage_hours": 47.0,
+    "episode_id": "SYNTHETIC-MLGW-PLUMBING-ONLY:actual_mlgw_replay",
+    "physical_scenario_fingerprint": "sha256:62490949d4ea84b431b6687e27085eb82ff31c4808d85de6cf8559be64062d98",
+    "resource_fingerprint": "sha256:0356a890fc64c4b4def909504ce8ce254b5c1fa35211d3ab1a654a022aa90c1f",
+    "restoration_curve": [
+      {
+        "customers_out": 1000.0,
+        "minute": 0.0
+      },
+      {
+        "customers_out": 1000.0,
+        "minute": 60.0
+      },
+      {
+        "customers_out": 980.0,
+        "minute": 240.0
+      },
+      {
+        "customers_out": 280.0,
+        "minute": 360.0
+      },
+      {
+        "customers_out": 180.0,
+        "minute": 420.0
+      },
+      {
+        "customers_out": 0.0,
+        "minute": 480.0
+      }
+    ],
+    "unauthorized_actions": 0,
+    "unsafe_recommendations": 0
+  },
+  "claim_boundary": "Invented fixture only; no MLGW fact, controller result, transfer evidence, or restoration claim.",
+  "comparison": {
+    "baseline_controller": "actual_mlgw_replay",
+    "binding_authority": false,
+    "candidate_controller": "critical_biggest_return",
+    "candidate_safety_gate_passed": true,
+    "critical_outage_hours_reduction": 0.6170212765957447,
+    "customer_outage_hours_reduction": 0.4252252252252252,
+    "customers_per_crew_hour_increase": 0.0,
+    "restoration_time_reductions": {
+      "t50": 0.4148936170212766,
+      "t80": 0.41176470588235287,
+      "t90": 0.3880597014925372,
+      "t95": 0.3741007194244605,
+      "t99": 0.18181818181818207
+    },
+    "schema_version": "edon-mlgw-episode-comparison.v1",
+    "valid_matched_resources": true
+  },
+  "heuristic": {
+    "assignments": [
+      {
+        "crew_id": "crew-a-tree",
+        "critical_weight": 0.0,
+        "customers_restored": 0,
+        "duration_minutes": 60.0,
+        "finish_minute": 60.0,
+        "job_id": "tree-clearance",
+        "ready_minute": 0.0,
+        "start_minute": 0.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 5.0,
+        "customers_restored": 100,
+        "duration_minutes": 60.0,
+        "finish_minute": 120.0,
+        "job_id": "critical-pump",
+        "ready_minute": 60.0,
+        "start_minute": 60.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 2.0,
+        "customers_restored": 700,
+        "duration_minutes": 120.0,
+        "finish_minute": 240.0,
+        "job_id": "main-feeder",
+        "ready_minute": 60.0,
+        "start_minute": 120.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 0.0,
+        "customers_restored": 180,
+        "duration_minutes": 60.0,
+        "finish_minute": 300.0,
+        "job_id": "downstream-lateral",
+        "ready_minute": 240.0,
+        "start_minute": 240.0
+      },
+      {
+        "crew_id": "crew-z-line",
+        "critical_weight": 0.0,
+        "customers_restored": 20,
+        "duration_minutes": 180.0,
+        "finish_minute": 480.0,
+        "job_id": "small-service",
+        "ready_minute": 60.0,
+        "start_minute": 300.0
+      }
+    ],
+    "binding_authority": false,
+    "claim_boundary": "Synthetic integration rehearsal only; not MLGW data or performance evidence.",
+    "controller_id": "critical_biggest_return",
+    "coordination_latency_minutes": {
+      "ready_to_assignment": 300.0
+    },
+    "crew_hours": 8.0,
+    "critical_outage_hours": 18.0,
+    "episode_id": "SYNTHETIC-MLGW-PLUMBING-ONLY:critical_biggest_return",
+    "physical_scenario_fingerprint": "sha256:62490949d4ea84b431b6687e27085eb82ff31c4808d85de6cf8559be64062d98",
+    "resource_fingerprint": "sha256:0356a890fc64c4b4def909504ce8ce254b5c1fa35211d3ab1a654a022aa90c1f",
+    "restoration_curve": [
+      {
+        "customers_out": 1000.0,
+        "minute": 0.0
+      },
+      {
+        "customers_out": 1000.0,
+        "minute": 60.0
+      },
+      {
+        "customers_out": 900.0,
+        "minute": 120.0
+      },
+      {
+        "customers_out": 200.0,
+        "minute": 240.0
+      },
+      {
+        "customers_out": 20.0,
+        "minute": 300.0
+      },
+      {
+        "customers_out": 0.0,
+        "minute": 480.0
+      }
+    ],
+    "unauthorized_actions": 0,
+    "unsafe_recommendations": 0
+  },
+  "protocol_id": "EDON-MLGW-OR-001",
+  "schema_version": "edon-mlgw-synthetic-rehearsal.v1",
+  "status": "SYNTHETIC_PLUMBING_REHEARSAL_PASS"
+}

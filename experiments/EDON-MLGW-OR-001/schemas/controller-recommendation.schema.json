@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "edon-mlgw-controller-recommendation.v1",
+  "type": "object",
+  "required": [
+    "recommendation_id",
+    "controller_id",
+    "decision_time",
+    "visible_timeline_hash",
+    "assignments",
+    "abstain",
+    "safety_checks",
+    "binding_authority"
+  ],
+  "properties": {
+    "recommendation_id": {"type": "string"},
+    "controller_id": {"type": "string"},
+    "decision_time": {"type": "string", "format": "date-time"},
+    "visible_timeline_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["crew_id", "job_id", "rank"],
+        "properties": {
+          "crew_id": {"type": "string"},
+          "job_id": {"type": "string"},
+          "rank": {"type": "integer", "minimum": 1}
+        },
+        "additionalProperties": false
+      }
+    },
+    "abstain": {"type": "boolean"},
+    "safety_checks": {"type": "object", "additionalProperties": {"type": "boolean"}},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

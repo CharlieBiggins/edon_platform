@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "edon-research"
+version = "0.9.1"
+description = "Typed institutional representation, simulation, learning, and deterministic governance research platform"
+readme = "README.md"
+requires-python = ">=3.11"
+license = {text = "License pending; all rights reserved"}
+authors = [{name = "EDON Research Lab"}]
+dependencies = []
+
+[project.scripts]
+edon = "edon.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"edon.actionnet.eventnet" = [
+  "worlds/*/*.py",
+  "worlds/*/registry/*.json",
+]
+
+[tool.edon]
+claim_registry = "governance/claim-registry/claims.json"
+experiment_registry = "experiments/registry.json"

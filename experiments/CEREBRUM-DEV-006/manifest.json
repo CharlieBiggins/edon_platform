@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-006",
+  "version": "0.1.0",
+  "status": "READY_FOR_RESOURCE_CONTINGENT_EXECUTION",
+  "created": "2026-08-14",
+  "artifact": {
+    "id": "CEREBRUM-DEV-006-protocol-manifest",
+    "sha256": "sha256:12c891337c34248bf461cba3ae09d25564e8daf2d348a47f61a4e796eaa0dd1f",
+    "storage_location": "archive://EDON Research/experiments/CEREBRUM-DEV-006/results/protocol_manifest.json"
+  },
+  "readiness": {
+    "sha256": "sha256:585e0db342fa2a557b4e5a238ca1a21ec6edd87bfcbf0516574dd74f22806fbd",
+    "controls": "30/30",
+    "storage_location": "archive://EDON Research/experiments/CEREBRUM-DEV-006/results/readiness_report.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26081461, 26081462],
+  "dataset": "ACTIONNET-DATA-QUAL-006",
+  "license": "pending",
+  "claim_scope": "Executable fresh-lineage synthetic appeal-boundary repair protocol; no learned result yet.",
+  "binding_authority": false
+}

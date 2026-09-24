@@ -1,0 +1,22 @@
+services:
+  edon:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile
+    environment:
+      EDON_API_KEYS: ${EDON_API_KEYS:?Set a JSON token-to-role map}
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - edon-state:/var/lib/edon
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    restart: unless-stopped
+
+volumes:
+  edon-state:

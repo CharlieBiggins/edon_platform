@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-training-release.schema.json",
+  "title": "Governed ActionNet training release",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "release_id", "experience_ids", "experience_hashes", "model_target", "release_manager_id", "created_at", "release_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-training-release.v1"},
+    "tenant_id": {"type": "string"},
+    "release_id": {"type": "string"},
+    "experience_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}, "uniqueItems": true},
+    "experience_hashes": {"type": "object"},
+    "model_target": {"type": "string"},
+    "release_manager_id": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "release_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "schema_version": "cerebrum-transfer-008-reservation.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "reserved_on": "2026-08-24",
+  "instrument": {
+    "cases": 192,
+    "task_counts": {
+      "CERTIFICATE": 48,
+      "TRANSITION": 48,
+      "QUEUE_TRACE": 48,
+      "PAIR_CONTRAST": 48
+    },
+    "pair_class_record_counts": {
+      "PIVOTAL": 128,
+      "INVARIANCE": 32,
+      "CONTEXTUAL": 32
+    },
+    "mechanisms": 16,
+    "semantic_family_ids": null,
+    "domain_ids": null,
+    "renderer_ids": null,
+    "timing_profile_ids": null,
+    "generator_seed_commitment": null,
+    "generator_source_commitment": null,
+    "oracle_source_commitment": null,
+    "input_commitment": null,
+    "label_commitment": null,
+    "overlap_audit_commitment": null
+  },
+  "cases_materialized": false,
+  "prompts_materialized": false,
+  "labels_materialized": false,
+  "generator_materialized": false,
+  "oracle_materialized": false,
+  "runtime_materialized": false,
+  "scorer_materialized": false,
+  "predictions_materialized": false,
+  "score_materialized": false,
+  "materialization_authorized": false,
+  "binding_authority": false
+}

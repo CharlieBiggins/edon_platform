@@ -1,0 +1,11 @@
+CREATE TABLE journal_events (tenant_id text NOT NULL, event_id text NOT NULL, event_type text NOT NULL, payload jsonb NOT NULL, recorded_at timestamptz NOT NULL, PRIMARY KEY (tenant_id,event_id));
+CREATE TABLE evidence_records (tenant_id text NOT NULL, evidence_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,evidence_id));
+CREATE TABLE state_snapshots (tenant_id text NOT NULL, scope_id text NOT NULL, version bigint NOT NULL, values jsonb NOT NULL, PRIMARY KEY (tenant_id,scope_id));
+CREATE TABLE idempotency_keys (tenant_id text NOT NULL, key text NOT NULL, response jsonb NOT NULL, PRIMARY KEY (tenant_id,key));
+CREATE TABLE incidents (tenant_id text NOT NULL, incident_id text NOT NULL, scope_id text NOT NULL, state_version bigint NOT NULL, status text NOT NULL, PRIMARY KEY (tenant_id,incident_id));
+CREATE TABLE proposals (tenant_id text NOT NULL, proposal_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,proposal_id));
+CREATE TABLE human_reviews (tenant_id text NOT NULL, review_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,review_id));
+CREATE TABLE mandates (tenant_id text NOT NULL, mandate_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,mandate_id));
+CREATE TABLE shadow_evaluations (tenant_id text NOT NULL, proposal_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,proposal_id));
+CREATE TABLE outcomes (tenant_id text NOT NULL, outcome_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,outcome_id));
+CREATE TABLE receipts (tenant_id text NOT NULL, receipt_id text NOT NULL, payload jsonb NOT NULL, PRIMARY KEY (tenant_id,receipt_id));

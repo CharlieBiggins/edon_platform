@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-008-reservation.v1",
+  "type": "object",
+  "required": [
+    "protocol_id",
+    "instrument",
+    "cases_materialized",
+    "labels_materialized",
+    "materialization_authorized",
+    "binding_authority"
+  ],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-008"},
+    "instrument": {"type": "object"},
+    "cases_materialized": {"const": false},
+    "labels_materialized": {"const": false},
+    "materialization_authorized": {"const": false},
+    "binding_authority": {"const": false}
+  }
+}

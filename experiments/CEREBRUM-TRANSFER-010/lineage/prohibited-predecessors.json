@@ -1,0 +1,44 @@
+{
+  "schema_version": "cerebrum-transfer-010-prohibited-predecessors.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "prohibited_case_sources": [
+    "ACTIONNET-DATA-QUAL-001",
+    "ACTIONNET-DATA-QUAL-002",
+    "ACTIONNET-DATA-QUAL-003",
+    "ACTIONNET-DATA-QUAL-004",
+    "ACTIONNET-DATA-QUAL-005",
+    "ACTIONNET-DATA-QUAL-006",
+    "ACTIONNET-DATA-QUAL-007",
+    "ACTIONNET-DATA-QUAL-008",
+    "ACTIONNET-DATA-QUAL-009",
+    "ACTIONNET-DATA-QUAL-010",
+    "CEREBRUM-TRANSFER-003",
+    "CEREBRUM-TRANSFER-005",
+    "CEREBRUM-TRANSFER-006-EXPLORATORY",
+    "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC",
+    "CEREBRUM-TRANSFER-008",
+    "CEREBRUM-DEV-009-RB1-validation",
+    "CEREBRUM-DEV-010-training",
+    "CEREBRUM-DEV-010-validation"
+  ],
+  "prohibited_source_hashes": [
+    "sha256:9dd29e2bbdfcae4cbdcdda28f57b4ab35fc0b9a616ac889a52b339ca3564b8bc",
+    "sha256:bec1faa6d76a7ab11facf8e8f3cf72674406dee123e9947c237ca18b4806e361",
+    "sha256:7287c76c02d2510919995d5dc66e72504dfc95788994e12eb1a2bde161c29c8f",
+    "sha256:968bf8f126527da214046cd69f0e2ea0755291a4109dd7b4831a6a845a6bb136"
+  ],
+  "prohibited_post_materialization_actions": [
+    "gradient_update",
+    "calibration",
+    "retrieval_change",
+    "instrument_demonstration",
+    "prompt_repair",
+    "parser_patch",
+    "output_repair",
+    "retry_budget_change",
+    "threshold_tuning",
+    "case_specific_analysis"
+  ],
+  "action_on_overlap": "ABORT_MATERIALIZATION_AND_RESERVE_NEW_IDENTITY",
+  "binding_authority": false
+}

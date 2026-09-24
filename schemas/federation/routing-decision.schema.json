@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/federation/routing-decision.schema.json",
+  "title": "Cross-scope routing decision",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["tenant_id", "decision_id", "source_scope_id", "target_scope_id", "consequence_scope_ids", "impact_score", "uncertainty", "disposition", "reason_codes", "context_sha256", "record_sha256", "binding_authority"],
+  "properties": {
+    "tenant_id": {"type": "string"},
+    "decision_id": {"type": "string"},
+    "source_scope_id": {"type": "string"},
+    "target_scope_id": {"type": "string"},
+    "consequence_scope_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "impact_score": {"type": "number", "minimum": 0, "maximum": 1},
+    "uncertainty": {"type": "number", "minimum": 0, "maximum": 1},
+    "required_authority_scope_id": {"type": ["string", "null"]},
+    "disposition": {"enum": ["HANDLE_LOCAL", "HANDLE_AT_ROOT", "ESCALATE"]},
+    "reason_codes": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "context_sha256": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string"},
+    "escalation": {"type": "object"},
+    "binding_authority": {"const": false}
+  }
+}

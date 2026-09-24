@@ -1,0 +1,22 @@
+{
+  "ordinary-a": {
+    "training_registration_sha256": null,
+    "training_manifest_sha256": null,
+    "adapter_sha256": null
+  },
+  "actionnet-a": {
+    "training_registration_sha256": null,
+    "training_manifest_sha256": null,
+    "adapter_sha256": null
+  },
+  "ordinary-b": {
+    "training_registration_sha256": null,
+    "training_manifest_sha256": null,
+    "adapter_sha256": null
+  },
+  "actionnet-b": {
+    "training_registration_sha256": null,
+    "training_manifest_sha256": null,
+    "adapter_sha256": null
+  }
+}

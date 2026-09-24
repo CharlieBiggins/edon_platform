@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/intelligence/component-registry.schema.json",
+  "title": "Model and Solver Registry component",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "component_id", "provider", "identity", "component_type",
+    "qualified_workflows", "input_schema_refs", "output_schema_refs",
+    "capability_envelope", "unsupported_conditions", "data_permissions",
+    "tenant_permissions", "default_budget_ref", "reliability_evidence_refs",
+    "fallback_policy", "evaluation_records", "deployment_status",
+    "rollback_target", "registered_at", "manifest_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-intelligence-component-registry.v1"},
+    "component_id": {"type": "string", "minLength": 1, "maxLength": 300},
+    "provider": {"type": "string", "minLength": 1, "maxLength": 300},
+    "identity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity_kind", "version"],
+      "properties": {
+        "identity_kind": {"enum": ["HASHED_ARTIFACT", "PROVIDER_MANAGED_API", "DETERMINISTIC_COMPONENT"]},
+        "version": {"type": "string", "minLength": 1, "maxLength": 300},
+        "artifact_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "provider_model_id": {"type": "string", "minLength": 1, "maxLength": 500},
+        "api_revision": {"type": "string", "minLength": 1, "maxLength": 300},
+        "deployment_id": {"type": "string", "minLength": 1, "maxLength": 300},
+        "evaluation_configuration_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"identity_kind": {"enum": ["HASHED_ARTIFACT", "DETERMINISTIC_COMPONENT"]}}, "required": ["identity_kind"]},
+          "then": {"required": ["artifact_sha256"]}
+        },
+        {
+          "if": {"properties": {"identity_kind": {"const": "PROVIDER_MANAGED_API"}}, "required": ["identity_kind"]},
+          "then": {"required": ["provider_model_id", "api_revision", "deployment_id", "evaluation_configuration_sha256"]}
+        }
+      ]
+    },
+    "component_type": {"enum": ["PERCEPTION_MODEL", "REFLEX_MODEL", "COMPILER_MODEL", "CORE_REASONER", "FRONTIER_MODEL", "CUSTOMER_MODEL", "DOMAIN_SPECIALIST", "OPTIMIZER", "SIMULATOR", "PROPOSAL_CRITIC", "OUTCOME_MODEL", "COMMUNICATION_MODEL", "DETERMINISTIC_VERIFIER"]},
+    "qualified_workflows": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "input_schema_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "output_schema_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "capability_envelope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task_families", "institutional_structures", "input_conditions", "language_coverage", "tool_access", "maximum_action_scope", "known_limitations", "required_evidence", "evaluation_confidence"],
+      "properties": {
+        "task_families": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "institutional_structures": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "input_conditions": {"type": "array", "items": {"type": "object"}},
+        "language_coverage": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "tool_access": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "maximum_action_scope": {"type": "object"},
+        "known_limitations": {"type": "array", "items": {"type": "string", "minLength": 1}},
+        "required_evidence": {"type": "array", "items": {"type": "object"}},
+        "evaluation_confidence": {"type": "number", "minimum": 0, "maximum": 1}
+      }
+    },
+    "unsupported_conditions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "data_permissions": {"type": "object"},
+    "tenant_permissions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "default_budget_ref": {"type": "string", "minLength": 1},
+    "reliability_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "fallback_policy": {"type": "object"},
+    "evaluation_records": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "deployment_status": {"enum": ["REGISTERED", "EVALUATED", "CANARY", "ACTIVE_SCOPED", "SUSPENDED", "ROLLED_BACK", "RETIRED"]},
+    "rollback_target": {"type": "string", "minLength": 1},
+    "registered_at": {"type": "string", "format": "date-time"},
+    "manifest_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

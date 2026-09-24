@@ -1,0 +1,74 @@
+{
+  "schema_version": "cerebrum-transfer-010-baseline-contract.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "status": "FROZEN_BEFORE_INSTRUMENT_MATERIALIZATION",
+  "effective_on": "2026-09-04",
+  "conditions": [
+    {"condition": "unmodified_base", "class": "LEARNED_RAW_DIAGNOSTIC", "primary_superiority_eligible": false},
+    {"condition": "interface_matched_base", "class": "LEARNED_MATCHED_BASELINE", "primary_superiority_eligible": true},
+    {"condition": "prompted_interface_matched_base", "class": "LEARNED_MATCHED_BASELINE", "primary_superiority_eligible": true},
+    {"condition": "frontier_general_primary", "class": "FRONTIER_MATCHED_BASELINE", "primary_superiority_eligible": true},
+    {"condition": "frontier_general_secondary", "class": "FRONTIER_MATCHED_BASELINE", "primary_superiority_eligible": true},
+    {"condition": "rb1_predecessor_pair", "class": "REPAIR_EFFECT_DIAGNOSTIC", "primary_superiority_eligible": false},
+    {"condition": "transparent_rules_ceiling", "class": "DETERMINISTIC_SOLVABILITY_CONTROL", "primary_superiority_eligible": false}
+  ],
+  "primary_comparator": {
+    "eligible_conditions": [
+      "interface_matched_base",
+      "prompted_interface_matched_base",
+      "frontier_general_primary",
+      "frontier_general_secondary"
+    ],
+    "selection": "MAX_REGISTERED_EXECUTION_COMPOSITE",
+    "candidate_improvement_min": 0.1,
+    "raw_unmodified_base_is_diagnostic_only": true,
+    "rules_ceiling_is_not_a_learned_comparator": true
+  },
+  "frontier_requirements": {
+    "condition_count": 2,
+    "distinct_providers": true,
+    "general_purpose_models": true,
+    "publicly_accessible_at_freeze": true,
+    "no_edon_specific_training": true,
+    "exact_model_and_api_revisions_frozen": true,
+    "selection_rule_frozen_before_instrument": true
+  },
+  "shared_resources": {
+    "same_released_observations": true,
+    "same_task_instructions": true,
+    "same_task_token_limits": true,
+    "same_model_agnostic_output_contract": true,
+    "same_deterministic_compiler": true,
+    "same_case_order": true,
+    "same_retry_budget": true,
+    "retry_budget_per_case": 0,
+    "temperature_zero_or_deterministic_minimum": true
+  },
+  "prompt_pack": {
+    "source_class": "PUBLIC_NON_PROTECTED_INTERFACE_ONLY",
+    "freeze_before_instrument_materialization": true,
+    "instrument_content_prohibited": true,
+    "answer_bearing_metadata_prohibited": true
+  },
+  "required_metric_views": [
+    "RAW_SCHEMA_VALIDITY",
+    "CONDITIONAL_DECISION_ACCURACY_GIVEN_VALID_OUTPUT",
+    "CONDITIONAL_SEMANTIC_ACCURACY_GIVEN_VALID_OUTPUT",
+    "FINAL_COMPILED_ACCURACY",
+    "UNSAFE_AUTHORIZATION",
+    "TRANSITION",
+    "POST_STATE",
+    "QUEUE_ORDER",
+    "QUEUE_EXECUTION",
+    "QUEUE_DEFERRAL",
+    "QUEUE_STEPS",
+    "QUEUE_FINAL_STATE",
+    "PAIR_CONTRAST",
+    "CAUSAL_PATH",
+    "GOVERNANCE_FORM_COMPOSITE",
+    "MECHANISM_FLOORS",
+    "TOKEN_AND_RETRY_USE"
+  ],
+  "instrument_materialized": false,
+  "binding_authority": false
+}

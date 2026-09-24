@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actions/execution-record.schema.json",
+  "title": "Execution Assurance lifecycle record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "execution_id",
+    "execution_request_id",
+    "tenant_id",
+    "institution_id",
+    "action_proposal_id",
+    "authorization_decision_id",
+    "validated_state_version",
+    "lifecycle_status",
+    "validation_checks",
+    "connector_profile_ref",
+    "idempotency_key",
+    "event_refs",
+    "created_at",
+    "updated_at",
+    "record_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-execution-record.v1"},
+    "execution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "execution_request_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "action_proposal_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "authorization_decision_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "validated_state_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "lifecycle_status": {"enum": ["VALIDATION_FAILED", "VERIFIED", "RESERVED", "DISPATCHED", "ACKNOWLEDGED", "PARTIAL", "OUTCOME_VERIFIED", "COMPLETED", "FAILED", "CANCELLED", "COMPENSATED"]},
+    "validation_checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorization", "proposal_unchanged", "state_current", "preconditions", "resources", "connector", "idempotency"],
+      "properties": {
+        "authorization": {"enum": ["PASS", "FAIL"]},
+        "proposal_unchanged": {"enum": ["PASS", "FAIL"]},
+        "state_current": {"enum": ["PASS", "FAIL"]},
+        "preconditions": {"enum": ["PASS", "FAIL"]},
+        "resources": {"enum": ["PASS", "FAIL"]},
+        "connector": {"enum": ["PASS", "FAIL"]},
+        "idempotency": {"enum": ["PASS", "FAIL"]}
+      }
+    },
+    "connector_profile_ref": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 500},
+    "reservation_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "dispatch_receipt_ref": {"type": "string", "minLength": 1},
+    "acknowledgement_ref": {"type": "string", "minLength": 1},
+    "outcome_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "compensation_ref": {"type": "string", "minLength": 1},
+    "event_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

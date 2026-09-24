@@ -1,0 +1,202 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:8848a49440415bb00b31dcf75aab5d794b7835761c14db09c7047d9b44b1fa52",
+    "focused_validation": {
+      "case_ids": 64,
+      "decision_counts": {
+        "ALLOW": 32,
+        "CONTESTED": 32
+      },
+      "pair_ids": 32,
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_CLOSURE_REGISTER": 64
+      },
+      "weight_max": 8.0,
+      "weight_min": 8.0,
+      "weight_sum": 512.0
+    },
+    "train": {
+      "case_ids": 384,
+      "decision_counts": {
+        "ALLOW": 192,
+        "CONTESTED": 192
+      },
+      "pair_ids": 48,
+      "records": 384,
+      "renderer_counts": {
+        "APPEAL_FINALITY_LEDGER": 96,
+        "APPEAL_STATUS_MATRIX": 96,
+        "CLOCK_BOUNDARY_MEMO": 96,
+        "CLOSURE_EVIDENCE_CARD": 96
+      },
+      "weight_max": 8.0,
+      "weight_min": 8.0,
+      "weight_sum": 3072.0
+    },
+    "train_generator": {
+      "aggregate_outcome_sha256": "sha256:e7b5d10ef660a956126072aea07f50c08de85aac344482552add970058bdcb3c",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 72,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 72,
+        "CONTESTED": 48,
+        "INVALID": 24
+      },
+      "deferred_event_count_distribution": {
+        "1": 37,
+        "2": 63,
+        "3": 33,
+        "4": 11
+      },
+      "deferred_event_trajectories": 144,
+      "engine_comparisons": 1056,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 96,
+        "7": 48
+      },
+      "families": [
+        600,
+        601,
+        602,
+        603
+      ],
+      "generator_lineage": "generator-e7e77a2d5a5faecc",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 12,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 12,
+        "UNRESOLVED_APPEAL": 48
+      },
+      "multi_actor_trajectories": 144,
+      "mutation_path_count_distribution": {
+        "2": 96,
+        "4": 48
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 12,
+        "INVARIANCE": 12,
+        "PIVOTAL": 48
+      },
+      "pivotal_pair_changes": 48,
+      "query_time_distribution": {
+        "8": 30,
+        "9": 30,
+        "10": 28,
+        "11": 28,
+        "12": 28
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 144,
+      "transition_disagreements": 0
+    },
+    "validation_generator": {
+      "aggregate_outcome_sha256": "sha256:cb3b1b387043cbc4dfb284ca585ce71e6742390a1da3289677e42a5f971c8773",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 48,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 48,
+        "CONTESTED": 32,
+        "INVALID": 16
+      },
+      "deferred_event_count_distribution": {
+        "1": 19,
+        "2": 36,
+        "3": 31,
+        "4": 10
+      },
+      "deferred_event_trajectories": 96,
+      "engine_comparisons": 704,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 64,
+        "7": 32
+      },
+      "families": [
+        640,
+        641,
+        642,
+        643
+      ],
+      "generator_lineage": "generator-4daa15e5db4d77d1",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 8,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 8,
+        "UNRESOLVED_APPEAL": 32
+      },
+      "multi_actor_trajectories": 96,
+      "mutation_path_count_distribution": {
+        "2": 64,
+        "4": 32
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 8,
+        "INVARIANCE": 8,
+        "PIVOTAL": 32
+      },
+      "pivotal_pair_changes": 32,
+      "query_time_distribution": {
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 18,
+        "12": 18
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 96,
+      "transition_disagreements": 0
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh-lineage project-authored synthetic resolved/unresolved appeal calibration data only; no full regression, independent transfer, real-institution, production, authority, or IGI claim.",
+  "control_count": 28,
+  "controls": {
+    "appeal_boundary_exact": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "certificate_only": true,
+    "decision_clock_exact": true,
+    "event_operands_visible": true,
+    "heldout_renderer_validation_only": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "model_inputs_only_observation_query": true,
+    "new_protocol_namespace": true,
+    "pivotal_only": true,
+    "predecessor_families_disjoint": true,
+    "predecessor_renderers_disjoint": true,
+    "registered_counts": true,
+    "registered_pair_counts": true,
+    "released_lineage_ids_unique": true,
+    "reserved_future_families_unmaterialized": true,
+    "train_decisions_balanced": true,
+    "train_validation_cases_disjoint": true,
+    "train_validation_families_disjoint": true,
+    "train_validation_pairs_disjoint": true,
+    "train_validation_renderers_disjoint": true,
+    "training_weights_symmetric": true,
+    "transition_engines_exact": true,
+    "unique_case_ids": true,
+    "unresolved_appeal_mechanism_only": true,
+    "validation_decisions_balanced": true
+  },
+  "controls_passed": 28,
+  "dataset_id": "ACTIONNET-APPEAL-FINALITY-CALIBRATION-v12.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-012",
+  "result_id": "ACTIONNET-DATA-QUAL-012-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v12",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV012_BALANCE_CONTINUATION"
+}

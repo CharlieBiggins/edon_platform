@@ -1,0 +1,28 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-013-FOCUSED",
+  "version": "1.0.0",
+  "status": "FOCUSED_NEAR_CLOCK_REPAIR_SIGNAL_OPERATOR_REPORTED",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "CEREBRUM-DEV-013-FOCUSED-readiness-v1.0.0",
+    "sha256": "sha256:4b42a1df8e152dff0da2bd91f9b776f58075e7cafd23c7a0f444a84fa3a965d0",
+    "storage_location": "results/readiness-report.json"
+  },
+  "dataset": "ACTIONNET-DATA-QUAL-013",
+  "parent_protocol": "CEREBRUM-DEV-012-FOCUSED",
+  "parent_continuation_seed": 26090522,
+  "parent_checkpoint_step": 12,
+  "continuation_seed": 26090532,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "training_records": 192,
+  "development_records_per_candidate": 32,
+  "development_candidates": 3,
+  "confirmation_records": 64,
+  "optimizer_steps": 12,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Operator-reported step-6 focused confirmation pass: 63/64, zero unsafe authorizations, 9/9 checks; full regression and transfer remain unestablished.",
+  "binding_authority": false
+}

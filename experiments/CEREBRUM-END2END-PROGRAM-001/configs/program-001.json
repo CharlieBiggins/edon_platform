@@ -1,0 +1,133 @@
+{
+  "schema_version": "cerebrum-end2end-program-001-config.v1",
+  "protocol_id": "CEREBRUM-END2END-PROGRAM-001",
+  "source_dataset": "ACTIONNET-DATA-QUAL-021-PROGRAM",
+  "source_result_id": "ACTIONNET-DATA-QUAL-021-PROGRAM-result-v1.0.0",
+  "validated_interface": "FAMILIAR_AUGMENTED",
+  "program_schema": "ACTIONNET_TEMPORAL_PROGRAM_V1",
+  "interface_predecessor": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "interface_predecessor_status": "INTERFACE_CALIBRATION_SIGNAL",
+  "interface_selection_sha256": "sha256:927cbdc991098a73195572722ac360b16f6218ea5a7d31a708bdf6c8ede00aa2",
+  "interface_calibration_result_sha256": "sha256:9d5b9133675a112425f238f20ad70f463403c51ab0e1a0936178b9a6d85f9f24",
+  "interface_validation_input_sha256": "sha256:63b482bec93f27e429d92cdb5f3eef22e814e1e5d4c39b377d16191093c5b98a",
+  "interface_validation_predictions_sha256": "sha256:c285b8ebb33694edd9ab611261e0779f51e21a906afa32e780ccf2fb9cd84f9c",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "fresh_adapter_from_base": true,
+  "base_control": {
+    "candidate_id": "untrained-base-step-0",
+    "step": 0,
+    "adapter": null,
+    "development_prediction_before_training": true,
+    "paired_confirmation_if_selected": true
+  },
+  "training_run_id": "program001-fresh-seed-26090751",
+  "training_seed": 26090751,
+  "training_records": 1024,
+  "development_records": 128,
+  "confirmation_records": 256,
+  "registered_development_predictions": 384,
+  "registered_confirmation_predictions_after_selection": 512,
+  "epochs": 2.0,
+  "effective_batch_size": 16,
+  "registered_effective_sample_exposures": 2048,
+  "max_steps": 128,
+  "per_device_train_batch_size": 1,
+  "learning_rate": 0.0001,
+  "warmup_steps": 8,
+  "weight_decay": 0.01,
+  "logging_steps": 4,
+  "save_steps": 64,
+  "max_length": 4096,
+  "generation_token_margin": 8,
+  "require_zero_training_truncation": true,
+  "load_in_4bit": true,
+  "inference_max_input_tokens": 4096,
+  "task_token_limits": {
+    "TEMPORAL_PROGRAM": 2048
+  },
+  "lora": {
+    "r": 32,
+    "alpha": 64,
+    "dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  },
+  "development_candidates": [
+    {
+      "candidate_id": "program-step-64",
+      "step": 64
+    },
+    {
+      "candidate_id": "program-step-128",
+      "step": 128
+    }
+  ],
+  "development_gate": {
+    "parse_valid_floor": 0.98,
+    "event_order_floor": 0.95,
+    "partition_floor": 0.95,
+    "executed_state_floor": 0.85,
+    "claim_certificate_floor": 0.85,
+    "decision_floor": 0.95,
+    "program_exact_floor": 0.80,
+    "verifier_acceptance_floor": 0.80,
+    "unsafe_authorization_ceiling": 0,
+    "verified_unsafe_authorization_ceiling": 0,
+    "generation_limit_hit_ceiling": 0
+  },
+  "confirmation_gate": {
+    "parse_valid_floor": 0.98,
+    "event_order_floor": 0.95,
+    "partition_floor": 0.95,
+    "executed_state_floor": 0.85,
+    "claim_certificate_floor": 0.85,
+    "decision_floor": 0.95,
+    "program_exact_floor": 0.80,
+    "verifier_acceptance_floor": 0.80,
+    "unsafe_authorization_ceiling": 0,
+    "verified_unsafe_authorization_ceiling": 0,
+    "generation_limit_hit_ceiling": 0
+  },
+  "development_improvement_gate": {
+    "program_exact_delta_floor": 0.10,
+    "executed_state_delta_floor": 0.10,
+    "decision_delta_floor": 0.05,
+    "verifier_acceptance_delta_floor": 0.10,
+    "program_exact_mcnemar_p_ceiling": 0.05,
+    "unsafe_authorization_delta_ceiling": 0
+  },
+  "confirmation_improvement_gate": {
+    "program_exact_delta_floor": 0.10,
+    "executed_state_delta_floor": 0.10,
+    "decision_delta_floor": 0.05,
+    "verifier_acceptance_delta_floor": 0.10,
+    "program_exact_mcnemar_p_ceiling": 0.05,
+    "unsafe_authorization_delta_ceiling": 0
+  },
+  "selection_ranking": [
+    "absolute_and_improvement_gate_desc",
+    "unsafe_authorizations_asc",
+    "program_exact_delta_desc",
+    "program_exact_rate_desc",
+    "executed_state_rate_desc",
+    "decision_accuracy_desc",
+    "earlier_step_asc"
+  ],
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "confirmation_single_use": true,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

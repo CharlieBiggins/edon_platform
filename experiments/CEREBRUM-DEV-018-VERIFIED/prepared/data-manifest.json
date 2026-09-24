@@ -1,0 +1,71 @@
+{
+  "answer_keys_present_in_verifier_inputs": false,
+  "binding_authority": false,
+  "confirmation_single_use": true,
+  "model_and_hybrid_scored_separately": true,
+  "prepared_hashes": {
+    "development_selection": "sha256:63e6c6249cd0be80afb986f84d09acdf532c8d24987d71205f903eaf2527da94",
+    "untouched_confirmation": "sha256:73e8cf668b193887df31d17ccbb597def34d8011beed45bfb1610577973bc9e5"
+  },
+  "protocol_id": "CEREBRUM-DEV-018-VERIFIED",
+  "schema_version": "cerebrum-dev018-verified-data-manifest.v1",
+  "source_hashes": {
+    "development_selection": "sha256:033190e469a8ddb99d0ea57a727cedacb1bf8d6cedf66077250367646b5f42b0",
+    "untouched_confirmation": "sha256:8c06d68e976e499efd577fe94ae4dba37192b2f065a3d99a0ad99b1eb2339af6"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-018-result-v1.0.0",
+  "splits": {
+    "development_selection": {
+      "case_ids": 64,
+      "pair_ids": 16,
+      "profile_counts": {
+        "DEVELOPMENT_SELECTION": 64
+      },
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_VERIFIED_DEVELOPMENT_REGISTER": 64
+      },
+      "source_counts": {
+        "FRESH": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 16,
+        "PAIR_CONTRAST": 16,
+        "QUEUE_TRACE": 16,
+        "TRANSITION": 16
+      }
+    },
+    "untouched_confirmation": {
+      "case_ids": 192,
+      "pair_ids": 48,
+      "profile_counts": {
+        "UNTOUCHED_CONFIRMATION": 192
+      },
+      "records": 192,
+      "renderer_counts": {
+        "HELDOUT_VERIFIED_CONFIRMATION_DOCKET": 192
+      },
+      "source_counts": {
+        "FRESH": 192
+      },
+      "task_counts": {
+        "CERTIFICATE": 48,
+        "PAIR_CONTRAST": 48,
+        "QUEUE_TRACE": 48,
+        "TRANSITION": 48
+      }
+    }
+  },
+  "training_authorized": false,
+  "training_records": 0,
+  "transfer_authorized": false,
+  "verifier_fields": [
+    "case_id",
+    "task_type",
+    "compiler_input"
+  ],
+  "verifier_input_hashes": {
+    "development_selection": "sha256:65e4462861ba30ed6fe088a559809bf5213f2ef832adb8f9631307364f9aca2c",
+    "untouched_confirmation": "sha256:0e83ba76f0c490f26753da057e77b13ca162d82293519b3eaff4fe24f0255674"
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-institutional-ir.schema.json",
+  "title": "Canonical ActionNet Institutional IR",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "institution_id", "version", "institution_type", "canonical_tuple", "objects", "horizons", "truth_layers", "source_grounded", "authoritative", "binding_authority", "ir_sha256"],
+  "properties": {
+    "schema_version": {"const": "actionnet-institutional-ir.v1"},
+    "institution_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "institution_type": {"type": "string", "minLength": 1},
+    "canonical_tuple": {"const": "I=(X,E,R,A,P,W,T,C,Sigma)"},
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["object_id", "object_type", "tuple_component", "name", "attributes", "references", "temporal_state", "epistemic_state"],
+        "properties": {
+          "object_id": {"type": "string", "minLength": 1},
+          "object_type": {"enum": ["INSTITUTION", "ENTITY", "ACTOR", "ROLE", "AUTHORITY", "CAPABILITY", "RESOURCE", "GOAL", "OBLIGATION", "POLICY", "EVIDENCE", "WORKFLOW", "PLAN", "DEPENDENCY", "EVENT", "ACTION", "OUTCOME", "RISK", "TEMPORAL_CONSTRAINT", "CONFLICT"]},
+          "tuple_component": {"enum": ["X", "E", "R", "A", "P", "W", "T", "C", "SIGMA"]},
+          "name": {"type": "string", "minLength": 1},
+          "attributes": {"type": "object"},
+          "references": {"type": "array", "items": {"type": "object", "required": ["relation", "target_id"]}},
+          "temporal_state": {
+            "type": "object",
+            "required": ["valid_from_seconds", "valid_until_seconds", "observed_at_seconds"]
+          },
+          "epistemic_state": {
+            "type": "object",
+            "required": ["status", "confidence", "as_of", "sources", "critical"],
+            "properties": {
+              "status": {"enum": ["KNOWN", "UNKNOWN", "ESTIMATED", "STALE", "CONTRADICTORY", "DELAYED", "UNTRUSTED", "PROBABILISTIC"]},
+              "confidence": {"type": "number", "minimum": 0, "maximum": 1}
+            }
+          },
+          "behavior_model": {"type": "object"}
+        }
+      }
+    },
+    "horizons": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "object", "required": ["horizon_id", "duration_seconds", "label"]}
+    },
+    "truth_layers": {"type": "object", "required": ["normative", "operational", "behavioral"]},
+    "source_grounded": {"type": "boolean"},
+    "authoritative": {"const": false},
+    "binding_authority": {"const": false},
+    "ir_sha256": {"type": "string"}
+  }
+}

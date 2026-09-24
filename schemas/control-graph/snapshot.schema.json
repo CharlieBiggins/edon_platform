@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/control-graph/snapshot.schema.json",
+  "title": "Versioned Institutional Control Graph snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "snapshot_id",
+    "tenant_id",
+    "institution_id",
+    "graph_version",
+    "decision_time",
+    "recorded_at",
+    "available_to_controller_at",
+    "ir_version",
+    "policy_version",
+    "authority_version",
+    "domain_pack_versions",
+    "event_range",
+    "node_manifest",
+    "edge_manifest",
+    "conflict_refs",
+    "compartment_refs",
+    "snapshot_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-control-graph-snapshot.v1"},
+    "snapshot_id": {"type": "string", "minLength": 1, "maxLength": 300},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "graph_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "prior_graph_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "decision_time": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "available_to_controller_at": {"type": "string", "format": "date-time"},
+    "ir_version": {"type": "string", "minLength": 1},
+    "policy_version": {"type": "string", "minLength": 1},
+    "authority_version": {"type": "string", "minLength": 1},
+    "domain_pack_versions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "event_range": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["first_sequence", "last_sequence"],
+      "properties": {
+        "first_sequence": {"type": "integer", "minimum": 0},
+        "last_sequence": {"type": "integer", "minimum": 0}
+      }
+    },
+    "node_manifest": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "edge_manifest": {"type": "object", "additionalProperties": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "conflict_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "compartment_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "snapshot_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

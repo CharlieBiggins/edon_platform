@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/certificate.schema.json",
+  "title": "Non-authoritative Cerebrum certificate",
+  "type": "object",
+  "required": ["semantic_state", "decision", "failed_conditions", "binding_authority"],
+  "properties": {
+    "semantic_state": {"enum": ["TRUE", "FALSE", "UNKNOWN", "MISSING", "CONTESTED", "INVALID"]},
+    "decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "CONTESTED", "INVALID"]},
+    "failed_conditions": {"type": "array", "items": {"type": "string"}},
+    "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

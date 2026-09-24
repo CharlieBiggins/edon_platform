@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-008-baseline-registry.v1",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "protocol_id",
+    "amendment_id",
+    "status",
+    "contract_path",
+    "contract_sha256",
+    "prompt_pack_sha256",
+    "conditions",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "cerebrum-transfer-008-baseline-registry.v1"},
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-008"},
+    "amendment_id": {"const": "CEREBRUM-TRANSFER-008-AMENDMENT-001-BASELINE-FAIRNESS"},
+    "status": {
+      "enum": [
+        "PENDING_RB1_TWO_SEED_PASS",
+        "LEARNED_BASELINES_FROZEN"
+      ]
+    },
+    "contract_path": {"const": "config/baseline-contract.json"},
+    "contract_sha256": {"type": ["string", "null"]},
+    "prompt_pack_sha256": {"type": ["string", "null"]},
+    "conditions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "condition",
+          "model",
+          "revision",
+          "adapter_sha256",
+          "schema_constraint",
+          "interface_demonstrations",
+          "primary_superiority_eligible",
+          "frozen"
+        ]
+      }
+    },
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

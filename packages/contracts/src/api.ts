@@ -1,0 +1,16 @@
+export const CONTRACT_VERSION = '2026-09-24.v1' as const;
+export type ApiErrorCode = 'VALIDATION_FAILED' | 'PERMISSION_DENIED' | 'STATE_STALE' | 'EVIDENCE_MISSING' | 'MANDATE_INVALID' | 'KERNEL_DENIED' | 'REVIEW_REQUIRED' | 'OUTCOME_UNKNOWN' | 'INTEGRITY_FAILED';
+export type RequestBinding = { tenant_id: string; actor_id: string; correlation_id: string; trace_id: string; idempotency_key: string; expected_state_version?: number; contract_version: string; request_timestamp: string; evidence_references?: string[] };
+export type ApiError = { error: { code: ApiErrorCode; message: string; correlation_id: string; details?: Record<string, unknown> } };
+export type ApiResult<T> = { data: T; meta: { correlation_id: string; contract_version: string } };
+export const requestBindingFields = ['tenant_id', 'actor_id', 'correlation_id', 'trace_id', 'idempotency_key', 'contract_version', 'request_timestamp'] as const;
+export function validateBinding(value: unknown): value is RequestBinding { if (!value || typeof value !== 'object') return false; const input = value as Record<string, unknown>; return requestBindingFields.every(field => typeof input[field] === 'string' && String(input[field]).length > 0) && (input.expected_state_version === undefined || typeof input.expected_state_version === 'number') && (input.evidence_references === undefined || Array.isArray(input.evidence_references)); }
+export const apiSchemas = { RequestBinding: { type: 'object', required: [...requestBindingFields], properties: Object.fromEntries(requestBindingFields.map(field => [field, { type: 'string' }])) }, ApiError: { type: 'object', required: ['error'], properties: { error: { type: 'object', required: ['code', 'message', 'correlation_id'] } } } };
+export function openApiDocument(serverUrl = 'http://localhost:8787') {
+  const routes = ['/v1/events', '/v1/incidents/{id}', '/v1/state/{scopeId}', '/v1/proposals', '/v1/reviews', '/v1/shadow-evaluations', '/v1/outcomes', '/v1/receipts/{id}', '/v1/reconstructions/{incidentId}'];
+  const paths = Object.fromEntries(routes.map(path => [path, {
+    get: { responses: { '200': { description: 'Canonical API result' }, '400': { description: 'Canonical API error' } } },
+    post: { requestBody: { required: true, content: { 'application/json': { schema: { $ref: '#/components/schemas/RequestBinding' } } } }, responses: { '200': { description: 'Canonical API result' }, '400': { description: 'Canonical API error' } } },
+  }]));
+  return { openapi: '3.1.0', info: { title: 'Cerebrum Control Plane API', version: CONTRACT_VERSION }, servers: [{ url: serverUrl }], components: { schemas: apiSchemas }, paths };
+}

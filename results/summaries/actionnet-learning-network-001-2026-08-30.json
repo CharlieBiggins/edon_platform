@@ -1,0 +1,19 @@
+{
+  "schema_version": "edon-actionnet-learning-network-status.v1",
+  "date": "2026-08-30",
+  "architecture_id": "ACTIONNET-LEARNING-NETWORK-001",
+  "version": "0.8.0",
+  "status": "INTERNAL_GOVERNED_REFERENCE_NOT_PRODUCTION_AUTHORIZED",
+  "reference_tests": "9/9_PASS",
+  "memory_context_only": true,
+  "local_actionnet_tenant_isolated": true,
+  "global_records_store_raw_tenant_payloads": false,
+  "global_release_revalidates_local_eligibility": true,
+  "automatic_weight_updates": false,
+  "c1_version_lineage_immutable": true,
+  "real_institution_contribution_exists": false,
+  "model_trained_through_network": false,
+  "federated_learning_implemented": false,
+  "claim_boundary": "Internal governance and reference implementation only; no learned improvement, scaling law, federated-learning result, real-institution contribution, transfer, production, IGI, or autonomous-authority claim.",
+  "binding_authority": false
+}

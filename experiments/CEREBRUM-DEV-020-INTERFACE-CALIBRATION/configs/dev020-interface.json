@@ -1,0 +1,71 @@
+{
+  "schema_version": "cerebrum-dev020-interface-config.v1",
+  "protocol_id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "primary_condition": "single_source_representation_equivalence_and_decision_fidelity",
+  "source_dataset": "ACTIONNET-DATA-QUAL-020",
+  "training_steps": 0,
+  "training_authorized": false,
+  "model_parent_protocol": "CEREBRUM-DEV-017-CAUSAL",
+  "model_parent_candidate_id": "continuation-step-24",
+  "model_parent_step": 24,
+  "model_parent_adapter_tree_sha256": "sha256:3d774c4f63e29dc37917a38d7d65713f379fdfc4dc7caaa4599a668748bb2bb1",
+  "scientific_predecessor": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "scientific_predecessor_status": "DIAGNOSTIC_LOCALIZATION_COMPLETE",
+  "scientific_predecessor_prediction_freeze_sha256": "sha256:d90fdcc02e18ddd056f404ddac93817b8959cf6a0575c64552b2604cb2e0b050",
+  "scientific_predecessor_predictions_sha256": "sha256:f4b66cf825a707e058377303229b6a0025f1344319b862fe96c2fe64b00e9844",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "baseline_representation": "RAW_DOCKET",
+  "candidate_representations": [
+    "TYPED_JSON",
+    "COMPACT_TABLE",
+    "TEMPORAL_DSL",
+    "FAMILIAR_AUGMENTED"
+  ],
+  "fidelity_condition": "AUTHENTICATED_DECISION_FIDELITY",
+  "registered_calibration_scenarios": 64,
+  "registered_calibration_predictions": 384,
+  "registered_heldout_scenarios": 64,
+  "registered_heldout_predictions_after_selection": 192,
+  "selection_gates": {
+    "decision_noninferiority_margin": 0.05,
+    "semantic_noninferiority_margin": 0.05,
+    "raw_correct_preservation_floor": 0.95,
+    "decision_agreement_floor": 0.90,
+    "raw_schema_validity_floor": 1.0,
+    "unsafe_authorization_delta_ceiling": 0
+  },
+  "selection_tie_breaker": [
+    "fewest_unsafe_authorizations",
+    "fewest_raw_correct_degradations",
+    "highest_decision_accuracy",
+    "highest_exact_certificate_rate",
+    "highest_semantic_accuracy",
+    "fewest_mean_prompt_tokens",
+    "lexical_representation_id"
+  ],
+  "fidelity_gates": {
+    "decision_preservation_floor": 0.98,
+    "exact_certificate_floor": 0.95,
+    "raw_schema_validity_floor": 1.0,
+    "unsafe_decision_change_ceiling": 0
+  },
+  "load_in_4bit": true,
+  "inference_max_input_tokens": 4096,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 2048,
+    "QUEUE_TRACE": 2048,
+    "PAIR_CONTRAST": 2048,
+    "QUEUE_ORDER": 512,
+    "QUEUE_PARTITION": 1024
+  },
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

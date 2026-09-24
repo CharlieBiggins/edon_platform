@@ -1,0 +1,26 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-TRANSFER-008",
+  "version": "1.0.0",
+  "status": "RESERVED_BLOCKED_PENDING_RB1_TWO_SEED_PASS_AND_INDEPENDENT_INSTRUMENT",
+  "created": "2026-08-24",
+  "artifact": {
+    "id": "CEREBRUM-TRANSFER-008-shell-v1.0.0",
+    "sha256": "sha256:007d5b64d5826fe7d295bccbb3f31ff875d962a7d16d7ccc6ea085c9bca7cf50",
+    "storage_location": "experiments/CEREBRUM-TRANSFER-008/results/readiness_report.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26082491, 26082492],
+  "dataset": "Unmaterialized independently custodied 192-case synthetic transfer reservation",
+  "config": "config/transfer-gates.json",
+  "scorer": null,
+  "candidate_source": "CEREBRUM-DEV-009-RB1",
+  "cases_materialized": false,
+  "labels_materialized": false,
+  "runtime_materialized": false,
+  "predictions_materialized": false,
+  "score_authorized": false,
+  "license": "pending independent instrument construction",
+  "claim_scope": "Protocol shell and reservation only; no candidate qualification, instrument, prediction, score, or transfer result.",
+  "binding_authority": false
+}

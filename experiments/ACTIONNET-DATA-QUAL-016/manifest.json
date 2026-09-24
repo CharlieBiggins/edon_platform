@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-016",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV016_NARROW_REPAIR",
+  "created": "2026-09-06",
+  "training_records": 368,
+  "development_records": 64,
+  "confirmation_records": 192,
+  "consumer": "CEREBRUM-DEV-016-NARROW",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-016-result-v1.0.0",
+    "sha256": "sha256:7e00316637a469fed761f2fe25fc3d608b140c75d232a0722184cfdafc97b243",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-counterfactual-batch.schema.json",
+  "title": "Replay-verified ActionNet counterfactual batch",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "batch_id", "parent_experience_id", "parent_trajectory_sha256", "branches", "all_branches_replay_verified", "authoritative", "binding_authority", "batch_sha256"],
+  "properties": {
+    "schema_version": {"const": "actionnet-counterfactual-batch.v1"},
+    "batch_id": {"type": "string", "minLength": 1},
+    "parent_experience_id": {"type": "string", "minLength": 1},
+    "parent_trajectory_sha256": {"type": "string"},
+    "branches": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["branch_id", "intervention", "changed_paths", "trajectory", "verification", "branch_sha256"]
+      }
+    },
+    "all_branches_replay_verified": {"const": true},
+    "authoritative": {"const": false},
+    "binding_authority": {"const": false},
+    "batch_sha256": {"type": "string"}
+  }
+}

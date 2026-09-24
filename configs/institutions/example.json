@@ -1,0 +1,7 @@
+{
+  "institution_id": "example-institution",
+  "version": "0.0.0",
+  "source_registry": "provenance/source-registry",
+  "compiler_review_required": true,
+  "binding_authority": false
+}

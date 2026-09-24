@@ -1,0 +1,14 @@
+import type { ActionProposal, DecisionReceipt, KernelDecision, OutcomeRecord } from '../../contracts/src';
+const receiptHash = (value: unknown) => {
+  const text = JSON.stringify(value);
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i++) hash = Math.imul(hash ^ text.charCodeAt(i), 16777619);
+  return `sha256:sim-${(hash >>> 0).toString(16)}`;
+};
+export class HashLinkedReceiptService {
+  issue(proposal: ActionProposal, decision: KernelDecision, outcome: OutcomeRecord) {
+    const body = { receipt_id: 'RCP-1042', incident_id: proposal.incident_id, proposal_id: proposal.proposal_id, kernel_decision_id: decision.decision_id, human_reviewed: true, shadow_only: true as const, outcome_id: outcome.outcome_id, event_ids: ['evt-19001', 'evt-19002', 'evt-19003', 'evt-19004', 'evt-19005', 'evt-19006'], simulated: true as const };
+    return { ...body, receipt_hash: receiptHash(body), signature: 'simulated-signature' } satisfies DecisionReceipt;
+  }
+  verify(receipt: DecisionReceipt) { const { receipt_hash, signature, ...body } = receipt; return signature === 'simulated-signature' && receipt_hash === receiptHash(body); }
+}

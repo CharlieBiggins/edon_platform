@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "version": "1.0.0",
+  "created": "2026-09-06",
+  "status": "READY_PENDING_DEV018_RESULT_AND_DEV017_ADAPTER_IMPORT",
+  "dataset": "ACTIONNET-DATA-QUAL-019",
+  "model_parent": "CEREBRUM-DEV-017-CAUSAL",
+  "scientific_predecessor": "CEREBRUM-DEV-018-VERIFIED",
+  "training_records": 0,
+  "optimizer_steps": 0,
+  "diagnostic_scenarios": 32,
+  "diagnostic_conditions": 5,
+  "diagnostic_predictions": 160,
+  "artifact": {
+    "id": "CEREBRUM-DEV-019-DIAGNOSTIC-readiness-v1.0.0",
+    "sha256": "sha256:a67398a6290f124f4810e4e2e743c6a48f47650ebd464297e7bf158288ed84b2",
+    "storage_location": "results/readiness-report.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

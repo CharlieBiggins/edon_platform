@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/runtime/execution-certificate.schema.json",
+  "title": "Deterministic Institutional IR execution certificate",
+  "type": "object",
+  "required": [
+    "mechanism_id", "mechanism_version", "semantic_state", "decision",
+    "failed_conditions", "evaluated_conditions", "final_state_sha256", "binding_authority"
+  ],
+  "properties": {
+    "mechanism_id": {"type": "string"},
+    "mechanism_version": {"type": "string"},
+    "semantic_state": {"enum": ["TRUE", "FALSE", "UNKNOWN", "MISSING", "CONTESTED", "INVALID"]},
+    "decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "CONTESTED", "INVALID"]},
+    "failed_conditions": {"type": "array", "items": {"type": "string"}},
+    "evaluated_conditions": {"type": "integer", "minimum": 0},
+    "final_state_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "trace": {"type": "array", "items": {"type": "object"}},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

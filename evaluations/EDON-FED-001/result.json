@@ -1,0 +1,23 @@
+{
+  "binding_authority": false,
+  "check_count": 12,
+  "checks_passed": 12,
+  "claim_scope": "Internal deterministic hierarchical-coordination evidence only",
+  "evaluation_id": "EDON-FED-001",
+  "gates": {
+    "cross_scope_decision_uses_lca": true,
+    "escalation_lifecycle_is_additive": true,
+    "hierarchy_has_single_root": true,
+    "higher_authority_routes_to_global": true,
+    "local_decision_stays_local": true,
+    "multilevel_aggregate_preserves_capacity": true,
+    "optimization_authority_smuggling_rejected": true,
+    "optimization_candidate_is_non_binding": true,
+    "optimization_candidate_respects_constraints": true,
+    "projection_is_world_version_bound": true,
+    "tenant_scope_isolation": true,
+    "world_projection_is_redacted": true
+  },
+  "schema_version": "edon-fed-001-evaluation.v1",
+  "status": "PASS"
+}

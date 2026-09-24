@@ -1,0 +1,67 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "CPU readiness for one fresh full synthetic regression of the frozen DEV-013 step-6 candidate; no result or transfer authorization.",
+  "config_sha256": "sha256:0f515fe30bf1795c0f62c8d275d746aa54c9c144ba587d0ec5dce08d3296159e",
+  "core_control_count": 21,
+  "core_controls": {
+    "explicit_appeal_clock_prompt": true,
+    "explicit_queue_integrity_prompt": true,
+    "frozen_base_revision": true,
+    "heldout_full_regression_profile": true,
+    "heldout_renderer": true,
+    "no_training_records": true,
+    "operator_reported_parent_pass_frozen": true,
+    "operator_reported_zero_unsafe": true,
+    "qualified_source_all_controls": true,
+    "registered_adapter_hash": true,
+    "registered_confirmation_hashes": true,
+    "registered_parent_identity": true,
+    "registered_protocol_identity": true,
+    "registered_selection_hash": true,
+    "registered_training_manifest_hash": true,
+    "rules_ceiling_passes_all_26_checks": true,
+    "selected_step6_candidate": true,
+    "single_frozen_candidate": true,
+    "transfer_authorization_disabled": true,
+    "validation_count_192": true,
+    "validation_task_balance": true
+  },
+  "core_controls_passed": 21,
+  "expected_optimizer_steps": 0,
+  "expected_predictions": 192,
+  "full_regression": {
+    "case_ids": 192,
+    "pair_ids": 48,
+    "profile_counts": {
+      "FULL_REGRESSION": 192
+    },
+    "records": 192,
+    "renderer_counts": {
+      "HELDOUT_FULL_REGRESSION_REGISTER": 192
+    },
+    "task_counts": {
+      "CERTIFICATE": 48,
+      "PAIR_CONTRAST": 48,
+      "QUEUE_TRACE": 48,
+      "TRANSITION": 48
+    }
+  },
+  "parent_control_count": 8,
+  "parent_controls": {
+    "confirmation_result_identity": false,
+    "confirmation_result_present": false,
+    "selected_adapter_hash": false,
+    "selected_adapter_present": false,
+    "selection_hash": false,
+    "selection_present": false,
+    "training_manifest_hash": false,
+    "training_manifest_present": false
+  },
+  "parent_controls_passed": 0,
+  "prepared_sha256": "sha256:7374424fe18852a751e3a8d59723abf7af28b5883631244cde18f0d478a7bd2c",
+  "protocol_id": "CEREBRUM-DEV-014-FULL",
+  "public_scored": false,
+  "schema_version": "cerebrum-dev014-full-readiness.v1",
+  "status": "READY_PENDING_DEV013_SELECTED_ADAPTER_IMPORT",
+  "transfer_authorized": false
+}

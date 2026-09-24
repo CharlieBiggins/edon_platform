@@ -1,0 +1,15 @@
+{
+  "artifacts": {
+    "dataset/diagnostic_matrix.jsonl": "sha256:b60dc2d55389af58bd4805c6c1ea07bf8726c1aa2d4a1394012852b22c6684e1",
+    "lineage/lineages.json": "sha256:654ce0e31d91cd2ad9085cda8657df26b682c8d872bc0ce279edee99eea61d65",
+    "oracle/canonical_trajectories.jsonl": "sha256:084ecf14597cf8a2c22c8e4bc1b9000e90d3f5480a2c176ccb00458f4af4bd27",
+    "oracle/reservation.json": "sha256:345d189c748f5e9622326497a5e89cd22332578e057fe0da5536b79ea8113706",
+    "results/qualification_report.json": "sha256:70d0fca4e582e63deef3d84268a241fe4f4dd8d0c0a9e62c6e1dff3c83e72405"
+  },
+  "claim_boundary": "Fresh project-authored synthetic repeated-measures diagnostic data only; interventions can localize an earliest demonstrated failure under the instrument but cannot prove a unique cause, transfer, production authority, or IGI.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-019",
+  "result_hash": "sha256:12eb18457330e588c2c7c872cb1f36ac034dd9e7d29e55ffc3c9acdcc60cf10d",
+  "result_id": "ACTIONNET-DATA-QUAL-019-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV019_DIAGNOSTIC"
+}

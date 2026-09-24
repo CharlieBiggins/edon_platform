@@ -1,0 +1,27 @@
+{
+  "schema_version": "edon-architecture-status.v1",
+  "date": "2026-08-30",
+  "architecture_id": "EDON-INSTITUTIONAL-ENVIRONMENT-GATEWAY-001",
+  "status": "ARCHITECTURE_DEFINED_PARTIALLY_IMPLEMENTED_NOT_PRODUCTION_AUTHORIZED",
+  "scope": "Agents, enterprise systems, and governed resources as typed participants in the institutional action environment.",
+  "existing_foundations": [
+    "Agent Gateway protocol and custody core",
+    "institutional world state and memory",
+    "operations agents, resources, plans, assignments, and outcomes",
+    "deterministic Kernel authorization",
+    "transactional outbox",
+    "ActionNet governed experience"
+  ],
+  "new_contracts": [
+    "docs/architecture/institutional-environment-gateway.md",
+    "schemas/environment/event.schema.json",
+    "product/institutional-environment-gateway"
+  ],
+  "internal_contract_tests": "2/2_PASS",
+  "native_system_connectors_implemented": 0,
+  "native_resource_adapters_implemented": 0,
+  "outbound_environment_delivery_implemented": false,
+  "production_validated": false,
+  "claim_boundary": "Architecture and type-contract definition only; no live environment integration, causal attribution, real-institution performance, transfer, IGI, production safety, or autonomous-authority result is established.",
+  "binding_authority": false
+}

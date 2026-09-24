@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum-mini-igi-capstone-reservation.v1.json",
+  "title": "Cerebrum Mini-IGI capstone reservation",
+  "type": "object",
+  "required": ["schema_version", "protocol_id", "status", "prerequisites", "instrument", "materialization_authorized", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "cerebrum-mini-igi-capstone-reservation.v1"},
+    "protocol_id": {"const": "CEREBRUM-MINI-IGI-CAPSTONE-001"},
+    "status": {"type": "string"},
+    "prerequisites": {"type": "object"},
+    "instrument": {"type": "object"},
+    "materialization_authorized": {"type": "boolean"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

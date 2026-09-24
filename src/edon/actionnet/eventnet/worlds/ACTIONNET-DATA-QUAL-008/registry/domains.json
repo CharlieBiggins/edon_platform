@@ -1,0 +1,271 @@
+{
+  "schema_version": "actionnet-domain-registry.v1",
+  "registry_id": "ACTIONNET-DOMAIN-REGISTRY-008",
+  "claim_boundary": "Project-authored synthetic domain packs. They are authoring scaffolds, not source-grounded domain truth, expert validation, legal advice, medical advice, or production policy.",
+  "domains": [
+    {
+      "domain_id": "healthcare-clinical-operations",
+      "title": "Healthcare and Clinical Operations",
+      "sector_group": "health",
+      "risk_tier": "critical",
+      "workflows": ["care-escalation", "clinical-order-review", "discharge-coordination"],
+      "expert_specialties": ["clinical-operations", "patient-safety", "healthcare-compliance"],
+      "jurisdictions": ["us-federal", "us-state", "institution-local"],
+      "evidence_types": ["clinical-protocol", "order-record", "review-attestation"],
+      "mechanisms": ["CONSENT_WITHDRAWAL", "DELAYED_EVIDENCE", "APPROVAL_WITHDRAWAL", "UNRESOLVED_APPEAL"]
+    },
+    {
+      "domain_id": "clinical-laboratory-operations",
+      "title": "Clinical Laboratory Operations",
+      "sector_group": "health",
+      "risk_tier": "critical",
+      "workflows": ["specimen-acceptance", "result-release", "quality-control-escalation"],
+      "expert_specialties": ["laboratory-medicine", "lab-quality", "clinical-pathology"],
+      "jurisdictions": ["us-federal", "us-state", "institution-local"],
+      "evidence_types": ["specimen-chain", "quality-control-record", "result-attestation"],
+      "mechanisms": ["CHAIN_OF_CUSTODY_BREAK", "QUALITY_HOLD", "EVIDENCE_EXPIRY", "ROUTING_REJECTION"]
+    },
+    {
+      "domain_id": "public-health",
+      "title": "Public Health",
+      "sector_group": "health",
+      "risk_tier": "critical",
+      "workflows": ["case-notification", "resource-deployment", "outbreak-escalation"],
+      "expert_specialties": ["public-health", "epidemiology", "emergency-preparedness"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["surveillance-record", "incident-report", "public-health-order"],
+      "mechanisms": ["REPORTING_DEADLINE", "JURISDICTION_SHIFT", "RESOURCE_CONTENTION", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "pharma-medical-device-quality",
+      "title": "Pharmaceutical and Medical Device Quality",
+      "sector_group": "health",
+      "risk_tier": "critical",
+      "workflows": ["batch-release", "deviation-review", "recall-control"],
+      "expert_specialties": ["gxp-quality", "pharmacovigilance", "medical-device-quality"],
+      "jurisdictions": ["us-federal", "international", "institution-local"],
+      "evidence_types": ["batch-record", "deviation-record", "recall-evidence"],
+      "mechanisms": ["QUALITY_HOLD", "RECALL_INCOMPLETION", "CHAIN_OF_CUSTODY_BREAK", "APPROVAL_WITHDRAWAL"]
+    },
+    {
+      "domain_id": "banking-financial-services",
+      "title": "Banking and Financial Services",
+      "sector_group": "finance",
+      "risk_tier": "critical",
+      "workflows": ["transaction-review", "credit-approval", "financial-crime-escalation"],
+      "expert_specialties": ["banking-operations", "financial-risk", "aml-compliance"],
+      "jurisdictions": ["us-federal", "us-state", "international"],
+      "evidence_types": ["customer-due-diligence", "transaction-record", "risk-attestation"],
+      "mechanisms": ["CONFLICT_ASSERTION", "CONDITIONAL_DELEGATION", "DELAYED_EVIDENCE", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "insurance-claims",
+      "title": "Insurance and Claims Administration",
+      "sector_group": "finance",
+      "risk_tier": "high",
+      "workflows": ["claim-intake", "coverage-review", "appeal-adjudication"],
+      "expert_specialties": ["claims-operations", "underwriting", "insurance-compliance"],
+      "jurisdictions": ["us-state", "us-federal", "institution-local"],
+      "evidence_types": ["policy-record", "claim-evidence", "adjudication-note"],
+      "mechanisms": ["UNRESOLVED_APPEAL", "DELAYED_EVIDENCE", "POLICY_CHANGE", "JURISDICTION_SHIFT"]
+    },
+    {
+      "domain_id": "tax-revenue-administration",
+      "title": "Tax and Revenue Administration",
+      "sector_group": "government",
+      "risk_tier": "high",
+      "workflows": ["filing-review", "collection-action", "appeal-resolution"],
+      "expert_specialties": ["tax-administration", "revenue-operations", "administrative-appeals"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["filing-record", "authority-delegation", "appeal-record"],
+      "mechanisms": ["REPORTING_DEADLINE", "UNRESOLVED_APPEAL", "CONDITIONAL_DELEGATION", "EVIDENCE_EXPIRY"]
+    },
+    {
+      "domain_id": "government-procurement-grants",
+      "title": "Government Procurement and Grants",
+      "sector_group": "government",
+      "risk_tier": "high",
+      "workflows": ["solicitation-review", "award-approval", "grant-monitoring"],
+      "expert_specialties": ["public-procurement", "grants-management", "government-ethics"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["solicitation-record", "conflict-disclosure", "award-approval"],
+      "mechanisms": ["CONFLICT_ASSERTION", "BUDGET_ENCUMBRANCE", "APPROVAL_WITHDRAWAL", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "public-benefits",
+      "title": "Public Benefits Administration",
+      "sector_group": "government",
+      "risk_tier": "high",
+      "workflows": ["eligibility-review", "benefit-authorization", "appeal-processing"],
+      "expert_specialties": ["benefits-administration", "eligibility-policy", "administrative-appeals"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["eligibility-record", "identity-evidence", "appeal-decision"],
+      "mechanisms": ["DELAYED_EVIDENCE", "UNRESOLVED_APPEAL", "JURISDICTION_SHIFT", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "courts-administrative-adjudication",
+      "title": "Courts and Administrative Adjudication",
+      "sector_group": "justice",
+      "risk_tier": "critical",
+      "workflows": ["docket-routing", "hearing-readiness", "order-issuance"],
+      "expert_specialties": ["court-operations", "administrative-law", "records-governance"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["docket-record", "service-proof", "signed-order"],
+      "mechanisms": ["CHAIN_OF_CUSTODY_BREAK", "JURISDICTION_SHIFT", "UNRESOLVED_APPEAL", "QUORUM_FAILURE"]
+    },
+    {
+      "domain_id": "logistics-supply-chain",
+      "title": "Logistics and Supply Chain",
+      "sector_group": "infrastructure",
+      "risk_tier": "high",
+      "workflows": ["shipment-release", "route-exception", "custody-transfer"],
+      "expert_specialties": ["logistics-operations", "supply-chain-risk", "trade-compliance"],
+      "jurisdictions": ["us-federal", "us-state", "international"],
+      "evidence_types": ["bill-of-lading", "custody-record", "route-clearance"],
+      "mechanisms": ["CHAIN_OF_CUSTODY_BREAK", "ROUTING_REJECTION", "RESOURCE_CONTENTION", "JURISDICTION_SHIFT"]
+    },
+    {
+      "domain_id": "aviation-aerospace",
+      "title": "Aviation and Aerospace Operations",
+      "sector_group": "infrastructure",
+      "risk_tier": "critical",
+      "workflows": ["maintenance-release", "flight-dispatch", "safety-occurrence-review"],
+      "expert_specialties": ["aviation-safety", "maintenance-operations", "flight-operations"],
+      "jurisdictions": ["us-federal", "international", "institution-local"],
+      "evidence_types": ["maintenance-record", "dispatch-release", "safety-report"],
+      "mechanisms": ["QUALITY_HOLD", "APPROVAL_WITHDRAWAL", "REPORTING_DEADLINE", "EVIDENCE_EXPIRY"]
+    },
+    {
+      "domain_id": "rail-transit",
+      "title": "Rail and Public Transit",
+      "sector_group": "infrastructure",
+      "risk_tier": "critical",
+      "workflows": ["service-dispatch", "maintenance-clearance", "incident-escalation"],
+      "expert_specialties": ["rail-safety", "transit-operations", "maintenance-control"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["inspection-record", "dispatch-record", "incident-log"],
+      "mechanisms": ["RESOURCE_CONTENTION", "QUALITY_HOLD", "ROUTING_REJECTION", "REPORTING_DEADLINE"]
+    },
+    {
+      "domain_id": "energy-utilities",
+      "title": "Energy and Utilities",
+      "sector_group": "infrastructure",
+      "risk_tier": "critical",
+      "workflows": ["grid-change-approval", "outage-response", "capacity-allocation"],
+      "expert_specialties": ["utility-operations", "grid-reliability", "energy-compliance"],
+      "jurisdictions": ["us-federal", "us-state", "regional"],
+      "evidence_types": ["switching-order", "reliability-record", "capacity-forecast"],
+      "mechanisms": ["RESOURCE_CONTENTION", "QUORUM_FAILURE", "CONDITIONAL_DELEGATION", "PRIORITY_RACE"]
+    },
+    {
+      "domain_id": "telecommunications",
+      "title": "Telecommunications",
+      "sector_group": "infrastructure",
+      "risk_tier": "high",
+      "workflows": ["network-change", "service-restoration", "interconnection-review"],
+      "expert_specialties": ["network-operations", "telecom-compliance", "service-assurance"],
+      "jurisdictions": ["us-federal", "us-state", "international"],
+      "evidence_types": ["change-ticket", "network-telemetry", "interconnection-record"],
+      "mechanisms": ["ROUTING_REJECTION", "PRIORITY_RACE", "RESOURCE_CONTENTION", "APPROVAL_WITHDRAWAL"]
+    },
+    {
+      "domain_id": "manufacturing-quality",
+      "title": "Manufacturing and Quality Operations",
+      "sector_group": "industry",
+      "risk_tier": "high",
+      "workflows": ["lot-release", "nonconformance-review", "production-change"],
+      "expert_specialties": ["manufacturing-quality", "operations-engineering", "supplier-quality"],
+      "jurisdictions": ["institution-local", "us-federal", "international"],
+      "evidence_types": ["inspection-record", "lot-history", "change-approval"],
+      "mechanisms": ["QUALITY_HOLD", "RECALL_INCOMPLETION", "CHAIN_OF_CUSTODY_BREAK", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "construction-built-environment",
+      "title": "Construction and the Built Environment",
+      "sector_group": "industry",
+      "risk_tier": "high",
+      "workflows": ["permit-review", "inspection-clearance", "change-order-approval"],
+      "expert_specialties": ["construction-management", "building-safety", "permit-administration"],
+      "jurisdictions": ["us-state", "us-local", "institution-local"],
+      "evidence_types": ["permit-record", "inspection-report", "change-order"],
+      "mechanisms": ["JURISDICTION_SHIFT", "BUDGET_ENCUMBRANCE", "APPROVAL_WITHDRAWAL", "EVIDENCE_EXPIRY"]
+    },
+    {
+      "domain_id": "environmental-permitting",
+      "title": "Environmental Permitting and Compliance",
+      "sector_group": "environment",
+      "risk_tier": "high",
+      "workflows": ["permit-application", "monitoring-review", "enforcement-escalation"],
+      "expert_specialties": ["environmental-compliance", "permitting", "environmental-science"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["permit-condition", "monitoring-record", "inspection-finding"],
+      "mechanisms": ["REPORTING_DEADLINE", "EVIDENCE_EXPIRY", "JURISDICTION_SHIFT", "POLICY_CHANGE"]
+    },
+    {
+      "domain_id": "education-credentialing",
+      "title": "Education and Credentialing",
+      "sector_group": "social",
+      "risk_tier": "moderate",
+      "workflows": ["admission-review", "credential-award", "academic-appeal"],
+      "expert_specialties": ["education-administration", "credentialing", "academic-integrity"],
+      "jurisdictions": ["us-federal", "us-state", "institution-local"],
+      "evidence_types": ["transcript", "credential-attestation", "appeal-record"],
+      "mechanisms": ["UNRESOLVED_APPEAL", "DELAYED_EVIDENCE", "CONFLICT_ASSERTION", "MALFORMED_REQUEST"]
+    },
+    {
+      "domain_id": "employment-human-resources",
+      "title": "Employment and Human Resources",
+      "sector_group": "social",
+      "risk_tier": "high",
+      "workflows": ["hiring-review", "leave-approval", "workplace-investigation"],
+      "expert_specialties": ["human-resources", "employment-compliance", "workplace-investigations"],
+      "jurisdictions": ["us-federal", "us-state", "institution-local"],
+      "evidence_types": ["employment-record", "manager-attestation", "investigation-record"],
+      "mechanisms": ["CONFLICT_ASSERTION", "CONSENT_WITHDRAWAL", "APPROVAL_WITHDRAWAL", "JURISDICTION_SHIFT"]
+    },
+    {
+      "domain_id": "cybersecurity-incident-response",
+      "title": "Cybersecurity and Incident Response",
+      "sector_group": "technology",
+      "risk_tier": "critical",
+      "workflows": ["access-escalation", "incident-containment", "breach-notification"],
+      "expert_specialties": ["security-operations", "incident-response", "cyber-governance"],
+      "jurisdictions": ["us-federal", "us-state", "international"],
+      "evidence_types": ["security-alert", "forensic-artifact", "incident-timeline"],
+      "mechanisms": ["REVOCATION_PROPAGATION", "REPORTING_DEADLINE", "PRIORITY_RACE", "CHAIN_OF_CUSTODY_BREAK"]
+    },
+    {
+      "domain_id": "emergency-management",
+      "title": "Emergency Management",
+      "sector_group": "public-safety",
+      "risk_tier": "critical",
+      "workflows": ["incident-command", "resource-mobilization", "mutual-aid-approval"],
+      "expert_specialties": ["emergency-management", "incident-command", "public-safety-operations"],
+      "jurisdictions": ["us-federal", "us-state", "us-local"],
+      "evidence_types": ["incident-action-plan", "resource-request", "mutual-aid-record"],
+      "mechanisms": ["CONDITIONAL_DELEGATION", "RESOURCE_CONTENTION", "JURISDICTION_SHIFT", "PRIORITY_RACE"]
+    },
+    {
+      "domain_id": "research-operations",
+      "title": "Research and Laboratory Operations",
+      "sector_group": "science",
+      "risk_tier": "high",
+      "workflows": ["protocol-approval", "data-access", "study-deviation-review"],
+      "expert_specialties": ["research-compliance", "laboratory-operations", "research-ethics"],
+      "jurisdictions": ["us-federal", "institution-local", "international"],
+      "evidence_types": ["protocol-record", "consent-record", "deviation-report"],
+      "mechanisms": ["CONSENT_WITHDRAWAL", "APPROVAL_WITHDRAWAL", "REPORTING_DEADLINE", "CONFLICT_ASSERTION"]
+    },
+    {
+      "domain_id": "agriculture-food-safety",
+      "title": "Agriculture and Food Safety",
+      "sector_group": "food",
+      "risk_tier": "critical",
+      "workflows": ["lot-release", "inspection-review", "recall-control"],
+      "expert_specialties": ["food-safety", "agricultural-operations", "quality-assurance"],
+      "jurisdictions": ["us-federal", "us-state", "international"],
+      "evidence_types": ["inspection-record", "traceability-record", "recall-evidence"],
+      "mechanisms": ["RECALL_INCOMPLETION", "CHAIN_OF_CUSTODY_BREAK", "QUALITY_HOLD", "REPORTING_DEADLINE"]
+    }
+  ]
+}

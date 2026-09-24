@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-TRANSFER-003",
+  "version": "1.0.0",
+  "status": "TRANSFER_NOT_ESTABLISHED",
+  "created": "2026-08-11",
+  "artifact": {
+    "id": "frozen-transfer-evaluation",
+    "sha256": "sha256:b5e9f89e19b4dc6ddc0eb2d9af312660fa573e08114715944fe6ff92264701d4",
+    "storage_location": "legacy://EDON Research/experiments/CEREBRUM-TRANSFER-003/results/frozen-transfer-evaluation.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26080921, 26080922],
+  "dataset": "ACTIONNET-DATA-QUAL-004 transfer instrument",
+  "license": "pending",
+  "claim_scope": "Partial internal synthetic reusable signal; transfer not established.",
+  "binding_authority": false
+}

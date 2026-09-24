@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-020",
+  "version": "1.0.0",
+  "created": "2026-09-07",
+  "title": "Single-source interface calibration and decision-fidelity data",
+  "status": "READY_FOR_CEREBRUM_DEV020_INTERFACE_CALIBRATION",
+  "result_id": "ACTIONNET-DATA-QUAL-020-result-v1.0.0",
+  "dataset_id": "ACTIONNET-INTERFACE-CALIBRATION-v20.0.0",
+  "training_records": 0,
+  "calibration_scenarios": 64,
+  "calibration_predictions": 384,
+  "heldout_scenarios": 64,
+  "heldout_records": 384,
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-020-result-v1.0.0",
+    "sha256": "sha256:b083995a6398997c91a77327fa4fc43a288524c7bb1530e6b37e5f47a4ccc4da",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false,
+  "transfer_authorized": false
+}

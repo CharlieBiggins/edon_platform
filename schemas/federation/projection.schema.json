@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/federation/projection.schema.json",
+  "title": "Redacted hierarchical state projection",
+  "type": "object",
+  "required": ["schema_version", "scope_id", "projection_kind", "observed_at", "counts", "resources", "contains_raw_records", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "edon-federation-projection.v1"},
+    "scope_id": {"type": "string", "minLength": 1},
+    "projection_kind": {"enum": ["WORLD_SUMMARY", "AGGREGATE_SUMMARY"]},
+    "source_world_id": {"type": "string"},
+    "source_world_version": {"type": "integer", "minimum": 0},
+    "source_state_sha256": {"type": "string"},
+    "source_scope_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "source_projection_hashes": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "counts": {"type": "object"},
+    "resources": {"type": "object"},
+    "contains_raw_records": {"const": false},
+    "binding_authority": {"const": false}
+  }
+}

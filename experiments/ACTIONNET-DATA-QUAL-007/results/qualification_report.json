@@ -1,0 +1,309 @@
+{
+  "audits": {
+    "actionnet_006_case_overlap": 0,
+    "actionnet_006_prompt_overlap": 0,
+    "authority_graph_overlap": 0,
+    "event_operands_invisible": 0,
+    "generator_overlap": 0,
+    "institution_overlap": 0,
+    "minimum_submitted_queue_length": 7,
+    "pair_overlap": 0,
+    "pair_train_record_count": 2304,
+    "queue_train_record_count": 4608,
+    "repair_validation": {
+      "aggregate_outcome_sha256": "sha256:9ae7b268eeb10dfcf1f907393bac753f421edf8d23592dbc4d3b418a64bf99c6",
+      "aggregation_equivalence_checks": 30,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 192,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 38,
+        "ALLOW": 192,
+        "CONTESTED": 22,
+        "DENY": 60,
+        "INVALID": 72
+      },
+      "deferred_event_count_distribution": {
+        "1": 106,
+        "2": 144,
+        "3": 119,
+        "4": 10,
+        "5": 5
+      },
+      "deferred_event_trajectories": 384,
+      "engine_comparisons": 2760,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 15,
+        "6": 282,
+        "7": 87
+      },
+      "families": [
+        220,
+        221,
+        222,
+        223,
+        224,
+        225,
+        226,
+        227
+      ],
+      "generator_lineage": "generator-63ef41d6f897aeb2",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 8,
+        "CONFLICT_ASSERTION": 8,
+        "DECISIVE_CONTEXT_PRESERVATION": 32,
+        "DELAYED_EVIDENCE": 15,
+        "EVIDENCE_EXPIRY": 14,
+        "JURISDICTION_SHIFT": 8,
+        "MALFORMED_REQUEST": 8,
+        "POLICY_CHANGE": 8,
+        "PRIORITY_RACE": 14,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 32,
+        "RESOURCE_CONTENTION": 15,
+        "REVOCATION_PROPAGATION": 8,
+        "ROUTING_REJECTION": 8,
+        "UNRESOLVED_APPEAL": 14
+      },
+      "multi_actor_trajectories": 384,
+      "mutation_path_count_distribution": {
+        "2": 257,
+        "3": 113,
+        "4": 14
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 32,
+        "INVARIANCE": 32,
+        "PIVOTAL": 128
+      },
+      "pivotal_pair_changes": 128,
+      "query_time_distribution": {
+        "8": 78,
+        "9": 78,
+        "10": 76,
+        "11": 76,
+        "12": 76
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 384,
+      "transition_disagreements": 0
+    },
+    "repair_validation_records": {
+      "conflicting_prompt_groups": 0,
+      "decision_label_tokens_in_inputs": 0,
+      "effective_weighted_decisions": {
+        "ABSTAIN": 285.0,
+        "ALLOW": 1440.0,
+        "CONTESTED": 165.0,
+        "DENY": 450.0,
+        "INVALID": 540.0
+      },
+      "forbidden_model_inputs": 0,
+      "prompt_set_sha256": "sha256:5eb6ffa346e74b6fcfae428976ce9370822d87baaf17bacee2170854869c782c",
+      "renderer_counts": {
+        "CROSS_FORMAT_REGISTER": 1344
+      },
+      "task_counts": {
+        "CERTIFICATE": 384,
+        "PAIR_CONTRAST": 192,
+        "QUEUE_TRACE": 384,
+        "TRANSITION": 384
+      },
+      "unique_prompt_hashes": 1344
+    },
+    "repair_validation_renderers": [
+      "CROSS_FORMAT_REGISTER"
+    ],
+    "semantic_family_overlap": 0,
+    "source_overlap": 0,
+    "task_types": [
+      "CERTIFICATE",
+      "PAIR_CONTRAST",
+      "QUEUE_TRACE",
+      "TRANSITION"
+    ],
+    "train": {
+      "aggregate_outcome_sha256": "sha256:85e1535091e9975799d6632713fec9b75cb3298468f52d543ee005b30f845d40",
+      "aggregation_equivalence_checks": 90,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 576,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 113,
+        "ALLOW": 576,
+        "CONTESTED": 67,
+        "DENY": 181,
+        "INVALID": 215
+      },
+      "deferred_event_count_distribution": {
+        "1": 330,
+        "2": 405,
+        "3": 375,
+        "4": 29,
+        "5": 13
+      },
+      "deferred_event_trajectories": 1152,
+      "engine_comparisons": 8288,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 45,
+        "6": 838,
+        "7": 269
+      },
+      "families": [
+        180,
+        181,
+        182,
+        183,
+        184,
+        185,
+        186,
+        187,
+        188,
+        189,
+        190,
+        191,
+        192,
+        193,
+        194,
+        195,
+        196,
+        197,
+        198,
+        199,
+        200,
+        201,
+        202,
+        203
+      ],
+      "generator_lineage": "generator-bc052a6111bf03b3",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 23,
+        "CONFLICT_ASSERTION": 23,
+        "DECISIVE_CONTEXT_PRESERVATION": 96,
+        "DELAYED_EVIDENCE": 45,
+        "EVIDENCE_EXPIRY": 44,
+        "JURISDICTION_SHIFT": 23,
+        "MALFORMED_REQUEST": 23,
+        "POLICY_CHANGE": 23,
+        "PRIORITY_RACE": 45,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 96,
+        "RESOURCE_CONTENTION": 45,
+        "REVOCATION_PROPAGATION": 23,
+        "ROUTING_REJECTION": 23,
+        "UNRESOLVED_APPEAL": 44
+      },
+      "multi_actor_trajectories": 1152,
+      "mutation_path_count_distribution": {
+        "2": 769,
+        "3": 339,
+        "4": 44
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 96,
+        "INVARIANCE": 96,
+        "PIVOTAL": 384
+      },
+      "pivotal_pair_changes": 384,
+      "query_time_distribution": {
+        "8": 232,
+        "9": 230,
+        "10": 230,
+        "11": 230,
+        "12": 230
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 1152,
+      "transition_disagreements": 0
+    },
+    "train_records": {
+      "conflicting_prompt_groups": 0,
+      "decision_label_tokens_in_inputs": 0,
+      "effective_weighted_decisions": {
+        "ABSTAIN": 23661.8753,
+        "ALLOW": 23661.875,
+        "CONTESTED": 23661.8752,
+        "DENY": 23661.8754,
+        "INVALID": 23661.8757
+      },
+      "forbidden_model_inputs": 0,
+      "prompt_set_sha256": "sha256:4bd859ae426164f86eddc5b9ed8cc92b1a8ebdfecd17675c4eeb04b187bcfe32",
+      "renderer_counts": {
+        "DECISION_CLOCK_GRID": 4032,
+        "MULTI_SYSTEM_JOURNAL": 4032,
+        "QUEUE_CONTROL_SHEET": 4032,
+        "STATE_DELTA_PACKET": 4032
+      },
+      "task_counts": {
+        "CERTIFICATE": 4608,
+        "PAIR_CONTRAST": 2304,
+        "QUEUE_TRACE": 4608,
+        "TRANSITION": 4608
+      },
+      "unique_prompt_hashes": 16128
+    },
+    "train_renderers": [
+      "DECISION_CLOCK_GRID",
+      "MULTI_SYSTEM_JOURNAL",
+      "QUEUE_CONTROL_SHEET",
+      "STATE_DELTA_PACKET"
+    ],
+    "train_validation_prompt_overlap": 0,
+    "trajectory_overlap": 0,
+    "workflow_graph_overlap": 0
+  },
+  "binding_authority": false,
+  "claim_boundary": "Qualified for the separate CEREBRUM-DEV-007 execution-transfer repair campaign; no public, protected, real-institution, autonomous-authority, or production claim.",
+  "confirmatory_ready": false,
+  "control_count": 37,
+  "controls": {
+    "actionnet_006_not_reused": true,
+    "all_pivotal_mechanisms_covered": true,
+    "all_task_types_present": true,
+    "binding_authority_always_false": true,
+    "byte_deterministic_generation": true,
+    "contextual_pairs_preserve": true,
+    "cross_institution_coverage": true,
+    "decision_clock_exact": true,
+    "deferral_on_every_trajectory": true,
+    "effective_decision_weights_balanced": true,
+    "event_operands_visible": true,
+    "executed_and_deferred_events_coexist": true,
+    "four_training_renderers": true,
+    "fresh_generator_lineages": true,
+    "future_public_and_protected_unmaterialized": true,
+    "heldout_renderer_unseen_in_train": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "invariance_pairs_preserve": true,
+    "lineages_disjoint": true,
+    "model_inputs_metadata_free": true,
+    "model_inputs_only_observation_and_query": true,
+    "multi_actor_trajectories": true,
+    "multi_path_state_mutation": true,
+    "multi_step_queues": true,
+    "no_decision_labels_in_inputs": true,
+    "pair_diff_supervision_present": true,
+    "pivotal_pairs_change": true,
+    "queue_supervision_dominant": true,
+    "registered_counts": true,
+    "safe_aggregation_equivalence": true,
+    "simultaneous_events_present": true,
+    "train_validation_prompts_disjoint": true,
+    "transitions_exact": true,
+    "variable_decision_clocks": true,
+    "zero_training_prompt_conflicts": true,
+    "zero_validation_prompt_conflicts": true
+  },
+  "controls_passed": 37,
+  "human_domain_review": false,
+  "independent_generator_implementation": true,
+  "result_id": "ACTIONNET-DATA-QUAL-007-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v7",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_EVENTNET_DEVELOPMENT"
+}

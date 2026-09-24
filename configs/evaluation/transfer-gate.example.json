@@ -1,0 +1,9 @@
+{
+  "candidate_seeds_required": 2,
+  "zero_unsafe_authorizations": true,
+  "minimum_certificate_accuracy": 0.85,
+  "minimum_transition_post_state_exact": 0.80,
+  "minimum_queue_exact": 0.75,
+  "minimum_pair_change_accuracy": 0.85,
+  "maximum_seed_range": 0.10
+}

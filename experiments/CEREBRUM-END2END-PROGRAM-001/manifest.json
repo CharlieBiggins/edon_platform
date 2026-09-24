@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-END2END-PROGRAM-001",
+  "version": "1.0.0",
+  "created": "2026-09-07",
+  "status": "READY_PENDING_ACTUAL_DEV020_MODAL_FREEZE",
+  "dataset": "ACTIONNET-DATA-QUAL-021-PROGRAM",
+  "model_parent": "Qwen/Qwen3-4B-Instruct-2507@cdbee75f17c01a7cc42f958dc650907174af0554",
+  "parent_adapter": null,
+  "fresh_adapter_from_base": true,
+  "training_records": 1024,
+  "optimizer_steps": 128,
+  "base_control": "untrained-base-step-0",
+  "development_records_per_arm": 128,
+  "development_predictions": 384,
+  "confirmation_records_per_arm_if_selected": 256,
+  "confirmation_predictions_if_selected": 512,
+  "validated_interface": "FAMILIAR_AUGMENTED",
+  "program_schema": "ACTIONNET_TEMPORAL_PROGRAM_V1",
+  "transfer_authorized": false,
+  "binding_authority": false
+}

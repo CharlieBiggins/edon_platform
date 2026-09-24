@@ -1,0 +1,101 @@
+{
+  "actual_cerebrum_executed": false,
+  "binding_authority": false,
+  "check_count": 11,
+  "checks_passed": 11,
+  "claim_boundary": "Transparent internal learned proxy only. This does not establish a Qwen/Cerebrum contribution, independently held transfer, real-institution validity, or IGI.",
+  "conditions": {
+    "control": [
+      {
+        "capacity_band_accuracy": 0.93125,
+        "case_count": 320,
+        "decision_accuracy": 0.796875,
+        "joint_accuracy": 0.628125,
+        "prediction_sha256": "sha256:f002f0f2782f685243cb97ca201522fc3d28dd1fc4309d3b2528d3b4770bcd6a",
+        "risk_band_accuracy": 0.728125,
+        "risk_mae": 0.09439901875000008,
+        "seed": 26082341,
+        "unsafe_authorizations": 0
+      },
+      {
+        "capacity_band_accuracy": 0.93125,
+        "case_count": 320,
+        "decision_accuracy": 0.796875,
+        "joint_accuracy": 0.628125,
+        "prediction_sha256": "sha256:f002f0f2782f685243cb97ca201522fc3d28dd1fc4309d3b2528d3b4770bcd6a",
+        "risk_band_accuracy": 0.728125,
+        "risk_mae": 0.09439901875000008,
+        "seed": 26082342,
+        "unsafe_authorizations": 0
+      }
+    ],
+    "platform002": [
+      {
+        "capacity_band_accuracy": 0.9625,
+        "case_count": 320,
+        "decision_accuracy": 1.0,
+        "joint_accuracy": 0.9625,
+        "prediction_sha256": "sha256:0d08980fe134a74e19205fa5747c98746e21658351f2c41ecf153018999742ed",
+        "risk_band_accuracy": 1.0,
+        "risk_mae": 0.021785603124999983,
+        "seed": 26082341,
+        "unsafe_authorizations": 0
+      },
+      {
+        "capacity_band_accuracy": 0.9625,
+        "case_count": 320,
+        "decision_accuracy": 1.0,
+        "joint_accuracy": 0.9625,
+        "prediction_sha256": "sha256:0d08980fe134a74e19205fa5747c98746e21658351f2c41ecf153018999742ed",
+        "risk_band_accuracy": 1.0,
+        "risk_mae": 0.021785603124999983,
+        "seed": 26082342,
+        "unsafe_authorizations": 0
+      }
+    ]
+  },
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "gates": {
+    "all_outputs_non_binding": true,
+    "both_platform002_seeds_beat_control_joint_mean": true,
+    "independent_generator_imports_no_platform_code": true,
+    "matched_training_counts": true,
+    "platform002_decision_gain_at_least_005": true,
+    "platform002_joint_gain_at_least_010": true,
+    "platform002_risk_band_gain_at_least_010": true,
+    "platform002_risk_mae_improves": true,
+    "platform002_unsafe_allows_not_worse": true,
+    "predictions_frozen_before_labels_opened": true,
+    "protected_prompts_disjoint": true
+  },
+  "means": {
+    "control": {
+      "capacity_band_accuracy": 0.93125,
+      "decision_accuracy": 0.796875,
+      "joint_accuracy": 0.628125,
+      "risk_band_accuracy": 0.728125,
+      "risk_mae": 0.09439901875000008,
+      "unsafe_authorizations": 0.0
+    },
+    "platform002": {
+      "capacity_band_accuracy": 0.9625,
+      "decision_accuracy": 1.0,
+      "joint_accuracy": 0.9625,
+      "risk_band_accuracy": 1.0,
+      "risk_mae": 0.021785603124999983,
+      "unsafe_authorizations": 0.0
+    }
+  },
+  "platform002_minus_control": {
+    "capacity_band_accuracy": 0.03125,
+    "decision_accuracy": 0.203125,
+    "joint_accuracy": 0.334375,
+    "risk_band_accuracy": 0.271875,
+    "risk_mae": -0.0726134156250001,
+    "unsafe_authorizations": 0.0
+  },
+  "prediction_freeze_sha256": "sha256:1ae6142476a0d0ed1061b1f39f18b94d48be1dc13cef46ae3931eaf832ad3b4d",
+  "protected_labels_sha256": "sha256:76b8e5eb52ce840809115952130611597bda5f0d719684ef4b120930522c75de",
+  "schema_version": "cerebrum-platform-contrib-proxy-result.v1",
+  "status": "PROXY_SIGNAL_ESTABLISHED"
+}

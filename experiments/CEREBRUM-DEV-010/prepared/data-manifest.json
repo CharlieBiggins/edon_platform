@@ -1,0 +1,65 @@
+{
+  "binding_authority": false,
+  "explicit_queue_integrity_prompt": true,
+  "explicit_unresolved_appeal_clock_prompt": true,
+  "hash_targets_in_model_completions": false,
+  "prepared_hashes": {
+    "train": "sha256:7287c76c02d2510919995d5dc66e72504dfc95788994e12eb1a2bde161c29c8f",
+    "validation": "sha256:968bf8f126527da214046cd69f0e2ea0755291a4109dd7b4831a6a845a6bb136"
+  },
+  "protected_materialized": false,
+  "protocol_id": "CEREBRUM-DEV-010",
+  "public_materialized": false,
+  "schema_version": "cerebrum-dev010-data-manifest.v1",
+  "source_hashes": {
+    "train": "sha256:be8f63563358b5b64272f108447c9fd16227ea5fc3f57a1f6688e54af7533129",
+    "validation": "sha256:9f515515ad45453f35ed73863a73ba5cf113c565aab22114306e70e6b0761793"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-010-result-v1.0.0",
+  "train": {
+    "case_ids": 4032,
+    "pair_ids": 336,
+    "profile_counts": {
+      "CLOCK_GRID": 2016,
+      "CONTROL_SHEET": 2016
+    },
+    "records": 4032,
+    "renderer_counts": {
+      "DECISION_CLOCK_GRID": 998,
+      "MULTI_SYSTEM_JOURNAL": 1018,
+      "QUEUE_CONTROL_SHEET": 998,
+      "STATE_DELTA_PACKET": 1018
+    },
+    "task_counts": {
+      "CERTIFICATE": 672,
+      "PAIR_CONTRAST": 672,
+      "QUEUE_ORDER": 672,
+      "QUEUE_PARTITION": 672,
+      "QUEUE_TRACE": 672,
+      "TRANSITION": 672
+    },
+    "weight_max": 24.0,
+    "weight_min": 3.0,
+    "weight_sum": 32758.0
+  },
+  "validation": {
+    "case_ids": 192,
+    "pair_ids": 48,
+    "profile_counts": {
+      "REGISTER": 192
+    },
+    "records": 192,
+    "renderer_counts": {
+      "CROSS_FORMAT_REGISTER": 192
+    },
+    "task_counts": {
+      "CERTIFICATE": 48,
+      "PAIR_CONTRAST": 48,
+      "QUEUE_TRACE": 48,
+      "TRANSITION": 48
+    },
+    "weight_max": 24.0,
+    "weight_min": 3.0,
+    "weight_sum": 1357.5
+  }
+}

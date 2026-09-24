@@ -1,0 +1,30 @@
+{
+  "authorization": "DIAGNOSTIC_ONLY_FRESH_LINEAGE_REPAIR_REQUIRED",
+  "binding_authority": false,
+  "check_count": 10,
+  "checks": {
+    "binding_authority_false": true,
+    "candidate_gate_failed": true,
+    "case_reuse_prohibited": true,
+    "certificate_signal_nontrivial": true,
+    "pair_exact_zero": true,
+    "queue_exact_below_0_10": true,
+    "smoke_gate_failed": true,
+    "source_protocol_transfer007": true,
+    "transition_state_below_0_40": true,
+    "unsafe_authorizations_present": true
+  },
+  "checks_passed": 10,
+  "diagnosis": "Transfer-007 smoke retained partial certificate behavior but failed exact event execution, decision-clock deferral, state reconstruction, causal comparison, and safe authorization.",
+  "repair_requirements": [
+    "deferral on every fresh training trajectory",
+    "variable decision clocks",
+    "executed and deferred events in the same queue",
+    "multi-path exact state mutation",
+    "upweighted queue and pair-diff supervision",
+    "multiple generator profiles and training renderers plus a fresh held-out generator profile"
+  ],
+  "schema_version": "cerebrum-transfer007-failure-audit.v1",
+  "source_protocol": "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC",
+  "status": "EXECUTION_TRANSFER_FAILURE_CONFIRMED"
+}

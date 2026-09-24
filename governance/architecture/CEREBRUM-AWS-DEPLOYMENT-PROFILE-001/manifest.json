@@ -1,0 +1,20 @@
+{
+  "schema_version": "edon-deployment-profile-manifest.v1",
+  "profile_id": "CEREBRUM-AWS-DEPLOYMENT-PROFILE-001",
+  "version": "0.1.0-draft",
+  "status": "DRAFT_REFERENCE_DEPLOYMENT_NOT_PRODUCTION_QUALIFIED",
+  "drafted": "2026-09-23",
+  "hash_frozen": false,
+  "foundation_dependency": "CEREBRUM-PLATFORM-FOUNDATION-001",
+  "architecture_dependency": "CEREBRUM-MATURE-PLATFORM-SPEC-001",
+  "controlling_document": "docs/deployment/cerebrum-aws-deployment-profile-001.md",
+  "cloud_provider": "AWS",
+  "profile_qualification_gate_count": 12,
+  "infrastructure_deployed": false,
+  "cost_commitment_authorized": false,
+  "compliance_claim_authorized": false,
+  "external_pilot_authorized": false,
+  "production_qualified": false,
+  "consequential_writes_authorized": false,
+  "binding_authority": false
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/case.schema.json",
+  "title": "Label-free ActionNet case",
+  "type": "object",
+  "required": ["case_id", "observation", "query", "task_type", "institution_lineage", "source_lineage"],
+  "properties": {
+    "case_id": {"type": "string"},
+    "observation": {"type": "object"},
+    "query": {"type": "string"},
+    "task_type": {"enum": ["CERTIFICATE", "TRANSITION", "QUEUE_TRACE", "PAIR_CONTRAST"]},
+    "institution_lineage": {"type": "string"},
+    "source_lineage": {"type": "string"}
+  },
+  "not": {
+    "anyOf": [
+      {"required": ["target"]}, {"required": ["label"]}, {"required": ["expected"]},
+      {"required": ["oracle"]}, {"required": ["completion"]}
+    ]
+  },
+  "additionalProperties": false
+}

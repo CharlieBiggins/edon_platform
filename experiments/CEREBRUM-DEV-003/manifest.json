@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-003",
+  "version": "0.1.0",
+  "status": "SUPERSEDED_BY_DEV004",
+  "created": "2026-08-12",
+  "artifact": {
+    "id": "CEREBRUM-DEV-003-protocol-manifest",
+    "sha256": "sha256:d71cc3924d128aa904b78fa51b8879e1d6f1f5a40f8ea19cee50a30e1f7d24ea",
+    "storage_location": "legacy://EDON Research/experiments/CEREBRUM-DEV-003/results/protocol_manifest.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26081031, 26081032],
+  "dataset": "ACTIONNET-DATA-QUAL-004",
+  "license": "pending",
+  "claim_scope": "Protocol and provisional operator evidence only; no completed two-seed result.",
+  "binding_authority": false
+}

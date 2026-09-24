@@ -1,0 +1,28 @@
+{
+  "schema_version": "edon-agent-gateway-product-manifest.v1",
+  "product_id": "EDON-AGENT-GATEWAY-001",
+  "version": "0.5.1",
+  "release_date": "2026-08-29",
+  "status": "INTERNAL_PROTOCOL_CORE_NOT_PRODUCTION_AUTHORIZED",
+  "protocols": {
+    "MCP": "2026-07-28",
+    "A2A": "1.0",
+    "REST": "1.0",
+    "WEBHOOK": "1.0",
+    "FHIR_R4_SMART": "R4",
+    "observability": "OTLP_HTTP_JSON_COMPATIBLE"
+  },
+  "vendor_profile_count": 11,
+  "internal_evaluation": {
+    "evaluation_id": "EDON-AGENT-GATEWAY-001",
+    "status": "PASS",
+    "checks_passed": 19,
+    "check_count": 19
+  },
+  "native_vendor_connectors_implemented": 0,
+  "outbound_delivery_worker_implemented": false,
+  "production_identity_integrated": false,
+  "production_validated": false,
+  "direct_execution": false,
+  "binding_authority": false
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/gateway/vendor-profile.schema.json",
+  "title": "EDON Agent Gateway vendor capability profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "vendor_id", "name", "protocols", "preferred", "official_docs", "status",
+    "native_connector_implemented", "production_validated", "binding_authority"
+  ],
+  "properties": {
+    "vendor_id": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "protocols": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"enum": ["MCP", "A2A", "REST", "WEBHOOK", "FHIR_R4_SMART", "OTEL"]}
+    },
+    "preferred": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"enum": ["MCP", "A2A", "REST", "WEBHOOK", "FHIR_R4_SMART"]}
+    },
+    "official_docs": {"type": "string", "pattern": "^https://"},
+    "status": {"const": "PROFILE_ONLY_CREDENTIALS_AND_CONFORMANCE_REQUIRED"},
+    "native_connector_implemented": {"const": false},
+    "production_validated": {"const": false},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "protocol_id": "CEREBRUM-ACTIONNET-MATCHED-002",
+  "created": "2026-09-19",
+  "status": "IMPLEMENTED_DRAFT_NOT_REGISTERED",
+  "purpose": "LOCKED_48_CASE_PAIRED_SEED_QUALIFICATION",
+  "candidate_ids": ["ordinary-a", "actionnet-a", "ordinary-b", "actionnet-b"],
+  "records": 48,
+  "pairs": 24,
+  "responses": 192,
+  "institutions": 1,
+  "generation": {
+    "ordinary_seed": 26091850,
+    "targeted_seed": 26091851,
+    "ordinary_start": 104000,
+    "ordinary_families": 3,
+    "targeted_start": 105000,
+    "targeted_families": 2
+  },
+  "shared_output_format": "ACTIONNET_TEMPORAL_PROGRAM_V1_NATIVE_ONLY",
+  "confirmation_authorized": false,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

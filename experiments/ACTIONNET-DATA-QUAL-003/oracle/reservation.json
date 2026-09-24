@@ -1,0 +1,23 @@
+{
+  "exposed_development_reused_for_training": false,
+  "parent_public_semantic_families": [
+    12,
+    13,
+    14,
+    15
+  ],
+  "protected_materialized": false,
+  "protected_semantic_families": [
+    16,
+    17,
+    18,
+    19
+  ],
+  "public_materialized": false,
+  "successor_validation_semantic_families": [
+    20,
+    21,
+    22,
+    23
+  ]
+}

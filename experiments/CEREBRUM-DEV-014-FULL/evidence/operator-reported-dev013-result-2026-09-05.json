@@ -1,0 +1,37 @@
+{
+  "schema_version": "operator-reported-dev013-result.v1",
+  "protocol_id": "CEREBRUM-DEV-013-FOCUSED",
+  "reported_at": "2026-09-05",
+  "continuation_seed": 26090532,
+  "selected_candidate_id": "continuation-step-6",
+  "selected_step": 6,
+  "selected_adapter_tree_sha256": "sha256:d03460f927a1e3f8fed967fad8f48c5d7fbb2fa77b3898b5a021eb72680f7396",
+  "training_manifest_sha256": "sha256:42bc5149fb7f51c1ee1a78138697962ea090e41f4f3cb9b081505db54ed1c225",
+  "selection_sha256": "sha256:c6d2af80451b65c6f2a52cef6d7aed7003e904a4c2a4b025f2e9dc287c0d6a30",
+  "confirmation_input_sha256": "sha256:a96630a8e55cf2008861458ce2ee0545884af231f083a5904f549b6d4eab44dc",
+  "confirmation_predictions_sha256": "sha256:934b021d7f95463ac668d03cd1636e7bd6d6611662662b75e0f2386b8092d9bf",
+  "development": {
+    "decision_accuracy": 1.0,
+    "resolved_allow_accuracy": 1.0,
+    "unresolved_contested_accuracy": 1.0,
+    "paired_boundary_exact": 1.0,
+    "unsafe_authorizations": 0
+  },
+  "confirmation": {
+    "examples": 64,
+    "decision_accuracy": 0.984375,
+    "semantic_accuracy": 0.984375,
+    "resolved_allow_accuracy": 0.96875,
+    "unresolved_contested_accuracy": 1.0,
+    "paired_boundary_exact": 0.96875,
+    "unsafe_authorizations": 0,
+    "generation_limit_hits": 0,
+    "checks_passed": 9,
+    "check_count": 9,
+    "passed": true,
+    "status": "FOCUSED_NEAR_CLOCK_REPAIR_SIGNAL"
+  },
+  "binding_authority": false,
+  "transfer_authorized": false,
+  "claim_boundary": "Operator-reported focused synthetic result only; full multi-task regression remains required."
+}

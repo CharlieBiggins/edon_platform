@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/world/world-snapshot.schema.json",
+  "title": "Versioned institutional world snapshot",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "world_id", "version", "state",
+    "state_sha256", "event_hash", "created_at", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-world-snapshot.v1"},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "version": {"type": "integer", "minimum": 0},
+    "state": {"type": "object"},
+    "state_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "event_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

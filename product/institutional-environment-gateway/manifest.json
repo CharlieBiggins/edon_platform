@@ -1,0 +1,39 @@
+{
+  "schema_version": "edon-institutional-environment-gateway-product-manifest.v1",
+  "product_id": "EDON-INSTITUTIONAL-ENVIRONMENT-GATEWAY-001",
+  "version": "0.6.0",
+  "release_date": "2026-08-30",
+  "status": "ARCHITECTURE_DEFINED_PARTIALLY_IMPLEMENTED_NOT_PRODUCTION_AUTHORIZED",
+  "entity_classes": [
+    "AGENT",
+    "SYSTEM",
+    "RESOURCE"
+  ],
+  "event_classes": [
+    "OBSERVATION",
+    "PROPOSAL",
+    "AVAILABILITY_CHANGE",
+    "CAPACITY_CHANGE",
+    "STATE_CHANGE",
+    "ACTION_RECEIPT",
+    "OUTCOME"
+  ],
+  "implemented_components": [
+    "AGENT_GATEWAY_PROTOCOL_AND_CUSTODY_CORE",
+    "EVENT_SOURCED_WORLD_STATE",
+    "OPERATIONS_AGENT_RESOURCE_AND_OUTCOME_MODELS",
+    "KERNEL_EXACT_REQUEST_AUTHORIZATION",
+    "TRANSACTIONAL_OUTBOX",
+    "ACTIONNET_EXPERIENCE_GOVERNANCE"
+  ],
+  "internal_contract_tests": {
+    "status": "PASS",
+    "checks": "2/2"
+  },
+  "native_system_connectors_implemented": 0,
+  "native_resource_adapters_implemented": 0,
+  "outbound_environment_delivery_implemented": false,
+  "production_validated": false,
+  "real_institution_pilot_completed": false,
+  "binding_authority": false
+}

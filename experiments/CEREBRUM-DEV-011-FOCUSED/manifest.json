@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-011-FOCUSED",
+  "version": "1.0.0",
+  "status": "FOCUSED_REPAIR_HOLD_AFTER_FIRST_REGISTERED_RUN",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "CEREBRUM-DEV-011-FOCUSED-seed-26090512-operator-result-v1.0.0",
+    "sha256": "sha256:8f1266e510a1d871698c11a155c8ecd09a328a5022cf1887a6a46504cfe03795",
+    "storage_location": "evidence/operator-reported-seed-26090512-result-2026-09-05.json"
+  },
+  "dataset": "ACTIONNET-DATA-QUAL-011",
+  "parent_protocol": "CEREBRUM-DEV-010",
+  "parent_seeds": [26090401, 26090402],
+  "continuation_seeds": [26090511, 26090512],
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "training_records": 768,
+  "validation_records": 64,
+  "optimizer_steps_per_parent": 48,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Operator-reported first-run result: zero unsafe authorizations and perfect unresolved-appeal accuracy, but 30/32 resolved appeals missed the frozen 95 percent floor; second run not executed.",
+  "binding_authority": false
+}

@@ -1,0 +1,28 @@
+{
+  "built_on": "2026-09-14",
+  "protocol_id": "CEREBRUM-ACTIONNET-COMPARISON-001",
+  "status": "CPU_FRAMEWORK_TESTED_PAID_RUN_NOT_READY",
+  "source_inventory_sha256": "sha256:fefa828112b924011e9130afc1257e6b0f391730c4f26bebc0691b4b789d2f61",
+  "test_command": "python -B -m unittest discover -s edon/experiments/CEREBRUM-ACTIONNET-COMPARISON-001/tests -v",
+  "tests_passed": 19,
+  "tests_failed": 0,
+  "last_suite_seconds": 45.794,
+  "integration_evidence": [
+    "Exact frozen Program005 data reconstructed in a disposable workspace",
+    "48-case ordinary/targeted successor fixture passed pair, class and exclusion checks",
+    "Inherited executable reference outputs scored 100 percent exact native and trace",
+    "Malformed output was retained and detected in failure diagnostics"
+  ],
+  "reference_fixture_is_model_result": false,
+  "temporary_fixtures_preserved": false,
+  "actual_program005_final_result_audited": false,
+  "comparison_screen_registered": false,
+  "paid_inference_runner_implemented": false,
+  "gpu_tested": false,
+  "training_started": false,
+  "external_api_calls_made_by_framework": false,
+  "confirmation_materialized": false,
+  "transfer_authorized": false,
+  "binding_authority": false,
+  "existing_frozen_experiments_modified": false
+}

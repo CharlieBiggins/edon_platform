@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/runtime/proposal.schema.json",
+  "title": "Governed runtime proposal",
+  "type": "object",
+  "required": ["proposal_id", "mechanism_version", "proposed_transition", "model_manifest_sha256", "input_sha256", "binding_authority"],
+  "properties": {
+    "proposal_id": {"type": "string"},
+    "mechanism_version": {"type": "string"},
+    "proposed_transition": {"type": "object"},
+    "model_manifest_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "input_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

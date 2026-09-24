@@ -1,0 +1,31 @@
+{
+  "claim_boundary": "Fresh-lineage project-authored synthetic repair corpus for internal EventNet learning only.",
+  "confirmatory_ready": false,
+  "counts": {
+    "canonical_trajectories": 600,
+    "counterfactual_pairs": 300,
+    "repair_validation_records": 420,
+    "train_records": 5040
+  },
+  "dataset_id": "ACTIONNET-EVENTNET-REPAIR-DATASET-v5.0.0",
+  "files": {
+    "dataset/repair_validation.jsonl": "sha256:18a223768348538d856ecbadc23e60c62081752f6d951e2a6c905d50dc4cdb42",
+    "dataset/train.jsonl": "sha256:77e9e03973235f970ed8cf3ba81e07d90fadb168fdf6414e3a97975b5e5bd7f7",
+    "lineage/lineages.json": "sha256:518b27473d22cbe2da60533a48cc37edf8bf6e7575e9ed61e09efd73e7f5089a",
+    "oracle/canonical_trajectories.jsonl": "sha256:99a12dada918c24672ee65068e559a2aa45fce84225df2116a28b74822a0ec94",
+    "oracle/mechanism_catalog.json": "sha256:98500d3ba98bd8293e41a72ffd135175c2691598338d3eeb9b3bff23765a70c7",
+    "oracle/reservation.json": "sha256:cc1326dfd5e65df7b56d08b2348f07a94307860cbe8eafc16431f3c0da25458b"
+  },
+  "human_domain_review": false,
+  "parent_result": "ACTIONNET-DATA-QUAL-004-result-v1.0.0",
+  "protected_materialized": false,
+  "public_materialized": false,
+  "schema_version": "actionnet-eventnet-dataset-manifest.v5",
+  "source_grounded": false,
+  "task_types": [
+    "CERTIFICATE",
+    "TRANSITION",
+    "QUEUE_TRACE",
+    "PAIR_CONTRAST"
+  ]
+}

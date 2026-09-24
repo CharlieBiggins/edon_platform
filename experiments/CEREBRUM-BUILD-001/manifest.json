@@ -1,0 +1,28 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-BUILD-001",
+  "version": "1.0.0",
+  "status": "ENGINEERING_SHELL_READY_MODEL_EXECUTION_NOT_RUN",
+  "created": "2026-08-25",
+  "artifact": {
+    "id": "CEREBRUM-BUILD-001-config-v1.0.0",
+    "sha256": "sha256:dd81cbbf5f7ef31ac17b03a2d6d198e68ebf60dc25f7724a5578cd4a2646bc8b",
+    "storage_location": "experiments/CEREBRUM-BUILD-001/config/build.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [],
+  "dataset": "No Build-001 training release frozen",
+  "config": "config/build.json",
+  "benchmark": "config/benchmark.json",
+  "training_started": false,
+  "model_artifact_exists": false,
+  "benchmark_executed": false,
+  "research_dependencies": [],
+  "parallel_research_tracks": [
+    "CEREBRUM-DEV-009-RB1",
+    "CEREBRUM-TRANSFER-008"
+  ],
+  "license": "EDON research source; model and data licenses must be registered separately",
+  "claim_scope": "Exploratory non-binding engineering shell and local Qwen provider integration only; no trained Build-001 model or performance result.",
+  "binding_authority": false
+}

@@ -1,0 +1,58 @@
+{
+  "binding_authority": false,
+  "certificate_only": true,
+  "full_regression": false,
+  "prepared_hashes": {
+    "train": "sha256:b1959a0c8da5441bc7b5a6f112c324caaa691248e455a1180c766e031a5ad7c1",
+    "validation": "sha256:980a4cd9083a260fd9f0b8a7d5ac784a02e48481eb619f50d85231dd8272b84f"
+  },
+  "protocol_id": "CEREBRUM-DEV-012-FOCUSED",
+  "schema_version": "cerebrum-dev012-focused-data-manifest.v1",
+  "source_hashes": {
+    "train": "sha256:0f1c18eb9dd139fefa10c88951ab91a26433487e9818e03eb13935056dffaba2",
+    "validation": "sha256:f7111c394be05c9b5555dc131eb7d73724f92509b333e925b8526ee956f6c9c8"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-012-result-v1.0.0",
+  "symmetric_appeal_finality_prompt": true,
+  "symmetric_training_weights": true,
+  "train": {
+    "case_ids": 384,
+    "decision_counts": {
+      "ALLOW": 192,
+      "CONTESTED": 192
+    },
+    "pair_ids": 48,
+    "records": 384,
+    "renderer_counts": {
+      "APPEAL_FINALITY_LEDGER": 96,
+      "APPEAL_STATUS_MATRIX": 96,
+      "CLOCK_BOUNDARY_MEMO": 96,
+      "CLOSURE_EVIDENCE_CARD": 96
+    },
+    "task_counts": {
+      "CERTIFICATE": 384
+    },
+    "weight_max": 8.0,
+    "weight_min": 8.0,
+    "weight_sum": 3072.0
+  },
+  "transfer_authorized": false,
+  "validation": {
+    "case_ids": 64,
+    "decision_counts": {
+      "ALLOW": 32,
+      "CONTESTED": 32
+    },
+    "pair_ids": 32,
+    "records": 64,
+    "renderer_counts": {
+      "HELDOUT_CLOSURE_REGISTER": 64
+    },
+    "task_counts": {
+      "CERTIFICATE": 64
+    },
+    "weight_max": 8.0,
+    "weight_min": 8.0,
+    "weight_sum": 512.0
+  }
+}

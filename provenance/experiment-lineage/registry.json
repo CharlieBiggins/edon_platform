@@ -1,0 +1,36 @@
+{
+  "schema_version": "edon-experiment-lineage.v1",
+  "edges": [
+    {"parent": "ACTIONNET-DATA-QUAL-004", "child": "CEREBRUM-DEV-003", "relation": "training_source"},
+    {"parent": "CEREBRUM-DEV-003", "child": "CEREBRUM-DEV-004", "relation": "failure_motivated_successor"},
+    {"parent": "ACTIONNET-DATA-QUAL-005", "child": "CEREBRUM-DEV-004", "relation": "training_source"},
+    {"parent": "CEREBRUM-DEV-002", "child": "CEREBRUM-TRANSFER-003", "relation": "frozen_candidates"},
+    {"parent": "CEREBRUM-DEV-004", "child": "CEREBRUM-TRANSFER-005", "relation": "registered_candidates"},
+    {"parent": "CEREBRUM-DEV-009-RB1", "child": "CEREBRUM-DEV-010", "relation": "failure_motivated_successor"},
+    {"parent": "ACTIONNET-DATA-QUAL-010", "child": "CEREBRUM-DEV-010", "relation": "training_source"},
+    {"parent": "CEREBRUM-DEV-010", "child": "CEREBRUM-DEV-011-FOCUSED", "relation": "failure_motivated_adapter_continuation"},
+    {"parent": "ACTIONNET-DATA-QUAL-011", "child": "CEREBRUM-DEV-011-FOCUSED", "relation": "focused_training_source"},
+    {"parent": "CEREBRUM-DEV-011-FOCUSED", "child": "CEREBRUM-DEV-012-FOCUSED", "relation": "near_miss_motivated_adapter_continuation"},
+    {"parent": "ACTIONNET-DATA-QUAL-012", "child": "CEREBRUM-DEV-012-FOCUSED", "relation": "balanced_focused_training_source"},
+    {"parent": "CEREBRUM-DEV-012-FOCUSED", "child": "CEREBRUM-DEV-013-FOCUSED", "relation": "boundary_failure_motivated_checkpoint_continuation"},
+    {"parent": "ACTIONNET-DATA-QUAL-013", "child": "CEREBRUM-DEV-013-FOCUSED", "relation": "safety_constrained_selection_and_confirmation_source"},
+    {"parent": "CEREBRUM-DEV-013-FOCUSED", "child": "CEREBRUM-DEV-014-FULL", "relation": "selected_step6_full_regression_candidate"},
+    {"parent": "ACTIONNET-DATA-QUAL-014", "child": "CEREBRUM-DEV-014-FULL", "relation": "fresh_full_multitask_regression_source"},
+    {"parent": "CEREBRUM-DEV-014-FULL", "child": "CEREBRUM-DEV-015-MIXED", "relation": "state_reconstruction_failure_motivated_mixed_replay"},
+    {"parent": "CEREBRUM-DEV-013-FOCUSED", "child": "CEREBRUM-DEV-015-MIXED", "relation": "selected_step6_adapter_parent"},
+    {"parent": "ACTIONNET-DATA-QUAL-015", "child": "CEREBRUM-DEV-015-MIXED", "relation": "mixed_replay_selection_and_confirmation_source"},
+    {"parent": "CEREBRUM-DEV-015-MIXED", "child": "CEREBRUM-DEV-016-NARROW", "relation": "step12_equal_metric_parent_for_delayed_evidence_and_state_repair"},
+    {"parent": "ACTIONNET-DATA-QUAL-016", "child": "CEREBRUM-DEV-016-NARROW", "relation": "fresh_narrow_training_selection_and_confirmation_source"}
+    ,{"parent": "CEREBRUM-DEV-016-NARROW", "child": "CEREBRUM-DEV-017-CAUSAL", "relation": "negative_result_and_shared_failure_signature_predecessor"}
+    ,{"parent": "CEREBRUM-DEV-015-MIXED", "child": "CEREBRUM-DEV-017-CAUSAL", "relation": "clean_step12_training_parent"}
+    ,{"parent": "ACTIONNET-DATA-QUAL-017", "child": "CEREBRUM-DEV-017-CAUSAL", "relation": "complete_exposure_causal_chain_training_selection_and_confirmation_source"}
+    ,{"parent": "CEREBRUM-DEV-017-CAUSAL", "child": "CEREBRUM-DEV-018-VERIFIED", "relation": "negative_result_and_frozen_step24_engineering_model_parent"}
+    ,{"parent": "ACTIONNET-DATA-QUAL-018", "child": "CEREBRUM-DEV-018-VERIFIED", "relation": "fresh_target_blind_verified_hybrid_development_and_confirmation_source"}
+    ,{"parent": "CEREBRUM-DEV-018-VERIFIED", "child": "CEREBRUM-DEV-019-DIAGNOSTIC", "relation": "successful_hybrid_and_persistent_model_error_diagnostic_predecessor"}
+    ,{"parent": "CEREBRUM-DEV-017-CAUSAL", "child": "CEREBRUM-DEV-019-DIAGNOSTIC", "relation": "unchanged_step24_diagnostic_model_parent"}
+    ,{"parent": "ACTIONNET-DATA-QUAL-019", "child": "CEREBRUM-DEV-019-DIAGNOSTIC", "relation": "fresh_gold_intervention_repeated_measures_source"}
+    ,{"parent": "CEREBRUM-DEV-019-DIAGNOSTIC", "child": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION", "relation": "nonmonotonic_intervention_result_motivated_interface_instrument_repair"}
+    ,{"parent": "CEREBRUM-DEV-017-CAUSAL", "child": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION", "relation": "unchanged_step24_interface_calibration_model_parent"}
+    ,{"parent": "ACTIONNET-DATA-QUAL-020", "child": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION", "relation": "fresh_single_source_representation_and_decision_fidelity_source"}
+  ]
+}

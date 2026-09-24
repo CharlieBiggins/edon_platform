@@ -1,0 +1,42 @@
+{
+  "schema_version": "operator-reported-dev020-result.v1",
+  "protocol_id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "reported_at_utc_date": "2026-09-07",
+  "source": "Operator-provided Modal stdout from the completed registered run",
+  "status": "INTERFACE_CALIBRATION_SIGNAL",
+  "passed": true,
+  "selected_representation": "FAMILIAR_AUGMENTED",
+  "calibration": {
+    "scenarios": 64,
+    "predictions": 384,
+    "raw_decision_correct": 53,
+    "selected_decision_correct": 54,
+    "selected_raw_correct_preserved": 53,
+    "selected_decision_degradations": 0,
+    "selected_unsafe_authorizations": 6,
+    "fidelity_decision_preserved": 64,
+    "fidelity_exact_certificates": 63,
+    "predictions_sha256": "sha256:b96d3dc46856e8b21d2587f3a6b0879dad900d6bca4073252dc6cd0602ac61dd",
+    "prediction_freeze_sha256": "sha256:63b75c7ad6e41ba15d8dacfb541274910e60dbb090819b4a50cd48956b8ea654"
+  },
+  "heldout": {
+    "scenarios": 64,
+    "predictions": 192,
+    "raw_decision_correct": 53,
+    "selected_decision_correct": 53,
+    "raw_selected_decision_agreement": 64,
+    "selected_decision_degradations": 0,
+    "selected_unsafe_authorizations": 9,
+    "fidelity_decision_preserved": 64,
+    "fidelity_exact_certificates": 64,
+    "input_sha256": "sha256:63b482bec93f27e429d92cdb5f3eef22e814e1e5d4c39b377d16191093c5b98a",
+    "predictions_sha256": "sha256:c285b8ebb33694edd9ab611261e0779f51e21a906afa32e780ccf2fb9cd84f9c",
+    "prediction_freeze_sha256": "sha256:2b20395b7a8b817ce62fc91e2267df457c543ecbf9aa99ca11d360dbfdf31289"
+  },
+  "calibration_result_sha256": "sha256:9d5b9133675a112425f238f20ad70f463403c51ab0e1a0936178b9a6d85f9f24",
+  "selection_freeze_sha256": "sha256:927cbdc991098a73195572722ac360b16f6218ea5a7d31a708bdf6c8ede00aa2",
+  "training_steps": 0,
+  "transfer_authorized": false,
+  "binding_authority": false,
+  "claim_boundary": "Operator-reported evidence only. The actual Modal files and hashes must be verified by finalize_result.py before Program-001 training."
+}

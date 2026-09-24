@@ -1,0 +1,65 @@
+{
+  "schema_version": "edon-igi-scope-coverage.v1",
+  "scope_id": "EDON-IGI-SCOPE-001",
+  "updated": "2026-08-25",
+  "coverage": [
+    {
+      "component": "TYPED_INSTITUTIONAL_REPRESENTATION",
+      "status": "SUPPORTED_BOUNDED_SUBCLASS",
+      "evidence": ["ACTIONNET-DATA-QUAL-004", "ACTIONNET-DATA-QUAL-005"],
+      "gap": "No completeness proof or validated compiler coverage over Scope-001."
+    },
+    {
+      "component": "SAME_PROGRAM_SYNTHETIC_LEARNING",
+      "status": "SUPPORTED_BOUNDED_INTERNAL",
+      "evidence": ["CEREBRUM-DEV-001", "CEREBRUM-DEV-002"],
+      "gap": "Shared generator/oracle ancestry does not establish independent transfer."
+    },
+    {
+      "component": "INDEPENDENT_SYNTHETIC_TASK_TRANSFER",
+      "status": "NOT_ESTABLISHED",
+      "evidence": ["CEREBRUM-TRANSFER-003", "CEREBRUM-TRANSFER-005", "CEREBRUM-TRANSFER-008"],
+      "gap": "Transfer-003 failed, Transfer-005 is blocked, and Transfer-008 is unmaterialized."
+    },
+    {
+      "component": "PROTECTED_MULTIDOMAIN_GENERALIZATION",
+      "status": "NOT_TESTED",
+      "evidence": [],
+      "gap": "No protected multi-domain instrument covers the registered variation axes."
+    },
+    {
+      "component": "LEARNED_CLOSED_LOOP_OPERATION",
+      "status": "DEVELOPMENT_ENVIRONMENT_READY_NOT_TESTED",
+      "evidence": ["CEREBRUM-BUILD-001", "CEREBRUM-CLOSED-LOOP-DEV-001"],
+      "gap": "Provider infrastructure and an interactive development curriculum exist, but neither registered seed has been trained or scored."
+    },
+    {
+      "component": "DETERMINISTIC_CLOSED_LOOP_INFRASTRUCTURE",
+      "status": "SUPPORTED_INTERNAL_REFERENCE",
+      "evidence": ["EDON-OPS-002", "EDON-FED-001"],
+      "gap": "Infrastructure evidence is not learned intelligence evidence."
+    },
+    {
+      "component": "REAL_INSTITUTION_SHADOW_VALIDITY",
+      "status": "NOT_TESTED",
+      "evidence": ["EDON-MLGW-OR-001"],
+      "gap": "Protocol exists; authorization, authoritative data, calibration, and execution are absent."
+    },
+    {
+      "component": "EXTERNAL_REPLICATION",
+      "status": "NOT_TESTED",
+      "evidence": [],
+      "gap": "No independent team has custodied and reproduced a Scope-001 result."
+    },
+    {
+      "component": "BOUNDED_FORMAL_GUARANTEES",
+      "status": "NOT_ESTABLISHED",
+      "evidence": [],
+      "gap": "No theorem establishes representation completeness, regret, near-optimality, or learned safety over Scope-001."
+    }
+  ],
+  "highest_supported_tier": "T1_SAME_PROGRAM_SYNTHETIC_LEARNING",
+  "scope_generality_established": false,
+  "universal_igi_established": false,
+  "binding_authority": false
+}

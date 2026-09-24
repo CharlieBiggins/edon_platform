@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/authority/resource-reservation.schema.json",
+  "title": "Institutional resource reservation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "reservation_id", "tenant_id", "institution_id", "status",
+    "resource_ref", "amount", "unit", "proposal_or_plan_ref", "owner_ref",
+    "priority", "effective_from", "expires_at", "conflict_policy",
+    "created_at", "reservation_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-resource-reservation.v1"},
+    "reservation_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["REQUESTED", "HELD", "COMMITTED", "PARTIALLY_CONSUMED", "CONSUMED", "RELEASED", "EXPIRED", "CANCELLED", "FAILED"]},
+    "resource_ref": {"type": "string", "minLength": 1},
+    "amount": {"type": "number", "exclusiveMinimum": 0},
+    "unit": {"type": "string", "minLength": 1},
+    "proposal_or_plan_ref": {"type": "string", "minLength": 1},
+    "owner_ref": {"type": "string", "minLength": 1},
+    "priority": {"type": "integer"},
+    "effective_from": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "conflict_policy": {"enum": ["FAIL", "QUEUE", "PREEMPT_IF_AUTHORIZED", "ESCALATE"]},
+    "authorization_ref": {"type": "string", "minLength": 1},
+    "release_or_consumption_ref": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "reservation_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

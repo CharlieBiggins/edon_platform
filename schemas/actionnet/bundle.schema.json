@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/bundle.schema.json",
+  "title": "Separated ActionNet generation bundle",
+  "type": "object",
+  "required": ["schema_version", "mechanism_id", "mechanism_version", "public", "protected", "manifest"],
+  "properties": {
+    "schema_version": {"const": "edon-actionnet-bundle.v1"},
+    "mechanism_id": {"type": "string"},
+    "mechanism_version": {"type": "string"},
+    "generator_seed": {"type": "integer"},
+    "public": {
+      "type": "object",
+      "required": ["schema_version", "cases"],
+      "properties": {
+        "schema_version": {"const": "edon-actionnet-public.v1"},
+        "cases": {"type": "array", "items": {"$ref": "case.schema.json"}}
+      },
+      "additionalProperties": false
+    },
+    "protected": {
+      "type": "object",
+      "required": ["schema_version", "labels"],
+      "properties": {
+        "schema_version": {"const": "edon-actionnet-oracle.v1"},
+        "labels": {"type": "object"}
+      },
+      "additionalProperties": false
+    },
+    "manifest": {"type": "object"},
+    "claim_boundary": {"type": "string"}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-012",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV012_BALANCE_CONTINUATION",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-012-result-v1.0.0",
+    "sha256": "sha256:0fd818c3603280211b58ea0e8e44d12850e46bd20584aed34ee5476b991b7120",
+    "storage_location": "results/result_manifest.json"
+  },
+  "dataset": "ACTIONNET-APPEAL-FINALITY-CALIBRATION-v12.0.0",
+  "seeds": [26090530, 26090540],
+  "parent_failure": "CEREBRUM-DEV-011-FOCUSED seed 26090512",
+  "training_records": 384,
+  "validation_records": 64,
+  "training_pairs": 48,
+  "validation_pairs": 32,
+  "source_grounded": false,
+  "independent_generator_implementation": false,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Fresh project-authored synthetic balanced appeal-finality calibration data only.",
+  "binding_authority": false
+}

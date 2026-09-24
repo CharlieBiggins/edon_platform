@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/authority/mandate.schema.json",
+  "title": "Delegated institutional mandate",
+  "description": "Scoped authority evidence. A mandate does not itself authorize a specific action proposal.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "mandate_id", "tenant_id", "institution_id", "status",
+    "grantor_id", "grantee_id", "purpose", "action_types", "target_scope",
+    "jurisdictions", "limits", "required_approvals", "delegation_depth",
+    "authority_chain_refs", "policy_version", "graph_version", "effective_from",
+    "expires_at", "signature", "mandate_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-mandate.v1"},
+    "mandate_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["DRAFT", "ACTIVE", "SUSPENDED", "REVOKED", "EXPIRED", "EXHAUSTED"]},
+    "grantor_id": {"type": "string", "minLength": 1},
+    "grantee_id": {"type": "string", "minLength": 1},
+    "purpose": {"type": "string", "minLength": 1},
+    "action_types": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "target_scope": {"type": "object"},
+    "jurisdictions": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "limits": {"type": "object"},
+    "required_approvals": {"type": "array", "items": {"type": "object"}},
+    "separation_of_duties": {"type": "array", "items": {"type": "object"}},
+    "delegation_depth": {"type": "integer", "minimum": 0},
+    "authority_chain_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "policy_version": {"type": "string", "minLength": 1},
+    "graph_version": {"type": "string", "minLength": 1},
+    "effective_from": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "revocation_ref": {"type": "string", "minLength": 1},
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "signed_sha256"],
+      "properties": {
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "minLength": 1},
+        "signed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "mandate_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

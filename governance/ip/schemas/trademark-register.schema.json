@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.invalid/schemas/ip/trademark-register.schema.json",
+  "title": "EDON trademark status register",
+  "type": "object",
+  "required": [
+    "schema_version", "updated", "status", "marks",
+    "registered_symbol_authorized", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-trademark-register.v1"},
+    "updated": {"type": "string", "format": "date"},
+    "marks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "mark", "role", "clearance_status", "filing_status",
+          "registration_status", "approved_symbol", "owner_verified"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^EDON-MARK-[0-9]{3}$"},
+          "mark": {"type": "string", "minLength": 1},
+          "approved_symbol": {"enum": ["PLAIN_TEXT", "TM", "REGISTERED"]},
+          "owner_verified": {"type": "boolean"}
+        },
+        "additionalProperties": true
+      }
+    },
+    "registered_symbol_authorized": {"type": "boolean"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

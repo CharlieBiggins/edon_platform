@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "dataset/format_calibration.jsonl": "sha256:b80b437c240b47ae364f2c50fbebc83504001f6bb5f17a27e8e8010ed9829995",
+    "dataset/heldout_format_validation.jsonl": "sha256:5e0bf871dba8aa7d046544822a7a01c76c6891c46965aa9b4fe4a893a66641c5",
+    "lineage/lineages.json": "sha256:9bf2b58ccf413116fe10d904ca5793fad2d55d977b798f0326357e2a4a5d33a0",
+    "oracle/calibration_trajectories.jsonl": "sha256:4129814972bbbacbe0fe4df38b97540aee2157019f23aa3381857fc6ec571fc0",
+    "oracle/reservation.json": "sha256:b56c86fb8161becf7376bebda3f59badc7509a29a360e6ad1d1c32464f45084a",
+    "oracle/validation_trajectories.jsonl": "sha256:f91cccee05f5573dada7ecf4b980bd6ba03020b6b7601123de8eb29275830e7b",
+    "results/qualification_report.json": "sha256:b083995a6398997c91a77327fa4fc43a288524c7bb1530e6b37e5f47a4ccc4da"
+  },
+  "claim_boundary": "Fresh project-authored synthetic interface-calibration data only; no learned repair, transfer, production authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-020",
+  "result_hash": "sha256:6236140b66d4509bb1e777d22a5fcf55edafd13fdcc953d6480111324b7ce0a9",
+  "result_id": "ACTIONNET-DATA-QUAL-020-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV020_INTERFACE_CALIBRATION"
+}

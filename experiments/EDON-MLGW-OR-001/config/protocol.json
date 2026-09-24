@@ -1,0 +1,73 @@
+{
+  "schema_version": "edon-mlgw-or-protocol.v1",
+  "protocol_id": "EDON-MLGW-OR-001",
+  "event_id": "MEMPHIS-BOW-ECHO-2026-08-22",
+  "time_zone": "America/Chicago",
+  "evidence_classes": [
+    "OBSERVED",
+    "DERIVED",
+    "ESTIMATED",
+    "TARGET",
+    "PILOT_MEASURED"
+  ],
+  "controllers": [
+    "actual_mlgw_replay",
+    "critical_biggest_return",
+    "conventional_or",
+    "general_agent",
+    "cerebrum",
+    "cerebrum_or_hybrid"
+  ],
+  "primary_endpoint": "customer_outage_hours",
+  "restoration_thresholds": [0.5, 0.8, 0.9, 0.95, 0.99],
+  "coordination_latency_intervals": [
+    "detection_to_assessment",
+    "assessment_to_assignment",
+    "assignment_to_departure",
+    "arrival_to_prerequisite_complete",
+    "repair_complete_to_energization"
+  ],
+  "safety_constraints": [
+    "topology",
+    "isolation",
+    "protection",
+    "thermal",
+    "voltage",
+    "grounding",
+    "clearance",
+    "qualified_authority",
+    "exact_request_binding"
+  ],
+  "tiers": {
+    "scientific_continuation": {
+      "customer_outage_hours_reduction_min": 0.10,
+      "requires_interval_above_zero": true,
+      "unsafe_recommendations_max": 0
+    },
+    "shadow_pilot_eligibility": {
+      "customer_outage_hours_reduction_min": 0.15,
+      "protected_storms_min": 1,
+      "unsafe_recommendations_max": 0
+    },
+    "stretch_fomo": {
+      "customer_outage_hours_reduction_min": 0.30,
+      "t80_reduction_min": 0.30,
+      "t95_reduction_min": 0.30,
+      "customers_per_crew_hour_increase_min": 0.25,
+      "coordination_latency_reduction_min": 0.40,
+      "critical_outage_hours_reduction_min": 0.40,
+      "protected_storms_min": 3,
+      "unsafe_recommendations_max": 0
+    }
+  },
+  "monte_carlo": {
+    "development_replicas": 1000,
+    "confirmatory_replicas_max": 10000,
+    "common_random_numbers": true,
+    "requires_calibrated_uncertainty_model": true
+  },
+  "binding_authority": false,
+  "public_event_role": "DEVELOPMENT_ONLY",
+  "protected_execution_authorized": false,
+  "live_shadow_authorized": false
+}

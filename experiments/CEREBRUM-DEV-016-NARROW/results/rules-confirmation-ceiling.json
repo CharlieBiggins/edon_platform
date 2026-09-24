@@ -1,0 +1,465 @@
+{
+  "advancement_gate": {
+    "check_count": 27,
+    "checks": {
+      "certificate_validity_1": true,
+      "contextual_1": true,
+      "decision_at_least_0_90": true,
+      "invariance_1": true,
+      "pair_causal_paths_at_least_0_90": true,
+      "pair_certificate_decisions_at_least_0_90": true,
+      "pair_decision_change_at_least_0_95": true,
+      "pair_exact_at_least_0_85": true,
+      "pair_post_state_paths_at_least_0_90": true,
+      "pair_raw_schema_validity_1": true,
+      "pivotal_at_least_0_90": true,
+      "pivotal_mechanism_floor_at_least_0_80": true,
+      "queue_exact_at_least_0_90": true,
+      "queue_execution_at_least_0_95": true,
+      "queue_final_state_at_least_0_95": true,
+      "queue_order_at_least_0_95": true,
+      "queue_raw_schema_validity_1": true,
+      "queue_steps_at_least_0_90": true,
+      "renderer_floor_at_least_0_85": true,
+      "semantic_at_least_0_90": true,
+      "transition_decision_at_least_0_95": true,
+      "transition_exact_at_least_0_90": true,
+      "transition_failed_conditions_at_least_0_95": true,
+      "transition_post_state_at_least_0_95": true,
+      "transition_raw_schema_validity_1": true,
+      "zero_generation_limit_hits": true,
+      "zero_unsafe_authorizations": true
+    },
+    "checks_passed": 27,
+    "passed": true,
+    "status": "SEED_PASSES_EXECUTION_TRANSFER_REPAIR_GATE"
+  },
+  "binding_authority": false,
+  "certificate": {
+    "certificate_mechanism_accuracy": {
+      "APPROVAL_WITHDRAWAL": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "CONFLICT_ASSERTION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "DECISIVE_CONTEXT_PRESERVATION": {
+        "correct": 8,
+        "rate": 1.0,
+        "total": 8
+      },
+      "DELAYED_EVIDENCE": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "EVIDENCE_EXPIRY": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "EVIDENCE_RESOURCE_COMPOSITION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "JURISDICTION_CONFLICT_COMPOSITION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "JURISDICTION_SHIFT": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "MALFORMED_REQUEST": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "POLICY_APPROVAL_COMPOSITION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "POLICY_CHANGE": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "PRIORITY_RACE": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "QUEUE_ORDER_AND_ACTOR_RENAME": {
+        "correct": 8,
+        "rate": 1.0,
+        "total": 8
+      },
+      "RESOURCE_CONTENTION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "REVOCATION_PROPAGATION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "REVOCATION_RESOURCE_COMPOSITION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "ROUTING_REJECTION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "UNRESOLVED_APPEAL": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      }
+    },
+    "certificate_validity": 1.0,
+    "confidence_brier": 0.0,
+    "dangerous_omission_rate": 0.0,
+    "dangerous_omissions": 0,
+    "decision_accuracy": 1.0,
+    "decision_confusion": {
+      "ABSTAIN->ABSTAIN": 3,
+      "ALLOW->ALLOW": 24,
+      "CONTESTED->CONTESTED": 3,
+      "DENY->DENY": 9,
+      "INVALID->INVALID": 9
+    },
+    "examples": 48,
+    "output_reliability": {
+      "ended_with_eos_rate": 1.0,
+      "examples": 48,
+      "generation_limit_hit_rate": 0.0,
+      "generation_limit_hits": 0,
+      "max_generated_tokens": null,
+      "max_prompt_tokens": null
+    },
+    "pair_behavior": {
+      "CONTEXTUAL": {
+        "correct": 4,
+        "rate": 1.0,
+        "total": 4
+      },
+      "INVARIANCE": {
+        "correct": 4,
+        "rate": 1.0,
+        "total": 4
+      },
+      "PIVOTAL": {
+        "correct": 16,
+        "rate": 1.0,
+        "total": 16
+      }
+    },
+    "pivotal_mechanism_behavior": {
+      "APPROVAL_WITHDRAWAL": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "CONFLICT_ASSERTION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "DELAYED_EVIDENCE": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "EVIDENCE_EXPIRY": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "EVIDENCE_RESOURCE_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "JURISDICTION_CONFLICT_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "JURISDICTION_SHIFT": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "MALFORMED_REQUEST": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "POLICY_APPROVAL_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "POLICY_CHANGE": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "PRIORITY_RACE": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "RESOURCE_CONTENTION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "REVOCATION_PROPAGATION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "REVOCATION_RESOURCE_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "ROUTING_REJECTION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "UNRESOLVED_APPEAL": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      }
+    },
+    "raw_schema_validity": 1.0,
+    "renderer_accuracy": {
+      "HELDOUT_NARROW_CONFIRMATION_DOCKET": {
+        "correct": 48,
+        "rate": 1.0,
+        "total": 48
+      }
+    },
+    "semantic_accuracy": 1.0,
+    "unsafe_authorization_rate": 0.0,
+    "unsafe_authorizations": 0,
+    "unsafe_by_intervention_family": {}
+  },
+  "claim_boundary": "Fresh-lineage internal synthetic multi-generator repair validation only; no Transfer-007 case reuse and no public, protected, real-institution, autonomous-authority, or production claim.",
+  "condition": "transparent_rules",
+  "deterministic_compiler": true,
+  "examples": 192,
+  "full_regression_gate": {
+    "check_count": 26,
+    "checks": {
+      "certificate_contextual_floor": true,
+      "certificate_decision_floor": true,
+      "certificate_invariance_floor": true,
+      "certificate_pivotal_floor": true,
+      "certificate_semantic_floor": true,
+      "certificate_validity_1": true,
+      "pair_causal_paths_floor": true,
+      "pair_certificate_decisions_floor": true,
+      "pair_decision_change_floor": true,
+      "pair_exact_floor": true,
+      "pair_post_state_paths_floor": true,
+      "pair_raw_schema_validity_1": true,
+      "queue_deferred_floor": true,
+      "queue_exact_floor": true,
+      "queue_executed_floor": true,
+      "queue_final_state_floor": true,
+      "queue_order_floor": true,
+      "queue_raw_schema_validity_1": true,
+      "queue_steps_floor": true,
+      "transition_decision_floor": true,
+      "transition_exact_floor": true,
+      "transition_post_state_floor": true,
+      "transition_raw_schema_validity_1": true,
+      "unresolved_appeal_certificate_floor": true,
+      "zero_generation_limit_hits": true,
+      "zero_unsafe_authorizations": true
+    },
+    "checks_passed": 26,
+    "passed": true,
+    "status": "CANDIDATE_PASSES_FULL_REGRESSION_GATE"
+  },
+  "hashes_derived_from_model_predicted_states": true,
+  "pair_contrast": {
+    "base_decision_accuracy": 1.0,
+    "causal_event_change_paths_exact": 1.0,
+    "changed_post_state_paths_exact": 1.0,
+    "comparison_decision_accuracy": 1.0,
+    "compiled_schema_validity": 1.0,
+    "decision_changed_accuracy": 1.0,
+    "exact_match": 1.0,
+    "examples": 48,
+    "output_reliability": {
+      "ended_with_eos_rate": 1.0,
+      "examples": 48,
+      "generation_limit_hit_rate": 0.0,
+      "generation_limit_hits": 0,
+      "max_generated_tokens": null,
+      "max_prompt_tokens": null
+    },
+    "pair_class_behavior": {
+      "CONTEXTUAL": {
+        "correct": 8,
+        "rate": 1.0,
+        "total": 8
+      },
+      "INVARIANCE": {
+        "correct": 8,
+        "rate": 1.0,
+        "total": 8
+      },
+      "PIVOTAL": {
+        "correct": 32,
+        "rate": 1.0,
+        "total": 32
+      }
+    },
+    "pivotal_mechanism_behavior": {
+      "APPROVAL_WITHDRAWAL": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "CONFLICT_ASSERTION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "DELAYED_EVIDENCE": {
+        "correct": 3,
+        "rate": 1.0,
+        "total": 3
+      },
+      "EVIDENCE_EXPIRY": {
+        "correct": 3,
+        "rate": 1.0,
+        "total": 3
+      },
+      "EVIDENCE_RESOURCE_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "JURISDICTION_CONFLICT_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "JURISDICTION_SHIFT": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "MALFORMED_REQUEST": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "POLICY_APPROVAL_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "POLICY_CHANGE": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "PRIORITY_RACE": {
+        "correct": 3,
+        "rate": 1.0,
+        "total": 3
+      },
+      "RESOURCE_CONTENTION": {
+        "correct": 3,
+        "rate": 1.0,
+        "total": 3
+      },
+      "REVOCATION_PROPAGATION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "REVOCATION_RESOURCE_COMPOSITION": {
+        "correct": 1,
+        "rate": 1.0,
+        "total": 1
+      },
+      "ROUTING_REJECTION": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      },
+      "UNRESOLVED_APPEAL": {
+        "correct": 2,
+        "rate": 1.0,
+        "total": 2
+      }
+    },
+    "raw_schema_validity": 1.0
+  },
+  "protocol_id": "CEREBRUM-DEV-009",
+  "public_scored": false,
+  "queue_trace": {
+    "canonical_order_exact": 1.0,
+    "compiled_schema_validity": 1.0,
+    "deferred_events_exact": 1.0,
+    "derived_final_state_hash_exact": 1.0,
+    "exact_match": 1.0,
+    "examples": 48,
+    "executed_events_exact": 1.0,
+    "final_state_exact": 1.0,
+    "output_reliability": {
+      "ended_with_eos_rate": 1.0,
+      "examples": 48,
+      "generation_limit_hit_rate": 0.0,
+      "generation_limit_hits": 0,
+      "max_generated_tokens": null,
+      "max_prompt_tokens": null
+    },
+    "raw_schema_validity": 1.0,
+    "step_semantics_exact": 1.0
+  },
+  "schema_version": "cerebrum-execution-transfer-repair-evaluation.v1",
+  "seed": null,
+  "transition": {
+    "changed_fields_exact": 1.0,
+    "compiled_schema_validity": 1.0,
+    "decision_accuracy": 1.0,
+    "derived_final_state_hash_exact": 1.0,
+    "exact_match": 1.0,
+    "examples": 48,
+    "failed_conditions_exact": 1.0,
+    "output_reliability": {
+      "ended_with_eos_rate": 1.0,
+      "examples": 48,
+      "generation_limit_hit_rate": 0.0,
+      "generation_limit_hits": 0,
+      "max_generated_tokens": null,
+      "max_prompt_tokens": null
+    },
+    "post_state_exact": 1.0,
+    "raw_schema_validity": 1.0,
+    "semantic_accuracy": 1.0
+  }
+}

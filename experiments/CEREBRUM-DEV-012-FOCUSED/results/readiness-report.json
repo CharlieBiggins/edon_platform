@@ -1,0 +1,88 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Adaptive balanced appeal-finality readiness only; no learned result, full regression, or transfer authorization.",
+  "config_sha256": "sha256:b04fc5129fddbe9fc91c4b3bea27fb0835826dbd7ba1ef7f8771c8896d3d683d",
+  "core_control_count": 22,
+  "core_controls": {
+    "balanced_train_decisions": true,
+    "balanced_validation_decisions": true,
+    "certificate_only": true,
+    "effective_batch_16": true,
+    "fresh_continuation_seed": true,
+    "frozen_base_revision": true,
+    "full_regression_disabled": true,
+    "heldout_renderer_unseen_in_train": true,
+    "lower_continuation_learning_rate": true,
+    "operator_reported_parent_near_miss_frozen": true,
+    "oracle_scoring_ceiling_passes": true,
+    "qualified_source_all_controls": true,
+    "registered_24_optimizer_steps": true,
+    "registered_parent_identity": true,
+    "registered_protocol_identity": true,
+    "symmetric_finality_prompt": true,
+    "symmetric_training_weights": true,
+    "train_count_384": true,
+    "train_validation_families_disjoint": true,
+    "train_validation_pairs_disjoint": true,
+    "transfer_authorization_disabled": true,
+    "validation_count_64": true
+  },
+  "core_controls_passed": 22,
+  "expected_optimizer_steps": 24,
+  "full_regression": false,
+  "parent_control_count": 3,
+  "parent_controls": {
+    "parent_adapter_present": false,
+    "parent_identity_valid": false,
+    "parent_manifest_hash_valid": false
+  },
+  "parent_controls_passed": 0,
+  "prepared_hashes": {
+    "train": "sha256:b1959a0c8da5441bc7b5a6f112c324caaa691248e455a1180c766e031a5ad7c1",
+    "validation": "sha256:980a4cd9083a260fd9f0b8a7d5ac784a02e48481eb619f50d85231dd8272b84f"
+  },
+  "protocol_id": "CEREBRUM-DEV-012-FOCUSED",
+  "public_scored": false,
+  "schema_version": "cerebrum-dev012-focused-readiness.v1",
+  "status": "READY_PENDING_DEV011_PARENT_IMPORT",
+  "train": {
+    "case_ids": 384,
+    "decision_counts": {
+      "ALLOW": 192,
+      "CONTESTED": 192
+    },
+    "pair_ids": 48,
+    "records": 384,
+    "renderer_counts": {
+      "APPEAL_FINALITY_LEDGER": 96,
+      "APPEAL_STATUS_MATRIX": 96,
+      "CLOCK_BOUNDARY_MEMO": 96,
+      "CLOSURE_EVIDENCE_CARD": 96
+    },
+    "task_counts": {
+      "CERTIFICATE": 384
+    },
+    "weight_max": 8.0,
+    "weight_min": 8.0,
+    "weight_sum": 3072.0
+  },
+  "transfer_authorized": false,
+  "validation": {
+    "case_ids": 64,
+    "decision_counts": {
+      "ALLOW": 32,
+      "CONTESTED": 32
+    },
+    "pair_ids": 32,
+    "records": 64,
+    "renderer_counts": {
+      "HELDOUT_CLOSURE_REGISTER": 64
+    },
+    "task_counts": {
+      "CERTIFICATE": 64
+    },
+    "weight_max": 8.0,
+    "weight_min": 8.0,
+    "weight_sum": 512.0
+  }
+}

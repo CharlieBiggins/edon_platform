@@ -1,0 +1,291 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:b24fdf576acf32e33ca19fe84dbf297da207f41a025f7451bfc80e0e373fb288",
+    "calibration": {
+      "arm_counts": {
+        "DECISION_FIDELITY": 64,
+        "REPRESENTATION": 320
+      },
+      "condition_counts": {
+        "AUTHENTICATED_DECISION_FIDELITY": 64,
+        "COMPACT_TABLE": 64,
+        "FAMILIAR_AUGMENTED": 64,
+        "RAW_DOCKET": 64,
+        "TEMPORAL_DSL": 64,
+        "TYPED_JSON": 64
+      },
+      "mechanism_counts": {
+        "APPROVAL_WITHDRAWAL": 12,
+        "CONFLICT_ASSERTION": 12,
+        "DECISIVE_CONTEXT_PRESERVATION": 60,
+        "DELAYED_EVIDENCE": 24,
+        "EVIDENCE_EXPIRY": 24,
+        "EVIDENCE_RESOURCE_COMPOSITION": 12,
+        "JURISDICTION_CONFLICT_COMPOSITION": 12,
+        "JURISDICTION_SHIFT": 12,
+        "MALFORMED_REQUEST": 12,
+        "POLICY_APPROVAL_COMPOSITION": 12,
+        "POLICY_CHANGE": 12,
+        "PRIORITY_RACE": 24,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 60,
+        "RESOURCE_CONTENTION": 24,
+        "REVOCATION_PROPAGATION": 24,
+        "REVOCATION_RESOURCE_COMPOSITION": 12,
+        "ROUTING_REJECTION": 12,
+        "UNRESOLVED_APPEAL": 24
+      },
+      "records": 384,
+      "scenarios": 64
+    },
+    "calibration_generator": {
+      "aggregate_outcome_sha256": "sha256:6deadf10062b0c247be23cf3a4de43b80046b3739a71b65a2591953bbdf34600",
+      "aggregation_equivalence_checks": 4,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 32,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 5,
+        "ALLOW": 32,
+        "CONTESTED": 4,
+        "DENY": 12,
+        "INVALID": 11
+      },
+      "deferred_event_count_distribution": {
+        "1": 17,
+        "2": 19,
+        "3": 26,
+        "4": 1,
+        "5": 1
+      },
+      "deferred_event_trajectories": 64,
+      "engine_comparisons": 466,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 2,
+        "6": 42,
+        "7": 20
+      },
+      "families": [
+        1080,
+        1081,
+        1082,
+        1083,
+        1084,
+        1085,
+        1086,
+        1087
+      ],
+      "generator_lineage": "generator-eccbbf89e504cd92",
+      "generator_profile": "INTERFACE_CALIBRATION",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 1,
+        "CONFLICT_ASSERTION": 1,
+        "DECISIVE_CONTEXT_PRESERVATION": 5,
+        "DELAYED_EVIDENCE": 2,
+        "EVIDENCE_EXPIRY": 2,
+        "EVIDENCE_RESOURCE_COMPOSITION": 1,
+        "JURISDICTION_CONFLICT_COMPOSITION": 1,
+        "JURISDICTION_SHIFT": 1,
+        "MALFORMED_REQUEST": 1,
+        "POLICY_APPROVAL_COMPOSITION": 1,
+        "POLICY_CHANGE": 1,
+        "PRIORITY_RACE": 2,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 5,
+        "RESOURCE_CONTENTION": 2,
+        "REVOCATION_PROPAGATION": 2,
+        "REVOCATION_RESOURCE_COMPOSITION": 1,
+        "ROUTING_REJECTION": 1,
+        "UNRESOLVED_APPEAL": 2
+      },
+      "multi_actor_trajectories": 64,
+      "mutation_path_count_distribution": {
+        "2": 41,
+        "3": 19,
+        "4": 4
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 5,
+        "INVARIANCE": 5,
+        "PIVOTAL": 22
+      },
+      "pivotal_pair_changes": 22,
+      "query_time_distribution": {
+        "8": 14,
+        "9": 14,
+        "10": 12,
+        "11": 12,
+        "12": 12
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 64,
+      "transition_disagreements": 0
+    },
+    "heldout_validation": {
+      "arm_counts": {
+        "DECISION_FIDELITY": 64,
+        "REPRESENTATION": 320
+      },
+      "condition_counts": {
+        "AUTHENTICATED_DECISION_FIDELITY": 64,
+        "COMPACT_TABLE": 64,
+        "FAMILIAR_AUGMENTED": 64,
+        "RAW_DOCKET": 64,
+        "TEMPORAL_DSL": 64,
+        "TYPED_JSON": 64
+      },
+      "mechanism_counts": {
+        "APPROVAL_WITHDRAWAL": 12,
+        "CONFLICT_ASSERTION": 12,
+        "DECISIVE_CONTEXT_PRESERVATION": 60,
+        "DELAYED_EVIDENCE": 24,
+        "EVIDENCE_EXPIRY": 24,
+        "EVIDENCE_RESOURCE_COMPOSITION": 12,
+        "JURISDICTION_CONFLICT_COMPOSITION": 12,
+        "JURISDICTION_SHIFT": 12,
+        "MALFORMED_REQUEST": 12,
+        "POLICY_APPROVAL_COMPOSITION": 12,
+        "POLICY_CHANGE": 12,
+        "PRIORITY_RACE": 24,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 60,
+        "RESOURCE_CONTENTION": 24,
+        "REVOCATION_PROPAGATION": 24,
+        "REVOCATION_RESOURCE_COMPOSITION": 12,
+        "ROUTING_REJECTION": 12,
+        "UNRESOLVED_APPEAL": 24
+      },
+      "records": 384,
+      "scenarios": 64
+    },
+    "validation_generator": {
+      "aggregate_outcome_sha256": "sha256:6deadf10062b0c247be23cf3a4de43b80046b3739a71b65a2591953bbdf34600",
+      "aggregation_equivalence_checks": 4,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 32,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 5,
+        "ALLOW": 32,
+        "CONTESTED": 4,
+        "DENY": 12,
+        "INVALID": 11
+      },
+      "deferred_event_count_distribution": {
+        "1": 16,
+        "2": 18,
+        "3": 26,
+        "4": 4
+      },
+      "deferred_event_trajectories": 64,
+      "engine_comparisons": 466,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 2,
+        "6": 42,
+        "7": 20
+      },
+      "families": [
+        1100,
+        1101,
+        1102,
+        1103,
+        1104,
+        1105,
+        1106,
+        1107
+      ],
+      "generator_lineage": "generator-c199526f0f440a8e",
+      "generator_profile": "INTERFACE_CALIBRATION",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 1,
+        "CONFLICT_ASSERTION": 1,
+        "DECISIVE_CONTEXT_PRESERVATION": 5,
+        "DELAYED_EVIDENCE": 2,
+        "EVIDENCE_EXPIRY": 2,
+        "EVIDENCE_RESOURCE_COMPOSITION": 1,
+        "JURISDICTION_CONFLICT_COMPOSITION": 1,
+        "JURISDICTION_SHIFT": 1,
+        "MALFORMED_REQUEST": 1,
+        "POLICY_APPROVAL_COMPOSITION": 1,
+        "POLICY_CHANGE": 1,
+        "PRIORITY_RACE": 2,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 5,
+        "RESOURCE_CONTENTION": 2,
+        "REVOCATION_PROPAGATION": 2,
+        "REVOCATION_RESOURCE_COMPOSITION": 1,
+        "ROUTING_REJECTION": 1,
+        "UNRESOLVED_APPEAL": 2
+      },
+      "multi_actor_trajectories": 64,
+      "mutation_path_count_distribution": {
+        "2": 41,
+        "3": 19,
+        "4": 4
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 5,
+        "INVARIANCE": 5,
+        "PIVOTAL": 22
+      },
+      "pivotal_pair_changes": 22,
+      "query_time_distribution": {
+        "8": 14,
+        "9": 14,
+        "10": 12,
+        "11": 12,
+        "12": 12
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 64,
+      "transition_disagreements": 0
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh project-authored synthetic interface-calibration data only; no learned repair, transfer, production authority, or IGI claim.",
+  "control_count": 31,
+  "controls": {
+    "all_records_fresh": true,
+    "all_targets_nonbinding": true,
+    "authenticated_fidelity_source": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "calibration_record_count_384": true,
+    "calibration_scenario_count_64": true,
+    "calibration_validation_case_disjoint": true,
+    "calibration_validation_family_disjoint": true,
+    "calibration_validation_pair_disjoint": true,
+    "calibration_validation_scenario_disjoint": true,
+    "case_ids_unique": true,
+    "decision_clock_exact": true,
+    "evaluation_only_no_training_split": true,
+    "fidelity_query_explicitly_immutable": true,
+    "heldout_validation_not_used_for_selection": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "lineage_ids_unique": true,
+    "neutral_input_labels": true,
+    "previous_families_disjoint": true,
+    "representation_query_identical": true,
+    "reserved_future_families_unmaterialized": true,
+    "single_observation_source_per_representation": true,
+    "six_conditions_per_scenario": true,
+    "targets_identical_within_scenario": true,
+    "trajectory_count_128": true,
+    "transfer_authorization_disabled": true,
+    "transition_engines_exact": true,
+    "validation_record_count_384": true,
+    "validation_scenario_count_64": true
+  },
+  "controls_passed": 31,
+  "dataset_id": "ACTIONNET-INTERFACE-CALIBRATION-v20.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-020",
+  "result_id": "ACTIONNET-DATA-QUAL-020-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v20",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV020_INTERFACE_CALIBRATION"
+}

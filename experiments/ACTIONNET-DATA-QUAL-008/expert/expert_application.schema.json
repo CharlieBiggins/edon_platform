@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/expert-application.v1.json",
+  "title": "ActionNet Expert Self-Application",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["application_id", "identity_reference", "professional_email", "affiliation", "claimed_domains", "claimed_specialties", "claimed_jurisdictions", "credential_references", "experience_summary", "conflict_disclosure", "terms_accepted", "submitted_at"],
+  "properties": {
+    "application_id": {"type": "string"},
+    "identity_reference": {"type": "string"},
+    "professional_email": {"type": "string", "format": "email"},
+    "affiliation": {"type": "string"},
+    "claimed_domains": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "claimed_specialties": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "claimed_jurisdictions": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "credential_references": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "experience_summary": {"type": "string", "minLength": 40},
+    "conflict_disclosure": {"type": "string"},
+    "terms_accepted": {"const": true},
+    "submitted_at": {"type": "string", "format": "date-time"},
+    "application_status": {"enum": ["SUBMITTED", "IDENTITY_REVIEW", "CREDENTIAL_REVIEW", "CALIBRATION_PENDING", "APPROVED", "REJECTED"]}
+  }
+}

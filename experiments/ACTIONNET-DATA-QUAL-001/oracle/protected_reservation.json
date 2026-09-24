@@ -1,0 +1,14 @@
+{
+  "domains": [
+    "protected-domain-a",
+    "protected-domain-b"
+  ],
+  "examples": 0,
+  "seed_materialized": false,
+  "semantic_families": [
+    16,
+    17,
+    18,
+    19
+  ]
+}

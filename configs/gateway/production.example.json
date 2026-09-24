@@ -1,0 +1,44 @@
+{
+  "schema_version": "edon-agent-gateway-config.v1",
+  "status": "PRODUCTION_ORIENTED_REFERENCE_NOT_PRODUCTION_AUTHORIZED",
+  "protocol_versions": {
+    "MCP": "2026-07-28",
+    "A2A": "1.0",
+    "REST": "1.0",
+    "WEBHOOK": "1.0",
+    "FHIR_R4_SMART": "R4"
+  },
+  "runtime": {
+    "default_mode": "SHADOW",
+    "direct_delivery_enabled": false,
+    "direct_execution_enabled": false,
+    "kernel_authorization_required_for_commit": true,
+    "max_normalized_payload_bytes": 1048576,
+    "max_query_records": 1000,
+    "content_telemetry_enabled": false,
+    "trace_context_propagation": true,
+    "idempotency_required": true,
+    "immutable_message_custody": true,
+    "audit_chain_required": true
+  },
+  "security": {
+    "https_required": true,
+    "credentials_in_payload_prohibited": true,
+    "secret_manager_references_required_for_enabled_connectors": true,
+    "tenant_binding_required": true,
+    "operation_allowlist_required": true,
+    "target_allowlist_supported": true,
+    "fhir_writes_prohibited": true,
+    "external_authority_fields_rejected": true,
+    "connector_registration_disabled_by_default": true,
+    "security_review_required_for_enablement": true
+  },
+  "observability": {
+    "format": "OTLP_HTTP_JSON_COMPATIBLE",
+    "semantic_conventions_target": "1.44.0",
+    "payload_content_recorded": false,
+    "message_hash_recorded": true,
+    "vendor_and_protocol_recorded": true
+  },
+  "binding_authority": false
+}

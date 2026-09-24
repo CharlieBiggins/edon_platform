@@ -1,0 +1,14 @@
+{
+  "schema_version": "actionnet-platform-config.v1",
+  "state_directory": "/var/lib/edon",
+  "default_training_eligible": false,
+  "allow_raw_customer_data_centralization": false,
+  "require_local_governed_abstraction": true,
+  "require_canonical_institutional_ir": true,
+  "human_behavior_outputs_are_scenarios_only": true,
+  "allow_protected_training": false,
+  "allow_automatic_model_release": false,
+  "allow_binding_interventions": false,
+  "minimum_review_dimensions": ["DOMAIN", "SAFETY", "LINEAGE", "TRAINING"],
+  "production_ready": false
+}

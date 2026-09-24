@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/operations/goal.schema.json",
+  "title": "Versioned institutional goal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["goal_id", "description", "status", "priority", "dependencies", "success_criteria", "active_plan_id", "created_at", "updated_at"],
+  "properties": {
+    "goal_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "description": {"type": "string", "minLength": 10, "maxLength": 10000},
+    "status": {"enum": ["PROPOSED", "ACTIVE", "PAUSED", "BLOCKED", "COMPLETED", "FAILED", "CANCELLED"]},
+    "priority": {"type": "integer", "minimum": 0, "maximum": 100},
+    "deadline": {"type": ["string", "null"], "format": "date-time"},
+    "dependencies": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "parent_goal_id": {"type": ["string", "null"]},
+    "owner_id": {"type": ["string", "null"]},
+    "success_criteria": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "active_plan_id": {"type": ["string", "null"]},
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": "string", "format": "date-time"},
+    "transition_reason": {"type": "string"}
+  }
+}

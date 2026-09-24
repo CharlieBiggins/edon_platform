@@ -1,0 +1,27 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-013",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV013_BOUNDARY_SELECTION",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-013-result-v1.0.0",
+    "sha256": "sha256:0898a8c1bb239fc004e7911af1cfd930ad45fe40c735d3e3bd8490fd6d73498b",
+    "storage_location": "results/result_manifest.json"
+  },
+  "dataset": "ACTIONNET-NEAR-CLOCK-APPEAL-BOUNDARY-v13.0.0",
+  "seeds": [26090550, 26090560, 26090570],
+  "parent_failure": "CEREBRUM-DEV-012-FOCUSED near-clock boundary hold",
+  "training_records": 192,
+  "selection_records": 32,
+  "confirmation_records": 64,
+  "training_pairs": 24,
+  "selection_pairs": 16,
+  "confirmation_pairs": 32,
+  "source_grounded": false,
+  "independent_generator_implementation": false,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Fresh project-authored synthetic near-clock selection and confirmation data only.",
+  "binding_authority": false
+}

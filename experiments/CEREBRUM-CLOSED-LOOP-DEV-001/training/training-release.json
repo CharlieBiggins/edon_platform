@@ -1,0 +1,37 @@
+{
+  "all_records_training_eligible": true,
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "binding_authority": false,
+  "candidate_seeds": [
+    26082491,
+    26082492
+  ],
+  "capstone_material_included": false,
+  "created": "2026-09-03",
+  "files": [
+    {
+      "path": "dataset/train-episodes.jsonl",
+      "sha256": "sha256:61fdbcd4d11ebfb95f4da1d19ebcdb169ca5888a7055df418bd5eb9fe01404c3"
+    },
+    {
+      "path": "dataset/train-turns.jsonl",
+      "sha256": "sha256:40501cc81bef5aef842fdb3094da7b6d2706bfd3b5716c732f590f39b6c53650"
+    },
+    {
+      "path": "oracle/train-oracle.jsonl",
+      "sha256": "sha256:000ebbf2a92c5623e36ae2d1a3f004b7a2ed9f5c890153e8db5bb93a15a8ff02"
+    }
+  ],
+  "protected_labels_included": false,
+  "real_institution_data_included": false,
+  "release_id": "CEREBRUM-CLOSED-LOOP-DEV-001-TRAINING-v1.0.0",
+  "schema_version": "cerebrum-closed-loop-training-release.v1",
+  "source_experiments": [
+    "CEREBRUM-CLOSED-LOOP-DEV-001"
+  ],
+  "status": "AUTHORIZED_FOR_DEVELOPMENT_TRAINING",
+  "train_episodes": 288,
+  "train_turns": 2496,
+  "training_authorized": true,
+  "transfer008_material_included": false
+}

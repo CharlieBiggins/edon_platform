@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "edon-mlgw-evidence-record.v1",
+  "type": "object",
+  "required": [
+    "record_id",
+    "event_id",
+    "record_type",
+    "evidence_class",
+    "event_time",
+    "available_at",
+    "source_id",
+    "payload",
+    "authoritative",
+    "training_eligible",
+    "previous_record_hash",
+    "record_hash"
+  ],
+  "properties": {
+    "record_id": {"type": "string", "minLength": 1},
+    "event_id": {"type": "string", "minLength": 1},
+    "record_type": {"type": "string", "minLength": 1},
+    "evidence_class": {
+      "enum": ["OBSERVED", "DERIVED", "ESTIMATED", "TARGET", "PILOT_MEASURED"]
+    },
+    "event_time": {"type": "string", "format": "date-time"},
+    "available_at": {"type": "string", "format": "date-time"},
+    "source_id": {"type": ["string", "null"]},
+    "payload": {"type": "object"},
+    "derivation": {"type": ["object", "null"]},
+    "confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "authoritative": {"type": "boolean"},
+    "training_eligible": {"const": false},
+    "supersedes": {"type": ["string", "null"]},
+    "previous_record_hash": {"type": ["string", "null"]},
+    "record_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  },
+  "additionalProperties": false
+}

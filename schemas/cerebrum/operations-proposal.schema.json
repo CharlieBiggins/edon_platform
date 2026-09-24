@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/operations-proposal.schema.json",
+  "title": "Non-authoritative Cerebrum operations proposal",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "proposal_id", "proposal_type", "payload", "rationale", "confidence", "model_lineage", "input_sha256", "proposal_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "edon-cerebrum-operations-proposal.v1"},
+    "proposal_id": {"type": "string", "minLength": 1},
+    "proposal_type": {"enum": ["ABSTAIN", "CREATE_GOAL", "CREATE_PLAN", "DISPATCH_STEP", "REPLAN", "CANCEL_STEP"]},
+    "payload": {"type": "object"},
+    "rationale": {"type": "string", "minLength": 10},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "model_lineage": {"type": "string", "minLength": 1},
+    "input_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "proposal_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

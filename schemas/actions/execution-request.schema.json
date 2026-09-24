@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actions/execution-request.schema.json",
+  "title": "Authorization-bound execution request",
+  "description": "Request for Execution Assurance to validate and act on an unchanged authorized proposal.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "execution_request_id",
+    "tenant_id",
+    "institution_id",
+    "action_proposal_id",
+    "action_proposal_sha256",
+    "authorization_decision_id",
+    "authorization_decision_sha256",
+    "expected_state_version",
+    "connector_profile_ref",
+    "idempotency_key",
+    "requested_by",
+    "requested_at",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-execution-request.v1"},
+    "execution_request_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "action_proposal_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "action_proposal_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "authorization_decision_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "authorization_decision_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "expected_state_version": {"type": "string", "minLength": 1, "maxLength": 200},
+    "connector_profile_ref": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 500},
+    "requested_by": {"type": "string", "minLength": 1, "maxLength": 200},
+    "requested_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

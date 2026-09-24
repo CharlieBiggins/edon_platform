@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/world/world-event.schema.json",
+  "title": "Kernel-authorized institutional world event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "world_id", "event_id", "event_type",
+    "actor_id", "expected_version", "mutations", "authorization_ref",
+    "source_lineage"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-world-event.v1"},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "world_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "event_type": {"type": "string", "minLength": 1, "maxLength": 200},
+    "actor_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "expected_version": {"type": "integer", "minimum": 0},
+    "authorization_ref": {"type": "string", "minLength": 1, "maxLength": 8192},
+    "source_lineage": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1, "maxLength": 200},
+      "uniqueItems": true
+    },
+    "mutations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["op", "path"],
+        "properties": {
+          "op": {
+            "enum": ["SET", "DELETE", "INCREMENT", "APPEND_UNIQUE", "REMOVE", "REPLACE_ROOT"]
+          },
+          "path": {
+            "type": "array",
+            "items": {"type": "string", "minLength": 1, "maxLength": 200}
+          },
+          "value": {}
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "op": {"enum": ["SET", "INCREMENT", "APPEND_UNIQUE", "REMOVE", "REPLACE_ROOT"]}
+              }
+            },
+            "then": {"required": ["value"]}
+          }
+        ]
+      }
+    }
+  }
+}

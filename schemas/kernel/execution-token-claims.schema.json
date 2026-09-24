@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/kernel/execution-token-claims.schema.json",
+  "title": "Kernel execution-token claims",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "purpose", "key_id", "token_id", "nonce", "tenant_id", "world_id", "actor_id", "issuer_id", "authority_version", "expected_world_version", "event_id", "event_type", "mutations_sha256", "issued_at", "expires_at", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "edon-kernel-execution-token.v1"},
+    "purpose": {"const": "WORLD_EVENT_COMMIT"},
+    "key_id": {"type": "string", "minLength": 1},
+    "token_id": {"type": "string", "minLength": 1},
+    "nonce": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "actor_id": {"type": "string", "minLength": 1},
+    "issuer_id": {"type": "string", "minLength": 1},
+    "authority_version": {"type": "string", "minLength": 1},
+    "expected_world_version": {"type": "integer", "minimum": -1},
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "minLength": 1},
+    "mutations_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "issued_at": {"type": "integer"},
+    "expires_at": {"type": "integer"},
+    "binding_authority": {"const": true}
+  }
+}

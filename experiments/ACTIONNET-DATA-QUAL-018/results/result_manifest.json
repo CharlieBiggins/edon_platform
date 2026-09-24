@@ -1,0 +1,16 @@
+{
+  "artifacts": {
+    "dataset/development_selection.jsonl": "sha256:033190e469a8ddb99d0ea57a727cedacb1bf8d6cedf66077250367646b5f42b0",
+    "dataset/untouched_confirmation.jsonl": "sha256:8c06d68e976e499efd577fe94ae4dba37192b2f065a3d99a0ad99b1eb2339af6",
+    "lineage/lineages.json": "sha256:50ce4752dc24ec442ecb9872bd40f2d25e3849ab26519e2eed1b0324aecfa795",
+    "oracle/canonical_trajectories.jsonl": "sha256:07a72dbb6c2136a71e1340bfcdf6b99a8b62f335dfcf0938084bc71d2abf43b5",
+    "oracle/reservation.json": "sha256:9311dd0a6cafb117744d0511b21112c24b840c9a7c735a7d0aa8ce86c53ec775",
+    "results/qualification_report.json": "sha256:5a5b617a1e39f99aebc817bb75b34087f5e7f09504f4ec64340b8b94aed45a27"
+  },
+  "claim_boundary": "Fresh project-authored synthetic development and sealed confirmation for target-blind verified-hybrid integration only; no learned-capability, independent-transfer, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-018",
+  "result_hash": "sha256:905272db32ebd70821458bc6a3a5efd7a3b8b398d1b91c9da3efe1349f7f7461",
+  "result_id": "ACTIONNET-DATA-QUAL-018-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV018_VERIFIED_HYBRID"
+}

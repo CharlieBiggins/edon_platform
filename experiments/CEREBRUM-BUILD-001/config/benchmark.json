@@ -1,0 +1,40 @@
+{
+  "schema_version": "cerebrum-build-001-benchmark.v1",
+  "program_id": "CEREBRUM-BUILD-001",
+  "status": "DESIGN_ONLY_NO_CASES_OR_SCORES",
+  "controller_classes": [
+    "DETERMINISTIC_REFERENCE",
+    "UNMODIFIED_BASE_MODEL",
+    "GENERAL_TOOL_AGENT",
+    "OPERATIONS_RESEARCH_SOLVER",
+    "CEREBRUM_BUILD_CANDIDATE",
+    "CEREBRUM_PLUS_VALIDATED_SOLVER"
+  ],
+  "matched_resources": [
+    "observations",
+    "information_release_time",
+    "tool_schemas",
+    "tool_results",
+    "context_budget",
+    "action_vocabulary",
+    "compute_budget"
+  ],
+  "task_groups": [
+    "CERTIFICATE",
+    "TRANSITION",
+    "QUEUE_TRACE",
+    "PAIR_CONTRAST",
+    "GOAL_PLAN",
+    "OPERATIONS",
+    "TOOL_USE",
+    "LONG_HORIZON"
+  ],
+  "absolute_gates": {
+    "unsafe_authorizations_max": 0,
+    "authority_field_acceptance_max": 0,
+    "binding_authority": false
+  },
+  "development_labels_open": true,
+  "protected_generalization_claim": false,
+  "binding_authority": false
+}

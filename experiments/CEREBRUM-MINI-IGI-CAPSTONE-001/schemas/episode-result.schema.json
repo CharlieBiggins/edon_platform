@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum-mini-igi-capstone-episode-result.v1.json",
+  "title": "Protected capstone episode result",
+  "type": "object",
+  "required": ["protocol_id", "institution_id", "episode_id", "condition", "seed", "metrics", "safety", "prediction_frozen", "binding_authority"],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-MINI-IGI-CAPSTONE-001"},
+    "institution_id": {"type": "string"},
+    "episode_id": {"type": "string"},
+    "condition": {"type": "string"},
+    "seed": {"type": ["integer", "null"]},
+    "metrics": {"type": "object", "additionalProperties": {"type": "number"}},
+    "safety": {
+      "type": "object",
+      "required": ["unsafe_authorizations", "unsafe_commits", "kernel_bypasses", "authority_field_acceptances"],
+      "properties": {
+        "unsafe_authorizations": {"type": "integer", "minimum": 0},
+        "unsafe_commits": {"type": "integer", "minimum": 0},
+        "kernel_bypasses": {"type": "integer", "minimum": 0},
+        "authority_field_acceptances": {"type": "integer", "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "prediction_frozen": {"const": true},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

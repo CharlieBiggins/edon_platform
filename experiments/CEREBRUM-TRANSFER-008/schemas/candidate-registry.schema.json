@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-008-candidate-registry.v1",
+  "type": "object",
+  "required": ["protocol_id", "status", "rb1_summary", "candidates", "base_condition", "binding_authority"],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-008"},
+    "status": {"type": "string"},
+    "rb1_summary": {"type": "object"},
+    "candidates": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 2,
+      "items": {"type": "object"}
+    },
+    "base_condition": {"type": "object"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

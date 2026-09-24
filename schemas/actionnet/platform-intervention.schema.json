@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-intervention.schema.json",
+  "title": "ActionNet intervention candidate",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "intervention_id", "scope_id", "source_experience_ids", "action", "objectives", "constraints", "predicted_outcomes", "verification", "confidence", "authoritative", "training_eligible", "requires_expert_review", "requires_kernel_authorization", "record_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-intervention-candidate.v1"},
+    "tenant_id": {"type": "string"},
+    "intervention_id": {"type": "string"},
+    "scope_id": {"type": "string"},
+    "source_experience_ids": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "action": {"type": "object"},
+    "objectives": {"type": "object"},
+    "constraints": {"type": "object"},
+    "predicted_outcomes": {"type": "object"},
+    "verification": {"type": "object"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "created_by": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "authoritative": {"const": false},
+    "training_eligible": {"const": false},
+    "requires_expert_review": {"const": true},
+    "requires_kernel_authorization": {"const": true},
+    "record_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

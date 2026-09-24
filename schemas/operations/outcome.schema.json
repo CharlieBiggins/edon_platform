@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/operations/outcome.schema.json",
+  "title": "Monitored institutional step outcome",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["outcome_id", "plan_id", "step_id", "agent_id", "success", "reported_success", "summary", "payload", "actual_outcomes", "missing_expected_outcomes", "unexpected_outcomes", "recorded_at"],
+  "properties": {
+    "outcome_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "plan_id": {"type": "string", "minLength": 1},
+    "step_id": {"type": "string", "minLength": 1},
+    "agent_id": {"type": "string", "minLength": 1},
+    "success": {"type": "boolean"},
+    "reported_success": {"type": "boolean"},
+    "summary": {"type": "string", "minLength": 10},
+    "payload": {"type": "object"},
+    "actual_outcomes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "missing_expected_outcomes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "unexpected_outcomes": {"type": "array", "uniqueItems": true, "items": {"type": "string"}},
+    "recorded_at": {"type": "string", "format": "date-time"}
+  }
+}

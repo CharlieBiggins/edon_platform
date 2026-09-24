@@ -1,0 +1,119 @@
+{
+  "audits": {
+    "contextual_pair_changes": 0,
+    "counterfactual_pairs": 360,
+    "decision_distribution": {
+      "ABSTAIN": 90,
+      "ALLOW": 360,
+      "CONTESTED": 28,
+      "DENY": 94,
+      "INVALID": 148
+    },
+    "decision_label_tokens_in_inputs": 0,
+    "engine_comparisons": 2880,
+    "engine_disagreements": 0,
+    "exact_duplicate_inputs": 0,
+    "forbidden_model_inputs": 0,
+    "initial_state_mismatches": 0,
+    "invariance_checks": 1440,
+    "invariance_failures": 0,
+    "invariance_pair_changes": 0,
+    "label_encoded_identifiers": 0,
+    "mechanism_distribution": {
+      "ADD_CONFLICT": 28,
+      "EVIDENCE_MISSING": 46,
+      "EVIDENCE_UNKNOWN": 30,
+      "EXHAUST_RESOURCE": 30,
+      "EXPIRE_TIME": 46,
+      "MALFORM_INPUT": 44,
+      "POLICY_DENY": 44,
+      "REVOKE_AUTHORITY": 32
+    },
+    "nonminimal_pairs": 0,
+    "pair_class_distribution": {
+      "CONTEXTUAL": 60,
+      "INVARIANCE": 60,
+      "PIVOTAL": 240
+    },
+    "pivotal_pair_changes": 240,
+    "selected_renderers": {
+      "development": [
+        "EVENT_LOG"
+      ],
+      "public_holdout": [
+        "MEMO"
+      ],
+      "train": [
+        "FORMAL"
+      ]
+    },
+    "semantic_distribution": {
+      "CONTESTED": 28,
+      "FALSE": 94,
+      "INVALID": 148,
+      "MISSING": 30,
+      "TRUE": 360,
+      "UNKNOWN": 60
+    },
+    "transition_disagreements": 0,
+    "variant_decision_distribution": {
+      "BASE": {
+        "ALLOW": 300,
+        "INVALID": 60
+      },
+      "CHANGED": {
+        "ABSTAIN": 90,
+        "ALLOW": 60,
+        "CONTESTED": 28,
+        "DENY": 94,
+        "INVALID": 88
+      }
+    }
+  },
+  "claim_boundary": "Qualified for internal development LoRA pipeline testing only; not protected learning evidence, cross-institution transfer, or real-institution validity.",
+  "confirmatory_ready": false,
+  "control_count": 29,
+  "controls": {
+    "all_decisions_present": true,
+    "all_interventions_covered": true,
+    "all_semantic_states_present": true,
+    "byte_deterministic_generation": true,
+    "canonical_schema_shape": true,
+    "contextual_pairs_preserve": true,
+    "counterfactual_pairs_complete": true,
+    "domains_disjoint": true,
+    "generator_lineages_disjoint": true,
+    "institution_lineages_disjoint": true,
+    "invariance_pairs_preserve": true,
+    "invariances_hold": true,
+    "lineage_schema_shape": true,
+    "minimal_pair_construction": true,
+    "no_decision_labels_in_inputs": true,
+    "no_exact_duplicate_inputs": true,
+    "no_forbidden_model_inputs": true,
+    "no_label_encoded_identifiers": true,
+    "pivotal_pairs_change": true,
+    "prompt_hashes_disjoint": true,
+    "protected_unmaterialized": true,
+    "public_labels_separate": true,
+    "public_renderer_unseen_in_train": true,
+    "registered_counts": true,
+    "registered_pair_classes": true,
+    "semantic_families_disjoint": true,
+    "transitions_exact": true,
+    "two_reference_engines_exact": true,
+    "variant_not_perfect_label_proxy": true
+  },
+  "controls_passed": 29,
+  "counts": {
+    "development": 120,
+    "public_holdout": 120,
+    "train": 480
+  },
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "result_id": "ACTIONNET-DATA-QUAL-001-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v1",
+  "source_grounded": false,
+  "status": "READY_FOR_DEVELOPMENT_TRAINING"
+}

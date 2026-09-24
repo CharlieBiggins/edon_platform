@@ -1,0 +1,207 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:0e58140b167c0dcf8f281a1babcaf4b05b8404efacc0b70970bbc1f2316f42de",
+    "focused_validation": {
+      "case_ids": 64,
+      "decision_counts": {
+        "ALLOW": 32,
+        "CONTESTED": 32
+      },
+      "pair_ids": 32,
+      "records": 64,
+      "renderer_counts": {
+        "HELDOUT_APPEAL_REVIEW_REGISTER": 64
+      },
+      "task_counts": {
+        "CERTIFICATE": 64
+      },
+      "weight_sum": 448.0
+    },
+    "train": {
+      "case_ids": 768,
+      "decision_counts": {
+        "ALLOW": 384,
+        "CONTESTED": 384
+      },
+      "pair_ids": 96,
+      "records": 768,
+      "renderer_counts": {
+        "APPEAL_CLOCK_LEDGER": 192,
+        "APPEAL_DEADLINE_CARD": 192,
+        "APPEAL_DISPOSITION_TIMELINE": 192,
+        "APPEAL_EVENT_MATRIX": 192
+      },
+      "task_counts": {
+        "CERTIFICATE": 768
+      },
+      "weight_sum": 5376.0
+    },
+    "train_generator": {
+      "aggregate_outcome_sha256": "sha256:6f65b0d51867bb951c4a52cc9fbf7a8fdcef19181b69103b9f4da7ac03aa67f8",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 144,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 144,
+        "CONTESTED": 96,
+        "INVALID": 48
+      },
+      "deferred_event_count_distribution": {
+        "1": 58,
+        "2": 100,
+        "3": 94,
+        "4": 36
+      },
+      "deferred_event_trajectories": 288,
+      "engine_comparisons": 2112,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 192,
+        "7": 96
+      },
+      "families": [
+        500,
+        501,
+        502,
+        503,
+        504,
+        505,
+        506,
+        507
+      ],
+      "generator_lineage": "generator-726ea728d877f3ac",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 24,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 24,
+        "UNRESOLVED_APPEAL": 96
+      },
+      "multi_actor_trajectories": 288,
+      "mutation_path_count_distribution": {
+        "2": 192,
+        "4": 96
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 24,
+        "INVARIANCE": 24,
+        "PIVOTAL": 96
+      },
+      "pivotal_pair_changes": 96,
+      "query_time_distribution": {
+        "8": 58,
+        "9": 58,
+        "10": 58,
+        "11": 58,
+        "12": 56
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 288,
+      "transition_disagreements": 0
+    },
+    "validation_generator": {
+      "aggregate_outcome_sha256": "sha256:cb3b1b387043cbc4dfb284ca585ce71e6742390a1da3289677e42a5f971c8773",
+      "aggregation_equivalence_checks": 0,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 48,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ALLOW": 48,
+        "CONTESTED": 32,
+        "INVALID": 16
+      },
+      "deferred_event_count_distribution": {
+        "1": 14,
+        "2": 29,
+        "3": 36,
+        "4": 17
+      },
+      "deferred_event_trajectories": 96,
+      "engine_comparisons": 704,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "6": 64,
+        "7": 32
+      },
+      "families": [
+        540,
+        541,
+        542,
+        543
+      ],
+      "generator_lineage": "generator-21a6465f8ea0046f",
+      "generator_profile": "UNRESOLVED_APPEAL_FOCUS",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "DECISIVE_CONTEXT_PRESERVATION": 8,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 8,
+        "UNRESOLVED_APPEAL": 32
+      },
+      "multi_actor_trajectories": 96,
+      "mutation_path_count_distribution": {
+        "2": 64,
+        "4": 32
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 8,
+        "INVARIANCE": 8,
+        "PIVOTAL": 32
+      },
+      "pivotal_pair_changes": 32,
+      "query_time_distribution": {
+        "8": 20,
+        "9": 20,
+        "10": 20,
+        "11": 18,
+        "12": 18
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 96,
+      "transition_disagreements": 0
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh-lineage project-authored synthetic unresolved-appeal failure-focused data only; no full regression, independent transfer, real-institution, production, authority, or IGI claim.",
+  "control_count": 27,
+  "controls": {
+    "appeal_boundary_exact": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "certificate_only": true,
+    "decision_clock_exact": true,
+    "event_operands_visible": true,
+    "heldout_renderer_validation_only": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "model_inputs_only_observation_query": true,
+    "new_protocol_namespace": true,
+    "no_duplicate_lineage_ids": true,
+    "no_raw_sensitive_fields": true,
+    "pivotal_only": true,
+    "predecessor_families_disjoint": true,
+    "predecessor_renderers_disjoint": true,
+    "registered_counts": true,
+    "registered_pair_counts": true,
+    "train_decisions_balanced": true,
+    "train_validation_cases_disjoint": true,
+    "train_validation_families_disjoint": true,
+    "train_validation_pairs_disjoint": true,
+    "train_validation_renderers_disjoint": true,
+    "transition_engines_exact": true,
+    "unique_case_ids": true,
+    "unresolved_appeal_only": true,
+    "validation_decisions_balanced": true
+  },
+  "controls_passed": 27,
+  "dataset_id": "ACTIONNET-UNRESOLVED-APPEAL-FOCUSED-v11.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-011",
+  "result_id": "ACTIONNET-DATA-QUAL-011-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v11",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV011_FOCUSED_CONTINUATION"
+}

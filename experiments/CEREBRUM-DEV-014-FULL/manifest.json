@@ -1,0 +1,21 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-014-FULL",
+  "version": "1.0.0",
+  "status": "FULL_MULTITASK_REGRESSION_HOLD_OPERATOR_REPORTED",
+  "created": "2026-09-05",
+  "dataset": "ACTIONNET-DATA-QUAL-014",
+  "parent_protocol": "CEREBRUM-DEV-013-FOCUSED",
+  "selected_candidate_id": "continuation-step-6",
+  "selected_step": 6,
+  "validation_records": 192,
+  "optimizer_steps": 0,
+  "artifact": {
+    "id": "CEREBRUM-DEV-014-FULL-readiness-v1.0.0",
+    "sha256": "sha256:a6fdaa11965ca1ca9f09a7e24eb53f2afbbdf7532d9763245c473609c999e443",
+    "storage_location": "results/readiness-report.json"
+  },
+  "full_regression": true,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

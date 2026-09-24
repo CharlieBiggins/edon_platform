@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/governed-feedback-event.v1.json",
+  "title": "Governed Application Feedback Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["event_id", "tenant_id", "case_id", "workflow_name", "principal_id", "actor_role", "task_type", "original_output", "human_correction", "reason_codes", "evidence_references", "model_version", "kernel_version", "policy_version", "data_classification", "learning_mode", "protected_case", "created_at"],
+  "properties": {
+    "event_id": {"type": "string"},
+    "tenant_id": {"type": "string"},
+    "case_id": {"type": "string"},
+    "workflow_name": {"type": "string"},
+    "department": {"type": ["string", "null"]},
+    "principal_id": {"type": "string"},
+    "actor_role": {"type": "string"},
+    "domain_id": {"type": ["string", "null"]},
+    "jurisdiction": {"type": ["string", "null"]},
+    "task_type": {"type": "string"},
+    "original_output": {"type": "object"},
+    "human_correction": {"type": "object"},
+    "reason_codes": {"type": "array", "items": {"enum": ["policy_gap", "unsafe_allow", "unsafe_deny", "missed_escalation", "wrong_authority", "missing_evidence_requirement", "bad_state_transition", "workflow_mismatch", "jurisdiction_mismatch", "time_window_mismatch", "resource_constraint_missed", "conflict_not_detected"]}, "minItems": 1, "uniqueItems": true},
+    "evidence_references": {"type": "array", "items": {"type": "string"}},
+    "model_version": {"type": "string"},
+    "kernel_version": {"type": "string"},
+    "policy_version": {"type": "string"},
+    "institution_ir_version": {"type": ["string", "null"]},
+    "trace_id": {"type": ["string", "null"]},
+    "data_classification": {"enum": ["public", "internal", "confidential", "restricted"]},
+    "learning_mode": {"enum": ["disabled", "tenant_only", "global_deidentified"]},
+    "protected_case": {"type": "boolean"},
+    "created_at": {"type": "string", "format": "date-time"}
+  }
+}

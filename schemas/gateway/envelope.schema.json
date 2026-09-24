@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/gateway/envelope.schema.json",
+  "title": "EDON Agent Gateway immutable envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "message_id", "tenant_id", "connector_id", "vendor_id",
+    "protocol", "protocol_version", "direction", "message_type", "occurred_at",
+    "idempotency_key", "sensitivity", "trace_context", "payload",
+    "binding_authority", "executed", "envelope_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-agent-gateway-envelope.v1"},
+    "message_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "connector_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "vendor_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "protocol": {"enum": ["MCP", "A2A", "REST", "WEBHOOK", "FHIR_R4_SMART"]},
+    "protocol_version": {"type": "string", "minLength": 1},
+    "direction": {"enum": ["INGRESS", "EGRESS"]},
+    "message_type": {"type": "string", "minLength": 1, "maxLength": 128},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 128},
+    "sensitivity": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+    "trace_context": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "traceparent": {"type": "string"},
+        "tracestate": {"type": "string", "maxLength": 512}
+      }
+    },
+    "payload": {"type": "object"},
+    "binding_authority": {"const": false},
+    "executed": {"const": false},
+    "envelope_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

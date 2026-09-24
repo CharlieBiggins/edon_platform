@@ -1,0 +1,26 @@
+{
+  "schema_version": "edon-mlgw-storm-registry.v1",
+  "storms": [
+    {
+      "id": "MLGW-WINTER-STORM-LANDON-2022-02-03",
+      "role": "DEVELOPMENT_CANDIDATE",
+      "source_grounding": "PARTIAL_PUBLIC",
+      "protected": false
+    },
+    {
+      "id": "MEMPHIS-BOW-ECHO-2026-08-22",
+      "role": "PUBLIC_DEVELOPMENT_REPLAY",
+      "source_grounding": "PUBLIC_CAPTURE_INCOMPLETE",
+      "protected": false
+    }
+  ],
+  "additional_historical_events": {
+    "status": "CANDIDATES_NOT_REGISTERED_PENDING_SOURCE_VERIFICATION_AND_CUSTODY",
+    "rule": "No event becomes protected or confirmatory merely by being listed publicly."
+  },
+  "future_live_event": {
+    "role": "PROSPECTIVE_SHADOW_RESERVATION",
+    "materialized": false,
+    "authorized": false
+  }
+}

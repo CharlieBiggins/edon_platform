@@ -1,0 +1,15 @@
+{
+  "dev018_confirmation_reused": false,
+  "dev019_cases_reused": false,
+  "heldout_validation_selection_locked": true,
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false,
+  "reserved_future_families": [
+    1120,
+    1121,
+    1122,
+    1123
+  ],
+  "training_split_materialized": false
+}

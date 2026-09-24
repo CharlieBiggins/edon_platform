@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/gateway/message-request.schema.json",
+  "title": "EDON Agent Gateway message request",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "tenant_id", "connector_id", "protocol", "protocol_version", "message_id",
+    "idempotency_key", "occurred_at", "sensitivity", "body"
+  ],
+  "properties": {
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "connector_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "protocol": {"enum": ["MCP", "A2A", "REST", "WEBHOOK", "FHIR_R4_SMART"]},
+    "protocol_version": {"type": "string", "minLength": 1},
+    "message_id": {"type": "string", "minLength": 1, "maxLength": 128},
+    "idempotency_key": {"type": "string", "minLength": 1, "maxLength": 128},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "sensitivity": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+    "trace_context": {"type": "object"},
+    "body": {"type": "object"},
+    "actor_id": {"type": "string"}
+  }
+}

@@ -1,0 +1,158 @@
+{
+  "audits": {
+    "aggregate_target_sha256": "sha256:296fca5eea27c0eebe71c9102c6fc2359c377c0c65af1deb84c5fcef84fec1c2",
+    "condition_counts": {
+      "A_RAW": 32,
+      "B_GOLD_TYPED_EVENTS": 32,
+      "C_GOLD_EVENT_ORDER": 32,
+      "D_GOLD_PREDECISION_STATE": 32,
+      "E_GOLD_DECISION": 32
+    },
+    "generator": {
+      "aggregate_outcome_sha256": "sha256:db66673254d5091827f95311abfe1c64806ad255a8971da2e3abbb65405c5c77",
+      "aggregation_equivalence_checks": 2,
+      "aggregation_equivalence_failures": 0,
+      "contextual_pair_changes": 0,
+      "cross_institution_trajectories": 16,
+      "decision_clock_violations": 0,
+      "decision_distribution": {
+        "ABSTAIN": 3,
+        "ALLOW": 16,
+        "CONTESTED": 2,
+        "DENY": 6,
+        "INVALID": 5
+      },
+      "deferred_event_count_distribution": {
+        "1": 8,
+        "2": 12,
+        "3": 11,
+        "4": 1
+      },
+      "deferred_event_trajectories": 32,
+      "engine_comparisons": 229,
+      "engine_disagreements": 0,
+      "executed_event_count_distribution": {
+        "5": 1,
+        "6": 25,
+        "7": 6
+      },
+      "families": [
+        1060,
+        1061,
+        1062,
+        1063
+      ],
+      "generator_lineage": "generator-9193358c4bb07953",
+      "generator_profile": "GOLD_INTERVENTION_DIAGNOSTIC",
+      "invariance_pair_changes": 0,
+      "mechanism_distribution": {
+        "APPROVAL_WITHDRAWAL": 1,
+        "CONFLICT_ASSERTION": 1,
+        "DECISIVE_CONTEXT_PRESERVATION": 2,
+        "DELAYED_EVIDENCE": 1,
+        "EVIDENCE_EXPIRY": 1,
+        "JURISDICTION_SHIFT": 1,
+        "MALFORMED_REQUEST": 1,
+        "POLICY_CHANGE": 1,
+        "PRIORITY_RACE": 1,
+        "QUEUE_ORDER_AND_ACTOR_RENAME": 2,
+        "RESOURCE_CONTENTION": 1,
+        "REVOCATION_PROPAGATION": 1,
+        "ROUTING_REJECTION": 1,
+        "UNRESOLVED_APPEAL": 1
+      },
+      "multi_actor_trajectories": 32,
+      "mutation_path_count_distribution": {
+        "2": 20,
+        "3": 11,
+        "4": 1
+      },
+      "pair_class_distribution": {
+        "CONTEXTUAL": 2,
+        "INVARIANCE": 2,
+        "PIVOTAL": 12
+      },
+      "pivotal_pair_changes": 12,
+      "query_time_distribution": {
+        "8": 8,
+        "9": 6,
+        "10": 6,
+        "11": 6,
+        "12": 6
+      },
+      "scheduler_disagreements": 0,
+      "simultaneous_event_trajectories": 32,
+      "transition_disagreements": 0
+    },
+    "pair_class_counts": {
+      "CONTEXTUAL": 4,
+      "INVARIANCE": 4,
+      "PIVOTAL": 24
+    },
+    "pairs": 16,
+    "pivotal_mechanism_counts": {
+      "APPROVAL_WITHDRAWAL": 1,
+      "CONFLICT_ASSERTION": 1,
+      "DELAYED_EVIDENCE": 1,
+      "EVIDENCE_EXPIRY": 1,
+      "JURISDICTION_SHIFT": 1,
+      "MALFORMED_REQUEST": 1,
+      "POLICY_CHANGE": 1,
+      "PRIORITY_RACE": 1,
+      "RESOURCE_CONTENTION": 1,
+      "REVOCATION_PROPAGATION": 1,
+      "ROUTING_REJECTION": 1,
+      "UNRESOLVED_APPEAL": 1
+    },
+    "records": 160,
+    "scenarios": 32
+  },
+  "binding_authority": false,
+  "claim_boundary": "Fresh project-authored synthetic repeated-measures diagnostic data only; interventions can localize an earliest demonstrated failure under the instrument but cannot prove a unique cause, transfer, production authority, or IGI.",
+  "control_count": 34,
+  "controls": {
+    "all_records_fresh": true,
+    "all_twelve_pivotal_mechanisms_present": true,
+    "binding_authority_false": true,
+    "byte_deterministic_generation": true,
+    "case_ids_unique": true,
+    "condition_counts_balanced": true,
+    "condition_order_complete": true,
+    "confirmation_data_not_reused": true,
+    "decision_clock_exact": true,
+    "decision_condition_is_cumulative": true,
+    "evaluation_only_no_training_split": true,
+    "event_order_condition_is_cumulative": true,
+    "five_conditions_per_scenario": true,
+    "fresh_seed_registered": true,
+    "gold_decision_matches_oracle": true,
+    "gold_order_matches_oracle": true,
+    "gold_state_matches_oracle": true,
+    "independent_reference_engines_exact": true,
+    "independent_schedulers_exact": true,
+    "lineage_ids_unique": true,
+    "previous_family_ranges_disjoint": true,
+    "queue_integrity_exact": true,
+    "raw_condition_has_no_gold_support": true,
+    "registered_pair_class_distribution": true,
+    "registered_record_count_160": true,
+    "registered_scenario_count_32": true,
+    "reserved_future_families_unmaterialized": true,
+    "scenario_ids_hidden_from_inputs": true,
+    "state_condition_is_cumulative_without_decision": true,
+    "targets_identical_within_scenario": true,
+    "transfer_authorization_disabled": true,
+    "transition_engines_exact": true,
+    "typed_event_condition_has_only_typed_support": true,
+    "wrapper_schema_distribution_matched": true
+  },
+  "controls_passed": 34,
+  "dataset_id": "ACTIONNET-GOLD-INTERVENTION-DIAGNOSTIC-v19.0.0",
+  "human_domain_review": false,
+  "independent_generator_implementation": false,
+  "protocol_id": "ACTIONNET-DATA-QUAL-019",
+  "result_id": "ACTIONNET-DATA-QUAL-019-result-v1.0.0",
+  "schema_version": "actionnet-data-qualification-report.v19",
+  "source_grounded": false,
+  "status": "READY_FOR_CEREBRUM_DEV019_DIAGNOSTIC"
+}

@@ -1,0 +1,27 @@
+{
+  "arm_counts": {
+    "DECISION_FIDELITY": 64,
+    "REPRESENTATION": 320
+  },
+  "binding_authority": false,
+  "condition_counts": {
+    "AUTHENTICATED_DECISION_FIDELITY": 64,
+    "COMPACT_TABLE": 64,
+    "FAMILIAR_AUGMENTED": 64,
+    "RAW_DOCKET": 64,
+    "TEMPORAL_DSL": 64,
+    "TYPED_JSON": 64
+  },
+  "fidelity_prompts_explicitly_immutable": true,
+  "heldout_validation_prepared": false,
+  "prepared_sha256": "sha256:fb2916715d6fbe84c2ba5a3dd3e5179ca1832911e7990f1cf677e33c9adea4ea",
+  "protocol_id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "records": 384,
+  "representation_prompts_use_parent_system": true,
+  "scenarios": 64,
+  "schema_version": "cerebrum-dev020-calibration-data-manifest.v1",
+  "source_sha256": "sha256:b80b437c240b47ae364f2c50fbebc83504001f6bb5f17a27e8e8010ed9829995",
+  "training_authorized": false,
+  "training_records": 0,
+  "transfer_authorized": false
+}

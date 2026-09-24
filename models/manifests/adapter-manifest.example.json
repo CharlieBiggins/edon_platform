@@ -1,0 +1,12 @@
+{
+  "schema_version": "edon-model-manifest.v1",
+  "artifact_id": "cerebrum-example-seed-00000000",
+  "version": "0.0.0",
+  "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+  "storage_location": "artifact://replace-me",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seed": 0,
+  "dataset": "replace-me",
+  "license": "pending",
+  "claim_scope": "Example only; no result claim."
+}

@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/optimization/candidate.schema.json",
+  "title": "Validated non-binding optimization candidate",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "tenant_id", "scope_id", "objective", "request_sha256", "provider_lineage", "allocations", "unmet_demand", "total_cost", "status", "feasible", "optimality_claim", "binding_authority", "requires_kernel_authorization", "candidate_sha256"],
+  "properties": {
+    "schema_version": {"const": "edon-optimization-candidate.v1"},
+    "request_id": {"type": "string"},
+    "tenant_id": {"type": "string"},
+    "scope_id": {"type": "string"},
+    "objective": {"const": "MINIMIZE_COST"},
+    "request_sha256": {"type": "string"},
+    "provider_lineage": {"type": "string"},
+    "allocations": {"type": "array", "items": {"type": "object"}},
+    "unmet_demand": {"type": "object"},
+    "total_cost": {"type": "number", "minimum": 0},
+    "status": {"enum": ["FEASIBLE", "PARTIAL", "INFEASIBLE"]},
+    "feasible": {"type": "boolean"},
+    "optimality_claim": {"const": false},
+    "binding_authority": {"const": false},
+    "requires_kernel_authorization": {"const": true},
+    "candidate_sha256": {"type": "string"}
+  }
+}

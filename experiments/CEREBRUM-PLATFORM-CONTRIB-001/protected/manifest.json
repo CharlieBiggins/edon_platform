@@ -1,0 +1,14 @@
+{
+  "binding_authority": false,
+  "case_count": 320,
+  "claim_boundary": "Project-authored independently implemented synthetic target; not an independently held real institution.",
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "imports_actionnet_or_training_code": false,
+  "instrument_id": "CEREBRUM-PLATFORM-CONTRIB-001-PROTECTED-v1.0.0",
+  "labels_separated": true,
+  "protected_labels_sha256": "sha256:76b8e5eb52ce840809115952130611597bda5f0d719684ef4b120930522c75de",
+  "public_inputs_sha256": "sha256:613ec9149aa752bb37eb6aa91083e9018e090e95e49b7fd2ab18de0f77a9e13c",
+  "schema_version": "cerebrum-platform-contrib-protected.v1",
+  "seed": 26082371,
+  "target_institution_type": "ORBITAL_LAUNCH_RANGE"
+}

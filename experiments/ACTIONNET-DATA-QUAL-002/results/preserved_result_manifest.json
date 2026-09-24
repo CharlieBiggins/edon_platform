@@ -1,0 +1,23 @@
+{
+  "artifacts": {
+    "PREREGISTRATION.md": "sha256:6b777cb05f59f89cd6f189e53b9150960912d8a0ff16c1954b49c935b0c104f2",
+    "README.md": "sha256:e1e347d33abadf7822be188a0cc2e02d63b6968ad6355eadb164ae63d16e85ac",
+    "actionnet_repair.py": "sha256:b2b3d55fa38a906179f5ef3f99d6b838e4a585c96b1de7ad54530d485d1d3da6",
+    "dataset/development.jsonl": "sha256:f30f2736c3a04b7a78b6ff042218c0a6f37a9adebffcf2cfc6822d7b5a3dea43",
+    "dataset/public_holdout_inputs.jsonl": "sha256:8f755a4c5e3c9405a3bc3adccf035b689bdab9f7a4b14101397200144f70b181",
+    "dataset/train.jsonl": "sha256:0e8ff1bd33429b574a803d9fc752ee24dc66f10e21c2e130a35c81ca19e16c18",
+    "lineage/lineages.json": "sha256:9fd8fc0c6da4e224d509e852481994c27fac3fa6ab24013ab5c1570bf80adcd6",
+    "oracle/canonical_trajectories.jsonl": "sha256:d598059ec6adc9dc2135bb760e25c456224b6132cb0407c5bcb29fcc05ce29b3",
+    "oracle/protected_reservation.json": "sha256:586b0e509884d15251cf356758f03f5d5d65fcca66e656a383069889319ad5e4",
+    "oracle/public_holdout_labels.jsonl": "sha256:61ecf8870e025212fb440dc044dfce588ddc249ea054928e93ef0b3778e4c254",
+    "results/dataset_manifest.json": "sha256:6b2fc73a7931451da0dbbf7c11600615ab49cd27bb734ff16a4fc5fdaedb3d70",
+    "results/qualification_report.json": "sha256:1d8470a3cf61b6ce350ef12727c331b08956399027efed03c4c39810ee6f0182",
+    "run_campaign.py": "sha256:9e4248bf826a8eea81e9a001b6b784a0960f8d6d182a387aa8a8b2d276ad09a3"
+  },
+  "claim_boundary": "Qualified for internal development training with observable target factors; no cross-institution or real-institution claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-002",
+  "result_hash": "sha256:b44b977a41e03ee62abd4fe0cdd9dc1f5b621010a458ba00caf81a113ccc8236",
+  "result_id": "ACTIONNET-DATA-QUAL-002-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_DEVELOPMENT_TRAINING_OBSERVABLE"
+}

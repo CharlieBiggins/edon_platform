@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/source-provenance.v1.json",
+  "title": "ActionNet Source Provenance",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["source_id", "source_type", "title", "version", "jurisdiction", "effective_from", "content_sha256", "permission_status", "retrieved_at"],
+  "properties": {
+    "source_id": {"type": "string"},
+    "source_type": {"enum": ["law", "regulation", "policy", "sop", "protocol", "standard", "audit-artifact", "expert-authored"]},
+    "title": {"type": "string"},
+    "version": {"type": "string"},
+    "jurisdiction": {"type": "string"},
+    "effective_from": {"type": "string", "format": "date"},
+    "effective_to": {"type": ["string", "null"], "format": "date"},
+    "content_sha256": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "permission_status": {"enum": ["PERMITTED", "RESTRICTED", "PENDING", "NOT_APPLICABLE_PUBLIC"]},
+    "retrieved_at": {"type": "string", "format": "date-time"}
+  }
+}

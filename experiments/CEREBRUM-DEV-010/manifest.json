@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-010",
+  "version": "1.0.0",
+  "status": "OPERATOR_REPORTED_NEGATIVE_RESULT_RAW_ARTIFACTS_EXTERNAL",
+  "created": "2026-09-04",
+  "artifact": {
+    "id": "CEREBRUM-DEV-010-readiness-v1.0.0",
+    "sha256": "sha256:a1f1a9c439bec17c29c07ec9fb7c2227fd6a6c5963383c1a335f9ef0f8b76034",
+    "storage_location": "results/readiness-report.json"
+  },
+  "dataset": "ACTIONNET-DATA-QUAL-010",
+  "parent_failure": "CEREBRUM-DEV-009-RB1",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "license": "pending model and research artifact terms",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "seeds": [26090401, 26090402],
+  "training_records": 4032,
+  "validation_records": 192,
+  "expected_optimizer_steps_per_seed_on_l4": 252,
+  "claim_scope": "Operator-reported synthetic two-seed negative result: seed 1 passed; seed 2 failed unresolved-appeal and zero-unsafe gates. Raw GPU artifacts remain under external custody.",
+  "binding_authority": false
+}

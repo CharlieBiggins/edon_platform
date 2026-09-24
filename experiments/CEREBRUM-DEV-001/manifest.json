@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-001",
+  "version": "1.0.0",
+  "status": "COMPLETED_SAFETY_HOLD",
+  "created": "2026-08-09",
+  "artifact": {
+    "id": "CEREBRUM-DEV-001-protocol-manifest",
+    "sha256": "sha256:e6cd2b05d230af85d7de354f13d6fd6e576340bf95adaabcd61f835cf91cda4f",
+    "storage_location": "legacy://EDON Research/experiments/CEREBRUM-DEV-001/results/protocol_manifest.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "seeds": [26080901],
+  "dataset": "ACTIONNET-DATA-QUAL-002",
+  "license": "pending",
+  "claim_scope": "Bounded single-seed synthetic counterfactual-learning evidence; held for safety repair.",
+  "binding_authority": false
+}

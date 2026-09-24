@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/global-experience.schema.json",
+  "title": "De-identified Global ActionNet experience abstraction",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "institution_type", "mechanism_families",
+    "trajectory_summary", "outcome_summary", "generalized_pattern",
+    "provenance_commitments", "raw_payload_included", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "actionnet-global-experience.v1"},
+    "institution_type": {"type": "string", "minLength": 1},
+    "mechanism_families": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "trajectory_summary": {"type": "object"},
+    "outcome_summary": {"type": "object"},
+    "generalized_pattern": {"type": "object"},
+    "provenance_commitments": {"type": "object"},
+    "raw_payload_included": {"const": false},
+    "binding_authority": {"const": false}
+  }
+}

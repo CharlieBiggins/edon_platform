@@ -1,0 +1,57 @@
+{
+  "binding_authority": false,
+  "certificate_only": true,
+  "explicit_unresolved_appeal_clock_prompt": true,
+  "full_regression": false,
+  "prepared_hashes": {
+    "train": "sha256:f6ed120c55404df0bd38f49dab95ae83bb77945da911538eb2c221cb517e9c51",
+    "validation": "sha256:9f7a2b8a88fc84e64244a86cad38c0dd229af2037aec9eddc5a23ed7cf7b365a"
+  },
+  "protocol_id": "CEREBRUM-DEV-011-FOCUSED",
+  "schema_version": "cerebrum-dev011-focused-data-manifest.v1",
+  "source_hashes": {
+    "train": "sha256:8b6e32e2580a6ed83a28b55f2318b45f06183f33fdc734e524e854e62dd9413d",
+    "validation": "sha256:35e371c24bb1bdb70798893322b9548b90cd70e381b668904c18d1d0f6a9d41c"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-011-result-v1.0.0",
+  "train": {
+    "case_ids": 768,
+    "decision_counts": {
+      "ALLOW": 384,
+      "CONTESTED": 384
+    },
+    "pair_ids": 96,
+    "records": 768,
+    "renderer_counts": {
+      "APPEAL_CLOCK_LEDGER": 192,
+      "APPEAL_DEADLINE_CARD": 192,
+      "APPEAL_DISPOSITION_TIMELINE": 192,
+      "APPEAL_EVENT_MATRIX": 192
+    },
+    "task_counts": {
+      "CERTIFICATE": 768
+    },
+    "weight_max": 8.0,
+    "weight_min": 6.0,
+    "weight_sum": 5376.0
+  },
+  "transfer_authorized": false,
+  "validation": {
+    "case_ids": 64,
+    "decision_counts": {
+      "ALLOW": 32,
+      "CONTESTED": 32
+    },
+    "pair_ids": 32,
+    "records": 64,
+    "renderer_counts": {
+      "HELDOUT_APPEAL_REVIEW_REGISTER": 64
+    },
+    "task_counts": {
+      "CERTIFICATE": 64
+    },
+    "weight_max": 8.0,
+    "weight_min": 6.0,
+    "weight_sum": 448.0
+  }
+}

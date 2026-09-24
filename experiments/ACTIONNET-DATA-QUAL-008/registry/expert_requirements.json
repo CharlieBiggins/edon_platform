@@ -1,0 +1,35 @@
+{
+  "schema_version": "actionnet-expert-requirements.v1",
+  "registry_id": "ACTIONNET-EXPERT-REQUIREMENTS-008",
+  "eligibility": {
+    "required_profile_status": "VERIFIED",
+    "minimum_calibration_score": 0.8,
+    "credential_must_be_current": true,
+    "jurisdiction_match_required": true,
+    "domain_specialty_match_required": true,
+    "conflict_attestation_required": true,
+    "tenant_permission_required_for_institution_data": true
+  },
+  "review_policy": {
+    "moderate": {"independent_reviews": 1, "adjudication_on_disagreement": true},
+    "high": {"independent_reviews": 2, "adjudication_on_disagreement": true},
+    "critical": {"independent_reviews": 2, "adjudicator_required": true, "safety_review_required": true}
+  },
+  "separation_of_duties": [
+    "candidate_author_cannot_be_final_adjudicator",
+    "reviewer_cannot_review_own_submission",
+    "support_staff_cannot_assign_safety_labels",
+    "institution_click_is_never_an_authoritative_label"
+  ],
+  "training_gate": [
+    "source_permission_verified",
+    "privacy_review_passed",
+    "deidentification_verified",
+    "expert_review_complete",
+    "adjudication_complete_when_required",
+    "duplicate_check_passed",
+    "protected_evaluation_excluded",
+    "dataset_freeze_approved",
+    "release_approved"
+  ]
+}

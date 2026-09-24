@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/provenance/review-decision.schema.json",
+  "title": "Institutional mechanism review decision",
+  "type": "object",
+  "required": ["candidate_id", "reviewer_id", "reviewer_role", "decision", "rationale"],
+  "properties": {
+    "candidate_id": {"type": "string", "minLength": 1},
+    "reviewer_id": {"type": "string", "minLength": 1},
+    "reviewer_role": {"type": "string", "minLength": 1},
+    "decision": {"enum": ["APPROVE", "REJECT", "REVISION_REQUIRED"]},
+    "rationale": {"type": "string", "minLength": 1},
+    "resolutions": {"type": "object", "additionalProperties": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

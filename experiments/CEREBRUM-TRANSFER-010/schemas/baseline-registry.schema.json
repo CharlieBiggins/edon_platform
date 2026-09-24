@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-010-baseline-registry.v1",
+  "type": "object",
+  "required": ["protocol_id", "status", "contract_path", "contract_sha256", "prompt_pack_sha256", "conditions", "binding_authority"],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-010"},
+    "status": {"type": "string"},
+    "contract_path": {"const": "config/baseline-contract.json"},
+    "contract_sha256": {"type": ["string", "null"]},
+    "prompt_pack_sha256": {"type": ["string", "null"]},
+    "conditions": {"type": "array", "minItems": 5, "maxItems": 5, "items": {"type": "object"}},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

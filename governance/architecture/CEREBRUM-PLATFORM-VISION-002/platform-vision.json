@@ -1,0 +1,72 @@
+{
+  "schema_version": "edon-platform-vision.v2",
+  "vision_id": "CEREBRUM-PLATFORM-VISION-002",
+  "version": "2.0.0",
+  "status": "FROZEN_CONTROLLING_VISION_NOT_IMPLEMENTED",
+  "frozen": "2026-09-21",
+  "predecessor": {
+    "vision_id": "CEREBRUM-PLATFORM-VISION-001",
+    "artifact_sha256": "sha256:db1c64dccc4e0662ca63d0e5411299d3b855b8a372ba6f6c66c4532649fbbec4"
+  },
+  "controlling_document": "docs/architecture/cerebrum-platform-vision-002.md",
+  "platform": {
+    "name": "Cerebrum",
+    "kind": "HORIZONTAL_INSTITUTIONAL_INTELLIGENCE_PLATFORM_FOR_GOVERNED_AUTONOMY",
+    "customer_surfaces": [
+      "INTELLIGENCE_API",
+      "CONTROL_PLANE",
+      "COMMAND_CENTER",
+      "EMBEDDED_DECISION_CARDS"
+    ],
+    "control_plane": [
+      "OBSERVATION_AND_CONNECTOR_GATEWAY",
+      "INSTITUTIONAL_CONTROL_GRAPH",
+      "REASONING_RUNTIME",
+      "DELEGATED_AUTHORITY_AND_COMMITMENT_LAYER",
+      "INDEPENDENT_KERNEL",
+      "EXECUTION_ASSURANCE_AND_RECOVERY",
+      "OUTCOME_RECEIPT_AND_AUDIT_INFRASTRUCTURE"
+    ],
+    "delegated_authority_and_commitment_services": [
+      "IDENTITY_AND_CAPABILITY_REGISTRY",
+      "MANDATE_SERVICE",
+      "COMMITMENT_LEDGER",
+      "RESOURCE_RESERVATION_SYSTEM",
+      "DECISION_RECEIPT_SERVICE",
+      "COMPENSATION_MANAGER"
+    ],
+    "learning_release_path": [
+      "REVIEWED_ACTIONNET_EXPERIENCE",
+      "EVALUATION_AND_RELEASE_REGISTRY",
+      "DEPLOYMENT_CONTROLLER",
+      "REASONING_RUNTIME"
+    ]
+  },
+  "canonical_specifications": [
+    "EVENT_ENVELOPE",
+    "INSTITUTIONAL_STATE_MODEL",
+    "INSTITUTIONAL_IR_LIFECYCLE",
+    "ACTION_LIFECYCLE",
+    "RELEASE_AND_DEPLOYMENT_CONTRACT",
+    "FIRST_QUALIFIED_OPERATIONAL_WORKFLOW",
+    "INSTITUTIONAL_CONTROL_GRAPH",
+    "DELEGATED_AUTHORITY_AND_COMMITMENT_LAYER",
+    "DECISION_EXECUTION_AND_COMPENSATION_RECEIPTS"
+  ],
+  "invariants": {
+    "capability_implies_authority": false,
+    "human_approval_bypasses_kernel": false,
+    "compensation_bypasses_kernel": false,
+    "release_registry_updates_runtime_directly": false,
+    "delivery_acknowledgement_proves_outcome": false,
+    "public_callers_may_declare_authorization": false
+  },
+  "claims": {
+    "complete_platform_implemented": false,
+    "protected_platform_evaluation_passed": false,
+    "qualified_workflow_exists": false,
+    "production_authorized": false,
+    "binding_authority": false
+  },
+  "supersession_rule": "Material changes require a new vision identity and explicit migration record."
+}

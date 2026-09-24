@@ -1,0 +1,38 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-009-RB1",
+  "version": "1.0.0",
+  "status": "RB1_TRANSFER_NOT_ESTABLISHED",
+  "created": "2026-08-24",
+  "completed": "2026-09-04",
+  "artifact": {
+    "id": "CEREBRUM-DEV-009-RB1-frozen-result-v1.0.0",
+    "sha256": "sha256:35e6a0b54fd1a5d885e741eea5163c688198836c7e57703d78d295826711d60b",
+    "storage_location": "results/rb1-two-seed-summary.json"
+  },
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "dataset": "ACTIONNET-DATA-QUAL-009 compute-bounded subset",
+  "license": "research archive; adapters remain under external custody",
+  "base_model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "seeds": [26082491, 26082492],
+  "training_records_per_seed": 2688,
+  "validation_records_per_seed": 192,
+  "result": {
+    "status": "RB1_TRANSFER_NOT_ESTABLISHED",
+    "checks": "4/6",
+    "sha256": "sha256:35e6a0b54fd1a5d885e741eea5163c688198836c7e57703d78d295826711d60b",
+    "storage_location": "results/rb1-two-seed-summary.json"
+  },
+  "failure_audit": {
+    "sha256": "sha256:b05380931a3a2c749cd62c18009c3a3f74d43a5296c0b209c3dfc4a3a631cbdf",
+    "storage_location": "results/rb1-failure-audit.json"
+  },
+  "external_custody_archive": {
+    "filename": "rb1-frozen-result-2026-09-04.tar.gz",
+    "sha256": "sha256:8631d51a382adf29abaed01759e5e5aa1db09f78ecd14ba24cc6f36fd1457299",
+    "bytes": 1173324,
+    "committed_to_repository": false
+  },
+  "claim_scope": "Frozen negative same-program synthetic cross-profile development result; no independent, external, real-institution, production, authority, or IGI claim.",
+  "binding_authority": false
+}

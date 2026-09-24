@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-010-protected-input.v1",
+  "type": "object",
+  "required": ["case_id", "task", "observation", "query"],
+  "properties": {
+    "case_id": {"type": "string", "pattern": "^case-[a-f0-9]{16,}$"},
+    "task": {"enum": ["CERTIFICATE", "TRANSITION", "QUEUE_TRACE", "PAIR_CONTRAST"]},
+    "observation": {
+      "type": "object",
+      "required": ["media_type", "content"],
+      "properties": {
+        "media_type": {"type": "string", "minLength": 1},
+        "content": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "query": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

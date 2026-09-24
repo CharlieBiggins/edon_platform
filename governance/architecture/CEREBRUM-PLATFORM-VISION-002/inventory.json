@@ -1,0 +1,27 @@
+{
+  "schema_version": "edon-content-inventory.v2",
+  "vision_id": "CEREBRUM-PLATFORM-VISION-002",
+  "hash_mode": "UTF8_LF_SINGLE_TRAILING_NEWLINE",
+  "files": {
+    "README.md": "sha256:ae71ff93668bafe3b52969efff2295a7d214ba48458b2f8dfd01d47806fbcd63",
+    "platform-vision.json": "sha256:c1f8ff7211e71cb93265485d78e6db3f8648117fea777862cae19dcc8b2d9f79",
+    "preflight.py": "sha256:a399e4d084c2e84513276131fd6284e667b3fddb9d845f681b01082f118ad38c",
+    "../cerebrum-platform-vision-001-to-002.json": "sha256:08bb3d141976ac9dcf8e58eee0c399207818d86ceaa2ff28911a1a812a1b43ec",
+    "../../../docs/architecture/cerebrum-platform-vision-002.md": "sha256:262ce6d5481982587bfb517d0cd2a01ef39c5b3626d96bbb23ef9191db23e78c",
+    "../../../docs/specifications/VISION-002.md": "sha256:e0ed85d5307b031a27e59a5d870806b41bdc4a181363377e1fe392a83764b51a",
+    "../../../docs/specifications/institutional-control-graph.md": "sha256:5769b53d55600a0e20b7e1ee49716d4e1b9017e9a8ac14a9da769cc65ea913f3",
+    "../../../docs/specifications/delegated-authority-commitment.md": "sha256:ee4e5c0ea95472c48b462c615491e8f8622e3cc7bed60f21fbab11832e9aeb25",
+    "../../../docs/specifications/decision-execution-receipts.md": "sha256:613380b47d6d63af359e51b102c44846c9af87cf0b1a2d1b53011b0e54c8a83a",
+    "../../../schemas/control-graph/edge.schema.json": "sha256:2dd0b06f57761bc65c3e8ec29532705e71d1fb627af5849fb5207b6bb1bcac67",
+    "../../../schemas/control-graph/node.schema.json": "sha256:3435ec99afc85fbf5352cd3ee7b07a84aa9452859a34149a99893fa159f6167d",
+    "../../../schemas/control-graph/snapshot.schema.json": "sha256:5b77685fa44cfdfe6d859193c1e143597c1889dda77c116a4b7ec7fada4cca34",
+    "../../../schemas/authority/commitment.schema.json": "sha256:f1dc3d2f104b1668ffce9e72f4aab4940a9e0ff07221a61c5c5420b368e6c3d5",
+    "../../../schemas/authority/identity-capability.schema.json": "sha256:56e173d973803db02c3ea21849187dbc9a9061b094b553d5b8b0b329336cccf3",
+    "../../../schemas/authority/mandate.schema.json": "sha256:5f130de619de061f3f28400a64eac29186663339a94bdf2621b7a2646afb5f5b",
+    "../../../schemas/authority/resource-reservation.schema.json": "sha256:29fd67bb39f00fe40b86e34ec7df2dd897d89d78adb846eef024066468a96612",
+    "../../../schemas/receipts/compensation-record.schema.json": "sha256:2833ee940900bb563bb11b96187577d71908b6c448dd6f7d45a2f2ced137e176",
+    "../../../schemas/receipts/decision-receipt.schema.json": "sha256:4b3501435e81907d2302eb8b0bcf3e4054e81189a1b9b13842851afeb6f5f524",
+    "../../../schemas/receipts/execution-receipt.schema.json": "sha256:85362422d182677a1647067e2d21d8e0cec871c924f8d7787048072d3e709fbe"
+  },
+  "binding_authority": false
+}

@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-018-VERIFIED",
+  "version": "1.0.0",
+  "status": "VERIFIED_HYBRID_SYNTHETIC_SIGNAL",
+  "created": "2026-09-06",
+  "dataset": "ACTIONNET-DATA-QUAL-018",
+  "architecture": "frozen_model_plus_target_blind_deterministic_executor",
+  "model_parent": "CEREBRUM-DEV-017-CAUSAL",
+  "model_parent_candidate": "continuation-step-24",
+  "training_records": 0,
+  "optimizer_steps": 0,
+  "development_records": 64,
+  "confirmation_records": 192,
+  "artifact": {
+    "id": "CEREBRUM-DEV-018-VERIFIED-operator-result-v1.0.0",
+    "sha256": "sha256:34d4b9dbc897bb4268fa92efde0a02eca7d3c235ac56168aff57cebb099e6c32",
+    "storage_location": "evidence/operator-reported-dev018-result-2026-09-06.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

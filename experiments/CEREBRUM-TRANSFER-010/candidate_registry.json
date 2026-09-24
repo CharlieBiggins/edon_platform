@@ -1,0 +1,36 @@
+{
+  "schema_version": "cerebrum-transfer-010-candidate-registry.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "status": "PENDING_DEV010_TWO_SEED_PASS",
+  "dev010_summary": {
+    "path": null,
+    "sha256": null,
+    "status": null,
+    "verified": false
+  },
+  "candidates": [
+    {
+      "condition": "dev010_seed_26090401",
+      "seed": 26090401,
+      "adapter_sha256": null,
+      "training_manifest_sha256": null,
+      "prediction_freeze_sha256": null,
+      "frozen": false
+    },
+    {
+      "condition": "dev010_seed_26090402",
+      "seed": 26090402,
+      "adapter_sha256": null,
+      "training_manifest_sha256": null,
+      "prediction_freeze_sha256": null,
+      "frozen": false
+    }
+  ],
+  "base_condition": {
+    "condition": "unmodified_base",
+    "model": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "frozen": true
+  },
+  "binding_authority": false
+}

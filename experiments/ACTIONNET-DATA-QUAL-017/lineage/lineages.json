@@ -1,0 +1,503 @@
+{
+  "records": [
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:f0e74fc46cff60a7e002f41801fce95b3bbe3ba4386d126ed8e125973228f59f",
+      "lineage_id": "renderer-ba58268347bb115d",
+      "lineage_type": "renderer",
+      "parents": [],
+      "transformation": "render-causal-chain-curriculum-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:5323be6bacba450b9c0fefa330280d059aee37ca5dbbf312aac9661c2be8ba07",
+      "lineage_id": "renderer-a9d36a60ee02a9a5",
+      "lineage_type": "renderer",
+      "parents": [],
+      "transformation": "render-causal-chain-curriculum-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:84571436602bba83f2ebc91d67268e8aaa11f9a62350b75b1dcbdfcc02a847d7",
+      "lineage_id": "renderer-f0d43ed65f4221e7",
+      "lineage_type": "renderer",
+      "parents": [],
+      "transformation": "render-causal-chain-curriculum-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:15b5ed1d7a7e2c6fd3197591c31d239301e02d45ad4679257cb5be4b9ecbc60a",
+      "lineage_id": "renderer-c140bd4f3540dc48",
+      "lineage_type": "renderer",
+      "parents": [],
+      "transformation": "render-causal-chain-curriculum-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:c214ed2e95959de3448d449f929ffcbebc65e29c0fbf89a1cb30edf9c6c4e430",
+      "lineage_id": "renderer-aa58bf3d18a797df",
+      "lineage_type": "renderer",
+      "parents": [],
+      "transformation": "render-causal-chain-curriculum-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:e78932ee76a6c37802613a84e68b766bb85cc24c6bf094672b5343d0dc8356f9",
+      "lineage_id": "generator-802362fb01f84d31",
+      "lineage_type": "generator",
+      "parents": [
+        "ACTIONNET-DATA-QUAL-016-result-v1.0.0"
+      ],
+      "transformation": "generate-fresh-complete-exposure-causal-chain-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:f08825f9a62cf3f0a8a534a4adc6d0afb16256169904a322eebf717ea314be8b",
+      "lineage_id": "source-9ef223d90098e713",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:c28683beb3c028481c2e054e0a9bbfd693ca238b65cf2e33a985269de806694b",
+      "lineage_id": "institution-532ea34149aed2b2",
+      "lineage_type": "institution",
+      "parents": [
+        "source-9ef223d90098e713"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:315c96c386bab1fdfa72a85215b168cde8b08ad3eb230959817c41e6aa39b849",
+      "lineage_id": "authority-graph-532ea34149aed2b2",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-532ea34149aed2b2"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:d2456f1116086907b4629a7177e0c369c0a5a11326a016c7e7067fc0f465818a",
+      "lineage_id": "workflow-graph-532ea34149aed2b2",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-532ea34149aed2b2"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:67f5eec38aef7668aac6e15887a00a3f4609e8686e3b38bd4f7ce47027345e94",
+      "lineage_id": "source-b1cf29a072a4988d",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:9d57bd28eeeff6bca4c959be9d80db79323a036cb165bc108c361edf365aa225",
+      "lineage_id": "institution-c8c721b8db7ffc0a",
+      "lineage_type": "institution",
+      "parents": [
+        "source-b1cf29a072a4988d"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:0128ceaae9f218ec70129ef3259e91b2a9c91ab47b8dbc85e4ee545f2357cc15",
+      "lineage_id": "authority-graph-c8c721b8db7ffc0a",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-c8c721b8db7ffc0a"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:33be85913795ae366947d36a46481f96bbd3d04d0a66c4662e94db13bd162c44",
+      "lineage_id": "workflow-graph-c8c721b8db7ffc0a",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-c8c721b8db7ffc0a"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:c53290e876d95d16fd1e1cad0b37da681c82544f979e29f6e599b2bb205eece0",
+      "lineage_id": "source-3637422ea2ef3c3a",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:1a21ac8089ff32c5f2cd2c49b6cd3b4f5a03faa43f1585a1547a7269ec4a1f71",
+      "lineage_id": "institution-7d999c3e62a119b0",
+      "lineage_type": "institution",
+      "parents": [
+        "source-3637422ea2ef3c3a"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:bd86b511f7a0fdd8f5d75e9b406b795218b02ecbed239575514b6e574ef0d8a1",
+      "lineage_id": "authority-graph-7d999c3e62a119b0",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-7d999c3e62a119b0"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:db1c38f5cec1c4a44dbd6703deb2a40449445443d91c4cc4dede3eabe82b38c0",
+      "lineage_id": "workflow-graph-7d999c3e62a119b0",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-7d999c3e62a119b0"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:4264ab2ef1194b1f290d5acee39e71bba8e2f59ca8f94a08a3e7e3d9d4ad0c51",
+      "lineage_id": "source-e74e52239e7bcd62",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:24ad99c751092c94e98a4d3e3be324a7b1dd3efe5116c52f3fa39e8d4e67a711",
+      "lineage_id": "institution-c47fff9ddd8fc11f",
+      "lineage_type": "institution",
+      "parents": [
+        "source-e74e52239e7bcd62"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:3a9677cec72590512819cff3b7eea3fa82d01be1ee1210ba6326d954c9a046b7",
+      "lineage_id": "authority-graph-c47fff9ddd8fc11f",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-c47fff9ddd8fc11f"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:b44512ac0c90a05eb3b542c728c63b9e19e6e6e3855211f37d90b61f4c2742c5",
+      "lineage_id": "workflow-graph-c47fff9ddd8fc11f",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-c47fff9ddd8fc11f"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:1e9e2ac9cade06862f93465fbb1448ba9514388bc108d7e722ca707a3e97924e",
+      "lineage_id": "generator-d9143ab3c0333e67",
+      "lineage_type": "generator",
+      "parents": [
+        "ACTIONNET-DATA-QUAL-016-result-v1.0.0"
+      ],
+      "transformation": "generate-fresh-causal-chain-regression-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:455ca10bd33fb27af982e3cd755bed03b96e4cee93c6f713853c84867f1670b8",
+      "lineage_id": "source-d95462eebfc26259",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:a53e0c5601cb0e92482ef9aec1f9c2a5408030e9ae3033b985ad37e58b6c5db6",
+      "lineage_id": "institution-73d7e9e92e0fde1c",
+      "lineage_type": "institution",
+      "parents": [
+        "source-d95462eebfc26259"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:fa784cbaea73dae226e7580f8f1da3d862d9a4417d0b5c456685da956e3a834f",
+      "lineage_id": "authority-graph-73d7e9e92e0fde1c",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-73d7e9e92e0fde1c"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:6fec9ab0576153ed6d3236737b6d572c41e6e1a82ec0ba45a7b367329b58bdc9",
+      "lineage_id": "workflow-graph-73d7e9e92e0fde1c",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-73d7e9e92e0fde1c"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:04c4fae1d275e35238ed910500664914baa78bcca70e546ba8fe150938a3c3fd",
+      "lineage_id": "source-a70c07fec3f5acb3",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:0faa58dc4c81bd49df0102c5627d2d03b1819bd4b20b18d4d5faf41251d3c529",
+      "lineage_id": "institution-34b07a3068b3311d",
+      "lineage_type": "institution",
+      "parents": [
+        "source-a70c07fec3f5acb3"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:68f105b518913570371f8571fcdd47536fa82db805e10ff8bc31cd1f4fb62beb",
+      "lineage_id": "authority-graph-34b07a3068b3311d",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-34b07a3068b3311d"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:8a8728907603d461609a81fa178fc2b1ffe441440b2d9496bdb5b04cc30e918a",
+      "lineage_id": "workflow-graph-34b07a3068b3311d",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-34b07a3068b3311d"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:c48c7d1c5574be552171ee2d25b326619f2a6132f7e66aa9add14ac82fac05bd",
+      "lineage_id": "generator-ced26c3710ac9867",
+      "lineage_type": "generator",
+      "parents": [
+        "ACTIONNET-DATA-QUAL-016-result-v1.0.0"
+      ],
+      "transformation": "generate-fresh-causal-chain-regression-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:67e744d923dd640c9d5ae799f457cd3b39afea846a9792596aa612a5901fd1a0",
+      "lineage_id": "source-e1cca83147946955",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:749bc8c2e4c1d9cacf3438812637e269873b7665cd71ac6d625957f0a3ff615d",
+      "lineage_id": "institution-830ea96f119b4d6d",
+      "lineage_type": "institution",
+      "parents": [
+        "source-e1cca83147946955"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:f7d1d4ec350c7b23a8e4a4b797b422ebd6748ee0dd86f2fcdd649935692b4d34",
+      "lineage_id": "authority-graph-830ea96f119b4d6d",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-830ea96f119b4d6d"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:a76ea82e5b2ca6b9dea2352e88125955d40909a89f87bd6fee644e392fd03f66",
+      "lineage_id": "workflow-graph-830ea96f119b4d6d",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-830ea96f119b4d6d"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:1a9054dce15da2b3e8af960e7dcef585c5923f5fdccd7265925b6568079dafb1",
+      "lineage_id": "source-37ea1c47f49c520e",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:d2b037aa3c7fbe5275d2c5ee80667926366d3410798b1e85a62bb7f0056463b5",
+      "lineage_id": "institution-e3dc63fc6e63d048",
+      "lineage_type": "institution",
+      "parents": [
+        "source-37ea1c47f49c520e"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:8914c571c94a8925eccb642be50e95ffc2f410eb7cab1cb719f7e5116dbef897",
+      "lineage_id": "authority-graph-e3dc63fc6e63d048",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-e3dc63fc6e63d048"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:4ef5524a9e562478c650ecf0bb3a64c6b6e33c71f1cc1063cfb51c43b19b9d4b",
+      "lineage_id": "workflow-graph-e3dc63fc6e63d048",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-e3dc63fc6e63d048"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:2479718a01ee540e53a397ac70522357b809db5fc641aa4792b060b7f2bfc005",
+      "lineage_id": "source-3fd8e4befe590063",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:4ccce0e4410f8f05cecff275d097ad5336b76d7d836bcb400d611f6fbf70c648",
+      "lineage_id": "institution-ac304a333a5a3459",
+      "lineage_type": "institution",
+      "parents": [
+        "source-3fd8e4befe590063"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:d2c0ebb2bf3e1fccf2474ec06142c1e2f9174634bcf73ae78810740c3bb026f3",
+      "lineage_id": "authority-graph-ac304a333a5a3459",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-ac304a333a5a3459"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:370f683905ce6136cd8a0105f43794a2c5c8f020a25dfa0971ccaad52efe2bc1",
+      "lineage_id": "workflow-graph-ac304a333a5a3459",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-ac304a333a5a3459"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:1734ded450a5f2e12d6e336db1d52a588b2102eb6f5651c92dbbcefdc697ee3e",
+      "lineage_id": "source-750e56407f6c60c4",
+      "lineage_type": "source",
+      "parents": [],
+      "transformation": "project-authored-synthetic-source-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:8bec42d4094074d2b32955b93f944e298acabfb251f47b33e7863ddd83213db6",
+      "lineage_id": "institution-4bb6e67a2d9fff18",
+      "lineage_type": "institution",
+      "parents": [
+        "source-750e56407f6c60c4"
+      ],
+      "transformation": "compile-institution-v7",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:713e6fad4c9b5957cbf2d99ef841c72130ff1578dc5a46b2a3da9d55c49fa4eb",
+      "lineage_id": "authority-graph-4bb6e67a2d9fff18",
+      "lineage_type": "authority_graph",
+      "parents": [
+        "institution-4bb6e67a2d9fff18"
+      ],
+      "transformation": "compile-authority-graph-v1",
+      "version": "1.0.0"
+    },
+    {
+      "authority": "EDON Research Lab",
+      "content_sha256": "sha256:dc0c651f4970aaec68593d63a9656c3108df06b32ab9ecf907192e72d3bab104",
+      "lineage_id": "workflow-graph-4bb6e67a2d9fff18",
+      "lineage_type": "workflow_graph",
+      "parents": [
+        "institution-4bb6e67a2d9fff18"
+      ],
+      "transformation": "compile-workflow-graph-v1",
+      "version": "1.0.0"
+    }
+  ],
+  "schema_version": "actionnet-lineage-registry.v17"
+}

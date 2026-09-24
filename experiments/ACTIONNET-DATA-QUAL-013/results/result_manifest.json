@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "dataset/development_selection.jsonl": "sha256:f78945c042af4acf49ab079e5dcb603d7fbe0453e0d24a045e6234fb284a9cba",
+    "dataset/train.jsonl": "sha256:c7954aa8fccf91f8ed347b903e91c3e4aedeaae897c6854860eafc3f8d29cf0d",
+    "dataset/untouched_confirmation.jsonl": "sha256:605d80653a784374f5d9764fba0d9d0c81871ff21af1032553ba40af78553bd9",
+    "lineage/lineages.json": "sha256:52c4d50947dfabe8ab1df2865148cbfdecea47c45dceee195093486d84e4a071",
+    "oracle/canonical_trajectories.jsonl": "sha256:85dfbe49becd84e7462eb117cf77e66d1c8882e813770d3e8bc2570a54abeffb",
+    "oracle/reservation.json": "sha256:ac0e631cb84d6678a6ecee0acd8ae4ee0df2953f4b5bb7bd67fcee9d64398d6f",
+    "results/qualification_report.json": "sha256:de880016128d7bb37f6c66cb032430339b3d23b95547cfa750709c55bbbd1629"
+  },
+  "claim_boundary": "Fresh project-authored synthetic near-clock development selection and untouched confirmation data only; no full regression, independent transfer, real-institution, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-013",
+  "result_hash": "sha256:d8ea871bc92396d9d75afebbcff9e97bbcdf13263bf24a577d5249cc316f4708",
+  "result_id": "ACTIONNET-DATA-QUAL-013-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV013_BOUNDARY_SELECTION"
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.invalid/schemas/ip/candidate-family-registry.schema.json",
+  "title": "EDON sanitized candidate invention-family registry",
+  "type": "object",
+  "required": ["schema_version", "updated", "status", "candidate_families", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "edon-ip-candidate-family-registry.v1"},
+    "updated": {"type": "string", "format": "date"},
+    "status": {"type": "string", "minLength": 1},
+    "candidate_families": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "name", "disposition", "implementation_status",
+          "patentability_determined", "prior_art_search_status",
+          "ownership_review_status", "inventorship_review_status",
+          "filing_status", "patent_pending", "scientific_result_status",
+          "public_sources"
+        ],
+        "properties": {
+          "id": {"type": "string", "pattern": "^EDON-IP-FAM-[0-9]{3}$"},
+          "name": {"type": "string", "minLength": 1},
+          "patentability_determined": {"type": "boolean"},
+          "patent_pending": {"type": "boolean"},
+          "public_sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {"type": "string", "minLength": 1}
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

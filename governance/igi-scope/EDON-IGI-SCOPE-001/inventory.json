@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-content-inventory.v1",
+  "scope_id": "EDON-IGI-SCOPE-001",
+  "files": {
+    "CLAIMS.md": "sha256:41f35f91349a44b42bd5ab39db8da7fde765602c25ec0ba200d14fc89923024c",
+    "EVALUATION_PROFILES.md": "sha256:025b297ecc689c05c582ac3eae821370a54f50dd1d156a4d5de7f654c35cba71",
+    "README.md": "sha256:d72ce4b7c209debbf5d9aa89d0f4d06066260d0d6870e869ca971a133699023d",
+    "SCOPE.md": "sha256:8f2fa63a10e8d73fd39933e6971f9d6d33212001949fbecdbf09b9f207acc9bb",
+    "VERSIONING.md": "sha256:1f17ad44e3b6cdf1ec40cb2962516e245ff46e16af93924579bed1f45d3009dc",
+    "coverage-matrix.json": "sha256:265a8a3b798f226ed479a1659b06fa32ead880f87c02ab668b13af2cf8c8d25f",
+    "preflight.py": "sha256:4833fa79f1a31185bb1ab119b4371a2fc1ba05ee7145b5e0e820d0274d96f6d9",
+    "scope.json": "sha256:f9fc18f199ebc14303f5bca10dd2f5b1b3c9ba1269bb613eabf4f0fb9d5d8af7",
+    "scope.schema.json": "sha256:09eebe82193c281936598086c41f658a65eda78573991a98020e236e78f11d62",
+    "tests/test_scope.py": "sha256:84829071dd9cb448a0a099b01a8105316cdab388e5f9a8ac0aa4d2e9d6f8de29"
+  },
+  "binding_authority": false
+}

@@ -1,0 +1,22 @@
+{
+  "claim_boundary": "Observable synthetic development corpus only; not real-institution or confirmatory data.",
+  "confirmatory_ready": false,
+  "dataset_id": "ACTIONNET-DEV-DATASET-v2.0.0",
+  "examples": {
+    "development": 120,
+    "public_holdout": 120,
+    "train": 480
+  },
+  "files": {
+    "dataset/development.jsonl": "sha256:f30f2736c3a04b7a78b6ff042218c0a6f37a9adebffcf2cfc6822d7b5a3dea43",
+    "dataset/public_holdout_inputs.jsonl": "sha256:8f755a4c5e3c9405a3bc3adccf035b689bdab9f7a4b14101397200144f70b181",
+    "dataset/train.jsonl": "sha256:0e8ff1bd33429b574a803d9fc752ee24dc66f10e21c2e130a35c81ca19e16c18",
+    "lineage/lineages.json": "sha256:9fd8fc0c6da4e224d509e852481994c27fac3fa6ab24013ab5c1570bf80adcd6",
+    "oracle/canonical_trajectories.jsonl": "sha256:d598059ec6adc9dc2135bb760e25c456224b6132cb0407c5bcb29fcc05ce29b3",
+    "oracle/protected_reservation.json": "sha256:586b0e509884d15251cf356758f03f5d5d65fcca66e656a383069889319ad5e4",
+    "oracle/public_holdout_labels.jsonl": "sha256:61ecf8870e025212fb440dc044dfce588ddc249ea054928e93ef0b3778e4c254"
+  },
+  "schema_version": "actionnet-development-dataset-manifest.v2",
+  "source_grounded": false,
+  "supersedes_for_model_development": "ACTIONNET-DEV-DATASET-v1.0.0"
+}

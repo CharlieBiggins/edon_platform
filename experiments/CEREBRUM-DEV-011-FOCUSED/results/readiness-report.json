@@ -1,0 +1,107 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Focused post-failure synthetic readiness only; no learned result, full regression, or transfer authorization.",
+  "config_sha256": "sha256:e79b811af626ad424373ec5e097b9f3fda1beaa384f3db42dbbc32421caea88d",
+  "core_control_count": 22,
+  "core_controls": {
+    "balanced_train_decisions": true,
+    "balanced_validation_decisions": true,
+    "certificate_only": true,
+    "effective_batch_16": true,
+    "explicit_appeal_clock_prompt": true,
+    "frozen_base_revision": true,
+    "full_regression_disabled": true,
+    "heldout_renderer_unseen_in_train": true,
+    "low_continuation_learning_rate": true,
+    "operator_reported_parent_failure_frozen": true,
+    "oracle_scoring_ceiling_passes": true,
+    "qualified_source_all_controls": true,
+    "registered_48_optimizer_steps": true,
+    "registered_protocol_identity": true,
+    "train_count_768": true,
+    "train_validation_families_disjoint": true,
+    "train_validation_pairs_disjoint": true,
+    "transfer_authorization_disabled": true,
+    "two_distinct_parent_runs": true,
+    "two_fresh_continuation_seeds": true,
+    "validation_count_64": true,
+    "zero_training_truncation_required": true
+  },
+  "core_controls_passed": 22,
+  "expected_optimizer_steps_per_parent": 48,
+  "full_regression": false,
+  "parent_control_count": 6,
+  "parent_controls": {
+    "parent_26090401_identity": false,
+    "parent_26090401_manifest_hash": false,
+    "parent_26090401_present": false,
+    "parent_26090402_identity": false,
+    "parent_26090402_manifest_hash": false,
+    "parent_26090402_present": false
+  },
+  "parent_controls_passed": 0,
+  "parent_details": [
+    {
+      "identity_valid": false,
+      "manifest_hash_valid": false,
+      "parent_seed": 26090401,
+      "path": "CEREBRUM-DEV-010/artifacts/dev010-seed-26090401",
+      "present": false
+    },
+    {
+      "identity_valid": false,
+      "manifest_hash_valid": false,
+      "parent_seed": 26090402,
+      "path": "CEREBRUM-DEV-010/artifacts/dev010-seed-26090402",
+      "present": false
+    }
+  ],
+  "prepared_hashes": {
+    "train": "sha256:f6ed120c55404df0bd38f49dab95ae83bb77945da911538eb2c221cb517e9c51",
+    "validation": "sha256:9f7a2b8a88fc84e64244a86cad38c0dd229af2037aec9eddc5a23ed7cf7b365a"
+  },
+  "protocol_id": "CEREBRUM-DEV-011-FOCUSED",
+  "public_scored": false,
+  "schema_version": "cerebrum-dev011-focused-readiness.v1",
+  "status": "READY_PENDING_PARENT_ADAPTER_IMPORT",
+  "train": {
+    "case_ids": 768,
+    "decision_counts": {
+      "ALLOW": 384,
+      "CONTESTED": 384
+    },
+    "pair_ids": 96,
+    "records": 768,
+    "renderer_counts": {
+      "APPEAL_CLOCK_LEDGER": 192,
+      "APPEAL_DEADLINE_CARD": 192,
+      "APPEAL_DISPOSITION_TIMELINE": 192,
+      "APPEAL_EVENT_MATRIX": 192
+    },
+    "task_counts": {
+      "CERTIFICATE": 768
+    },
+    "weight_max": 8.0,
+    "weight_min": 6.0,
+    "weight_sum": 5376.0
+  },
+  "transfer_authorized": false,
+  "validation": {
+    "case_ids": 64,
+    "decision_counts": {
+      "ALLOW": 32,
+      "CONTESTED": 32
+    },
+    "pair_ids": 32,
+    "records": 64,
+    "renderer_counts": {
+      "HELDOUT_APPEAL_REVIEW_REGISTER": 64
+    },
+    "task_counts": {
+      "CERTIFICATE": 64
+    },
+    "weight_max": 8.0,
+    "weight_min": 6.0,
+    "weight_sum": 448.0
+  }
+}

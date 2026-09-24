@@ -1,0 +1,64 @@
+{
+  "schema_version": "edon-platform-vision.v1",
+  "vision_id": "CEREBRUM-PLATFORM-VISION-001",
+  "version": "1.0.0",
+  "status": "FROZEN_CONTROLLING_VISION_NOT_IMPLEMENTED",
+  "frozen": "2026-09-20",
+  "controlling_document": "docs/architecture/cerebrum-platform-vision.md",
+  "platform": {
+    "name": "Cerebrum",
+    "kind": "HORIZONTAL_INSTITUTIONAL_INTELLIGENCE_PLATFORM",
+    "interfaces": [
+      "COMMAND_CENTER",
+      "EMBEDDED_DECISION_CARDS",
+      "INTELLIGENCE_API",
+      "AGENT_GATEWAY",
+      "SDKS_AND_WEBHOOKS"
+    ],
+    "authority_path": [
+      "CONTROL_PLANE",
+      "REASONING_RUNTIME",
+      "ACTION_PROPOSAL",
+      "INDEPENDENT_KERNEL",
+      "EXECUTION_ASSURANCE",
+      "OBSERVATION_AND_CONNECTOR_GATEWAY"
+    ],
+    "learning_release_path": [
+      "OUTCOME_AND_AUDIT_STREAM",
+      "REVIEWED_ACTIONNET_EXPERIENCE",
+      "EVALUATION_AND_RELEASE_REGISTRY",
+      "DEPLOYMENT_CONTROLLER",
+      "REASONING_RUNTIME"
+    ]
+  },
+  "doctrine": [
+    "MODELS_PROPOSE",
+    "HUMANS_APPROVE_WHEN_REQUIRED",
+    "KERNEL_AUTHORIZES",
+    "EXECUTION_ASSURANCE_ACTS",
+    "CONNECTORS_INTERACT",
+    "OUTCOMES_UPDATE_STATE",
+    "REVIEWED_EVIDENCE_IMPROVES_FUTURE_RELEASES"
+  ],
+  "canonical_specifications": [
+    "EVENT_ENVELOPE",
+    "INSTITUTIONAL_STATE_MODEL",
+    "INSTITUTIONAL_IR_LIFECYCLE",
+    "ACTION_LIFECYCLE",
+    "RELEASE_AND_DEPLOYMENT_CONTRACT",
+    "FIRST_QUALIFIED_OPERATIONAL_WORKFLOW"
+  ],
+  "compatibility": {
+    "historical_experiment_records_rewritten": false,
+    "historical_results_upgraded": false,
+    "existing_api_routes_reclassified_as_public_v1": false,
+    "existing_state_schemas_replaced": false
+  },
+  "claims": {
+    "complete_platform_implemented": false,
+    "protected_platform_evaluation_passed": false,
+    "production_authorized": false,
+    "binding_authority": false
+  },
+  "supersession_rule": "Material changes require a new vision identity and explicit migration record."
+}

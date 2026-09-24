@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/system-cycle.schema.json",
+  "title": "Non-binding Cerebrum System C1 reasoning cycle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "cycle_id", "tenant_id", "world_id", "decision_time",
+    "state_projection_sha256", "context_sha256", "c1", "proposal",
+    "provenance_graph_sha256", "kernel_authorization_requested", "executed",
+    "binding_authority", "cycle_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-cerebrum-system-cycle.v1"},
+    "cycle_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "decision_time": {"type": "string", "format": "date-time"},
+    "state_projection_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "context_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "c1": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["architectural_name", "historical_component_name", "model_lineage"],
+      "properties": {
+        "architectural_name": {"const": "C1"},
+        "historical_component_name": {"const": "Cerebrum learned component"},
+        "model_lineage": {"type": "string", "minLength": 1}
+      }
+    },
+    "proposal": {"$ref": "operations-proposal.schema.json"},
+    "provenance_graph_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "kernel_authorization_requested": {"const": false},
+    "executed": {"const": false},
+    "binding_authority": {"const": false},
+    "cycle_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

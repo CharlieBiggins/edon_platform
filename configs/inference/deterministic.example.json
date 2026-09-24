@@ -1,0 +1,7 @@
+{
+  "do_sample": false,
+  "max_input_tokens": 2048,
+  "checkpoint_per_case": true,
+  "compile_hashes_from_predicted_states": true,
+  "binding_authority": false
+}

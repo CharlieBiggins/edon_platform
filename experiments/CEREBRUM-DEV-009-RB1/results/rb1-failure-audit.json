@@ -1,0 +1,119 @@
+{
+  "schema_version": "cerebrum-dev009-rb1-failure-audit.v1",
+  "protocol_id": "CEREBRUM-DEV-009-RB1",
+  "audit_date": "2026-09-04",
+  "status": "TARGETED_QUEUE_AND_UNRESOLVED_APPEAL_REPAIR_REQUIRED",
+  "frozen_disposition": "RB1_TRANSFER_NOT_ESTABLISHED",
+  "unsafe_authorization": {
+    "shared_across_both_seeds": true,
+    "case_id": "case-96be065408a63666",
+    "counterfactual_pair_id": "pair-02ea20794cc97b7e",
+    "pair_class": "PIVOTAL",
+    "mechanism": "UNRESOLVED_APPEAL",
+    "variant": "INTERVENTION",
+    "renderer": "DEPENDENCY_GRAPH_PACKET",
+    "expected_decision": "CONTESTED",
+    "expected_semantic_state": "CONTESTED",
+    "expected_failed_conditions": ["UNRESOLVED_CONTEST"],
+    "predicted_decision_both_seeds": "ALLOW",
+    "predicted_semantic_state_both_seeds": "TRUE",
+    "predicted_failed_conditions_both_seeds": [],
+    "seed_confidence": {
+      "26082491": 0.9965488282839458,
+      "26082492": 0.9953392827510834
+    }
+  },
+  "queue_trace": {
+    "examples_per_seed": 48,
+    "shared_failed_cases": 22,
+    "seed_26082491": {
+      "exact_correct": 24,
+      "exact_rate": 0.5,
+      "failed_cases": 24,
+      "field_failure_counts": {
+        "ordered_event_ids": 11,
+        "executed_event_ids": 10,
+        "deferred_event_ids": 19,
+        "step_semantics": 16,
+        "final_state": 6,
+        "final_state_sha256": 6
+      },
+      "canonical_order_exact": 0.7708333333333334,
+      "executed_events_exact": 0.7916666666666666,
+      "deferred_events_exact": 0.6041666666666666,
+      "step_semantics_exact": 0.6666666666666666,
+      "final_state_exact": 0.875
+    },
+    "seed_26082492": {
+      "exact_correct": 17,
+      "exact_rate": 0.3541666666666667,
+      "failed_cases": 31,
+      "field_failure_counts": {
+        "ordered_event_ids": 15,
+        "executed_event_ids": 11,
+        "deferred_event_ids": 24,
+        "step_semantics": 19,
+        "final_state": 10,
+        "final_state_sha256": 10
+      },
+      "canonical_order_exact": 0.6875,
+      "executed_events_exact": 0.7708333333333334,
+      "deferred_events_exact": 0.5,
+      "step_semantics_exact": 0.6041666666666666,
+      "final_state_exact": 0.7916666666666666
+    },
+    "observed_error_forms": [
+      "deferred identifiers returned with correct membership but noncanonical order",
+      "events omitted from the exhaustive ordered list",
+      "executed and deferred membership assigned on the wrong side of the decision clock",
+      "event identifiers duplicated, truncated, or hallucinated",
+      "incorrect list execution propagated into step semantics and final state"
+    ],
+    "shared_failed_case_ids": [
+      "case-1123044fd4ed2522",
+      "case-15f06f8b6d67dd77",
+      "case-18c46d3b9c428d9d",
+      "case-1abcfe99071a58a8",
+      "case-1dcf5830c0a005a4",
+      "case-3127a964a3967454",
+      "case-35e5686612b5383e",
+      "case-566bf6f6a019ae28",
+      "case-6a358d9367c62e1f",
+      "case-6b3ad8eb393d6886",
+      "case-71d59215eceaae81",
+      "case-750e805c0a0f3c69",
+      "case-87524f51d6b7ed19",
+      "case-9180428cada31599",
+      "case-94a497375b3178ae",
+      "case-9b198b24b60267ff",
+      "case-a282b9e48cf3ae6b",
+      "case-ac94aa2d9645a62f",
+      "case-b3cf62e56dfdd9cd",
+      "case-bceaa77343c324a1",
+      "case-f1f6f18eb05bd3be",
+      "case-f570aaf43781769c"
+    ]
+  },
+  "retained_strengths": {
+    "seed_26082491": {
+      "certificate_decision_accuracy": 0.9375,
+      "transition_exact": 0.8333333333333334,
+      "pair_exact": 0.9375
+    },
+    "seed_26082492": {
+      "certificate_decision_accuracy": 0.9166666666666666,
+      "transition_exact": 0.8125,
+      "pair_exact": 0.9583333333333334
+    }
+  },
+  "repair_constraints": [
+    "preserve the frozen RB1 result and thresholds",
+    "exclude every exposed RB1 case and prompt from successor training and validation",
+    "use new case, source, institution, generator, renderer, and semantic-family lineages",
+    "state the exhaustive disjoint order-preserving queue partition contract explicitly",
+    "add decomposed queue-order and queue-partition supervision",
+    "upweight resolved-versus-unresolved appeal timing boundaries",
+    "require two fresh seeds and a fresh held-renderer validation instrument"
+  ],
+  "binding_authority": false
+}

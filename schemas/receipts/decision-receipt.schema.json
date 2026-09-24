@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/receipts/decision-receipt.schema.json",
+  "title": "Kernel decision receipt",
+  "description": "Immutable proof of the exact inputs, checks, versions, and Kernel result. The receipt does not broaden or replace the underlying decision.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "receipt_id", "sequence", "tenant_id", "institution_id",
+    "proposal_id", "proposal_sha256", "graph_version", "state_version", "ir_version",
+    "policy_version", "authority_version", "domain_pack_versions", "identity_ref",
+    "capability_refs", "mandate_refs", "commitment_refs", "reservation_refs",
+    "evidence_refs", "approval_evidence_refs", "checks", "decision", "conditions",
+    "kernel_id", "issued_at", "expires_at", "trace_id", "signature",
+    "receipt_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-decision-receipt.v1"},
+    "receipt_id": {"type": "string", "minLength": 1},
+    "sequence": {"type": "integer", "minimum": 0},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "authorization_decision_id": {"type": "string", "minLength": 1},
+    "proposal_id": {"type": "string", "minLength": 1},
+    "proposal_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "graph_version": {"type": "string", "minLength": 1},
+    "state_version": {"type": "string", "minLength": 1},
+    "ir_version": {"type": "string", "minLength": 1},
+    "policy_version": {"type": "string", "minLength": 1},
+    "authority_version": {"type": "string", "minLength": 1},
+    "domain_pack_versions": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "identity_ref": {"type": "string", "minLength": 1},
+    "capability_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "mandate_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "commitment_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "reservation_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "approval_evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "checks": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["identity", "capability", "mandate", "policy", "jurisdiction", "evidence", "preconditions", "commitments", "resources", "conflicts", "risk", "approvals"],
+      "properties": {
+        "identity": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "capability": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "mandate": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "policy": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "jurisdiction": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "evidence": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "preconditions": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "commitments": {"enum": ["PASS", "FAIL", "UNKNOWN", "NOT_APPLICABLE"]},
+        "resources": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "conflicts": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "risk": {"enum": ["PASS", "FAIL", "UNKNOWN"]},
+        "approvals": {"enum": ["PASS", "FAIL", "UNKNOWN", "NOT_REQUIRED"]}
+      }
+    },
+    "decision": {"enum": ["ALLOW", "DENY", "APPROVAL_REQUIRED", "ESCALATE", "ABSTAIN", "REVISE", "REASSIGN"]},
+    "conditions": {"type": "array", "items": {"type": "object"}},
+    "kernel_id": {"type": "string", "minLength": 1},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "trace_id": {"type": "string", "minLength": 1},
+    "signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "signed_sha256"],
+      "properties": {
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "minLength": 1},
+        "signed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "receipt_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

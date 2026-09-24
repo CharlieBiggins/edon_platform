@@ -1,0 +1,16 @@
+{
+  "protocol_id": "CEREBRUM-ACTIONNET-TRANSFER-001",
+  "created": "2026-09-19",
+  "status": "BLOCKED_PROTECTED_SHELL_NO_INSTRUMENT",
+  "candidate_ids": ["ordinary-a", "actionnet-a", "ordinary-b", "actionnet-b"],
+  "institution_count": 3,
+  "records_per_institution": 16,
+  "pairs_per_institution": 8,
+  "records": 48,
+  "pairs": 24,
+  "responses": 192,
+  "protected_training_allowed": false,
+  "prompt_repair_allowed": false,
+  "threshold_change_allowed": false,
+  "binding_authority": false
+}

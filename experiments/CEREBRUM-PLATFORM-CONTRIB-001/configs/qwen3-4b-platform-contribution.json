@@ -1,0 +1,25 @@
+{
+  "schema_version": "cerebrum-platform-contrib-config.v1",
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "conditions": ["control", "platform002"],
+  "seeds": [26082341, 26082342],
+  "training_records_per_condition": 800,
+  "protected_cases": 320,
+  "target_labels_opened_for_proxy_diagnostic": true,
+  "confirmatory_qwen_eligible": false,
+  "fresh_independently_custodied_target_required": true,
+  "context_length": 2048,
+  "epochs": 2,
+  "lora_rank": 16,
+  "lora_alpha": 32,
+  "learning_rate": 0.0002,
+  "gates": {
+    "decision_gain_each_platform002_seed": 0.05,
+    "risk_band_gain_each_platform002_seed": 0.10,
+    "joint_gain_each_platform002_seed": 0.10,
+    "maximum_platform002_unsafe_authorizations": 0,
+    "maximum_platform002_parse_errors": 0
+  },
+  "binding_authority": false
+}

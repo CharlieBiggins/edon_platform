@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-002",
+  "version": "1.0.0",
+  "status": "QUALIFIED",
+  "created": "2026-08-09",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-002-result-v1.0.0",
+    "sha256": "sha256:b44b977a41e03ee62abd4fe0cdd9dc1f5b621010a458ba00caf81a113ccc8236",
+    "storage_location": "experiments/ACTIONNET-DATA-QUAL-002/results/result_manifest.json"
+  },
+  "model": null,
+  "seeds": [],
+  "dataset": "ACTIONNET-DATASET-v2-OBSERVABLE",
+  "license": "pending",
+  "claim_scope": "Internal observable synthetic development corpus.",
+  "binding_authority": false
+}

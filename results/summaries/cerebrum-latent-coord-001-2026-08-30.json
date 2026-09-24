@@ -1,0 +1,24 @@
+{
+  "schema_version": "cerebrum-latent-coord-001-status.v1",
+  "date": "2026-08-30",
+  "protocol_id": "CEREBRUM-LATENT-COORD-001",
+  "status": "SHELL_READY_INSTRUMENT_AND_CANDIDATE_UNMATERIALIZED",
+  "controls": "35/35",
+  "reserved_cases": 480,
+  "reserved_pairs": 240,
+  "coordination_modes": 8,
+  "conditions": [
+    "message_only_graph",
+    "full_state_rules",
+    "base_model_full_state",
+    "cerebrum_full_state"
+  ],
+  "candidate_seeds_required": 2,
+  "candidate_frozen": false,
+  "protected_instrument_materialized": false,
+  "predictions_exist": false,
+  "score_exists": false,
+  "capability_established": false,
+  "claim_boundary": "Protocol and schema readiness only; no latent-coordination detection, attribution, causal reconstruction, forecasting, governance, baseline-superiority, transfer, real-institution, production, or IGI result.",
+  "binding_authority": false
+}

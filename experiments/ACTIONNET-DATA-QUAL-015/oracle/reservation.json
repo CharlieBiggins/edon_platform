@@ -1,0 +1,14 @@
+{
+  "confirmation_single_use": true,
+  "dev014_cases_prohibited_from_training": true,
+  "development_selection_is_adaptive": true,
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false,
+  "reserved_future_families": [
+    820,
+    821,
+    822,
+    823
+  ]
+}

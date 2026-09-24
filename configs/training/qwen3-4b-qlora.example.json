@@ -1,0 +1,8 @@
+{
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "method": "QLoRA",
+  "max_length": 2048,
+  "require_zero_truncation": true,
+  "weighted_completion_loss": true,
+  "seed": 0
+}

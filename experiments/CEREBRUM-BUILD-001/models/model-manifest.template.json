@@ -1,0 +1,21 @@
+{
+  "schema_version": "cerebrum-build-model-manifest.v1",
+  "model_id": "REPLACE_ME",
+  "status": "DRAFT_NO_ARTIFACT",
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "base_revision": null,
+  "adapter_sha256": null,
+  "training_release_id": null,
+  "training_release_sha256": null,
+  "seed": null,
+  "runtime": {
+    "load_in_4bit": true,
+    "max_input_tokens": 4096,
+    "deterministic_decoding": true
+  },
+  "benchmark_status": "NOT_RUN",
+  "internal_shadow_eligible": false,
+  "external_pilot_eligible": false,
+  "production_eligible": false,
+  "binding_authority": false
+}

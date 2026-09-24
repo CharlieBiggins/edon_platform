@@ -1,0 +1,13 @@
+{
+  "schema_version": "cerebrum-transfer-reservation-closure.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "closed_at": "2026-09-05",
+  "status": "RESERVATION_CLOSED_UNMATERIALIZED_DEV010_FAILED",
+  "reason": "The operator-reported CEREBRUM-DEV-010 two-seed summary returned DEV010_REPAIR_NOT_ESTABLISHED and failed the frozen candidate prerequisite.",
+  "candidate_registered": false,
+  "protected_instrument_materialized": false,
+  "predictions_exist": false,
+  "score_exists": false,
+  "successor_substitution_permitted": false,
+  "binding_authority": false
+}

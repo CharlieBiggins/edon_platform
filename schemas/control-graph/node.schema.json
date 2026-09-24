@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/control-graph/node.schema.json",
+  "title": "Institutional Control Graph node",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "node_id",
+    "tenant_id",
+    "institution_id",
+    "node_class",
+    "node_type",
+    "lifecycle_owner",
+    "payload",
+    "effective_from",
+    "recorded_at",
+    "available_to_controller_at",
+    "evidence_refs",
+    "compartment_refs",
+    "node_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-control-graph-node.v1"},
+    "node_id": {"type": "string", "minLength": 1, "maxLength": 300},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "institution_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "node_class": {
+      "enum": [
+        "ACTOR", "ORGANIZATION", "ROLE", "JURISDICTION", "SYSTEM", "FACILITY", "CONNECTOR",
+        "RESOURCE", "CAPABILITY", "CREDENTIAL", "RESERVATION", "CONSTRAINT",
+        "OBSERVATION", "EVIDENCE", "STATE_ASSERTION", "CONFLICT", "INCIDENT",
+        "OBJECTIVE", "POLICY", "PROHIBITION", "EXCEPTION", "MANDATE", "APPROVAL",
+        "COMMITMENT", "DEPENDENCY", "PLAN", "PROPOSAL", "ACTION", "COMPENSATION",
+        "DECISION_RECEIPT", "EXECUTION_RECEIPT", "OUTCOME", "RELEASE", "DEPLOYMENT"
+      ]
+    },
+    "node_type": {"type": "string", "minLength": 1, "maxLength": 300},
+    "lifecycle_owner": {"type": "string", "minLength": 1, "maxLength": 300},
+    "payload": {"type": "object"},
+    "effective_from": {"type": "string", "format": "date-time"},
+    "effective_until": {"type": "string", "format": "date-time"},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "available_to_controller_at": {"type": "string", "format": "date-time"},
+    "supersedes_node_version": {"type": "string", "minLength": 1, "maxLength": 300},
+    "evidence_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 1000}},
+    "compartment_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1, "maxLength": 200}},
+    "node_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

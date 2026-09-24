@@ -1,0 +1,18 @@
+{
+  "schema_version": "edon-igi-scope-manifest.v1",
+  "scope_id": "EDON-IGI-SCOPE-001",
+  "version": "1.0.0",
+  "status": "FROZEN_DEFINITION_NO_IGI_RESULT",
+  "frozen": "2026-08-25",
+  "artifact": {
+    "id": "EDON-IGI-SCOPE-001-definition-v1.0.0",
+    "sha256": "sha256:f9fc18f199ebc14303f5bca10dd2f5b1b3c9ba1269bb613eabf4f0fb9d5d8af7",
+    "storage_location": "governance/igi-scope/EDON-IGI-SCOPE-001/scope.json"
+  },
+  "inventory": "inventory.json",
+  "universal_claim_authorized": false,
+  "external_pilot_authorized": false,
+  "production_authorized": false,
+  "claim_scope": "Bounded environment definition only; no model result or IGI claim.",
+  "binding_authority": false
+}

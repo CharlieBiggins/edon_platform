@@ -1,0 +1,57 @@
+{
+  "actionnet_004_repair_validation_semantic_families": [
+    50,
+    51,
+    52,
+    53
+  ],
+  "actionnet_004_train_semantic_families": [
+    30,
+    31,
+    32,
+    33,
+    34,
+    35,
+    36,
+    37,
+    38,
+    39,
+    40,
+    41
+  ],
+  "eventnet_fresh_validation_semantic_families": [
+    90,
+    91,
+    92,
+    93
+  ],
+  "eventnet_repair_train_semantic_families": [
+    70,
+    71,
+    72,
+    73,
+    74,
+    75,
+    76,
+    77,
+    78,
+    79,
+    80,
+    81
+  ],
+  "future_public_semantic_families": [
+    94,
+    95,
+    96,
+    97
+  ],
+  "protected_materialized": false,
+  "protected_semantic_families": [
+    98,
+    99,
+    100,
+    101
+  ],
+  "public_materialized": false,
+  "real_institution_materialized": false
+}

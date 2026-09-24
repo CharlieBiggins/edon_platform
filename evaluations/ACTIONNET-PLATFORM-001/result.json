@@ -1,0 +1,30 @@
+{
+  "binding_authority": false,
+  "check_count": 18,
+  "checks_passed": 18,
+  "claim_scope": "Internal product-workflow evidence only",
+  "evaluation_id": "ACTIONNET-PLATFORM-001",
+  "gates": {
+    "active_acquisition_targets_gap": true,
+    "audit_chain_valid": true,
+    "authority_smuggling_rejected": true,
+    "composition_edge_evidence_graded": true,
+    "counterfactual_parent_preserved": true,
+    "coverage_is_registered_not_universal": true,
+    "coverage_snapshot_frozen": true,
+    "experience_safe_defaults": true,
+    "independent_review_dimensions_required": true,
+    "intervention_candidate_non_binding": true,
+    "mechanism_registry_versioned": true,
+    "model_exposure_recorded": true,
+    "procedural_world_deterministic": true,
+    "procedural_world_safe_defaults": true,
+    "protected_vault_blocks_training": true,
+    "tenant_isolation": true,
+    "training_eligibility_is_explicit": true,
+    "training_release_hash_bound": true
+  },
+  "production_ready": false,
+  "schema_version": "actionnet-platform-001-evaluation.v1",
+  "status": "PASS"
+}

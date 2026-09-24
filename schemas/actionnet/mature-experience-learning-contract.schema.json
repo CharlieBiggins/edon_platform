@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/mature-experience-learning-contract.schema.json",
+  "title": "Mature ActionNet experience and learning contract",
+  "description": "Content-bound trajectory custody and permitted-use record composing existing ActionNet experience, review, abstraction, counterfactual, coverage, and release contracts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "contract_id", "tenant_id", "institution_id",
+    "trajectory_ref", "initial_graph_version", "initial_state_version",
+    "observation_refs", "interpretation_refs", "simulation_refs",
+    "human_judgment_refs", "proposal_refs", "decision_receipt_refs",
+    "execution_receipt_refs", "outcome_evidence_refs", "verified_outcome_refs",
+    "counterfactual_refs", "correction_refs", "rights", "privacy_review_refs",
+    "domain_review_refs", "safety_review_refs", "quality_review_refs",
+    "contamination_review_refs", "permitted_uses", "protected_evaluation",
+    "training_eligible", "deployment_effect", "contract_sha256",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-actionnet-mature-experience-learning-contract.v1"},
+    "contract_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "trajectory_ref": {"type": "string", "minLength": 1},
+    "initial_graph_version": {"type": "string", "minLength": 1},
+    "initial_state_version": {"type": "string", "minLength": 1},
+    "observation_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "interpretation_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "simulation_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "human_judgment_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "proposal_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "decision_receipt_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "execution_receipt_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "outcome_evidence_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "verified_outcome_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "counterfactual_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "correction_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "rights": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["owner_ref", "source_rights_ref", "permitted_use_hash", "expiration"],
+      "properties": {
+        "owner_ref": {"type": "string", "minLength": 1},
+        "source_rights_ref": {"type": "string", "minLength": 1},
+        "permitted_use_hash": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "expiration": {"type": "string", "format": "date-time"}
+      }
+    },
+    "privacy_review_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "domain_review_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "safety_review_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "quality_review_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "contamination_review_refs": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "permitted_uses": {"type": "array", "uniqueItems": true, "items": {"enum": ["LOCAL_CONTEXT", "LOCAL_TRAINING", "GLOBAL_ABSTRACTION", "GLOBAL_TRAINING", "DEVELOPMENT_EVALUATION", "PROTECTED_EVALUATION", "AUDIT_ONLY"]}},
+    "protected_evaluation": {"type": "boolean"},
+    "training_eligible": {"type": "boolean"},
+    "deployment_effect": {"const": false},
+    "contract_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"protected_evaluation": {"const": true}}, "required": ["protected_evaluation"]},
+      "then": {"properties": {"training_eligible": {"const": false}}}
+    }
+  ]
+}

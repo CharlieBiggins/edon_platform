@@ -1,0 +1,32 @@
+{
+  "schema_version": "operator-reported-cerebrum-focused-result.v1",
+  "protocol_id": "CEREBRUM-DEV-011-FOCUSED",
+  "reported_at": "2026-09-05",
+  "continuation_seed": 26090512,
+  "parent_seed": 26090402,
+  "status": "FOCUSED_REPAIR_HOLD",
+  "checks_passed": 8,
+  "check_count": 9,
+  "decision_accuracy": 0.96875,
+  "semantic_accuracy": 0.96875,
+  "resolved_allow_accuracy": 0.9375,
+  "unresolved_contested_accuracy": 1.0,
+  "paired_boundary_exact": 0.9375,
+  "unsafe_authorizations": 0,
+  "decision_confusion": {
+    "ALLOW->ALLOW": 30,
+    "ALLOW->CONTESTED": 2,
+    "CONTESTED->CONTESTED": 32
+  },
+  "failed_checks": [
+    "resolved_allow_accuracy_floor"
+  ],
+  "validation_sha256": "sha256:9f7a2b8a88fc84e64244a86cad38c0dd229af2037aec9eddc5a23ed7cf7b365a",
+  "predictions_sha256": "sha256:a6143f3cb8aa823aedfcf1250351f74f56e027a9efae08518ee6d33e4b99b3f2",
+  "training_manifest_sha256": "sha256:190c37ec181252b6eee2b4b4e852f1fab42a9d87c0fb11cb8c3849f8fdfee240",
+  "second_registered_parent_run_executed": false,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "binding_authority": false,
+  "claim_boundary": "Operator-reported adaptive synthetic focused result; unresolved safety repaired, but the frozen resolved-ALLOW floor missed by one case."
+}

@@ -1,0 +1,61 @@
+{
+  "schema_version": "cerebrum-transfer-010-baseline-registry.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "status": "PENDING_DEV010_PASS_AND_BASELINE_FREEZE",
+  "contract_path": "config/baseline-contract.json",
+  "contract_sha256": "sha256:34122ceeda9ef023138e3adaa46377660f5eb95d2a7ab332fd08ed6c452fbd0f",
+  "prompt_pack_sha256": null,
+  "conditions": [
+    {
+      "condition": "unmodified_base",
+      "provider": "local",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "schema_constraint": false,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": false,
+      "frozen": false
+    },
+    {
+      "condition": "interface_matched_base",
+      "provider": "local",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    },
+    {
+      "condition": "prompted_interface_matched_base",
+      "provider": "local",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "schema_constraint": true,
+      "interface_demonstrations": true,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    },
+    {
+      "condition": "frontier_general_primary",
+      "provider": null,
+      "model": null,
+      "revision": null,
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    },
+    {
+      "condition": "frontier_general_secondary",
+      "provider": null,
+      "model": null,
+      "revision": null,
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    }
+  ],
+  "binding_authority": false
+}

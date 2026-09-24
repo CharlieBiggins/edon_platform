@@ -1,0 +1,46 @@
+{
+  "schema_version": "edon-mlgw-source-registry.v1",
+  "retrieval_date": "2026-08-24",
+  "sources": [
+    {
+      "source_id": "NWS-MEG-AUG22-2026",
+      "title": "August 22, 2026 Severe Weather",
+      "publisher": "National Weather Service Memphis",
+      "url": "https://www.weather.gov/meg/August_22_2026_Severe_Weather",
+      "authority": "OFFICIAL_WEATHER",
+      "bytes_archived": false,
+      "sha256": null,
+      "status": "URL_REGISTERED_BYTES_NOT_ARCHIVED"
+    },
+    {
+      "source_id": "MLGW-OUTAGE-SUMMARY",
+      "title": "MLGW Territory Outage Activity",
+      "publisher": "Memphis Light, Gas and Water",
+      "url": "https://outagemap.mlgw.org/OutageSummary.php/1000",
+      "authority": "OFFICIAL_OUTAGE_SNAPSHOT",
+      "bytes_archived": false,
+      "sha256": null,
+      "status": "URL_REGISTERED_BYTES_NOT_ARCHIVED"
+    },
+    {
+      "source_id": "MLGW-BOW-ECHO-PROGRESS",
+      "title": "MLGW makes progress assessing damage, restoring customers after bow echo",
+      "publisher": "Memphis Light, Gas and Water",
+      "url": "https://www.mlgw.com/news/MLGW_makes_progress_assessing_damage_restoring_customers_after_bow_echo",
+      "authority": "OFFICIAL_UTILITY_UPDATE",
+      "bytes_archived": false,
+      "sha256": null,
+      "status": "URL_REGISTERED_BYTES_NOT_ARCHIVED"
+    },
+    {
+      "source_id": "MLGW-OIAT-2022",
+      "title": "Outage Improvement Advisory Team presentation",
+      "publisher": "Memphis Light, Gas and Water",
+      "url": "https://www.mlgw.com/images/content/files/pdf/Outage%20Improvement%20Advisory%20Team%2022%203-17-22%20%281%29.pdf",
+      "authority": "OFFICIAL_HISTORICAL_PROCESS_SOURCE",
+      "bytes_archived": false,
+      "sha256": null,
+      "status": "URL_REGISTERED_BYTES_NOT_ARCHIVED"
+    }
+  ]
+}

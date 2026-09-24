@@ -1,0 +1,41 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Project-authored synthetic training conditions; no learned Cerebrum result.",
+  "conditions": {
+    "CONTROL_SINGLE_MECHANISM": {
+      "class_counts": {
+        "ABSTAIN": 200,
+        "ALLOW": 320,
+        "DENY": 280
+      },
+      "origin_counts": {
+        "COMPOSITION": 0,
+        "COUNTERFACTUAL": 0,
+        "SINGLE_MECHANISM": 800
+      },
+      "path": "control.jsonl",
+      "records": 800,
+      "sha256": "sha256:daae697b226616b79c6931c042d68ed872fd90103da7409ee3ff7187001f1bb3"
+    },
+    "PLATFORM002_ACTIVE": {
+      "class_counts": {
+        "ABSTAIN": 498,
+        "ALLOW": 109,
+        "DENY": 193
+      },
+      "origin_counts": {
+        "COMPOSITION": 361,
+        "COUNTERFACTUAL": 239,
+        "SINGLE_MECHANISM": 200
+      },
+      "path": "platform002.jsonl",
+      "records": 800,
+      "sha256": "sha256:78126248e510072626eb6281a7447b21aac507ebee7e19a8263d401371169061"
+    }
+  },
+  "experiment_id": "CEREBRUM-PLATFORM-CONTRIB-001",
+  "matched_record_count": true,
+  "protected_target_used": false,
+  "schema_version": "cerebrum-platform-contrib-training.v1",
+  "seed": 26082331
+}

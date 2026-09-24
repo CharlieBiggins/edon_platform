@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/releases/deployment-approval.schema.json",
+  "title": "Deployment Controller approval record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "deployment_approval_id",
+    "release_id",
+    "release_contract_sha256",
+    "environment_id",
+    "deployment_scope",
+    "runtime_attestation_ref",
+    "compatibility_status",
+    "human_approvals",
+    "canary_limits",
+    "monitoring_profile_ref",
+    "containment_profile_ref",
+    "rollback_release_id",
+    "decision",
+    "issued_at",
+    "expires_at",
+    "controller_signature",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-deployment-approval.v1"},
+    "deployment_approval_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "release_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "release_contract_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "environment_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "deployment_scope": {"type": "object"},
+    "runtime_attestation_ref": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "compatibility_status": {"enum": ["PASS", "FAIL"]},
+    "human_approvals": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "canary_limits": {"type": "object"},
+    "monitoring_profile_ref": {"type": "string", "minLength": 1},
+    "containment_profile_ref": {"type": "string", "minLength": 1},
+    "rollback_release_id": {"type": "string", "minLength": 1},
+    "decision": {"enum": ["APPROVE_CANARY", "APPROVE_SCOPED", "DENY", "REVOKE", "ROLLBACK"]},
+    "issued_at": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "controller_signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "signed_sha256"],
+      "properties": {
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "minLength": 1},
+        "signed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "binding_authority": {"const": false}
+  }
+}

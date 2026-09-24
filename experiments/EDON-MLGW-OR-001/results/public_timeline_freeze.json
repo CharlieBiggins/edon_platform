@@ -1,0 +1,25 @@
+{
+  "authoritative_records": 0,
+  "binding_authority": false,
+  "chain": {
+    "event_ids": [
+      "MEMPHIS-BOW-ECHO-2026-08-22"
+    ],
+    "head_hash": "sha256:47dd49d98e2e01dd720846bc391045ab65bd5389699d1212a27eb02ceef6f702",
+    "records": 4,
+    "valid": true
+  },
+  "claim_boundary": "Public-source development timeline only; not the authoritative internal MLGW information or decision state.",
+  "event_id": "MEMPHIS-BOW-ECHO-2026-08-22",
+  "evidence_class_counts": {
+    "DERIVED": 1,
+    "OBSERVED": 3
+  },
+  "ledger_sha256": "sha256:acc7749d13b81ef37a5cc3be35af6d2c9e7ea9db8ab6e8d6c812e1d85a056cc2",
+  "prospective": false,
+  "protected": false,
+  "protocol_id": "EDON-MLGW-OR-001",
+  "role": "PUBLIC_DEVELOPMENT_REPLAY",
+  "schema_version": "edon-mlgw-timeline-freeze.v1",
+  "training_eligible_records": 0
+}

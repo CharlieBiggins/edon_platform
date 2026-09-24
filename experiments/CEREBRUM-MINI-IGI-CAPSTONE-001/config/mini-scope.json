@@ -1,0 +1,144 @@
+{
+  "schema_version": "cerebrum-mini-igi-capstone-scope.v1",
+  "protocol_id": "CEREBRUM-MINI-IGI-CAPSTONE-001",
+  "parent_scope_id": "EDON-IGI-SCOPE-001",
+  "parent_profile": "COORDINATED_OPERATIONS_V1",
+  "status": "FROZEN_SHELL_NO_PROTECTED_INSTRUMENT",
+  "claim_class": "INTERNAL_BOUNDED_MINI_IGI_SIGNAL",
+  "institutions": [
+    {
+      "slot": "institution_a",
+      "reserved_form": "REGIONAL_HEALTH_OPERATIONS",
+      "domain": "HEALTH_OPERATIONS_NON_CLINICAL",
+      "authority_topology": "HIERARCHICAL_MATRIX",
+      "ontology_stress": ["DUAL_REPORTING", "POLICY_CONFLICT", "SCARCE_SHARED_RESOURCES"],
+      "author_role": "internal_instrument_author_a"
+    },
+    {
+      "slot": "institution_b",
+      "reserved_form": "MUNICIPAL_UTILITY_RESTORATION",
+      "domain": "UTILITY_RESTORATION_DISCRETE_EVENT_ONLY",
+      "authority_topology": "INCIDENT_COMMAND_WITH_EMERGENCY_DELEGATION",
+      "ontology_stress": ["TEMPORARY_DELEGATION", "REVOCATION", "DELAYED_OBSERVATION"],
+      "author_role": "internal_instrument_author_b"
+    },
+    {
+      "slot": "institution_c",
+      "reserved_form": "FEDERATED_RESEARCH_CONSORTIUM",
+      "domain": "FEDERATED_RESEARCH_GOVERNANCE",
+      "authority_topology": "QUORUM_MULTISCOPE_CONTESTED",
+      "ontology_stress": ["QUORUM", "CONTESTED_AUTHORITY", "NEGOTIATED_CONSTRAINT", "FEDERATION_ESCALATION"],
+      "author_role": "internal_instrument_author_c"
+    }
+  ],
+  "episode_design": {
+    "episode_count": 72,
+    "episodes_per_institution": 24,
+    "counterfactual_pair_count": 36,
+    "pairs_per_institution": 12,
+    "pair_class_counts": {
+      "PIVOTAL": 24,
+      "INVARIANCE": 6,
+      "CONTEXTUAL": 6
+    },
+    "scenario_families_per_institution": 8,
+    "episodes_per_scenario_family": 3,
+    "minimum_scored_opportunities_per_institution_per_task_family": 4,
+    "minimum_institutions_per_mechanism_family": 2,
+    "minimum_institutions_per_variation_axis": 2,
+    "decision_cycles_min": 8,
+    "decision_cycles_max": 12,
+    "simulator_events_min": 96,
+    "simulator_events_max": 384
+  },
+  "diagnostic_tracks": [
+    {
+      "id": "SOURCE_TO_IR_COMPILER",
+      "purpose": "ISOLATE_COMPILER_FIDELITY_AGAINST_CUSTODIAN_REFERENCE_IR",
+      "reference_ir_visible_to_controller": false
+    },
+    {
+      "id": "GOLD_IR_REASONING_ISOLATION",
+      "purpose": "ISOLATE_FROZEN_C1_REASONING_FROM_COMPILER_ERROR",
+      "reference_ir_visible_to_controller": true
+    },
+    {
+      "id": "END_TO_END_COMPILED_IR_CLOSED_LOOP",
+      "purpose": "MEASURE_COMPLETE_CANDIDATE_COMPILED_OPERATION",
+      "reference_ir_visible_to_controller": false
+    }
+  ],
+  "complete_loop": [
+    "OBSERVE",
+    "COMPILE",
+    "ESTIMATE_STATE",
+    "FORM_GOAL",
+    "DECOMPOSE_PLAN",
+    "ALLOCATE_RESOURCES",
+    "DISPATCH_OR_PROPOSE",
+    "KERNEL_AUTHORIZE_AND_COMMIT",
+    "MONITOR_OUTCOME",
+    "REPLAN_OR_TERMINATE"
+  ],
+  "task_families": [
+    "CERTIFICATE", "TRANSITION", "QUEUE_TRACE", "PAIR_CONTRAST",
+    "STATE_ESTIMATION", "GOAL_FORMATION", "PLAN_DECOMPOSITION",
+    "RESOURCE_ALLOCATION", "AGENT_DISPATCH", "OUTCOME_MONITORING",
+    "REPLANNING", "TOOL_SELECTION", "FEDERATION_ESCALATION"
+  ],
+  "mechanism_families": [
+    "AUTHORITY", "DELEGATION", "JURISDICTION", "APPROVAL", "REVOCATION",
+    "APPEAL", "EVIDENCE_LIFECYCLE", "EVIDENCE_COMPOSITION", "POLICY_CHANGE",
+    "POLICY_CONFLICT", "TEMPORAL_PRIORITY", "WORKFLOW_DEPENDENCY",
+    "EVENT_QUEUE", "RESOURCE_ALLOCATION", "RESOURCE_CONTENTION",
+    "ROUTING_REJECTION", "MALFORMED_REQUEST", "MULTISCOPE_ESCALATION"
+  ],
+  "variation_axes": [
+    "INSTITUTION_IDENTITY", "DOMAIN", "MECHANISM_COMPOSITION", "RENDERER",
+    "TEMPORAL_PROFILE", "OBSERVATION_NOISE", "OBSERVATION_DELAY",
+    "MISSING_INFORMATION", "CONFLICT_PROFILE", "AGENT_COUNT",
+    "RESOURCE_SCARCITY", "HORIZON_LENGTH", "TOOL_AVAILABILITY",
+    "FEDERATION_TOPOLOGY"
+  ],
+  "finite_bounds": {
+    "typed_state_paths_max": 384,
+    "roles_max": 48,
+    "agents_max": 64,
+    "resource_types_max": 64,
+    "simultaneous_goals_max": 12,
+    "plan_steps_max": 128,
+    "queued_events_max": 256,
+    "horizon_events_max": 512,
+    "mechanism_instances_max": 96,
+    "authority_depth_max": 12,
+    "federation_scopes_max": 4,
+    "tool_calls_max": 48,
+    "observation_delay_ticks_max": 96,
+    "serialized_observation_bytes_max": 131072
+  },
+  "compute_caps": {
+    "input_tokens_per_decision_max": 8192,
+    "generated_tokens_per_decision_max": 1024,
+    "tool_calls_per_episode_max": 48,
+    "non_protected_adaptation_episodes_max": 0,
+    "protected_gradient_updates_max": 0,
+    "protected_label_access": false,
+    "retry_budget_per_decision": 0
+  },
+  "adaptation_boundary": {
+    "candidate_weights_frozen_before_instrument": true,
+    "institution_local_context_only": true,
+    "memory_reset_between_episodes": true,
+    "cross_institution_memory": false,
+    "case_specific_prompt_repair": false,
+    "evaluator_feedback_before_score": false,
+    "automatic_weight_update": false
+  },
+  "internal_role_separation": {
+    "distinct_institution_authors": 3,
+    "candidate_developers_may_author_institutions": false,
+    "scorer_distinct_from_candidate_developers": true,
+    "external_replication": false
+  },
+  "binding_authority": false
+}

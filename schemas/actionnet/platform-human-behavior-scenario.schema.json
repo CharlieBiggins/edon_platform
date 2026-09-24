@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-human-behavior-scenario.schema.json",
+  "title": "Bounded ActionNet human-behavior scenario",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "institution_ir_sha256", "seed", "scenarios", "model_status", "authoritative", "binding_authority", "scenario_sha256"],
+  "properties": {
+    "schema_version": {"const": "actionnet-human-behavior-scenario.v1"},
+    "institution_ir_sha256": {"type": "string"},
+    "seed": {"type": "integer"},
+    "scenarios": {"type": "array", "items": {"type": "object", "required": ["actor_id", "disposition", "effective_cooperation_probability", "misexecution_probability", "sampled_misexecution", "assumptions_sha256"]}},
+    "model_status": {"const": "ASSUMPTION_DRIVEN_SCENARIO_NOT_HUMAN_GROUND_TRUTH"},
+    "authoritative": {"const": false},
+    "binding_authority": {"const": false},
+    "scenario_sha256": {"type": "string"}
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/operations/observation.schema.json",
+  "title": "Governed operational observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["observation_id", "modality", "source_id", "summary", "payload", "observed_at", "confidence", "sensitivity", "event_id", "expected_version", "authorization_ref"],
+  "properties": {
+    "observation_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "modality": {"enum": ["TEXT", "IMAGE", "AUDIO", "VIDEO", "SENSOR", "TELEMETRY", "DOCUMENT", "HUMAN_REPORT", "SYSTEM_EVENT"]},
+    "source_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "summary": {"type": "string", "minLength": 10, "maxLength": 10000},
+    "payload": {"type": "object"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "sensitivity": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+    "event_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "expected_version": {"type": "integer", "minimum": 0},
+    "authorization_ref": {"type": "string", "minLength": 1, "maxLength": 8192},
+    "provenance": {"type": "object"},
+    "retention_until": {"type": ["string", "null"], "format": "date-time"}
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "binding_authority": false,
+  "claim_boundary": "Fresh-lineage internal synthetic multi-generator repair preparation only; no Transfer-007 case reuse and no public, protected, real-institution, autonomous-authority, or production claim.",
+  "compiler_input_excluded_from_model_prompt": true,
+  "conditions": {
+    "multi_generator_execution_repair": {
+      "completion_chars_max": 2533,
+      "generator_profile_counts": {
+        "LEDGER": 5376,
+        "MATRIX": 5376
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 1792,
+        "INVARIANCE": 1792,
+        "PIVOTAL": 7168
+      },
+      "prompt_chars_max": 7226,
+      "records": 10752,
+      "renderer_counts": {
+        "AUTHORIZATION_WORKPAD": 2688,
+        "CHRONOLOGY_LEDGER": 2688,
+        "QUEUE_MATRIX": 2688,
+        "STATE_TRANSITION_CARD": 2688
+      },
+      "task_counts": {
+        "CERTIFICATE": 3072,
+        "PAIR_CONTRAST": 1536,
+        "QUEUE_TRACE": 3072,
+        "TRANSITION": 3072
+      },
+      "unique_case_ids": 10752,
+      "weight_max": 66.983458,
+      "weight_min": 0.539656,
+      "weight_sum": 85577.141304
+    }
+  },
+  "hash_targets_in_model_completions": false,
+  "heldout_validation_generator_profiles": [
+    "GRAPH"
+  ],
+  "metadata_in_prompts": false,
+  "model_input_fields": [
+    "observation",
+    "query"
+  ],
+  "prepared_hashes": {
+    "fresh-validation-all.jsonl": "sha256:e137f11480df41219ca8049c60ce7ed077e09aca11e48cec8b36ecd9cab5847a",
+    "fresh-validation-certificate.jsonl": "sha256:80d86b41eff43c9d0a2b70907ec024896652b8fc096d5ad3f4d950cd6dada014",
+    "fresh-validation-pair-contrast.jsonl": "sha256:2445715664b4b703f8cb938c807f831f9050847ba3724b682c51f9a6b6b815b0",
+    "fresh-validation-queue-trace.jsonl": "sha256:20111f64ddb59a33abbfc30b90f8743e93c64d0e19c980f56318fdf1c2a1da12",
+    "fresh-validation-transition.jsonl": "sha256:c5dc024bbecfaf53ef6706affcb63a59d09a2c7ab612c722e6277c2c1a7c4c3e",
+    "train-execution-repair.jsonl": "sha256:d36abf5bc30badc9d7131ac14a9a97b8a27871a4edfd8e6834a6ba6431636a04"
+  },
+  "protected_materialized": false,
+  "protocol_id": "CEREBRUM-DEV-009",
+  "public_materialized": false,
+  "queue_trace_supervision": true,
+  "real_institution_materialized": false,
+  "renderer_lineage_in_prompts": false,
+  "repair_validation": {
+    "all": {
+      "completion_chars_max": 2533,
+      "generator_profile_counts": {
+        "GRAPH": 1344
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 224,
+        "INVARIANCE": 224,
+        "PIVOTAL": 896
+      },
+      "prompt_chars_max": 6840,
+      "records": 1344,
+      "renderer_counts": {
+        "DEPENDENCY_GRAPH_PACKET": 1344
+      },
+      "task_counts": {
+        "CERTIFICATE": 384,
+        "PAIR_CONTRAST": 192,
+        "QUEUE_TRACE": 384,
+        "TRANSITION": 384
+      },
+      "unique_case_ids": 1344,
+      "weight_max": 4.0,
+      "weight_min": 0.5,
+      "weight_sum": 3072.0
+    },
+    "certificate": {
+      "completion_chars_max": 424,
+      "generator_profile_counts": {
+        "GRAPH": 384
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 64,
+        "INVARIANCE": 64,
+        "PIVOTAL": 256
+      },
+      "prompt_chars_max": 3788,
+      "records": 384,
+      "renderer_counts": {
+        "DEPENDENCY_GRAPH_PACKET": 384
+      },
+      "task_counts": {
+        "CERTIFICATE": 384
+      },
+      "unique_case_ids": 384,
+      "weight_max": 0.5,
+      "weight_min": 0.5,
+      "weight_sum": 192.0
+    },
+    "pair-contrast": {
+      "completion_chars_max": 1027,
+      "generator_profile_counts": {
+        "GRAPH": 192
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 32,
+        "INVARIANCE": 32,
+        "PIVOTAL": 128
+      },
+      "prompt_chars_max": 6840,
+      "records": 192,
+      "renderer_counts": {
+        "DEPENDENCY_GRAPH_PACKET": 192
+      },
+      "task_counts": {
+        "PAIR_CONTRAST": 192
+      },
+      "unique_case_ids": 192,
+      "weight_max": 1.0,
+      "weight_min": 1.0,
+      "weight_sum": 192.0
+    },
+    "queue-trace": {
+      "completion_chars_max": 2533,
+      "generator_profile_counts": {
+        "GRAPH": 384
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 64,
+        "INVARIANCE": 64,
+        "PIVOTAL": 256
+      },
+      "prompt_chars_max": 3819,
+      "records": 384,
+      "renderer_counts": {
+        "DEPENDENCY_GRAPH_PACKET": 384
+      },
+      "task_counts": {
+        "QUEUE_TRACE": 384
+      },
+      "unique_case_ids": 384,
+      "weight_max": 4.0,
+      "weight_min": 4.0,
+      "weight_sum": 1536.0
+    },
+    "transition": {
+      "completion_chars_max": 1201,
+      "generator_profile_counts": {
+        "GRAPH": 384
+      },
+      "pair_class_counts": {
+        "CONTEXTUAL": 64,
+        "INVARIANCE": 64,
+        "PIVOTAL": 256
+      },
+      "prompt_chars_max": 3850,
+      "records": 384,
+      "renderer_counts": {
+        "DEPENDENCY_GRAPH_PACKET": 384
+      },
+      "task_counts": {
+        "TRANSITION": 384
+      },
+      "unique_case_ids": 384,
+      "weight_max": 3.0,
+      "weight_min": 3.0,
+      "weight_sum": 1152.0
+    }
+  },
+  "sample_weights_preserved": true,
+  "schema_version": "cerebrum-execution-transfer-repair-data-manifest.v1",
+  "source_hashes": {
+    "dataset/repair_validation.jsonl": "sha256:52ec137d68b317190a0691d878b04997989f59640e8b726e0983eabacbcf1d74",
+    "dataset/train.jsonl": "sha256:a791d13729e76b316349dd591ed3b13ab3e4e241235e9e6911c6b0a6c5b10247",
+    "oracle/mechanism_catalog.json": "sha256:fc3494c3977fa7a42bc1be671f69e8ec4a1e8aa9b7844e4f4dbd0377fc3e2ba3",
+    "oracle/reservation.json": "sha256:bf4d27442e87fc0a35afa79f7b2d30baaaf89809363260c3a204cb5089d5189b",
+    "results/qualification_report.json": "sha256:4dd30829c1efd9393cca58d5d61f288f35a8354396502beead16536e06310db3",
+    "results/result_manifest.json": "sha256:79f68df7ee630bcad26ee0bc155652aca15897521a1e72a08fe74c787aa945de"
+  },
+  "source_result": "ACTIONNET-DATA-QUAL-009-result-v1.0.0",
+  "training_generator_profiles": [
+    "LEDGER",
+    "MATRIX"
+  ],
+  "transfer007_cases_reused": false,
+  "validation_queue_examples": 384,
+  "validation_trajectories_with_deferral": 384
+}

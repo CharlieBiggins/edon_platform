@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "dataset/development_selection.jsonl": "sha256:154eedd7e048d571c7b40cb71664dc88538f79c5380124e1375c5ff28f670b32",
+    "dataset/train.jsonl": "sha256:c1c6a2161071075e0eb8da111403d585344bfaa7eb533575f6a30471a2ba8d58",
+    "dataset/untouched_confirmation.jsonl": "sha256:0035afe1f33c0f6c84abe86883c9a722a38a982060bfe9c9270034ed42c0b2f7",
+    "lineage/lineages.json": "sha256:58c18e7cd19f66deda28c8318f314b73bc282240e25ba8552e9a30447ff65585",
+    "oracle/canonical_trajectories.jsonl": "sha256:a4aa7473893264df15caa62aed726e3c91073e9cfe18b8d5e9a9d8b7677a486c",
+    "oracle/reservation.json": "sha256:780b965fdabcd89ec16d95c6a370ca813166a5f5974b59ba115689fa79c997f8",
+    "results/qualification_report.json": "sha256:ae08a1547068d2a5f887ddf8f6ca474bcbc6a5970e0f95f0eb49edbd56603662"
+  },
+  "claim_boundary": "Mixed public training replay plus fresh project-authored synthetic checkpoint selection and confirmation only; no independent transfer, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-015",
+  "result_hash": "sha256:e3e284da8b280e9164642372bb725fb7d70a75a866d1ba0b3e996eb7ebe4e831",
+  "result_id": "ACTIONNET-DATA-QUAL-015-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV015_MIXED_RETENTION_REPAIR"
+}

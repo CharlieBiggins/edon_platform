@@ -1,0 +1,30 @@
+{
+  "artifact": {
+    "id": "CEREBRUM-CLOSED-LOOP-DEV-001-qualification-v1.0.0",
+    "sha256": "sha256:471ee3981c0caf289b6a5dd4261344f4bcbdd975b736c6e12f7c568ff0ebcd45",
+    "storage_location": "experiments/CEREBRUM-CLOSED-LOOP-DEV-001/results/qualification-report.json"
+  },
+  "binding_authority": false,
+  "capstone_material_used": false,
+  "claim_scope": "Materialized synthetic interactive closed-loop development environment and deterministic reference solvability only",
+  "dataset": "288 training episodes and 72 held-out development episodes; project-authored synthetic only",
+  "experiment_id": "CEREBRUM-CLOSED-LOOP-DEV-001",
+  "generator_materialized": true,
+  "learned_scoring_completed": false,
+  "learned_training_completed": false,
+  "license": "License pending; all rights reserved",
+  "model": "Qwen/Qwen3-4B-Instruct-2507 two-seed successor not trained",
+  "production_authorized": false,
+  "real_institution_data_used": false,
+  "schema_version": "edon-experiment-manifest.v1",
+  "seeds": [
+    26082491,
+    26082492
+  ],
+  "status": "READY_FOR_TWO_SEED_LEARNED_CLOSED_LOOP_DEVELOPMENT",
+  "training_data_materialized": true,
+  "transfer008_material_used": false,
+  "two_seed_result": null,
+  "validation_data_materialized": true,
+  "version": "1.0.0"
+}

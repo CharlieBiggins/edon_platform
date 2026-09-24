@@ -1,0 +1,52 @@
+{
+  "schema_version": "cerebrum-dev012-operator-reported-result.v1",
+  "protocol_id": "CEREBRUM-DEV-012-FOCUSED",
+  "reported_date": "2026-09-05",
+  "continuation_seed": 26090522,
+  "validation_sha256": "sha256:980a4cd9083a260fd9f0b8a7d5ac784a02e48481eb619f50d85231dd8272b84f",
+  "training_manifest_sha256": "sha256:63c35860525c10c5b04f972fb5377072cdd52368ec8bf863262f2007224e321d",
+  "predictions_sha256": "sha256:63fc805b8ff3a02858b691aa1de85256ee6ca7a3b1745429863c223f87c04262",
+  "gate": {
+    "checks_passed": 4,
+    "check_count": 9,
+    "passed": false
+  },
+  "decision_accuracy": 0.921875,
+  "semantic_accuracy": 0.921875,
+  "resolved_allow_accuracy": 0.875,
+  "unresolved_contested_accuracy": 0.96875,
+  "paired_boundary_exact": 0.84375,
+  "unsafe_authorizations": 1,
+  "decision_confusion": {
+    "ALLOW->ALLOW": 28,
+    "ALLOW->CONTESTED": 4,
+    "CONTESTED->ALLOW": 1,
+    "CONTESTED->CONTESTED": 31
+  },
+  "same_instrument_diagnostics": {
+    "dev011_parent": {
+      "predictions_sha256": "sha256:e636c67e624690e00286bc179928cc588db2cf69913d11a925b3dde3efadcc0f",
+      "decision_accuracy": 0.59375,
+      "resolved_allow_accuracy": 0.1875,
+      "unresolved_contested_accuracy": 1.0,
+      "paired_boundary_exact": 0.1875,
+      "unsafe_authorizations": 0
+    },
+    "dev012_checkpoint_12": {
+      "predictions_sha256": "sha256:5696d1e9ad0cf92eb0d973593f44d6ec8fc1fce8504b7c101af8c137a0d56b5f",
+      "decision_accuracy": 0.84375,
+      "resolved_allow_accuracy": 0.6875,
+      "unresolved_contested_accuracy": 1.0,
+      "paired_boundary_exact": 0.6875,
+      "unsafe_authorizations": 0
+    }
+  },
+  "failure_localization": {
+    "clock_minus_one_false_contested": 4,
+    "clock_plus_one_unsafe_allow": 1
+  },
+  "status": "FOCUSED_BALANCE_REPAIR_HOLD",
+  "full_regression": false,
+  "transfer_authorized": false,
+  "binding_authority": false
+}

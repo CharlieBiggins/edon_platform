@@ -1,0 +1,26 @@
+import type { ActionProposal, DecisionReceipt, EventEnvelope, EvidenceRecord, KernelDecision, OutcomeRecord } from '../../contracts/src';
+
+const now = () => new Date().toISOString();
+const digest = (value: unknown) => `sha256:sim-${JSON.stringify(value).length.toString(16)}-${String(value).slice(0, 8)}`;
+
+export class ShadowRecoverySimulator {
+  private events: EventEnvelope<unknown>[] = [];
+  private stateVersion = 141;
+  private sequence = 19000;
+  readonly evidence: EvidenceRecord[] = [
+    { evidence_id: 'EV-2081', status: 'observed', source: 'WMS event feed', version: 'v3', citation_text: 'Memphis outbound capacity observed at 260 units.' },
+    { evidence_id: 'EV-2082', status: 'verified', source: 'Commitment ledger', version: 'v8', citation_text: 'Four delivery commitments are exposed before cutoff.' },
+    { evidence_id: 'EV-2085', status: 'missing', source: 'Carrier liaison', version: 'pending', citation_text: 'Carrier capacity confirmation is missing.' },
+  ];
+
+  admitObservation(incidentId = 'INC-1042') { return this.record('OBSERVATION_RECEIVED', 'wms-event-feed', 'CONNECTOR', incidentId, { capacity_units: 260 }); }
+  projectState(incidentId = 'INC-1042') { const before = this.stateVersion; this.stateVersion += 1; return this.record('STATE_PROJECTED', 'control-plane', 'SYSTEM', incidentId, { changed: ['Memphis capacity', 'Carrier commitment C-782'], values: { capacity: 260, carrier_commitment: 'at_risk' } }, before); }
+  createProposal(incidentId = 'INC-1042'): ActionProposal { const proposal: ActionProposal = { proposal_id: 'PROP-1042', incident_id: incidentId, objective: 'Protect threatened delivery commitments', actions: ['Transfer 320 orders to Nashville', 'Reserve limited Memphis overtime'], modeled_cost: 24600, commitments_protected: 4, assumptions: ['Nashville capacity remains available', 'Carrier confirmation arrives before cutoff'], citations: ['EV-2081', 'EV-2082', 'EV-2085'], state_version: this.stateVersion, policy_version: 'POL-LOG-07 v18', status: 'PENDING_KERNEL' }; this.record('PROPOSAL_CREATED', 'routing-agent-07', 'AGENT', incidentId, proposal); return proposal; }
+  evaluateKernel(proposal: ActionProposal): KernelDecision { const decision: KernelDecision = { decision_id: `DEC-${++this.sequence}`, proposal_id: proposal.proposal_id, disposition: 'APPROVAL_REQUIRED', reason_codes: ['COST_EXCEEDS_AGENT_MANDATE', 'MISSING_CARRIER_EVIDENCE'], required_approval: true, evaluated_at: now(), state_version: proposal.state_version, policy_version: proposal.policy_version, simulated: true }; this.record('KERNEL_DECIDED', 'institutional-kernel', 'KERNEL', proposal.incident_id, decision); return decision; }
+  recordHumanReview(proposal: ActionProposal, approved: boolean) { return this.record('HUMAN_REVIEWED', 'jordan-ellis', 'HUMAN', proposal.incident_id, { proposal_id: proposal.proposal_id, approved, signed_input: true }); }
+  recordShadowRecommendation(proposal: ActionProposal) { proposal.status = 'SHADOW_RECORDED'; return this.record('SHADOW_RECOMMENDATION_RECORDED', 'command-center', 'SYSTEM', proposal.incident_id, { proposal_id: proposal.proposal_id, executed: false }); }
+  observeOutcome(proposal: ActionProposal): OutcomeRecord { const outcome: OutcomeRecord = { outcome_id: 'OUT-1042', proposal_id: proposal.proposal_id, observed_at: now(), recovery_time: '10.2h', actual_cost: 15800, commitments_protected: 3, evidence_ids: ['EV-2092'], verification_status: 'PENDING' }; this.record('OUTCOME_OBSERVED', 'operator-report', 'HUMAN', proposal.incident_id, outcome); return outcome; }
+  issueReceipt(proposal: ActionProposal, decision: KernelDecision, outcome?: OutcomeRecord): DecisionReceipt { const receipt: DecisionReceipt = { receipt_id: 'RCP-1042', incident_id: proposal.incident_id, proposal_id: proposal.proposal_id, kernel_decision_id: decision.decision_id, human_reviewed: true, shadow_only: true, outcome_id: outcome?.outcome_id, event_ids: this.events.map(event => event.event_id), receipt_hash: digest(this.events), signature: 'simulated-signature', simulated: true }; this.record('RECEIPT_ISSUED', 'receipt-service', 'SYSTEM', proposal.incident_id, receipt); return receipt; }
+  getJournal() { return [...this.events]; }
+  private record(type: EventEnvelope['event_type'], actorId: string, actorType: EventEnvelope['actor_type'], incidentId: string, payload: unknown, before = this.stateVersion) { const event: EventEnvelope<unknown> = { event_id: `evt-${++this.sequence}`, tenant_id: 'meridian-demo', event_type: type, actor_id: actorId, actor_type: actorType, scope_id: 'memphis-fulfillment', incident_id: incidentId, occurred_at: now(), observed_at: now(), available_to_controller_at: now(), recorded_at: now(), correlation_id: `corr-${incidentId}`, causation_id: this.events.at(-1)?.event_id, trace_id: `trace-${incidentId}`, state_version_before: before, state_version_after: this.stateVersion, policy_version: 'POL-LOG-07 v18', model_release: type === 'PROPOSAL_CREATED' ? 'c1-shadow-0.9.1' : undefined, payload, payload_hash: digest(payload), previous_record_hash: this.events.at(-1)?.payload_hash ?? 'sha256:genesis', signature: 'simulated-signature', simulated: true }; this.events.push(event); return event; }
+}

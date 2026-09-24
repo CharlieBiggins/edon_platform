@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.invalid/schemas/ip/disclosure-register.schema.json",
+  "title": "EDON public-disclosure register",
+  "type": "object",
+  "required": [
+    "schema_version", "updated", "status", "completeness_attested",
+    "search_scope", "entries", "release_blocked_until_complete",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-public-disclosure-register.v1"},
+    "updated": {"type": "string", "format": "date"},
+    "status": {"type": "string", "minLength": 1},
+    "completeness_attested": {"type": "boolean"},
+    "search_scope": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "entries": {"type": "array", "items": {"type": "object"}},
+    "release_blocked_until_complete": {"type": "boolean"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

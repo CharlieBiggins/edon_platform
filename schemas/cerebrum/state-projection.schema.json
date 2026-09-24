@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/state-projection.schema.json",
+  "title": "Time-gated separated Cerebrum System state projection",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "world_id", "decision_time", "assertions",
+    "views", "conflicts", "separated_state_classes", "future_assertions_excluded",
+    "binding_authority", "projection_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-cerebrum-state-projection.v1"},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "world_id": {"type": "string", "minLength": 1},
+    "decision_time": {"type": "string", "format": "date-time"},
+    "assertions": {"type": "array", "items": {"$ref": "state-assertion.schema.json"}},
+    "views": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["OBSERVED", "REPORTED", "INFERRED", "AUTHORIZED", "COMMITTED"],
+      "properties": {
+        "OBSERVED": {"type": "object"},
+        "REPORTED": {"type": "object"},
+        "INFERRED": {"type": "object"},
+        "AUTHORIZED": {"type": "object"},
+        "COMMITTED": {"type": "object"}
+      }
+    },
+    "conflicts": {"type": "array", "items": {"type": "object"}},
+    "separated_state_classes": {"const": true},
+    "future_assertions_excluded": {"type": "integer", "minimum": 0},
+    "binding_authority": {"const": false},
+    "projection_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+  }
+}

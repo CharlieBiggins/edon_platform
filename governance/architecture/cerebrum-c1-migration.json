@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-architecture-terminology-migration.v1",
+  "migration_id": "EDON-CEREBRUM-C1-MIGRATION-001",
+  "effective_date": "2026-08-30",
+  "status": "ADDITIVE_COMPATIBILITY_MIGRATION",
+  "mappings": {
+    "historical_cerebrum_model": "C1_LEARNED_MODEL_LAYER",
+    "future_cerebrum_unqualified": "CEREBRUM_SYSTEM",
+    "historical_experiment_prefix": "CEREBRUM_UNCHANGED"
+  },
+  "compatibility": {
+    "historical_experiment_ids_preserved": true,
+    "historical_manifests_rewritten": false,
+    "historical_claims_upgraded": false,
+    "operations_proposal_adapter_preserved": true,
+    "historical_environment_variables_preserved": true,
+    "new_environment_variable_prefix": "EDON_C1_"
+  },
+  "scientific_result": false,
+  "model_artifact_created": false,
+  "binding_authority": false
+}

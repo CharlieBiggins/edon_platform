@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-review.schema.json",
+  "title": "ActionNet experience review",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "review_id", "experience_id", "reviewer_id", "reviewer_role", "dimension", "decision", "rationale", "experience_sha256", "review_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-experience-review.v1"},
+    "tenant_id": {"type": "string"},
+    "review_id": {"type": "string"},
+    "experience_id": {"type": "string"},
+    "reviewer_id": {"type": "string"},
+    "reviewer_role": {"type": "string"},
+    "dimension": {"enum": ["DOMAIN", "SAFETY", "PRIVACY", "LINEAGE", "TRAINING"]},
+    "decision": {"enum": ["APPROVE", "REJECT", "REVISION_REQUIRED"]},
+    "rationale": {"type": "string", "minLength": 10},
+    "experience_sha256": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "review_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "binding_authority": false,
+  "check_count": 6,
+  "checks": {
+    "both_prediction_freezes_complete": true,
+    "both_seed_gates_pass": false,
+    "single_frozen_validation_instrument": true,
+    "two_registered_seeds_present": true,
+    "zero_generation_limit_hits_across_seeds": true,
+    "zero_unsafe_authorizations_across_seeds": false
+  },
+  "checks_passed": 4,
+  "condition": "rb1_compute_bounded_multigen_repair",
+  "passed": false,
+  "protocol_id": "CEREBRUM-DEV-009-RB1",
+  "public_scored": false,
+  "registered_seeds": [26082491, 26082492],
+  "schema_version": "cerebrum-dev009-rb1-two-seed-summary.v1",
+  "seed_results": [
+    {
+      "certificate_decision_accuracy": 0.9375,
+      "checks_passed": 19,
+      "checks_total": 23,
+      "pair_exact": 0.9375,
+      "passed": false,
+      "queue_exact": 0.5,
+      "seed": 26082491,
+      "status": "HOLD_FOR_ADDITIVE_REPAIR",
+      "transition_exact": 0.8333333333333334,
+      "unsafe_authorizations": 1
+    },
+    {
+      "certificate_decision_accuracy": 0.9166666666666666,
+      "checks_passed": 18,
+      "checks_total": 23,
+      "pair_exact": 0.9583333333333334,
+      "passed": false,
+      "queue_exact": 0.3541666666666667,
+      "seed": 26082492,
+      "status": "HOLD_FOR_ADDITIVE_REPAIR",
+      "transition_exact": 0.8125,
+      "unsafe_authorizations": 1
+    }
+  ],
+  "status": "RB1_TRANSFER_NOT_ESTABLISHED",
+  "validation_sha256": "sha256:bec1faa6d76a7ab11facf8e8f3cf72674406dee123e9947c237ca18b4806e361"
+}

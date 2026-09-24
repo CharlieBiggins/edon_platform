@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-010-candidate-registry.v1",
+  "type": "object",
+  "required": ["protocol_id", "status", "dev010_summary", "candidates", "base_condition", "binding_authority"],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-010"},
+    "status": {"type": "string"},
+    "dev010_summary": {"type": "object"},
+    "candidates": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "object"}},
+    "base_condition": {"type": "object"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

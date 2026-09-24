@@ -1,0 +1,16 @@
+{
+  "schema_version": "cerebrum-transfer007-smoke-failure-evidence.v1",
+  "source_protocol": "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC",
+  "source_status": "SMOKE_GATE_FAIL_STOP_AND_REPAIR",
+  "source_scored_at_utc": "2026-08-24T00:00:00+00:00",
+  "candidate": "CEREBRUM-DEV-009-seed-26081671",
+  "checks_passed": 3,
+  "check_count": 16,
+  "certificate_decision_accuracy": 0.70,
+  "transition_exact_match": 0.30,
+  "queue_exact_match": 0.025,
+  "pair_exact_match": 0.0,
+  "unsafe_authorizations": 3,
+  "case_reuse_authorized": false,
+  "binding_authority": false
+}

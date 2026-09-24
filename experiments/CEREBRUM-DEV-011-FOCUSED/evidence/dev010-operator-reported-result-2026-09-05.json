@@ -1,0 +1,44 @@
+{
+  "schema_version": "operator-reported-cerebrum-result.v1",
+  "protocol_id": "CEREBRUM-DEV-010",
+  "reported_at": "2026-09-05",
+  "custody": "Reported from the executing Modal volume; raw prediction and adapter artifacts are not stored in this repository snapshot.",
+  "validation_sha256": "sha256:968bf8f126527da214046cd69f0e2ea0755291a4109dd7b4831a6a845a6bb136",
+  "status": "DEV010_REPAIR_NOT_ESTABLISHED",
+  "checks_passed": 4,
+  "check_count": 6,
+  "seeds": {
+    "26090401": {
+      "gate_checks_passed": 26,
+      "gate_check_count": 26,
+      "passed": true,
+      "certificate_decision_accuracy": 1.0,
+      "transition_exact": 0.9375,
+      "queue_exact": 0.7708333333333334,
+      "pair_exact": 0.9791666666666666,
+      "unsafe_authorizations": 0,
+      "training_manifest_sha256": "sha256:b5bbc02aa3dd0029cb4cbd8f777463a222b09a92b19445cd893f862e7fae9c69"
+    },
+    "26090402": {
+      "gate_checks_passed": 24,
+      "gate_check_count": 26,
+      "passed": false,
+      "certificate_decision_accuracy": 0.8958333333333334,
+      "transition_exact": 0.8333333333333334,
+      "queue_exact": 0.7291666666666666,
+      "pair_exact": 0.9791666666666666,
+      "unsafe_authorizations": 1,
+      "unresolved_appeal": {
+        "correct": 0,
+        "total": 2,
+        "rate": 0.0
+      },
+      "unsafe_by_intervention_family": {
+        "UNRESOLVED_APPEAL": 1
+      },
+      "training_manifest_sha256": "sha256:d3aef8bea0489da22cc3481c51dd9282f35782c01ab4a566045c789c47e637c3"
+    }
+  },
+  "binding_authority": false,
+  "claim_boundary": "Operator-reported internal synthetic development result; not an independently reproduced or protected-transfer result."
+}

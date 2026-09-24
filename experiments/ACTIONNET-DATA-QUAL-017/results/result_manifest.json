@@ -1,0 +1,17 @@
+{
+  "artifacts": {
+    "dataset/development_selection.jsonl": "sha256:cef4db8f3f4cbc6b2e70ee603a915cefd88658d5307f0177be2614fa59f751f9",
+    "dataset/train.jsonl": "sha256:b7b9375db40ffda48ba0e6714bbfaac0e525c11602716b820ccf49f502189e2b",
+    "dataset/untouched_confirmation.jsonl": "sha256:7e06a89d261485c76cb7b400f27ab9028e48be9aae9afc12cdae92a30654b2ea",
+    "lineage/lineages.json": "sha256:defc2f6c2fa4511168d2180cd767520c1ad3f6f26f366651aabca0b51b1ed9a2",
+    "oracle/canonical_trajectories.jsonl": "sha256:f1e38599bfd179f4740461b2ce1a45c150cabe4e1b85a5c424eb5f1c31abb0f7",
+    "oracle/reservation.json": "sha256:676a9bff381a5fc2984d1361acaa96f868d98b15f0a211b4048804ca3f244685",
+    "results/qualification_report.json": "sha256:3fe9fea79a1863c0c00ecb2bfe44b8eba8800c951ccee1503e054e96b70c140c"
+  },
+  "claim_boundary": "Fresh project-authored complete-exposure causal-chain curriculum with adaptive checkpoint selection and sealed confirmation only; no independent transfer, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-017",
+  "result_hash": "sha256:70ab4842fcf60bc39d759f2487e8a31bce2eae62bebeab3a455b32146a3a9033",
+  "result_id": "ACTIONNET-DATA-QUAL-017-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV017_CAUSAL_REPAIR"
+}

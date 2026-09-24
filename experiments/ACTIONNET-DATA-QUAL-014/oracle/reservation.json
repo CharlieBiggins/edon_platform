@@ -1,0 +1,12 @@
+{
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false,
+  "reserved_future_families": [
+    784,
+    785,
+    786,
+    787
+  ],
+  "single_candidate_full_regression": true
+}

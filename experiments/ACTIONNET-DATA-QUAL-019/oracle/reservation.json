@@ -1,0 +1,14 @@
+{
+  "dev018_confirmation_reused": false,
+  "evaluation_only": true,
+  "protected_materialized": false,
+  "public_materialized": false,
+  "real_institution_materialized": false,
+  "reserved_future_families": [
+    1080,
+    1081,
+    1082,
+    1083
+  ],
+  "training_split_materialized": false
+}

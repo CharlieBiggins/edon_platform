@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "edon-mlgw-episode-result.v1",
+  "type": "object",
+  "required": [
+    "episode_id",
+    "controller_id",
+    "resource_fingerprint",
+    "physical_scenario_fingerprint",
+    "restoration_curve",
+    "crew_hours",
+    "coordination_latency_minutes",
+    "critical_outage_hours",
+    "unsafe_recommendations",
+    "unauthorized_actions",
+    "binding_authority"
+  ],
+  "properties": {
+    "episode_id": {"type": "string"},
+    "controller_id": {"type": "string"},
+    "resource_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "physical_scenario_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "restoration_curve": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["minute", "customers_out"],
+        "properties": {
+          "minute": {"type": "number", "minimum": 0},
+          "customers_out": {"type": "number", "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "crew_hours": {"type": "number", "minimum": 0},
+    "coordination_latency_minutes": {"type": "object", "additionalProperties": {"type": "number", "minimum": 0}},
+    "critical_outage_hours": {"type": "number", "minimum": 0},
+    "unsafe_recommendations": {"type": "integer", "minimum": 0},
+    "unauthorized_actions": {"type": "integer", "minimum": 0},
+    "assignments": {"type": "array", "items": {"type": "object"}},
+    "claim_boundary": {"type": "string"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

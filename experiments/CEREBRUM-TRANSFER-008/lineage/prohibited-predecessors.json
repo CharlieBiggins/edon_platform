@@ -1,0 +1,34 @@
+{
+  "schema_version": "cerebrum-transfer-008-prohibited-lineages.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "prohibited_case_sources": [
+    "CEREBRUM-TRANSFER-003",
+    "CEREBRUM-TRANSFER-006-EXPLORATORY",
+    "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC-smoke",
+    "CEREBRUM-TRANSFER-007-STAGED-DIAGNOSTIC-focused",
+    "CEREBRUM-DEV-009-LITE-DIAGNOSTIC-seed-26082491",
+    "CEREBRUM-DEV-009-RB1-training",
+    "CEREBRUM-DEV-009-RB1-validation"
+  ],
+  "prohibited_source_hashes": [
+    "sha256:9dd29e2bbdfcae4cbdcdda28f57b4ab35fc0b9a616ac889a52b339ca3564b8bc",
+    "sha256:bec1faa6d76a7ab11facf8e8f3cf72674406dee123e9947c237ca18b4806e361",
+    "sha256:37c702a969f2e8d49b26b7e9ace47939da3c6e6b9b5c677e5d0fe93d2a0f7f33",
+    "sha256:edd29d5a3d57eb8c0a087952b78e6a93983c87a6ab94abd51ff87a1feeb69265"
+  ],
+  "prohibited_reuse": [
+    "case_id",
+    "counterfactual_pair_id",
+    "exact_prompt",
+    "normalized_prompt",
+    "semantic_family",
+    "domain",
+    "renderer",
+    "timing_profile",
+    "prediction",
+    "label",
+    "case_specific_repair"
+  ],
+  "action_on_overlap": "ABORT_MATERIALIZATION_AND_RESERVE_NEW_IDENTITY",
+  "binding_authority": false
+}

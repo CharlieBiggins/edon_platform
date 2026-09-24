@@ -1,0 +1,20 @@
+{
+  "schema_version": "edon-paper-manifest.v1",
+  "paper_id": "EDON-IFM-2026",
+  "title": "Computational Institutions: Typed Representations for Institutional Reasoning and Safe AI Operation",
+  "status": "CANONICAL_LEGACY_SOURCE_NOT_YET_MIGRATED",
+  "canonical_source": {
+    "storage_location": "legacy://EDON Research/main.tex",
+    "sha256": "sha256:fd8ab713e5bd9c3185cc824cbbf8e2f2e54e2004b83f86b53791de3de7a2d4b3"
+  },
+  "canonical_pdf": {
+    "storage_location": "legacy://EDON Research/main.pdf",
+    "sha256": "sha256:65818fed3757d1635d65c551a6e613b0ee1a4ce07ac17821be65093fe2199c50"
+  },
+  "bibliography": {
+    "storage_location": "legacy://EDON Research/references.bib",
+    "sha256": "sha256:8a49d2070c6638537afaefb5fd71469d08667ad3ffbdaa16a76960c4a2c7381f"
+  },
+  "claim_registry": "governance/claim-registry/claims.json",
+  "binding_authority": false
+}

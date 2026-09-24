@@ -1,0 +1,22 @@
+{
+  "schema_version": "edon-platform-vision-manifest.v1",
+  "vision_id": "CEREBRUM-PLATFORM-VISION-001",
+  "version": "1.0.0",
+  "status": "FROZEN_CONTROLLING_VISION_NOT_IMPLEMENTED",
+  "frozen": "2026-09-20",
+  "artifact": {
+    "id": "CEREBRUM-PLATFORM-VISION-001-v1.0.0",
+    "sha256": "sha256:db1c64dccc4e0662ca63d0e5411299d3b855b8a372ba6f6c66c4532649fbbec4",
+    "storage_location": "governance/architecture/CEREBRUM-PLATFORM-VISION-001/platform-vision.json"
+  },
+  "controlling_document": {
+    "path": "docs/architecture/cerebrum-platform-vision.md",
+    "sha256": "sha256:927b761fec0dd55b7b1bf503dce62b2237434aa804104b259e90a81ff8d0940f"
+  },
+  "inventory": "inventory.json",
+  "implementation_claim_authorized": false,
+  "scientific_claim_authorized": false,
+  "external_pilot_authorized": false,
+  "production_authorized": false,
+  "binding_authority": false
+}

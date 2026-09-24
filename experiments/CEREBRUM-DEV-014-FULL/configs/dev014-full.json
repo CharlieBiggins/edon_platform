@@ -1,0 +1,53 @@
+{
+  "schema_version": "cerebrum-dev014-full-config.v1",
+  "protocol_id": "CEREBRUM-DEV-014-FULL",
+  "primary_condition": "fresh_full_multitask_regression",
+  "source_dataset": "ACTIONNET-DATA-QUAL-014",
+  "parent_protocol": "CEREBRUM-DEV-013-FOCUSED",
+  "parent_continuation_seed": 26090532,
+  "selected_candidate_id": "continuation-step-6",
+  "selected_step": 6,
+  "selected_adapter_tree_sha256": "sha256:d03460f927a1e3f8fed967fad8f48c5d7fbb2fa77b3898b5a021eb72680f7396",
+  "parent_training_manifest_sha256": "sha256:42bc5149fb7f51c1ee1a78138697962ea090e41f4f3cb9b081505db54ed1c225",
+  "parent_selection_sha256": "sha256:c6d2af80451b65c6f2a52cef6d7aed7003e904a4c2a4b025f2e9dc287c0d6a30",
+  "parent_confirmation_input_sha256": "sha256:a96630a8e55cf2008861458ce2ee0545884af231f083a5904f549b6d4eab44dc",
+  "parent_confirmation_predictions_sha256": "sha256:934b021d7f95463ac668d03cd1636e7bd6d6611662662b75e0f2386b8092d9bf",
+  "model_name": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "load_in_4bit": true,
+  "inference_max_input_tokens": 4096,
+  "task_token_limits": {
+    "CERTIFICATE": 512,
+    "TRANSITION": 1536,
+    "QUEUE_TRACE": 1536,
+    "PAIR_CONTRAST": 2048
+  },
+  "required_packages": {
+    "transformers": "5.16.1",
+    "peft": "0.20.0",
+    "bitsandbytes": "0.50.2",
+    "accelerate": "1.10.1"
+  },
+  "gate": {
+    "certificate_decision_min": 0.85,
+    "certificate_semantic_min": 0.85,
+    "certificate_pivotal_min": 0.85,
+    "certificate_invariance_min": 0.75,
+    "certificate_contextual_min": 0.75,
+    "unresolved_appeal_certificate_min": 0.9,
+    "transition_exact_min": 0.7,
+    "transition_post_state_min": 0.9,
+    "transition_decision_min": 0.85,
+    "queue_exact_min": 0.65,
+    "queue_order_min": 0.85,
+    "queue_executed_min": 0.85,
+    "queue_deferred_min": 0.85,
+    "queue_steps_min": 0.75,
+    "queue_final_state_min": 0.85,
+    "pair_exact_min": 0.7,
+    "pair_decision_change_min": 0.9,
+    "pair_certificate_decisions_min": 0.85,
+    "pair_causal_paths_min": 0.9,
+    "pair_post_state_paths_min": 0.9
+  }
+}

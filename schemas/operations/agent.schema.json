@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/operations/agent.schema.json",
+  "title": "Institutional agent registration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["agent_id", "kind", "capabilities", "status", "max_concurrent", "active_tasks", "relationships", "metadata", "registered_at"],
+  "properties": {
+    "agent_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "kind": {"enum": ["HUMAN", "SOFTWARE", "ROBOT", "SERVICE"]},
+    "capabilities": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "status": {"enum": ["AVAILABLE", "BUSY", "DEGRADED", "OFFLINE", "RETIRED"]},
+    "max_concurrent": {"type": "integer", "minimum": 1, "maximum": 1000},
+    "active_tasks": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "relationships": {"type": "object"},
+    "metadata": {"type": "object"},
+    "registered_at": {"type": "string", "format": "date-time"}
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "schema_version": "actionnet-mechanism-registry.v2",
+  "registry_id": "ACTIONNET-MECHANISM-REGISTRY-008",
+  "scheduler_order": ["time", "priority", "sequence", "event_id"],
+  "post_clock_behavior": "defer",
+  "binding_authority": false,
+  "mechanisms": [
+    {"id": "REVOCATION_PROPAGATION", "class": "authority", "status": "executable"},
+    {"id": "DELAYED_EVIDENCE", "class": "evidence", "status": "executable"},
+    {"id": "APPROVAL_WITHDRAWAL", "class": "workflow", "status": "executable"},
+    {"id": "RESOURCE_CONTENTION", "class": "resource", "status": "executable"},
+    {"id": "POLICY_CHANGE", "class": "policy", "status": "executable"},
+    {"id": "ROUTING_REJECTION", "class": "routing", "status": "executable"},
+    {"id": "JURISDICTION_SHIFT", "class": "jurisdiction", "status": "executable"},
+    {"id": "CONFLICT_ASSERTION", "class": "conflict", "status": "executable"},
+    {"id": "MALFORMED_REQUEST", "class": "validity", "status": "executable"},
+    {"id": "PRIORITY_RACE", "class": "time", "status": "executable"},
+    {"id": "EVIDENCE_EXPIRY", "class": "evidence", "status": "executable"},
+    {"id": "UNRESOLVED_APPEAL", "class": "workflow", "status": "executable"},
+    {"id": "CONSENT_WITHDRAWAL", "class": "consent", "status": "executable"},
+    {"id": "QUORUM_FAILURE", "class": "collective-authority", "status": "executable"},
+    {"id": "CHAIN_OF_CUSTODY_BREAK", "class": "evidence", "status": "executable"},
+    {"id": "CONDITIONAL_DELEGATION", "class": "authority", "status": "executable"},
+    {"id": "REPORTING_DEADLINE", "class": "obligation", "status": "executable"},
+    {"id": "BUDGET_ENCUMBRANCE", "class": "resource", "status": "executable"},
+    {"id": "QUALITY_HOLD", "class": "quality", "status": "executable"},
+    {"id": "RECALL_INCOMPLETION", "class": "quality", "status": "executable"},
+    {"id": "QUEUE_ORDER_AND_ACTOR_RENAME", "class": "invariance", "status": "executable"},
+    {"id": "DECISIVE_CONTEXT_PRESERVATION", "class": "contextual", "status": "executable"}
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "@cerebrum/control-plane-api",
+  "private": true,
+  "type": "module",
+  "scripts": { "typecheck": "tsc --noEmit" }
+}

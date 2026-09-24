@@ -1,0 +1,25 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-012-FOCUSED",
+  "version": "1.0.0",
+  "status": "FOCUSED_BALANCE_REPAIR_HOLD_OPERATOR_REPORTED",
+  "created": "2026-09-05",
+  "artifact": {
+    "id": "CEREBRUM-DEV-012-FOCUSED-operator-reported-result-v1.0.0",
+    "sha256": "sha256:605e14975e1d2f72b2ab621c14cd1b35b2e8be1b14013d8bce0990620331e502",
+    "storage_location": "evidence/operator-reported-result-2026-09-05.json"
+  },
+  "dataset": "ACTIONNET-DATA-QUAL-012",
+  "parent_protocol": "CEREBRUM-DEV-011-FOCUSED",
+  "parent_continuation_seed": 26090512,
+  "continuation_seed": 26090522,
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "model_revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+  "training_records": 384,
+  "validation_records": 64,
+  "optimizer_steps": 24,
+  "full_regression": false,
+  "transfer_authorized": false,
+  "claim_scope": "Operator-reported focused hold: 59/64 decisions and one unsafe authorization; no full regression or transfer.",
+  "binding_authority": false
+}

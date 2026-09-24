@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum-closed-loop-turn.v1.json",
+  "title": "Cerebrum closed-loop development turn",
+  "type": "object",
+  "required": [
+    "schema_version", "protocol_id", "record_id", "episode_id", "pair_id",
+    "pair_class", "cycle_index", "observation", "training_eligible",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "cerebrum-closed-loop-turn.v1"},
+    "protocol_id": {"const": "CEREBRUM-CLOSED-LOOP-DEV-001"},
+    "training_eligible": {"type": "boolean"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": true
+}

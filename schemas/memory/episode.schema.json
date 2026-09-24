@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/memory/episode.schema.json",
+  "title": "Governed institutional episodic memory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "tenant_id", "memory_id", "world_id", "episode_type",
+    "summary", "payload", "occurred_at", "sensitivity", "source_event_ids",
+    "provenance", "content_sha256", "created_by", "created_at", "scope",
+    "adaptation_mode", "training_eligible", "weight_update_authorized",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-episodic-memory.v1"},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "memory_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "world_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "episode_type": {"type": "string", "minLength": 1, "maxLength": 200},
+    "summary": {"type": "string", "minLength": 10, "maxLength": 10000},
+    "payload": {"type": "object"},
+    "occurred_at": {"type": "string", "format": "date-time"},
+    "sensitivity": {"enum": ["PUBLIC", "INTERNAL", "CONFIDENTIAL", "RESTRICTED"]},
+    "retention_until": {"type": ["string", "null"], "format": "date-time"},
+    "source_event_ids": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "provenance": {"type": "object"},
+    "content_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "created_by": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "scope": {"const": "INSTITUTION_LOCAL"},
+    "adaptation_mode": {"const": "CONTEXT_ONLY"},
+    "training_eligible": {"const": false},
+    "weight_update_authorized": {"const": false},
+    "retrieval_score": {"type": "integer", "minimum": 0},
+    "binding_authority": {"const": false}
+  }
+}

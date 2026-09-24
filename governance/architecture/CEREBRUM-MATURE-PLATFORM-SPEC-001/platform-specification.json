@@ -1,0 +1,79 @@
+{
+  "schema_version": "edon-mature-platform-specification.v1",
+  "specification_id": "CEREBRUM-MATURE-PLATFORM-SPEC-001",
+  "version": "1.0.0",
+  "status": "FROZEN_CONTROLLING_PRODUCT_SPECIFICATION_NOT_IMPLEMENTED",
+  "frozen": "2026-09-22",
+  "architecture_dependency": {
+    "vision_id": "CEREBRUM-PLATFORM-VISION-002",
+    "artifact_sha256": "sha256:c1f8ff7211e71cb93265485d78e6db3f8648117fea777862cae19dcc8b2d9f79"
+  },
+  "controlling_document": "docs/architecture/cerebrum-mature-platform-spec-001.md",
+  "planes": [
+    "EXPERIENCE",
+    "OBSERVATION_AND_INTEGRATION",
+    "CONTROL",
+    "AUTHORITY_AND_EXECUTION",
+    "LEARNING_AND_RELEASE"
+  ],
+  "canonical_specifications": [
+    "EVENT_ENVELOPE",
+    "INSTITUTIONAL_STATE_MODEL",
+    "INSTITUTIONAL_IR_LIFECYCLE",
+    "ACTION_LIFECYCLE",
+    "INSTITUTIONAL_CONTROL_GRAPH",
+    "DELEGATED_AUTHORITY_AND_COMMITMENT_LAYER",
+    "DECISION_EXECUTION_AND_COMPENSATION_RECEIPTS",
+    "MODEL_ROUTING_AND_INTELLIGENCE_RUNTIME",
+    "ACTIONNET_EXPERIENCE_AND_LEARNING_CONTRACT",
+    "RELEASE_AND_DEPLOYMENT_CONTRACT",
+    "FIRST_QUALIFIED_OPERATIONAL_WORKFLOW"
+  ],
+  "kernel_decisions": [
+    "ALLOW",
+    "DENY",
+    "ABSTAIN",
+    "ESCALATE",
+    "REVISE",
+    "REASSIGN",
+    "APPROVAL_REQUIRED"
+  ],
+  "epistemic_states": [
+    "UNKNOWN",
+    "REPORTED",
+    "OBSERVED",
+    "INFERRED",
+    "DISPUTED",
+    "VERIFIED"
+  ],
+  "release_path": [
+    "REVIEWED_ACTIONNET_EXPERIENCE",
+    "EVALUATION_AND_RELEASE_REGISTRY",
+    "INDEPENDENT_DEPLOYMENT_CONTROLLER",
+    "MODEL_AND_SOLVER_REGISTRY",
+    "ENFORCEABLE_ROUTING_POLICY",
+    "REASONING_RUNTIME"
+  ],
+  "invariants": {
+    "evidence_admission_implies_truth": false,
+    "critic_creates_authority": false,
+    "capability_implies_mandate": false,
+    "human_approval_bypasses_kernel": false,
+    "model_installs_or_qualifies_itself": false,
+    "actionnet_updates_production_directly": false,
+    "provider_managed_weights_falsely_claimed_hashed": false,
+    "warehouse_recovery_is_permanent_platform_specification": false
+  },
+  "current_evidence_statement": "EDON has demonstrated bounded synthetic learning and limited internally observed transfer signals; protected independent transfer remains unestablished.",
+  "complete_system_safety_gate": "Zero observed unauthorized committed actions in the registered complete-system evaluation.",
+  "claims": {
+    "complete_platform_implemented": false,
+    "bounded_institutional_intelligence_established": false,
+    "protected_independent_transfer_established": false,
+    "learned_closed_loop_established": false,
+    "customer_value_established": false,
+    "production_authorized": false,
+    "binding_authority": false
+  },
+  "supersession_rule": "Material changes require a new specification identity and explicit compatibility record."
+}

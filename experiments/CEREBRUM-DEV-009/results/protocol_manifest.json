@@ -1,0 +1,33 @@
+{
+  "claim_boundary": "CPU readiness for a fresh-lineage synthetic multi-generator repair experiment; no learned DEV-009 result yet and no Transfer-007 case reuse.",
+  "files": {
+    "FAILURE_AUDIT_PROTOCOL.md": "sha256:2d32baf058e381b7703e2ae5901b420b24fb6abd84aa40d5257ba2aef56f1125",
+    "MODEL_CARD_TEMPLATE.md": "sha256:670c05ecf90d9a972f2b1d40a8f8534175bff4be26e6383b0da8fc8c4f171e9c",
+    "PREREGISTRATION.md": "sha256:a4d83dd5cf564a222544135a794d2d7bcbe46c373dc0e47fd410c238d624ea4e",
+    "README.md": "sha256:291e33e37767f07e89c645b43713b36e73201fcfdd84a7e68ce2794dbba95762",
+    "audit_transfer007.py": "sha256:28f5afafa8c2ef4b7a620642b17b518c26ae0066ff56ae7ed0a1fce18d8d9d7a",
+    "canonicalize.py": "sha256:251593b2c7e3c2814dac31e1c43a3e8eea7bd1b73ff9aa34905c1c87a645caf6",
+    "cerebrum_eventnet_data.py": "sha256:424f078018464133ce57fb9bcd87d9df90ce0a5b7b581ed3ad1495dde207e8f3",
+    "configs/qwen3-4b-multigen-repair.json": "sha256:58d2e818aa72c335f4a02d04ba5cef481f56b77637447decb34471bbb8c16eb0",
+    "evaluate.py": "sha256:2b447631bff0de0ec4e440d08caf59c00b38025a51265956e0c8f075cc523304",
+    "eventnet_io.py": "sha256:028f04946ba39b7445f85b1bd0d0b294eb98bf92b1bde21393097324376a7d8c",
+    "evidence/transfer007-observed-result.json": "sha256:d23fcb5021c9fea1be15f0607e5b51e1e404d46c7ea6f58e53c2047b49a592f0",
+    "hardware_probe.py": "sha256:afed30830b8d1986f29bc2b55443455101746344cb846ba804826744d9246677",
+    "lightning_launcher.py": "sha256:ae5e58db181a0f821386968b9b23693f9e75076d51ca08c937fb107a7cb23389",
+    "predict.py": "sha256:efa5600f08bc87945095709a6ad0cdee63359f84e06f9abfbee29f696628ae7c",
+    "prepare_data.py": "sha256:2d808d789230c19d8e397ec56c613fa2441c6e379374df40d32859af8ad7aa61",
+    "prepared/data_manifest.json": "sha256:eaf5b095d6016b08ffa588710d8534af9bb0b29f22b4ea8bb1ff0fe53c41ceb0",
+    "requirements-lightning.txt": "sha256:373679d3afbb3120888c33f4dad5b036788092c1d18cee82dc5b43bd5d8ea3bb",
+    "results/readiness_report.json": "sha256:8e73dc3ec91d532ba5c3088a6060367f2557ed88c98f1f391a1b79217f626007",
+    "results/rules-execution-repair-validation-evaluation.json": "sha256:cdd56246c6cd7e8bc1600191905df10d4245aaa557d9985c75913f684309e444",
+    "results/transfer007-failure-audit.json": "sha256:eb82d03ef93e8d14d54e3f1c2fa53413fde9fbc35b4529e454cb64eebc2a6f77",
+    "rules_baseline.py": "sha256:ea206e16c50213d226b0701d8a1b1e9518c819d9323c9f8dc8455fbe5fd745a1",
+    "summarize_seeds.py": "sha256:65fb1185270b4a20446ad9c97920b0a456d135a459d7347d328f2dfe4f60f1f5",
+    "train_lora.py": "sha256:21a8fe728af3413f01e4e19582212f1b6f5467a57584fb9a7e34aa0aedbbe08b"
+  },
+  "protocol_id": "CEREBRUM-DEV-009",
+  "public_scored": false,
+  "resource_contingent": true,
+  "schema_version": "protocol-manifest.v1",
+  "status": "READY_FOR_RESOURCE_CONTINGENT_EXECUTION"
+}

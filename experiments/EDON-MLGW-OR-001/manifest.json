@@ -1,0 +1,37 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "EDON-MLGW-OR-001",
+  "version": "1.0.0",
+  "status": "PROTOCOL_READY_BLOCKED_MISSING_MLGW_AUTHORIZATION_AND_AUTHORITATIVE_DATA",
+  "created": "2026-08-24",
+  "affiliation": "UNAFFILIATED_RESEARCH_PROPOSAL",
+  "artifact": {
+    "id": "EDON-MLGW-OR-001-readiness-v1.0.0",
+    "sha256": "sha256:24b562086801fe6a3cc8daf12a685ba698a7760a3e808d48616f19da98f072da",
+    "storage_location": "experiments/EDON-MLGW-OR-001/results/readiness_report.json"
+  },
+  "event_anchor": {
+    "id": "MEMPHIS-BOW-ECHO-2026-08-22",
+    "role": "PUBLIC_DEVELOPMENT_REPLAY",
+    "protected": false,
+    "prospective": false
+  },
+  "controllers": [
+    "actual_mlgw_replay",
+    "critical_biggest_return",
+    "conventional_or",
+    "general_agent",
+    "cerebrum",
+    "cerebrum_or_hybrid"
+  ],
+  "primary_endpoint": "customer_outage_hours",
+  "dataset": "Public development event ledger only; protected MLGW dataset not materialized",
+  "model": null,
+  "protected_data_materialized": false,
+  "mlgw_authorized": false,
+  "trained_model": null,
+  "seeds": [],
+  "license": "research protocol; source-data licenses pending",
+  "claim_scope": "Protocol and executable research scaffolding only; no MLGW, Cerebrum, transfer, operational, safety, savings, or restoration-performance result.",
+  "binding_authority": false
+}

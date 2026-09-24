@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/receipts/compensation-record.schema.json",
+  "title": "Authorized compensation and recovery record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "compensation_record_id", "tenant_id", "institution_id",
+    "triggering_execution_id", "triggering_execution_receipt_id", "failure_or_partial_effect_refs",
+    "recovery_proposal_id", "recovery_decision_receipt_id", "recovery_execution_receipt_id",
+    "status", "residual_effect_refs", "human_review_refs", "recorded_at",
+    "record_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-compensation-record.v1"},
+    "compensation_record_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "institution_id": {"type": "string", "minLength": 1},
+    "triggering_execution_id": {"type": "string", "minLength": 1},
+    "triggering_execution_receipt_id": {"type": "string", "minLength": 1},
+    "failure_or_partial_effect_refs": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "recovery_proposal_id": {"type": "string", "minLength": 1},
+    "recovery_decision_receipt_id": {"type": "string", "minLength": 1},
+    "recovery_execution_receipt_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["PROPOSED", "AUTHORIZED", "EXECUTING", "COMPLETED", "PARTIAL", "FAILED", "ESCALATED", "MANUAL_TAKEOVER"]},
+    "residual_effect_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "human_review_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "recorded_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

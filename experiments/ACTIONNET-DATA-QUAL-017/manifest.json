@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-017",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV017_CAUSAL_REPAIR",
+  "created": "2026-09-06",
+  "training_records": 384,
+  "development_records": 64,
+  "confirmation_records": 192,
+  "consumer": "CEREBRUM-DEV-017-CAUSAL",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-017-result-v1.0.0",
+    "sha256": "sha256:3fe9fea79a1863c0c00ecb2bfe44b8eba8800c951ccee1503e054e96b70c140c",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false
+}

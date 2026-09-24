@@ -1,0 +1,99 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/releases/release-contract.schema.json",
+  "title": "Cerebrum evaluated release contract",
+  "description": "Signed registry record for an evaluated release. Registration does not install or deploy the release.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "release_id",
+    "release_status",
+    "artifact_hashes",
+    "component_versions",
+    "domain_pack_manifests",
+    "connector_compatibility",
+    "evaluation_records",
+    "qualified_workflows",
+    "unsupported_conditions",
+    "capability_envelope",
+    "approved_deployment_scope",
+    "required_approvals",
+    "canary_limits",
+    "monitoring_thresholds",
+    "containment_rules",
+    "rollback_target",
+    "incident_reconstruction_refs",
+    "registry_signature",
+    "created_at",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-release-contract.v1"},
+    "release_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "release_status": {"enum": ["CANDIDATE", "EVALUATED", "SIGNED", "APPROVED_FOR_DEPLOYMENT_REVIEW", "REVOKED"]},
+    "artifact_hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "adapter", "tokenizer"],
+      "properties": {
+        "model": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "adapter": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "tokenizer": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+        "runtime": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "component_versions": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["compiler", "ir_schema", "event_envelope", "state_model", "action_lifecycle"],
+      "properties": {
+        "compiler": {"type": "string", "minLength": 1},
+        "ir_schema": {"type": "string", "minLength": 1},
+        "event_envelope": {"type": "string", "minLength": 1},
+        "state_model": {"type": "string", "minLength": 1},
+        "action_lifecycle": {"type": "string", "minLength": 1}
+      }
+    },
+    "domain_pack_manifests": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}},
+    "connector_compatibility": {"type": "array", "items": {"type": "object"}},
+    "evaluation_records": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["evaluation_id", "instrument_sha256", "predictions_sha256", "scores_sha256", "result"],
+        "properties": {
+          "evaluation_id": {"type": "string", "minLength": 1},
+          "instrument_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "predictions_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "scores_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "result": {"enum": ["PASS", "FAIL", "INCONCLUSIVE", "INVALID"]}
+        }
+      }
+    },
+    "qualified_workflows": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "unsupported_conditions": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "capability_envelope": {"type": "object"},
+    "approved_deployment_scope": {"type": "object"},
+    "required_approvals": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "canary_limits": {"type": "object"},
+    "monitoring_thresholds": {"type": "object"},
+    "containment_rules": {"type": "array", "items": {"type": "object"}},
+    "rollback_target": {"type": "string", "minLength": 1, "maxLength": 200},
+    "incident_reconstruction_refs": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "registry_signature": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key_id", "algorithm", "signed_sha256"],
+      "properties": {
+        "key_id": {"type": "string", "minLength": 1},
+        "algorithm": {"type": "string", "minLength": 1},
+        "signed_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"}
+      }
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

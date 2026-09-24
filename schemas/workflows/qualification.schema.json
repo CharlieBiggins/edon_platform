@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/workflows/qualification.schema.json",
+  "title": "First Qualified Operational Workflow contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "qualification_id",
+    "workflow_id",
+    "tenant_id",
+    "domain_pack_ref",
+    "workflow_scope",
+    "operating_mode",
+    "baseline",
+    "data_access",
+    "authority_and_escalation",
+    "acceptance_gates",
+    "measurement_plan",
+    "stop_rules",
+    "approvals",
+    "status",
+    "claim_boundary",
+    "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-workflow-qualification.v1"},
+    "qualification_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "workflow_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "tenant_id": {"type": "string", "minLength": 1, "maxLength": 200},
+    "domain_pack_ref": {"type": "string", "minLength": 1, "maxLength": 1000},
+    "workflow_scope": {"type": "object"},
+    "operating_mode": {"enum": ["COMPILE", "HISTORICAL_REPLAY", "LIVE_SHADOW", "ASSISTED_OPERATION", "QUALIFIED_EXPANSION"]},
+    "baseline": {"type": "object"},
+    "data_access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["sources", "read_only", "rights_review_ref", "privacy_review_ref"],
+      "properties": {
+        "sources": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+        "read_only": {"type": "boolean"},
+        "rights_review_ref": {"type": "string", "minLength": 1},
+        "privacy_review_ref": {"type": "string", "minLength": 1}
+      }
+    },
+    "authority_and_escalation": {"type": "object"},
+    "acceptance_gates": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operational_value", "human_burden", "decision_quality", "safety", "deployment_reuse"],
+      "properties": {
+        "operational_value": {"type": "array", "items": {"type": "object"}},
+        "human_burden": {"type": "array", "items": {"type": "object"}},
+        "decision_quality": {"type": "array", "items": {"type": "object"}},
+        "safety": {"type": "array", "items": {"type": "object"}},
+        "deployment_reuse": {"type": "array", "items": {"type": "object"}}
+      }
+    },
+    "measurement_plan": {"type": "object"},
+    "stop_rules": {"type": "array", "minItems": 1, "items": {"type": "object"}},
+    "approvals": {"type": "array", "items": {"type": "object"}},
+    "status": {"enum": ["DRAFT", "REGISTERED", "RUNNING", "PASS", "FAIL", "INCONCLUSIVE", "INVALID", "SUSPENDED", "RETIRED"]},
+    "claim_boundary": {"type": "string", "minLength": 1},
+    "binding_authority": {"const": false}
+  }
+}

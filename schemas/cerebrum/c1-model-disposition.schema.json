@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/c1-model-disposition.schema.json",
+  "title": "Non-binding C1 model release disposition",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "model_id", "disposition", "rollback_model_id",
+    "evidence_ref_sha256", "rationale", "actor_id", "created_at",
+    "operational_effect", "disposition_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-c1-model-disposition.v1"},
+    "model_id": {"type": "string", "pattern": "^C1-"},
+    "disposition": {"enum": ["SHADOW_ELIGIBLE", "DEPLOYMENT_ELIGIBLE", "ROLLBACK_REQUIRED", "REVOKED", "ARCHIVED"]},
+    "rollback_model_id": {"type": ["string", "null"]},
+    "evidence_ref_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "rationale": {"type": "string", "minLength": 10},
+    "actor_id": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string", "format": "date-time"},
+    "operational_effect": {"const": false},
+    "disposition_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

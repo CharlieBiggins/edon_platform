@@ -1,0 +1,51 @@
+{
+  "schema_version": "cerebrum-transfer-010-reservation.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-010",
+  "reserved_on": "2026-09-04",
+  "instrument": {
+    "cases": 192,
+    "pairs": 48,
+    "governance_forms": 4,
+    "pairs_per_governance_form": 12,
+    "records_per_governance_form": 48,
+    "task_counts": {
+      "CERTIFICATE": 48,
+      "TRANSITION": 48,
+      "QUEUE_TRACE": 48,
+      "PAIR_CONTRAST": 48
+    },
+    "pair_class_record_counts": {
+      "PIVOTAL": 128,
+      "INVARIANCE": 32,
+      "CONTEXTUAL": 32
+    },
+    "mechanisms": 16,
+    "minimum_unseen_renderer_lineages": 4,
+    "semantic_family_ids": null,
+    "domain_ids": null,
+    "governance_form_ids": null,
+    "renderer_ids": null,
+    "timing_profile_ids": null,
+    "generator_seed_commitment": null,
+    "generator_source_commitment": null,
+    "oracle_source_commitment": null,
+    "governance_form_commitment": null,
+    "renderer_source_commitment": null,
+    "input_commitment": null,
+    "label_commitment": null,
+    "overlap_audit_commitment": null,
+    "authorship_attestation_commitment": null,
+    "power_analysis_commitment": null
+  },
+  "cases_materialized": false,
+  "prompts_materialized": false,
+  "labels_materialized": false,
+  "generator_materialized": false,
+  "oracle_materialized": false,
+  "runtime_materialized": false,
+  "scorer_materialized": false,
+  "predictions_materialized": false,
+  "score_materialized": false,
+  "materialization_authorized": false,
+  "binding_authority": false
+}

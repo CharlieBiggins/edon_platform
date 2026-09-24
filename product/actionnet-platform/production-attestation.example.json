@@ -1,0 +1,11 @@
+{
+  "external_identity": false,
+  "tls": false,
+  "secret_manager": false,
+  "backup_restore_tested": false,
+  "monitoring_and_alerting": false,
+  "privacy_review": false,
+  "penetration_test": false,
+  "incident_response": false,
+  "production_release_authorization": false
+}

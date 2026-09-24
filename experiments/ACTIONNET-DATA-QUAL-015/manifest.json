@@ -1,0 +1,17 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-015",
+  "version": "1.0.0",
+  "status": "READY_FOR_CEREBRUM_DEV015_MIXED_RETENTION_REPAIR",
+  "created": "2026-09-05",
+  "training_records": 384,
+  "development_records": 64,
+  "confirmation_records": 192,
+  "consumer": "CEREBRUM-DEV-015-MIXED",
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-015-result-v1.0.0",
+    "sha256": "sha256:ae08a1547068d2a5f887ddf8f6ca474bcbc6a5970e0f95f0eb49edbd56603662",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false
+}

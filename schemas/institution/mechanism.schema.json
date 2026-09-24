@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/institution/mechanism.schema.json",
+  "title": "Institutional mechanism",
+  "type": "object",
+  "required": ["mechanism_id", "version", "risk_class", "approved", "source_references"],
+  "properties": {
+    "mechanism_id": {"type": "string", "minLength": 1},
+    "version": {"type": "string", "minLength": 1},
+    "actors": {"type": "array", "items": {"type": "string"}},
+    "roles": {"type": "array", "items": {"type": "string"}},
+    "authority": {"type": "array", "items": {"type": "string"}},
+    "policies": {"type": "array", "items": {"type": "string"}},
+    "evidence_requirements": {"type": "array", "items": {"type": "string"}},
+    "resources": {"type": "array", "items": {"type": "string"}},
+    "workflow_steps": {"type": "array", "items": {"type": "string"}},
+    "approvals": {"type": "array", "items": {"type": "string"}},
+    "deadlines": {"type": "array", "items": {"type": "string"}},
+    "revocations": {"type": "array", "items": {"type": "string"}},
+    "jurisdictions": {"type": "array", "items": {"type": "string"}},
+    "escalations": {"type": "array", "items": {"type": "string"}},
+    "consequences": {"type": "array", "items": {"type": "string"}},
+    "risk_class": {"enum": ["LOW", "MODERATE", "HIGH", "CRITICAL", "UNCLASSIFIED"]},
+    "approved": {"type": "boolean"},
+    "source_references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source_id", "version", "sha256", "locator"],
+        "properties": {
+          "source_id": {"type": "string"},
+          "version": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+          "locator": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    },
+    "facts": {"type": "array", "items": {"type": "object"}},
+    "metadata": {"type": "object"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-cerebrum-system-product-manifest.v1",
+  "product_id": "EDON-CEREBRUM-SYSTEM-001",
+  "version": "0.7.0",
+  "release_date": "2026-08-30",
+  "status": "INTERNAL_REFERENCE_ARCHITECTURE_NOT_PRODUCTION_AUTHORIZED",
+  "learned_component": "C1",
+  "historical_component_name": "Cerebrum learned component",
+  "state_classes": ["OBSERVED", "REPORTED", "INFERRED", "AUTHORIZED", "COMMITTED"],
+  "implemented_reference_components": [
+    "C1_COMPATIBILITY_ADAPTER",
+    "DETERMINISTIC_SEPARATED_STATE_ENGINE",
+    "APPEND_ONLY_CAUSAL_PROVENANCE_GRAPH",
+    "NON_BINDING_CEREBRUM_SYSTEM_CYCLE"
+  ],
+  "reference_tests": "9/9_PASS",
+  "persistent_state_engine_wired_to_service": false,
+  "persistent_provenance_graph_wired_to_service": false,
+  "trained_c1_artifact_exists": false,
+  "protected_system_evaluation_exists": false,
+  "production_validated": false,
+  "binding_authority": false
+}

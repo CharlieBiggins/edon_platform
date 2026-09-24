@@ -1,0 +1,21 @@
+{
+  "binding_authority": false,
+  "check_count": 10,
+  "checks_passed": 10,
+  "claim_scope": "Internal deterministic integration evidence only",
+  "evaluation_id": "EDON-OPS-002",
+  "gates": {
+    "additive_plan_revision": true,
+    "atomic_resource_dispatch": true,
+    "deterministic_capability_assignment": true,
+    "failed_outcome_requires_replan": true,
+    "kernel_token_request_binding": true,
+    "learning_candidate_not_training_eligible": true,
+    "missing_expected_outcome_forces_failure": true,
+    "shadow_cycle_non_binding": true,
+    "transactional_outbox_delivered": true,
+    "world_event_replay_valid": true
+  },
+  "schema_version": "edon-ops-002-evaluation.v1",
+  "status": "PASS"
+}

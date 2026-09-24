@@ -1,0 +1,12 @@
+{
+  "schema_version": "cerebrum-transfer008-rb1-prerequisite-disposition.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "recorded": "2026-09-04",
+  "rb1_protocol_id": "CEREBRUM-DEV-009-RB1",
+  "rb1_status": "RB1_TRANSFER_NOT_ESTABLISHED",
+  "rb1_summary_sha256": "sha256:35e6a0b54fd1a5d885e741eea5163c688198836c7e57703d78d295826711d60b",
+  "materialization_authorized": false,
+  "candidate_substitution_authorized": false,
+  "status": "RESERVATION_CLOSED_UNMATERIALIZED_RB1_FAILED",
+  "binding_authority": false
+}

@@ -1,0 +1,15 @@
+{
+  "artifacts": {
+    "dataset/full_regression.jsonl": "sha256:19f3ca28399864fd9e7e02afdcb81d5bdeac77786dad600060552e5343fef3a0",
+    "lineage/lineages.json": "sha256:1b06ed97bebb7ccd13d88349ec7819cd9daf8f0136da221e413173eb66a797ce",
+    "oracle/canonical_trajectories.jsonl": "sha256:3523e38f9a7e8ebcf9bb6ca4e4c8b2f33ee827b63ace7d06bbbde28095ab8a8f",
+    "oracle/reservation.json": "sha256:5014a3c05fa6d987f9d59836ac04117935c7c9d403584feae68cb7dab53db35f",
+    "results/qualification_report.json": "sha256:5154abf3213abdb508708751257b4199fbea9160ef72971e67bded68e1b68f64"
+  },
+  "claim_boundary": "Fresh project-authored synthetic full multi-task regression only; no independent transfer, real-institution, production, authority, or IGI claim.",
+  "experiment_id": "ACTIONNET-DATA-QUAL-014",
+  "result_hash": "sha256:c97501819c2271306306ca0bcff0c758a614127ed4e41cbd04077b9219cf56ab",
+  "result_id": "ACTIONNET-DATA-QUAL-014-result-v1.0.0",
+  "schema_version": "result-manifest.v1",
+  "status": "READY_FOR_CEREBRUM_DEV014_FULL_REGRESSION"
+}

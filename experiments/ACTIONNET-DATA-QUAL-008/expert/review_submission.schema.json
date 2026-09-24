@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/review-submission.v1.json",
+  "title": "ActionNet Expert Review Submission",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["review_id", "candidate_pair_id", "expert_id", "decision", "failed_conditions", "evidence_references", "confidence", "conflict_attestation", "submitted_at"],
+  "properties": {
+    "review_id": {"type": "string"},
+    "candidate_pair_id": {"type": "string"},
+    "expert_id": {"type": "string"},
+    "decision": {"enum": ["ALLOW", "DENY", "ABSTAIN", "CONTESTED", "INVALID"]},
+    "failed_conditions": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "corrected_post_state": {"type": ["object", "null"]},
+    "evidence_references": {"type": "array", "items": {"type": "string"}, "minItems": 1},
+    "rationale": {"type": "string"},
+    "confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "conflict_attestation": {"const": true},
+    "submitted_at": {"type": "string", "format": "date-time"},
+    "binding_authority": {"const": false}
+  }
+}

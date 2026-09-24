@@ -1,0 +1,38 @@
+{
+  "claim_boundary": "Project-authored synthetic multi-domain candidates for expert authoring and governance workflow development only; not approved Cerebrum training data.",
+  "confirmatory_ready": false,
+  "counts": {
+    "authoring_candidate_records": 4032,
+    "canonical_trajectories": 576,
+    "counterfactual_pairs": 288,
+    "domain_packs": 24,
+    "executable_pivotal_mechanisms": 20,
+    "heldout_authoring_validation_records": 1008,
+    "review_queue_items": 288,
+    "training_eligible_records": 0
+  },
+  "dataset_id": "ACTIONNET-GOVERNED-MULTIDOMAIN-AUTHORING-v8.0.0",
+  "files": {
+    "dataset/authoring_candidates.jsonl": "sha256:439eb308ed43911678b2fc573c993f2b6033733b8be537326d41358c8b3851a2",
+    "dataset/heldout_authoring_validation.jsonl": "sha256:0ec84ac83c5b4cb5c5be4ec994b7cd9c87027a01e1be38d85ce39915fd9d831e",
+    "expert/review_queue.jsonl": "sha256:80e3d9bc6795395864feed4012f55b538284058d13cb66d857f357779fedf61a",
+    "lineage/lineages.json": "sha256:53c9a4e87c2c0d9c82f845d2a818efd2cc7bb1f8bcc1533263228ccde32cdb4c",
+    "oracle/canonical_trajectories.jsonl": "sha256:0a2f64a57a760a9580132671769256057d643aa5ab3a88ae42a1614788303e6d",
+    "oracle/domain_coverage.json": "sha256:111a66461e7da98b2fad501c0187e7ca13c64fca5d6e98a3b6034721c19df9e1",
+    "oracle/mechanism_catalog.json": "sha256:ca9c66ec90b5922ad1055b0513a135497e697cbf9e8ccb240ffe60cbd9410090",
+    "oracle/reservation.json": "sha256:644fd2d23ac86557219d479a99036802be1a3621d5d24df36beff75cc85c8335"
+  },
+  "human_domain_review": false,
+  "parent_result": "ACTIONNET-DATA-QUAL-007-result-v1.0.0",
+  "protected_materialized": false,
+  "public_materialized": false,
+  "schema_version": "actionnet-governed-authoring-dataset-manifest.v8",
+  "source_grounded": false,
+  "task_types": [
+    "CERTIFICATE",
+    "TRANSITION",
+    "QUEUE_TRACE",
+    "PAIR_CONTRAST"
+  ],
+  "training_eligible": false
+}

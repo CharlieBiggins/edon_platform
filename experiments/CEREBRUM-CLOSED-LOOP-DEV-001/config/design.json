@@ -1,0 +1,68 @@
+{
+  "schema_version": "cerebrum-closed-loop-dev-design.v1",
+  "protocol_id": "CEREBRUM-CLOSED-LOOP-DEV-001",
+  "status": "FROZEN_DEVELOPMENT_DESIGN",
+  "generator_seed": 26090301,
+  "candidate_seeds": [26082491, 26082492],
+  "base_model": "Qwen/Qwen3-4B-Instruct-2507",
+  "split_design": {
+    "train_pairs": 144,
+    "train_episodes": 288,
+    "validation_pairs": 36,
+    "validation_episodes": 72,
+    "train_pair_classes": {
+      "PIVOTAL": 96,
+      "INVARIANCE": 24,
+      "CONTEXTUAL": 24
+    },
+    "validation_pair_classes": {
+      "PIVOTAL": 24,
+      "INVARIANCE": 6,
+      "CONTEXTUAL": 6
+    }
+  },
+  "training_profiles": [
+    "SERVICE_DESK_OPERATIONS",
+    "DISTRIBUTION_CENTER_OPERATIONS",
+    "PERMIT_REVIEW_OPERATIONS"
+  ],
+  "heldout_validation_profiles": ["CAMPUS_FACILITIES_OPERATIONS"],
+  "training_renderers": ["STATUS_BRIEF", "OPERATIONS_LEDGER", "SHIFT_HANDOFF"],
+  "heldout_validation_renderers": ["INCIDENT_BOARD"],
+  "scenario_families": [
+    "TIME_SENSITIVE_REQUEST",
+    "EVIDENCE_DEPENDENT_REQUEST",
+    "RESOURCE_CONSTRAINED_REQUEST",
+    "DELEGATED_REQUEST",
+    "MULTISTEP_WORKFLOW",
+    "CAPABILITY_ROUTING",
+    "FAILED_OUTCOME_RECOVERY",
+    "VERIFICATION_REQUIRED"
+  ],
+  "allowed_proposal_types": [
+    "ABSTAIN",
+    "CANCEL_STEP",
+    "CREATE_GOAL",
+    "CREATE_PLAN",
+    "DISPATCH_STEP",
+    "REPLAN"
+  ],
+  "cycle_design": {
+    "successful_episode_cycles": 8,
+    "replanned_episode_cycles": 10,
+    "retry_budget_per_decision": 0,
+    "memory_reset_between_episodes": true,
+    "cross_episode_memory": false
+  },
+  "runtime_boundary": {
+    "development_only": true,
+    "controller_outputs_non_binding": true,
+    "kernel_only_state_commit": true,
+    "protected_transfer_material_allowed": false,
+    "capstone_material_allowed": false,
+    "real_institution_data_allowed": false,
+    "external_side_effects_allowed": false,
+    "binding_authority": false
+  },
+  "binding_authority": false
+}

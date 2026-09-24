@@ -1,0 +1,96 @@
+{
+  "audit_date": "2026-09-07",
+  "audited_predecessor": "CEREBRUM-DEV-019-DIAGNOSTIC",
+  "binding_authority": false,
+  "conditions": [
+    "A_RAW",
+    "B_GOLD_TYPED_EVENTS",
+    "C_GOLD_EVENT_ORDER",
+    "D_GOLD_PREDECISION_STATE",
+    "E_GOLD_DECISION"
+  ],
+  "finding_count": 17,
+  "findings": {
+    "certificate_compiler_does_not_bind_supplied_values": true,
+    "condition_names_and_instructions_use_gold_or_oracle_labels": true,
+    "initial_and_executed_state_co_present_from_D": true,
+    "input_truncation_not_observed": true,
+    "interventions_are_cumulative": true,
+    "novel_packet_schema_not_present_in_parent_training_interface": true,
+    "output_generation_limit_not_observed": true,
+    "parser_failure_not_supported": true,
+    "predecision_state_implemented_from_final_state": true,
+    "raw_and_typed_events_co_present_from_B": true,
+    "raw_observation_nested_in_every_condition": true,
+    "same_key_set_but_not_same_value_distribution": true,
+    "supplied_decision_not_declared_immutable": true,
+    "support_manipulation_not_directly_scored": true,
+    "task_query_identical_across_conditions": true,
+    "task_query_requests_recomputation": true,
+    "unordered_and_ordered_event_views_co_present_from_C": true
+  },
+  "findings_supported": 17,
+  "highest_priority_failure": "C introduced simultaneous raw, unordered typed, and ordered event representations while retaining a queue-recomputation task.",
+  "next_experiment_requirement": "Compare direct single-source representations, then validate the selected interface on a disjoint heldout split; test immutable decision copying in a separate arm.",
+  "packet_character_summary": {
+    "A_RAW": {
+      "maximum": 3361,
+      "mean": 3093.75,
+      "minimum": 2889
+    },
+    "B_GOLD_TYPED_EVENTS": {
+      "maximum": 6291,
+      "mean": 5703.625,
+      "minimum": 5253
+    },
+    "C_GOLD_EVENT_ORDER": {
+      "maximum": 8406,
+      "mean": 7451.25,
+      "minimum": 6729
+    },
+    "D_GOLD_PREDECISION_STATE": {
+      "maximum": 9462,
+      "mean": 8511.0625,
+      "minimum": 7782
+    },
+    "E_GOLD_DECISION": {
+      "maximum": 9458,
+      "mean": 8505.625,
+      "minimum": 7775
+    }
+  },
+  "prepared_sha256": "sha256:2c16efe4c03f10f1c9aad2ed6d02b5d6beeb620d1e77421cde32cdb5fa0183ed",
+  "primary_conclusion": "DEV-019 was procedurally complete but lacked manipulation validity for unique causal localization. The interventions changed prompt length, redundancy, labels, and task semantics in addition to the intended support variable.",
+  "prompt_character_summary": {
+    "A_RAW": {
+      "maximum": 4041,
+      "mean": 3773.75,
+      "minimum": 3569
+    },
+    "B_GOLD_TYPED_EVENTS": {
+      "maximum": 6971,
+      "mean": 6383.625,
+      "minimum": 5933
+    },
+    "C_GOLD_EVENT_ORDER": {
+      "maximum": 9086,
+      "mean": 8131.25,
+      "minimum": 7409
+    },
+    "D_GOLD_PREDECISION_STATE": {
+      "maximum": 10142,
+      "mean": 9191.0625,
+      "minimum": 8462
+    },
+    "E_GOLD_DECISION": {
+      "maximum": 10138,
+      "mean": 9185.625,
+      "minimum": 8455
+    }
+  },
+  "protocol_id": "CEREBRUM-DEV-020-INTERFACE-CALIBRATION",
+  "records_audited": 160,
+  "schema_version": "cerebrum-dev019-implementation-audit.v1",
+  "source_sha256": "sha256:b60dc2d55389af58bd4805c6c1ea07bf8726c1aa2d4a1394012852b22c6684e1",
+  "transfer_authorized": false
+}

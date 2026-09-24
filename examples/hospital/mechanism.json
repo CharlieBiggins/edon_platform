@@ -1,0 +1,17 @@
+{
+  "mechanism_id": "synthetic-hospital-medication-release",
+  "version": "0.1.0",
+  "authority": ["attending_physician", "pharmacy_reviewer"],
+  "evidence_requirements": ["active_order", "allergy_check", "dose_check"],
+  "workflow_steps": ["order", "clinical_review", "pharmacy_review", "release"],
+  "risk_class": "HIGH",
+  "approved": false,
+  "source_references": [
+    {
+      "source_id": "synthetic-source",
+      "version": "0.1.0",
+      "sha256": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+      "locator": "examples/hospital/README.md"
+    }
+  ]
+}

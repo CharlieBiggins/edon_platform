@@ -1,0 +1,44 @@
+{
+  "schema_version": "edon-mlgw-controller-registry.v1",
+  "controllers": [
+    {
+      "id": "actual_mlgw_replay",
+      "kind": "recorded_decision_replay",
+      "status": "BLOCKED_MISSING_INTERNAL_DECISION_LOG",
+      "binding_authority": false
+    },
+    {
+      "id": "critical_biggest_return",
+      "kind": "deterministic_heuristic",
+      "status": "REFERENCE_INTERFACE_READY",
+      "binding_authority": false
+    },
+    {
+      "id": "conventional_or",
+      "kind": "independently_engineered_optimizer",
+      "status": "INTERFACE_READY_IMPLEMENTATION_NOT_FROZEN",
+      "binding_authority": false
+    },
+    {
+      "id": "general_agent",
+      "kind": "matched_general_model_agent",
+      "status": "INTERFACE_READY_RUNTIME_NOT_FROZEN",
+      "binding_authority": false
+    },
+    {
+      "id": "cerebrum",
+      "kind": "institutional_advisory_controller",
+      "status": "INTERFACE_READY_RUNTIME_NOT_FROZEN",
+      "binding_authority": false
+    },
+    {
+      "id": "cerebrum_or_hybrid",
+      "kind": "institutional_state_plus_registered_optimizer",
+      "status": "INTERFACE_READY_RUNTIME_NOT_FROZEN",
+      "binding_authority": false
+    }
+  ],
+  "equal_budget_required": true,
+  "equal_information_required": true,
+  "equal_resources_required": true
+}

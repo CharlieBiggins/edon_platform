@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "edon-mlgw-source-record.v1",
+  "type": "object",
+  "required": ["source_id", "title", "publisher", "authority", "bytes_archived", "status"],
+  "properties": {
+    "source_id": {"type": "string", "minLength": 1},
+    "title": {"type": "string", "minLength": 1},
+    "publisher": {"type": "string", "minLength": 1},
+    "url": {"type": ["string", "null"]},
+    "authority": {"type": "string", "minLength": 1},
+    "bytes_archived": {"type": "boolean"},
+    "sha256": {"type": ["string", "null"], "pattern": "^sha256:[0-9a-f]{64}$"},
+    "status": {"type": "string", "minLength": 1}
+  },
+  "additionalProperties": false
+}

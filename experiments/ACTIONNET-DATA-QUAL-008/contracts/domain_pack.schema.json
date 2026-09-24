@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.edoncore.com/actionnet/domain-pack.v1.json",
+  "title": "ActionNet Domain Pack",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["domain_id", "title", "sector_group", "risk_tier", "workflows", "expert_specialties", "jurisdictions", "evidence_types", "mechanisms"],
+  "properties": {
+    "domain_id": {"type": "string", "pattern": "^[a-z0-9-]+$"},
+    "title": {"type": "string"},
+    "sector_group": {"type": "string"},
+    "risk_tier": {"enum": ["moderate", "high", "critical"]},
+    "workflows": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "expert_specialties": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "jurisdictions": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "evidence_types": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true},
+    "mechanisms": {"type": "array", "items": {"type": "string"}, "minItems": 1, "uniqueItems": true}
+  }
+}

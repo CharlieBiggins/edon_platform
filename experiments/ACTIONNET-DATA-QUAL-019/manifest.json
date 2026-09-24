@@ -1,0 +1,20 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "ACTIONNET-DATA-QUAL-019",
+  "version": "1.0.0",
+  "created": "2026-09-06",
+  "title": "Gold-intervention failure-localization data",
+  "status": "READY_FOR_CEREBRUM_DEV019_DIAGNOSTIC",
+  "result_id": "ACTIONNET-DATA-QUAL-019-result-v1.0.0",
+  "dataset_id": "ACTIONNET-GOLD-INTERVENTION-DIAGNOSTIC-v19.0.0",
+  "training_records": 0,
+  "diagnostic_scenarios": 32,
+  "diagnostic_predictions": 160,
+  "artifact": {
+    "id": "ACTIONNET-DATA-QUAL-019-result-v1.0.0",
+    "sha256": "sha256:70d0fca4e582e63deef3d84268a241fe4f4dd8d0c0a9e62c6e1dff3c83e72405",
+    "storage_location": "results/qualification_report.json"
+  },
+  "binding_authority": false,
+  "transfer_authorized": false
+}

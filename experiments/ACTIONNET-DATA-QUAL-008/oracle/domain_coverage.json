@@ -1,0 +1,440 @@
+{
+  "coverage_claim": "Broad project-authored sector scaffolding; not exhaustive coverage of all real-world domains or institution-specific policy.",
+  "domain_count": 24,
+  "domains": [
+    {
+      "domain_id": "healthcare-clinical-operations",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "clinical-operations",
+        "patient-safety",
+        "healthcare-compliance"
+      ],
+      "registered_mechanisms": [
+        "CONSENT_WITHDRAWAL",
+        "DELAYED_EVIDENCE",
+        "APPROVAL_WITHDRAWAL",
+        "UNRESOLVED_APPEAL"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "clinical-laboratory-operations",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "laboratory-medicine",
+        "lab-quality",
+        "clinical-pathology"
+      ],
+      "registered_mechanisms": [
+        "CHAIN_OF_CUSTODY_BREAK",
+        "QUALITY_HOLD",
+        "EVIDENCE_EXPIRY",
+        "ROUTING_REJECTION"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "public-health",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "public-health",
+        "epidemiology",
+        "emergency-preparedness"
+      ],
+      "registered_mechanisms": [
+        "REPORTING_DEADLINE",
+        "JURISDICTION_SHIFT",
+        "RESOURCE_CONTENTION",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "pharma-medical-device-quality",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "gxp-quality",
+        "pharmacovigilance",
+        "medical-device-quality"
+      ],
+      "registered_mechanisms": [
+        "QUALITY_HOLD",
+        "RECALL_INCOMPLETION",
+        "CHAIN_OF_CUSTODY_BREAK",
+        "APPROVAL_WITHDRAWAL"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "banking-financial-services",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "banking-operations",
+        "financial-risk",
+        "aml-compliance"
+      ],
+      "registered_mechanisms": [
+        "CONFLICT_ASSERTION",
+        "CONDITIONAL_DELEGATION",
+        "DELAYED_EVIDENCE",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "insurance-claims",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "claims-operations",
+        "underwriting",
+        "insurance-compliance"
+      ],
+      "registered_mechanisms": [
+        "UNRESOLVED_APPEAL",
+        "DELAYED_EVIDENCE",
+        "POLICY_CHANGE",
+        "JURISDICTION_SHIFT"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "tax-revenue-administration",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "tax-administration",
+        "revenue-operations",
+        "administrative-appeals"
+      ],
+      "registered_mechanisms": [
+        "REPORTING_DEADLINE",
+        "UNRESOLVED_APPEAL",
+        "CONDITIONAL_DELEGATION",
+        "EVIDENCE_EXPIRY"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "government-procurement-grants",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "public-procurement",
+        "grants-management",
+        "government-ethics"
+      ],
+      "registered_mechanisms": [
+        "CONFLICT_ASSERTION",
+        "BUDGET_ENCUMBRANCE",
+        "APPROVAL_WITHDRAWAL",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "public-benefits",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "benefits-administration",
+        "eligibility-policy",
+        "administrative-appeals"
+      ],
+      "registered_mechanisms": [
+        "DELAYED_EVIDENCE",
+        "UNRESOLVED_APPEAL",
+        "JURISDICTION_SHIFT",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "courts-administrative-adjudication",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "court-operations",
+        "administrative-law",
+        "records-governance"
+      ],
+      "registered_mechanisms": [
+        "CHAIN_OF_CUSTODY_BREAK",
+        "JURISDICTION_SHIFT",
+        "UNRESOLVED_APPEAL",
+        "QUORUM_FAILURE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "logistics-supply-chain",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "logistics-operations",
+        "supply-chain-risk",
+        "trade-compliance"
+      ],
+      "registered_mechanisms": [
+        "CHAIN_OF_CUSTODY_BREAK",
+        "ROUTING_REJECTION",
+        "RESOURCE_CONTENTION",
+        "JURISDICTION_SHIFT"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "aviation-aerospace",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "aviation-safety",
+        "maintenance-operations",
+        "flight-operations"
+      ],
+      "registered_mechanisms": [
+        "QUALITY_HOLD",
+        "APPROVAL_WITHDRAWAL",
+        "REPORTING_DEADLINE",
+        "EVIDENCE_EXPIRY"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "rail-transit",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "rail-safety",
+        "transit-operations",
+        "maintenance-control"
+      ],
+      "registered_mechanisms": [
+        "RESOURCE_CONTENTION",
+        "QUALITY_HOLD",
+        "ROUTING_REJECTION",
+        "REPORTING_DEADLINE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "energy-utilities",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "utility-operations",
+        "grid-reliability",
+        "energy-compliance"
+      ],
+      "registered_mechanisms": [
+        "RESOURCE_CONTENTION",
+        "QUORUM_FAILURE",
+        "CONDITIONAL_DELEGATION",
+        "PRIORITY_RACE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "telecommunications",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "network-operations",
+        "telecom-compliance",
+        "service-assurance"
+      ],
+      "registered_mechanisms": [
+        "ROUTING_REJECTION",
+        "PRIORITY_RACE",
+        "RESOURCE_CONTENTION",
+        "APPROVAL_WITHDRAWAL"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "manufacturing-quality",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "manufacturing-quality",
+        "operations-engineering",
+        "supplier-quality"
+      ],
+      "registered_mechanisms": [
+        "QUALITY_HOLD",
+        "RECALL_INCOMPLETION",
+        "CHAIN_OF_CUSTODY_BREAK",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "construction-built-environment",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "construction-management",
+        "building-safety",
+        "permit-administration"
+      ],
+      "registered_mechanisms": [
+        "JURISDICTION_SHIFT",
+        "BUDGET_ENCUMBRANCE",
+        "APPROVAL_WITHDRAWAL",
+        "EVIDENCE_EXPIRY"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "environmental-permitting",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "environmental-compliance",
+        "permitting",
+        "environmental-science"
+      ],
+      "registered_mechanisms": [
+        "REPORTING_DEADLINE",
+        "EVIDENCE_EXPIRY",
+        "JURISDICTION_SHIFT",
+        "POLICY_CHANGE"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "education-credentialing",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "education-administration",
+        "credentialing",
+        "academic-integrity"
+      ],
+      "registered_mechanisms": [
+        "UNRESOLVED_APPEAL",
+        "DELAYED_EVIDENCE",
+        "CONFLICT_ASSERTION",
+        "MALFORMED_REQUEST"
+      ],
+      "risk_tier": "moderate",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "employment-human-resources",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "human-resources",
+        "employment-compliance",
+        "workplace-investigations"
+      ],
+      "registered_mechanisms": [
+        "CONFLICT_ASSERTION",
+        "CONSENT_WITHDRAWAL",
+        "APPROVAL_WITHDRAWAL",
+        "JURISDICTION_SHIFT"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "cybersecurity-incident-response",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "security-operations",
+        "incident-response",
+        "cyber-governance"
+      ],
+      "registered_mechanisms": [
+        "REVOCATION_PROPAGATION",
+        "REPORTING_DEADLINE",
+        "PRIORITY_RACE",
+        "CHAIN_OF_CUSTODY_BREAK"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "emergency-management",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "emergency-management",
+        "incident-command",
+        "public-safety-operations"
+      ],
+      "registered_mechanisms": [
+        "CONDITIONAL_DELEGATION",
+        "RESOURCE_CONTENTION",
+        "JURISDICTION_SHIFT",
+        "PRIORITY_RACE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "research-operations",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "research-compliance",
+        "laboratory-operations",
+        "research-ethics"
+      ],
+      "registered_mechanisms": [
+        "CONSENT_WITHDRAWAL",
+        "APPROVAL_WITHDRAWAL",
+        "REPORTING_DEADLINE",
+        "CONFLICT_ASSERTION"
+      ],
+      "risk_tier": "high",
+      "source_grounded": false,
+      "workflow_count": 3
+    },
+    {
+      "domain_id": "agriculture-food-safety",
+      "expert_review_status": "PENDING",
+      "expert_specialties": [
+        "food-safety",
+        "agricultural-operations",
+        "quality-assurance"
+      ],
+      "registered_mechanisms": [
+        "RECALL_INCOMPLETION",
+        "CHAIN_OF_CUSTODY_BREAK",
+        "QUALITY_HOLD",
+        "REPORTING_DEADLINE"
+      ],
+      "risk_tier": "critical",
+      "source_grounded": false,
+      "workflow_count": 3
+    }
+  ],
+  "protocol_id": "ACTIONNET-DATA-QUAL-008",
+  "schema_version": "actionnet-domain-coverage.v1"
+}

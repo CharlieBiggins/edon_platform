@@ -1,0 +1,23 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-016-NARROW",
+  "version": "1.0.0",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE_OPERATOR_REPORTED",
+  "created": "2026-09-06",
+  "dataset": "ACTIONNET-DATA-QUAL-016",
+  "parent_protocol": "CEREBRUM-DEV-015-MIXED",
+  "parent_checkpoint_step": 12,
+  "continuation_seed": 26090612,
+  "training_records": 368,
+  "optimizer_steps": 12,
+  "development_records_per_candidate": 64,
+  "development_candidates": 2,
+  "confirmation_records": 192,
+  "artifact": {
+    "id": "CEREBRUM-DEV-016-NARROW-result-v1.0.0",
+    "sha256": "sha256:8a4a4783d7c0611e3b18d5e7e96f937c93a0225aa2fc38cff09317bf6150ceff",
+    "storage_location": "evidence/operator-reported-dev016-result-2026-09-06.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

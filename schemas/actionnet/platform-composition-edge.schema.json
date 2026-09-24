@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/actionnet/platform-composition-edge.schema.json",
+  "title": "ActionNet evidence-graded composition edge",
+  "type": "object",
+  "required": ["schema_version", "tenant_id", "edge_id", "source", "target", "relation_type", "conditions", "evidence_grade", "provenance", "record_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "actionnet-composition-edge.v1"},
+    "tenant_id": {"type": "string"},
+    "edge_id": {"type": "string"},
+    "source": {"type": "object", "required": ["mechanism_id", "version"]},
+    "target": {"type": "object", "required": ["mechanism_id", "version"]},
+    "relation_type": {"enum": ["COMPOSES_WITH", "AMPLIFIES", "MITIGATES", "INHIBITS", "PRECONDITION_FOR", "CAUSES", "ABSTRACTS_TO"]},
+    "conditions": {"type": "object"},
+    "evidence_grade": {"type": "string"},
+    "provenance": {"type": "object"},
+    "created_by": {"type": "string"},
+    "created_at": {"type": "string", "format": "date-time"},
+    "record_sha256": {"type": "string"},
+    "binding_authority": {"const": false}
+  }
+}

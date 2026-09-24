@@ -1,0 +1,13 @@
+{
+  "provider": "qwen-transformers",
+  "model": "Qwen/Qwen3-4B-Instruct-2507",
+  "adapter_path": "/persistent/models/cerebrum-build-001/final-adapter",
+  "model_lineage": "cerebrum-build-001:replace-with-frozen-hash",
+  "load_in_4bit": true,
+  "max_input_tokens": 4096,
+  "max_new_tokens": 1536,
+  "deterministic_decoding": true,
+  "fail_closed_to_abstain": true,
+  "mode": "SHADOW",
+  "binding_authority": false
+}

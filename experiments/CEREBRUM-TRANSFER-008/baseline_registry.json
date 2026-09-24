@@ -1,0 +1,42 @@
+{
+  "schema_version": "cerebrum-transfer-008-baseline-registry.v1",
+  "protocol_id": "CEREBRUM-TRANSFER-008",
+  "amendment_id": "CEREBRUM-TRANSFER-008-AMENDMENT-001-BASELINE-FAIRNESS",
+  "status": "PENDING_RB1_TWO_SEED_PASS",
+  "contract_path": "config/baseline-contract.json",
+  "contract_sha256": "sha256:d8a07532f2fb03e9ca9bf23c7be9cb6407c6a83d3fb5419403e1ab27e80f3ae5",
+  "prompt_pack_sha256": null,
+  "conditions": [
+    {
+      "condition": "unmodified_base",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "adapter_sha256": null,
+      "schema_constraint": false,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": false,
+      "frozen": false
+    },
+    {
+      "condition": "interface_matched_base",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "adapter_sha256": null,
+      "schema_constraint": true,
+      "interface_demonstrations": false,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    },
+    {
+      "condition": "prompted_interface_matched_base",
+      "model": "Qwen/Qwen3-4B-Instruct-2507",
+      "revision": null,
+      "adapter_sha256": null,
+      "schema_constraint": true,
+      "interface_demonstrations": true,
+      "primary_superiority_eligible": true,
+      "frozen": false
+    }
+  ],
+  "binding_authority": false
+}

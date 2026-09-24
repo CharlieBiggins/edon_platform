@@ -1,0 +1,134 @@
+{
+  "schema_version": "edon-claim-registry.v1",
+  "updated": "2026-09-22",
+  "claims": [
+    {
+      "id": "EDON-CLAIM-IR-001",
+      "statement": "Registered finite institutional mechanisms admit a shared typed representation and executable semantics.",
+      "status": "SUPPORTED_BOUNDED_INTERNAL",
+      "evidence": ["ACTIONNET-DATA-QUAL-004", "ACTIONNET-DATA-QUAL-005"],
+      "boundary": "Not a universal institutional ontology or proof of unrestricted expressiveness."
+    },
+    {
+      "id": "EDON-CLAIM-LEARN-001",
+      "statement": "Counterfactual ActionNet supervision contributes learnable signal relative to a matched synthetic ablation.",
+      "status": "SUPPORTED_BOUNDED_INTERNAL",
+      "evidence": ["CEREBRUM-DEV-001"],
+      "boundary": "Single synthetic development campaign; not external transfer."
+    },
+    {
+      "id": "EDON-CLAIM-REPAIR-001",
+      "statement": "A registered synthetic repair is seed-stable on its same-program validation task.",
+      "status": "SUPPORTED_BOUNDED_INTERNAL",
+      "evidence": ["CEREBRUM-DEV-002"],
+      "boundary": "Shared generator/oracle ancestry."
+    },
+    {
+      "id": "EDON-CLAIM-TRANSFER-001",
+      "statement": "Learned institutional intelligence generalizes across independently constructed institutional environments.",
+      "status": "NOT_ESTABLISHED",
+      "evidence": ["CEREBRUM-TRANSFER-003", "CEREBRUM-TRANSFER-005"],
+      "boundary": "TRANSFER-003 failed; TRANSFER-005 has no predictions or score."
+    },
+    {
+      "id": "EDON-CLAIM-COMPILER-001",
+      "statement": "Institutional sources can be compiled automatically into valid Institutional IR with limited human review.",
+      "status": "NOT_TESTED",
+      "evidence": [],
+      "boundary": "Architecture and schema only; no validated compiler study."
+    },
+    {
+      "id": "EDON-CLAIM-PRODUCTION-001",
+      "statement": "EDON is safe and effective for production institutional authority.",
+      "status": "PROHIBITED",
+      "evidence": [],
+      "boundary": "No deployment-specific validation; learned outputs are non-authoritative."
+    },
+    {
+      "id": "EDON-CLAIM-BUILD-001",
+      "statement": "EDON provides an opt-in local Qwen operations provider behind its typed non-binding proposal adapter and immutable shadow supervisor.",
+      "status": "IMPLEMENTED_INTERNAL_NOT_EVALUATED",
+      "evidence": ["CEREBRUM-BUILD-001"],
+      "boundary": "Provider and safety-boundary implementation only; no Build-001 training, benchmark, transfer, IGI, or production result."
+    },
+    {
+      "id": "EDON-CLAIM-CLOSED-LOOP-DEV-001",
+      "statement": "EDON provides a materialized synthetic interactive curriculum and fail-closed environment for learned institutional closed-loop development.",
+      "status": "DEVELOPMENT_ENVIRONMENT_READY_NO_LEARNED_RESULT",
+      "evidence": ["CEREBRUM-CLOSED-LOOP-DEV-001"],
+      "boundary": "Environment generation and deterministic reference solvability only; no learned two-seed closed-loop, independent transfer, capstone, real-institution, production, or IGI result."
+    },
+    {
+      "id": "EDON-CLAIM-IGI-SCOPE-001",
+      "statement": "EDON-IGI-SCOPE-001 defines a frozen finite institutional environment class for future bounded generality evaluation.",
+      "status": "DEFINED_NO_MODEL_RESULT",
+      "evidence": [],
+      "governance_evidence": ["governance/igi-scope/EDON-IGI-SCOPE-001/scope-manifest.json"],
+      "boundary": "Definition and coverage accounting only; Cerebrum coverage, independent transfer, universal IGI, and production validity are not established."
+    },
+    {
+      "id": "EDON-CLAIM-LATENT-COORD-001",
+      "statement": "EDON defines a protected protocol for testing whether Cerebrum can detect and reconstruct coordination mediated through institutional state.",
+      "status": "PROTOCOL_DEFINED_NO_MODEL_RESULT",
+      "evidence": ["CEREBRUM-LATENT-COORD-001"],
+      "boundary": "Protocol and schemas only; no detector, causal-validity, forecasting, baseline-superiority, transfer, real-institution, production, or IGI result exists."
+    },
+    {
+      "id": "EDON-CLAIM-CEREBRUM-SYSTEM-001",
+      "statement": "EDON implements a bounded reference composition that separates C1 learned proposals, deterministic institutional state views, horizontal provenance, and Kernel authority.",
+      "status": "IMPLEMENTED_INTERNAL_NOT_EVALUATED",
+      "evidence": [],
+      "governance_evidence": [
+        "governance/architecture/cerebrum-c1-migration.json",
+        "product/cerebrum-system/manifest.json"
+      ],
+      "boundary": "Architecture and reference implementation only; no trained C1 artifact, complete-system performance, causal-validity, independent transfer, real-institution, production, IGI, or binding-authority result."
+    },
+    {
+      "id": "EDON-CLAIM-LEARNING-NETWORK-001",
+      "statement": "EDON implements an internal governance reference separating institution-local memory, tenant-local ActionNet experience, rights-bound Global ActionNet abstractions, offline training releases, and immutable C1 versions.",
+      "status": "IMPLEMENTED_INTERNAL_NOT_EVALUATED",
+      "evidence": [],
+      "governance_evidence": [
+        "governance/learning/policy.json",
+        "product/actionnet-learning-network/manifest.json"
+      ],
+      "boundary": "Governance and reference implementation only; no real institution contribution, de-identification guarantee, learned improvement, scaling law, federated learning, transfer, production, IGI, or binding-authority result."
+    },
+    {
+      "id": "EDON-CLAIM-PLATFORM-VISION-001",
+      "statement": "CEREBRUM-PLATFORM-VISION-001 freezes EDON's controlling horizontal platform architecture and six canonical specifications.",
+      "status": "FROZEN_VISION_NOT_IMPLEMENTED",
+      "evidence": [],
+      "governance_evidence": [
+        "governance/architecture/CEREBRUM-PLATFORM-VISION-001/platform-vision.json",
+        "docs/architecture/cerebrum-platform-vision.md"
+      ],
+      "boundary": "Architecture governance and contracts only; no complete implementation, protected evaluation, qualified workflow, production safety, customer value, deployment authorization, or binding authority result."
+    },
+    {
+      "id": "EDON-CLAIM-PLATFORM-VISION-002",
+      "statement": "CEREBRUM-PLATFORM-VISION-002 additively freezes the Institutional Control Graph, Delegated Authority and Commitment Layer, and receipt model as EDON's controlling successor architecture.",
+      "status": "FROZEN_VISION_NOT_IMPLEMENTED",
+      "evidence": [],
+      "governance_evidence": [
+        "governance/architecture/CEREBRUM-PLATFORM-VISION-002/platform-vision.json",
+        "governance/architecture/cerebrum-platform-vision-001-to-002.json",
+        "docs/architecture/cerebrum-platform-vision-002.md"
+      ],
+      "boundary": "Architecture governance and additive contracts only; no Control Graph, mandate, commitment, reservation, receipt, compensation, deployment, protected evaluation, customer-value, production-safety, or binding-authority result."
+    },
+    {
+      "id": "EDON-CLAIM-MATURE-PLATFORM-SPEC-001",
+      "statement": "CEREBRUM-MATURE-PLATFORM-SPEC-001 freezes EDON's eleven-specification mature product and technical-contract map, including model routing and mature ActionNet learning custody.",
+      "status": "FROZEN_SPECIFICATION_NOT_IMPLEMENTED",
+      "evidence": [],
+      "governance_evidence": [
+        "governance/architecture/CEREBRUM-MATURE-PLATFORM-SPEC-001/platform-specification.json",
+        "docs/architecture/cerebrum-mature-platform-spec-001.md"
+      ],
+      "boundary": "Product specification and contracts only; no mature platform implementation, model-routing qualification, ActionNet learning deployment, protected transfer, learned closed-loop, customer-value, production-safety, bounded institutional-intelligence, or binding-authority result."
+    }
+  ],
+  "binding_authority": false
+}

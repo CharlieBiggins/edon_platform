@@ -1,0 +1,21 @@
+{
+  "schema_version": "edon-content-inventory.v2",
+  "specification_id": "CEREBRUM-MATURE-PLATFORM-SPEC-001",
+  "hash_mode": "UTF8_LF_SINGLE_TRAILING_NEWLINE",
+  "files": {
+    "README.md": "sha256:3910e713616b2159c22ba73bf96c7d4753542462917f89f7ff2765451ad45698",
+    "platform-specification.json": "sha256:7d445013f4ca7b5fd653ec42d82125a9a83437458054370dca5261922af9da8b",
+    "preflight.py": "sha256:6108f8f1495bbe396af464b661cb47d67deb5a4800e2b27c52ac97a63d76b9f2",
+    "../../../docs/architecture/cerebrum-mature-platform-spec-001.md": "sha256:a96e6551db604d26cc80e5f47aa4280232282dcf6e5f84a5ba58e9aa6afa0221",
+    "../../../docs/specifications/MATURE-PLATFORM-001.md": "sha256:051afe94b10e6fb12846ab3847684a7265a4b4bfd411daac6e5a0e7b5153ab35",
+    "../../../docs/specifications/model-routing-intelligence-runtime.md": "sha256:132088e938a7c80458d9ae589e15196f52568d6c6360b3adc9fe46a62549b731",
+    "../../../docs/specifications/actionnet-experience-learning-contract.md": "sha256:5c14440279285599bb1e0c3a29c6609e5e55c36e7930d789e86741bdee30f006",
+    "../../../schemas/intelligence/component-registry.schema.json": "sha256:8ff4176ed0a9161206c7f8a229f02268f0a25c7f01493db2d1f0acd280ef4295",
+    "../../../schemas/intelligence/data-access-grant.schema.json": "sha256:4e76aa9b85744c9482bc6eb590f5c5668a10434e5a5b51d79dc15d7b2c08ce44",
+    "../../../schemas/intelligence/invocation-receipt.schema.json": "sha256:dcf4d3282997098db00ad04834c647fb0a077bc874b640dd96e3ff117376fc34",
+    "../../../schemas/intelligence/routing-decision.schema.json": "sha256:debad43559a14cf01e56ebb874210409c022a15538f5abc1f496e69a6318c052",
+    "../../../schemas/intelligence/runtime-budget.schema.json": "sha256:0e449577867ce6e2e21757e9f8f8c388e15884a4d7da369ddc9667f1b224b4b6",
+    "../../../schemas/actionnet/mature-experience-learning-contract.schema.json": "sha256:81be93f52e3575f4f090d771713eb1ff3b1399d5e93c30ce820067cd8072a7ef"
+  },
+  "binding_authority": false
+}

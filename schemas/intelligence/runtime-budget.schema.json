@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/intelligence/runtime-budget.schema.json",
+  "title": "Intelligence runtime cost, latency, and degradation budget",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version", "budget_id", "tenant_id", "workflow_id", "maximum_cost",
+    "maximum_response_time_ms", "maximum_retries", "maximum_tool_calls",
+    "maximum_context_tokens", "maximum_concurrency", "degradation_policy",
+    "effective_from", "expires_at", "budget_sha256", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-intelligence-runtime-budget.v1"},
+    "budget_id": {"type": "string", "minLength": 1},
+    "tenant_id": {"type": "string", "minLength": 1},
+    "workflow_id": {"type": "string", "minLength": 1},
+    "maximum_cost": {"type": "number", "minimum": 0},
+    "maximum_response_time_ms": {"type": "integer", "minimum": 1},
+    "maximum_retries": {"type": "integer", "minimum": 0},
+    "maximum_tool_calls": {"type": "integer", "minimum": 0},
+    "maximum_context_tokens": {"type": "integer", "minimum": 1},
+    "maximum_concurrency": {"type": "integer", "minimum": 1},
+    "degradation_policy": {"enum": ["QUALIFIED_FALLBACK", "REDUCE_SCOPE", "REQUEST_HUMAN", "ABSTAIN", "ESCALATE", "SAFE_DEGRADED_MODE"]},
+    "effective_from": {"type": "string", "format": "date-time"},
+    "expires_at": {"type": "string", "format": "date-time"},
+    "budget_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false}
+  }
+}

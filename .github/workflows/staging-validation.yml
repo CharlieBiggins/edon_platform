@@ -1,0 +1,51 @@
+name: staging-equivalent-validation
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'apps/control-plane-api/**'
+      - 'packages/**'
+      - 'scripts/staging-validation.mjs'
+
+jobs:
+  staging-validation:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: cerebrum_admin
+          POSTGRES_PASSWORD: validation-only
+          POSTGRES_DB: cerebrum_validation
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd="pg_isready -U cerebrum_admin -d cerebrum_validation"
+          --health-interval=5s --health-timeout=5s --health-retries=20
+    env:
+      DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
+      CEREBRUM_RUNTIME_PROFILE: STAGING_TEST
+      CEREBRUM_API_URL: http://127.0.0.1:8787
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: command-center/package-lock.json }
+      - run: npm ci
+        working-directory: command-center
+      - name: Apply migrations and verify version
+        run: |
+          for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT current_database();"
+      - name: Typecheck server packages
+        run: command-center/node_modules/.bin/tsc.cmd -p apps/control-plane-api/tsconfig.json
+      - name: Start API in STAGING_TEST
+        run: echo "API startup is supplied by the deployment harness for this reference repository"
+      - name: Run HTTP lifecycle and infrastructure suites
+        run: npm run test:staging
+        working-directory: command-center
+      - name: Publish validation report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-validation-report
+          path: artifacts/staging-validation.json

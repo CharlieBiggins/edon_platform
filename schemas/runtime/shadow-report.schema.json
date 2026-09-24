@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/runtime/shadow-report.schema.json",
+  "title": "Non-authoritative shadow comparison report",
+  "type": "object",
+  "required": ["schema_version", "records", "summary", "report_sha256", "binding_authority"],
+  "properties": {
+    "schema_version": {"const": "edon-shadow-report.v1"},
+    "records": {"type": "array", "items": {"type": "object"}},
+    "summary": {"type": "object"},
+    "report_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "binding_authority": {"const": false},
+    "claim_boundary": {"type": "string"}
+  },
+  "additionalProperties": false
+}

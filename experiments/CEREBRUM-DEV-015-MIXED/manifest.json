@@ -1,0 +1,28 @@
+{
+  "schema_version": "edon-experiment-manifest.v1",
+  "experiment_id": "CEREBRUM-DEV-015-MIXED",
+  "version": "1.0.0",
+  "status": "NO_DEVELOPMENT_CANDIDATE_PASSES_FULL_GATE_OPERATOR_REPORTED",
+  "created": "2026-09-05",
+  "dataset": "ACTIONNET-DATA-QUAL-015",
+  "parent_protocol": "CEREBRUM-DEV-013-FOCUSED",
+  "parent_selected_step": 6,
+  "continuation_seed": 26090542,
+  "training_records": 384,
+  "optimizer_steps": 24,
+  "development_records_per_candidate": 64,
+  "development_candidates": 2,
+  "confirmation_records": 192,
+  "artifact": {
+    "id": "CEREBRUM-DEV-015-MIXED-readiness-v1.0.0",
+    "sha256": "sha256:274956e42283b926b762483924596ffb303c9c60c4d84b5ccd5c450c462e1605",
+    "storage_location": "results/readiness-report.json"
+  },
+  "result_evidence": {
+    "id": "CEREBRUM-DEV-015-MIXED-operator-result-2026-09-06",
+    "sha256": "sha256:069710e76f72cc6aa2ad2b5b5b569b4a3bffc97f8ba6f682f34240a39067b4ac",
+    "storage_location": "evidence/operator-reported-dev015-result-2026-09-06.json"
+  },
+  "transfer_authorized": false,
+  "binding_authority": false
+}

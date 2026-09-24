@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "cerebrum-transfer-010-custody-commitments.v1",
+  "type": "object",
+  "required": [
+    "protocol_id",
+    "authorship_attestation_commitment",
+    "generator_seed_commitment",
+    "generator_source_commitment",
+    "oracle_source_commitment",
+    "governance_form_commitment",
+    "renderer_source_commitment",
+    "input_commitment",
+    "label_commitment",
+    "overlap_audit_commitment",
+    "power_analysis_commitment",
+    "candidate_registry_commitment",
+    "baseline_registry_commitment",
+    "baseline_contract_commitment",
+    "baseline_prompt_pack_commitment",
+    "instrument_authors_independent_of_actionnet009_010_and_dev009_010",
+    "generator_implementer_independent_of_candidate_development",
+    "custodian_distinct_from_candidate_and_instrument_authors",
+    "no_actionnet001_through_010_code_import",
+    "protected_content_unseen_by_candidate_developers",
+    "labels_retained_by_custodian",
+    "power_analysis_frozen_before_materialization"
+  ],
+  "properties": {
+    "protocol_id": {"const": "CEREBRUM-TRANSFER-010"},
+    "authorship_attestation_commitment": {"$ref": "#/$defs/sha256"},
+    "generator_seed_commitment": {"$ref": "#/$defs/sha256"},
+    "generator_source_commitment": {"$ref": "#/$defs/sha256"},
+    "oracle_source_commitment": {"$ref": "#/$defs/sha256"},
+    "governance_form_commitment": {"$ref": "#/$defs/sha256"},
+    "renderer_source_commitment": {"$ref": "#/$defs/sha256"},
+    "input_commitment": {"$ref": "#/$defs/sha256"},
+    "label_commitment": {"$ref": "#/$defs/sha256"},
+    "overlap_audit_commitment": {"$ref": "#/$defs/sha256"},
+    "power_analysis_commitment": {"$ref": "#/$defs/sha256"},
+    "candidate_registry_commitment": {"$ref": "#/$defs/sha256"},
+    "baseline_registry_commitment": {"$ref": "#/$defs/sha256"},
+    "baseline_contract_commitment": {"$ref": "#/$defs/sha256"},
+    "baseline_prompt_pack_commitment": {"$ref": "#/$defs/sha256"},
+    "instrument_authors_independent_of_actionnet009_010_and_dev009_010": {"const": true},
+    "generator_implementer_independent_of_candidate_development": {"const": true},
+    "custodian_distinct_from_candidate_and_instrument_authors": {"const": true},
+    "no_actionnet001_through_010_code_import": {"const": true},
+    "protected_content_unseen_by_candidate_developers": {"const": true},
+    "labels_retained_by_custodian": {"const": true},
+    "power_analysis_frozen_before_materialization": {"const": true}
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

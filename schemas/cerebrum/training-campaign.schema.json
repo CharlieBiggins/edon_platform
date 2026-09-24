@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://edon.example/schemas/cerebrum/training-campaign.schema.json",
+  "title": "Cerebrum training campaign manifest",
+  "type": "object",
+  "required": [
+    "schema_version", "campaign_id", "condition", "seeds", "public_cases_sha256",
+    "protected_oracle_sha256", "labels_separated", "status", "binding_authority"
+  ],
+  "properties": {
+    "schema_version": {"const": "edon-training-campaign.v1"},
+    "campaign_id": {"type": "string"},
+    "condition": {"type": "string"},
+    "seeds": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "integer"}},
+    "public_cases_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "protected_oracle_sha256": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "qualification_sha256": {"type": "string"},
+    "command_template": {"type": ["array", "null"], "items": {"type": "string"}},
+    "labels_separated": {"const": true},
+    "status": {"const": "PREPARED"},
+    "binding_authority": {"const": false}
+  },
+  "additionalProperties": false
+}
