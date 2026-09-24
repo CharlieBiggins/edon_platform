@@ -1,6 +1,6 @@
 import type { DecisionReceipt, EventEnvelope, EvidenceRecord, OutcomeRecord, ActionProposal, KernelDecision } from '../../contracts/src/index.js';
 
-export type StoredIncident = { incident_id: string; tenant_id: string; scope_id: string; state_version: number; status: string };
+export type StoredIncident = { incident_id: string; tenant_id: string; scope_id: string; state_version: number; status: string; values?: Record<string, unknown> };
 export type StoredReview = { review_id: string; proposal_id: string; actor_id: string; approved: boolean; recorded_at: string };
 export type StoredShadow = { proposal_id: string; recorded_at: string; executed: false; credentials: 'NONE' };
 export type StoredKernelDecision = KernelDecision & { tenant_id: string; recorded_at?: string };
@@ -34,7 +34,7 @@ export class InMemoryPlatformRepositories implements PlatformRepositories {
   async getEvents(tenantId: string, incidentId?: string): Promise<EventEnvelope[]> { return this.events.filter(event => event.tenant_id === tenantId && (!incidentId || event.incident_id === incidentId)).map(event => structuredClone(event)); }
   async putEvidence() {}
   async getState(_tenantId: string, _scopeId: string) { return null; }
-  async putState(incident: StoredIncident, expectedVersion: number) { if (incident.state_version !== expectedVersion + 1) return false; this.states.set(`${incident.tenant_id}:${incident.scope_id}`, { version: incident.state_version, values: {} }); return true; }
+  async putState(incident: StoredIncident, expectedVersion: number) { if (incident.state_version !== expectedVersion && incident.state_version !== expectedVersion + 1) return false; this.states.set(`${incident.tenant_id}:${incident.scope_id}`, { version: incident.state_version, values: structuredClone(incident.values ?? {}) }); return true; }
   async putIncident() {}
   async putProposal(proposal: ActionProposal & { tenant_id: string }) { this.proposals.set(`${proposal.tenant_id}:${proposal.proposal_id}`, structuredClone(proposal)); }
   async getProposal(tenantId: string, proposalId: string) { return this.proposals.get(`${tenantId}:${proposalId}`) ?? null; }
@@ -59,7 +59,7 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async getEvents(tenantId: string, incidentId?: string) { const result = await this.db.query<EventEnvelope>('SELECT payload FROM journal_events WHERE tenant_id=$1 AND ($2::text IS NULL OR payload->>\'incident_id\'=$2) ORDER BY recorded_at,event_id', [tenantId, incidentId ?? null]); return result.rows.map(row => (row as unknown as { payload: EventEnvelope }).payload); }
   async putEvidence(record: EvidenceRecord & { tenant_id: string }) { await this.db.query('INSERT INTO evidence_records (tenant_id,evidence_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,evidence_id) DO NOTHING', [record.tenant_id, record.evidence_id, JSON.stringify(record)]); }
   async getState(tenantId: string, scopeId: string) { const result = await this.db.query<{ version: number; values: Record<string, unknown> }>('SELECT version,values FROM state_snapshots WHERE tenant_id=$1 AND scope_id=$2', [tenantId, scopeId]); return result.rows[0] ?? null; }
-  async putState(incident: StoredIncident, expectedVersion: number) { const result = await this.db.query('UPDATE state_snapshots SET version=$3 WHERE tenant_id=$1 AND scope_id=$2 AND version=$4', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion]); return result.rows.length === 1; }
+  async putState(incident: StoredIncident, expectedVersion: number) { const result = await this.db.query('INSERT INTO state_snapshots (tenant_id,scope_id,version,values) VALUES ($1,$2,$3,$5) ON CONFLICT (tenant_id,scope_id) DO UPDATE SET version=EXCLUDED.version, values=EXCLUDED.values WHERE state_snapshots.version=$4 RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]); return result.rows.length === 1; }
   async putIncident(incident: StoredIncident) { await this.db.query('INSERT INTO incidents (tenant_id,incident_id,scope_id,state_version,status) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (tenant_id,incident_id) DO UPDATE SET state_version=EXCLUDED.state_version,status=EXCLUDED.status', [incident.tenant_id, incident.incident_id, incident.scope_id, incident.state_version, incident.status]); }
   async putProposal(proposal: ActionProposal & { tenant_id: string }) { await this.db.query('INSERT INTO proposals (tenant_id,proposal_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,proposal_id) DO NOTHING', [proposal.tenant_id, proposal.proposal_id, JSON.stringify(proposal)]); }
   async getProposal(tenantId: string, proposalId: string) { const result = await this.db.query<{ payload: ActionProposal & { tenant_id: string } }>('SELECT payload FROM proposals WHERE tenant_id=$1 AND proposal_id=$2', [tenantId, proposalId]); return result.rows[0]?.payload ?? null; }
