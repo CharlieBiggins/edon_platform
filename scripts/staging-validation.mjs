@@ -3,12 +3,13 @@ import { resolve } from 'node:path';
 
 const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
 const authorization = process.env.CEREBRUM_AUTH_TOKEN ? { authorization: `Bearer ${process.env.CEREBRUM_AUTH_TOKEN}` } : {};
+const durabilityAuthorization = process.env.CEREBRUM_DURABILITY_TOKEN ? { authorization: `Bearer ${process.env.CEREBRUM_DURABILITY_TOKEN}` } : authorization;
 const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(artifactDir, { recursive: true });
 const started = new Date().toISOString();
 const checks = [];
-async function check(name, path) {
-  try { const response = await fetch(`${baseUrl}${path}`, { headers: authorization }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); }
+async function check(name, path, headers = authorization) {
+  try { const response = await fetch(`${baseUrl}${path}`, { headers }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); }
 }
 await check('process health', '/healthz');
 await check('runtime readiness', '/readyz');
@@ -33,7 +34,7 @@ assertValue('Kernel reevaluation', decision?.disposition === 'APPROVAL_REQUIRED'
 await post('/v1/shadow-evaluations', { binding, proposal_id: proposal?.proposal_id });
 await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: proposal?.proposal_id, verification_status: 'PENDING', actual_cost: 15800, commitments_protected: 3 });
 const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`, { headers: authorization }); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), 'receipt survives HTTP serialization');
-await check('reconstruction serialization', '/v1/reconstructions/INC-1042');
+await check('reconstruction serialization', '/v1/reconstructions/INC-1042', durabilityAuthorization);
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
 await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
 if (!report.passed) process.exitCode = 1;
