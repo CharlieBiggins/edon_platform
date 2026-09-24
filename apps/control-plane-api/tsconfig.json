@@ -6,7 +6,10 @@
     "strict": true,
     "noEmit": true,
     "types": ["node"],
-    "typeRoots": ["../../command-center/node_modules/@types"]
+    "typeRoots": ["../../command-center/node_modules/@types"],
+    "outDir": "dist",
+    "rootDir": "../../",
+    "noEmit": false
   },
   "include": ["src"]
 }

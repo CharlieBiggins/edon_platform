@@ -2,5 +2,5 @@
   "name": "@cerebrum/control-plane-api",
   "private": true,
   "type": "module",
-  "scripts": { "typecheck": "tsc --noEmit" }
+  "scripts": { "typecheck": "tsc -p tsconfig.json", "build": "tsc -p tsconfig.json", "start:staging-test": "node dist/apps/control-plane-api/src/start.js" }
 }

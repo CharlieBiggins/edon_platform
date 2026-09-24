@@ -4,6 +4,7 @@ command-center/dist/
 command-center/test-results/
 command-center/playwright-report/
 command-center/*.tsbuildinfo
+apps/control-plane-api/dist/
 github-edon_platform/
 __pycache__/
 *.pyc

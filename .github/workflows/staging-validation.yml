@@ -16,7 +16,7 @@ jobs:
         image: postgres:16
         env:
           POSTGRES_USER: cerebrum_admin
-          POSTGRES_PASSWORD: validation-only
+      POSTGRES_PASSWORD: validation-only
           POSTGRES_DB: cerebrum_validation
         ports: ['5432:5432']
         options: >-
@@ -26,6 +26,18 @@ jobs:
       DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
       CEREBRUM_RUNTIME_PROFILE: STAGING_TEST
       CEREBRUM_API_URL: http://127.0.0.1:8787
+      RUNTIME_PROFILE: STAGING_TEST
+      DATABASE_URL: postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_validation
+      MIGRATOR_ROLE: cerebrum_migrator
+      APPLICATION_ROLE: cerebrum_app
+      OIDC_ISSUER: http://127.0.0.1:8899
+      OIDC_AUDIENCE: cerebrum-control-plane
+      OIDC_JWKS_URL: http://127.0.0.1:8899/.well-known/jwks.json
+      RECEIPT_SIGNING_TEST_KEY: ci-validation-key
+      AUDIT_LOGGING: 'true'
+      TENANT_ISOLATION_ENFORCEMENT: 'true'
+      API_HOST: 127.0.0.1
+      API_PORT: '8787'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -35,17 +47,52 @@ jobs:
       - name: Apply migrations and verify version
         run: |
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT current_database();"
+          psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "SELECT version FROM schema_migrations ORDER BY version;"
       - name: Typecheck server packages
         run: command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
+      - name: Build API
+        run: command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
       - name: Start API in STAGING_TEST
-        run: echo "API startup is supplied by the deployment harness for this reference repository"
+        run: |
+          mkdir -p artifacts
+          nohup node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
+          echo $! > artifacts/api.pid
+      - name: Wait for API readiness
+        run: |
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/healthz && curl -fsS http://127.0.0.1:8787/readyz && exit 0; sleep 1; done
+          cat artifacts/api.log
+          exit 1
       - name: Run HTTP lifecycle and infrastructure suites
         run: npm run test:staging
         working-directory: command-center
+      - name: Restart API and verify reconstruction
+        run: |
+          kill "$(cat artifacts/api.pid)" || true
+          nohup node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 &
+          echo $! > artifacts/api-restart.pid
+          for i in $(seq 1 60); do curl -fsS http://127.0.0.1:8787/readyz && exit 0; sleep 1; done
+          cat artifacts/api-restart.log
+          exit 1
+      - name: Backup and restore checks
+        run: |
+          pg_dump "$DATABASE_URL" > artifacts/backup.sql
+          createdb -h 127.0.0.1 -U cerebrum_admin cerebrum_restore || true
+          psql postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore < artifacts/backup.sql
+          echo '{"backup": "created", "restore": "applied"}' > artifacts/backup-restore.json
+      - name: Cleanup API processes
+        if: always()
+        run: |
+          test ! -f artifacts/api.pid || kill "$(cat artifacts/api.pid)" || true
+          test ! -f artifacts/api-restart.pid || kill "$(cat artifacts/api-restart.pid)" || true
       - name: Publish validation report
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: staging-validation-report
           path: artifacts/staging-validation.json
+      - name: Upload runtime artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: staging-runtime-artifacts
+          path: artifacts/
