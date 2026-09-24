@@ -24,6 +24,9 @@ END $$;
 GRANT SELECT, INSERT ON state_snapshots, idempotency_keys TO cerebrum_app;
 GRANT SELECT ON state_snapshots, idempotency_keys TO cerebrum_audit;
 REVOKE UPDATE, DELETE ON state_snapshots, idempotency_keys FROM cerebrum_app, cerebrum_audit;
+GRANT SELECT, INSERT ON evidence_records, incidents, proposals, human_reviews, kernel_decisions, mandates, shadow_evaluations, outcomes TO cerebrum_app;
+GRANT SELECT ON evidence_records, incidents, proposals, human_reviews, kernel_decisions, mandates, shadow_evaluations, outcomes TO cerebrum_audit;
+REVOKE UPDATE, DELETE ON evidence_records, incidents, proposals, human_reviews, kernel_decisions, mandates, shadow_evaluations, outcomes FROM cerebrum_app, cerebrum_audit;
 
 INSERT INTO schema_migrations(version) VALUES ('003_lifecycle_records') ON CONFLICT DO NOTHING;
 COMMIT;
