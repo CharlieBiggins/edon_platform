@@ -577,3 +577,32 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-full .ask-conversation{width:100%!important}.ask-full .ask-message{width:min(100%,1080px);margin-left:auto;margin-right:auto}.ask-full .ask-message.user{max-width:min(100%,900px)}.ask-full .ask-object,.ask-full .ask-message .answer-provenance{width:100%;max-width:1080px;margin-left:auto;margin-right:auto}.ask-full .ask-conversation .ask-conversation-header,.ask-full .ask-conversation .ask-composer-region{width:100%}
 .context-rail button{position:relative}.context-rail button i{position:absolute;top:3px;right:2px;display:grid;place-items:center;min-width:15px;height:15px;padding:0 3px;border-radius:8px;background:#d8a85b;color:#fff;font-size:9px;font-style:normal;font-weight:700}.context-drawer-resize{position:absolute;z-index:2;left:-7px;top:0;bottom:0;width:14px;cursor:col-resize;background:transparent;border:0;touch-action:none}.context-drawer-resize span{display:block;width:2px;height:100%;margin:auto;background:#c5d8cc}.context-drawer-resize:hover span,.context-drawer-resize:focus-visible span{width:4px;background:#4a9275}.context-drawer{position:relative}.citation-highlight{background:#e9f5ed!important;box-shadow:inset 4px 0 #3d9270}.citation-highlight strong{color:#205f4a}.context-drawer .ask-inspector-tabs{overflow-x:auto}.context-drawer .ask-inspector-body{width:100%}
 @media(max-width:900px){.context-drawer{width:100%!important}.context-drawer-resize{display:none}.context-drawer-backdrop{inset:0}.ask-full .ask-message,.ask-full .ask-object,.ask-full .ask-message .answer-provenance{width:100%;max-width:none}}
+
+/* Canonical Workspace layout states. Chat Focus has no hidden second pane. */
+.ask-main-workspace{grid-template-columns:minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);min-width:0;min-height:0;overflow:hidden}
+.ask-main-workspace>.workspace-split-toolbar{grid-column:1/-1;grid-row:1}
+.ask-main-workspace>.ask-workspace{grid-column:1;grid-row:2;min-width:0;min-height:0}
+.ask-main-workspace>.context-rail{grid-row:2;grid-column:2}
+.ask-main-workspace[data-layout="chat-focus"]{grid-template-columns:minmax(0,1fr) 64px}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace{grid-column:1;grid-template-columns:minmax(0,1fr)!important;display:grid!important}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-conversation{grid-column:1;width:100%!important;min-width:0;max-width:none}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-inspector{display:none!important;visibility:visible!important;width:0!important;min-width:0!important}
+.ask-main-workspace[data-layout="chat-focus"]>.context-rail{position:static;grid-column:2;grid-row:2;width:64px;min-width:64px;height:100%;display:flex}
+.ask-main-workspace[data-layout="chat-focus"]>.context-drawer-backdrop{position:absolute;inset:0 64px 0 0;display:flex;justify-content:flex-end;z-index:20}
+.ask-main-workspace[data-layout="chat-focus"] .context-drawer{width:clamp(400px,32vw,640px)!important;max-width:65vw}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail span{display:none}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button{width:48px;min-width:48px}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button i{top:2px;right:1px}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail-restore{margin-top:auto!important}
+.ask-main-workspace[data-layout="compact"]>.ask-workspace{grid-template-columns:minmax(420px,35fr) minmax(600px,65fr)!important}
+.ask-main-workspace[data-layout="balanced"]>.ask-workspace{grid-template-columns:minmax(420px,45fr) minmax(600px,55fr)!important}
+.ask-main-workspace[data-layout="analysis"]>.ask-workspace{grid-template-columns:minmax(520px,60fr) minmax(500px,40fr)!important}
+.ask-main-workspace[data-layout="workspace-focus"]>.ask-workspace{grid-template-columns:minmax(0,1fr)!important}
+.ask-main-workspace[data-layout="workspace-focus"]>.ask-workspace>.ask-conversation{display:none!important}
+.ask-main-workspace[data-layout="workspace-focus"]>.ask-workspace>.ask-inspector{grid-column:1;display:grid!important}
+.ask-main-workspace:not([data-layout="chat-focus"])>.context-rail{display:none!important}
+.ask-main-workspace:not([data-layout="chat-focus"])>.context-drawer-backdrop{display:none!important}
+.ask-main-workspace[data-layout="chat-focus"] .ask-messages{width:100%;min-width:0;overflow-x:hidden}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{width:100%;min-width:0}
+.ask-main-workspace[data-layout="chat-focus"] .context-drawer-backdrop{overflow:hidden}
+@media(max-width:900px){.ask-main-workspace[data-layout="chat-focus"]{grid-template-columns:minmax(0,1fr) 64px}.ask-main-workspace[data-layout="chat-focus"] .context-drawer{width:calc(100vw - 64px)!important;max-width:none}.ask-main-workspace[data-layout="chat-focus"]>.context-drawer-backdrop{inset:0 64px 0 0}}
