@@ -1,0 +1,12 @@
+{
+  "schema_version": "2026-09-24.v1",
+  "status": "foundation",
+  "routes": ["overview", "queue", "incident/INC-1042", "reviews", "outcomes", "reconstructions", "receipts", "exceptions", "integrity", "holds", "exports", "value", "state", "integrations", "settings", "location", "actor", "builder", "intelligence"],
+  "roles": ["Operator", "Approver", "Auditor", "Safety reviewer", "Administrator"],
+  "operating_modes": ["SIMULATED / SHADOW / DISABLED", "loading", "stale", "conflicted", "restricted", "degraded", "disconnected"],
+  "viewports": [1920, 1440, 1100, 900],
+  "governed_journeys": ["login", "tenant scope", "incident", "Ask Cerebrum", "cited evidence", "plan comparison", "typed proposal", "Kernel decision", "human review", "Kernel reevaluation", "shadow outcome", "receipt", "reconstruction"],
+  "negative_boundaries": ["cross-tenant disclosure", "shadow execution", "human Kernel bypass", "unqualified C1 production use", "restricted evidence disclosure", "stale proposal dispatch", "unauthorized controls"],
+  "implemented_by": ["tests/validation.spec.ts", "tests/prototype.spec.ts"],
+  "known_simulation": ["institutional data", "OIDC identity in local prototype", "C1 responses", "Control Plane persistence"]
+}
