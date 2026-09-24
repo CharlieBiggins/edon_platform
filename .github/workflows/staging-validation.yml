@@ -110,19 +110,38 @@ jobs:
             done;
             exit "$code"' ERR
           npm run test:staging
-      - name: Validate identity and tenant isolation
+      - name: Validate identity, tenant isolation and role permissions
         run: |
-          set -euo pipefail
+          set -Eeuo pipefail
+          trap 'rc=$?;
+            echo "::error::FAILED line=${LINENO} exit=${rc} command=${BASH_COMMAND}";
+            for log in "$ARTIFACT_DIR"/api*.log "$ARTIFACT_DIR"/oidc*.log; do
+              if test -f "$log"; then
+                echo "::group::$log";
+                tail -n 200 "$log";
+                echo "::endgroup::";
+              fi
+            done;
+            exit "$rc"' ERR
+          echo "Running identity token validation"
           node scripts/identity-tenant-validation.mjs
+          echo "Checking tenant-scoped journal visibility"
           own="$(PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
           other="$(PGOPTIONS='-c app.tenant_id=other-tenant' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
           missing="$(PGOPTIONS='-c app.tenant_id=' psql "$DATABASE_URL" -At -c "SELECT count(*) FROM journal_events")"
-          test "$own" -gt 0; test "$other" = 0; test "$missing" = 0
+          echo "Asserting own tenant has records: $own"
+          if ! test "$own" -gt 0; then echo "::error::Own-tenant journal count is zero"; exit 1; fi
+          echo "Asserting other tenant is isolated: $other"
+          if ! test "$other" = 0; then echo "::error::Cross-tenant journal read returned $other records"; exit 1; fi
+          echo "Asserting missing tenant context is denied: $missing"
+          if ! test "$missing" = 0; then echo "::error::Missing tenant context returned $missing records"; exit 1; fi
+          echo "Checking projection privileges"
           test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'state_snapshots', 'UPDATE')")" = t
           test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'incidents', 'UPDATE')")" = t
           test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'proposals', 'UPDATE')")" = f
           test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'kernel_decisions', 'UPDATE')")" = f
           test "$(psql "$DATABASE_URL" -At -c "SELECT has_table_privilege(current_user, 'outcomes', 'UPDATE')")" = f
+          echo "Checking mutable state projection update"
           PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE state_snapshots SET values=values WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'"
           PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -c "UPDATE incidents SET status=status WHERE tenant_id='meridian-demo' AND incident_id='INC-1042'"
           for table in evidence_records proposals human_reviews kernel_decisions mandates shadow_evaluations outcomes; do
@@ -154,28 +173,44 @@ jobs:
           ! grep -Eq '=0:' $ARTIFACT_DIR/db-durability-baseline.txt
       - name: Restart API and verify durability
         run: |
-          set -euo pipefail
+          set -Eeuo pipefail
+          trap 'rc=$?;
+            echo "::error::FAILED line=${LINENO} exit=${rc} command=${BASH_COMMAND}";
+            for log in "$ARTIFACT_DIR"/api*.log "$ARTIFACT_DIR"/oidc*.log; do
+              if test -f "$log"; then echo "::group::$log"; tail -n 200 "$log"; echo "::endgroup::"; fi
+            done;
+            exit "$rc"' ERR
+          echo "Stopping API before restart durability verification"
           api_pid="$(cat $ARTIFACT_DIR/api.pid)"
           if kill "$api_pid" 2>/dev/null; then :; fi
           for i in $(seq 1 30); do
             if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi
             if test "$i" -eq 30; then echo "API did not stop"; exit 1; fi
           done
-          test -f apps/control-plane-api/dist/apps/control-plane-api/src/start.js
-          test -f apps/control-plane-api/dist/apps/control-plane-api/src/server.js
+          echo "Checking compiled API entrypoints"
+          if ! test -f apps/control-plane-api/dist/apps/control-plane-api/src/start.js; then echo "::error::Required file missing: apps/control-plane-api/dist/apps/control-plane-api/src/start.js"; ls -la apps/control-plane-api/dist/apps/control-plane-api/src; exit 1; fi
+          if ! test -f apps/control-plane-api/dist/apps/control-plane-api/src/server.js; then echo "::error::Required file missing: apps/control-plane-api/dist/apps/control-plane-api/src/server.js"; ls -la apps/control-plane-api/dist/apps/control-plane-api/src; exit 1; fi
           node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > $ARTIFACT_DIR/api-restart.log 2>&1 & echo $! > $ARTIFACT_DIR/api-restart.pid
           ready=0
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
           if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restart.log; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
           PGOPTIONS='-c app.tenant_id=meridian-demo' PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions WHERE proposal_id='PROP-1042' UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes WHERE payload->>'proposal_id'='PROP-1042' UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restart.txt
-          cmp $ARTIFACT_DIR/db-durability-baseline.txt $ARTIFACT_DIR/db-durability-restart.txt
+          echo "Comparing restart durability snapshot"
+          if ! diff -u "$ARTIFACT_DIR/db-durability-baseline.txt" "$ARTIFACT_DIR/db-durability-restart.txt"; then echo "::error::Database durability snapshot changed after restart"; exit 1; fi
       - name: Backup and restore database
         env:
           PGPASSWORD: validation-only
           PGCONNECT_TIMEOUT: '5'
         run: |
-          set -euo pipefail
+          set -Eeuo pipefail
+          trap 'rc=$?;
+            echo "::error::FAILED line=${LINENO} exit=${rc} command=${BASH_COMMAND}";
+            for log in "$ARTIFACT_DIR"/api*.log "$ARTIFACT_DIR"/oidc*.log; do
+              if test -f "$log"; then echo "::group::$log"; tail -n 200 "$log"; echo "::endgroup::"; fi
+            done;
+            exit "$rc"' ERR
+          echo "Creating database backup"
           api_pid="$(cat $ARTIFACT_DIR/api-restart.pid)"
           kill "$api_pid"
           for i in $(seq 1 30); do if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi; done
@@ -216,7 +251,8 @@ jobs:
           if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restore.log; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
           PGPASSWORD=validation-only psql -h 127.0.0.1 -U cerebrum_admin -d cerebrum_restore -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions WHERE proposal_id='PROP-1042' UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes WHERE payload->>'proposal_id'='PROP-1042' UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restore.txt
-          cmp $ARTIFACT_DIR/db-durability-baseline.txt $ARTIFACT_DIR/db-durability-restore.txt
+          echo "Comparing restored database durability snapshot"
+          if ! diff -u "$ARTIFACT_DIR/db-durability-baseline.txt" "$ARTIFACT_DIR/db-durability-restore.txt"; then echo "::error::Database durability snapshot changed after restore"; exit 1; fi
       - name: Stop services
         if: always()
         run: |
