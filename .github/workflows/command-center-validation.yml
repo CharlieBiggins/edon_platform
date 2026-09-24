@@ -1,0 +1,114 @@
+name: command-center-validation
+
+on:
+  pull_request:
+    paths:
+      - 'command-center/**'
+      - 'packages/contracts/**'
+      - '.github/workflows/command-center-validation.yml'
+  schedule:
+    - cron: '30 2 * * *'
+  workflow_run:
+    workflows: ['staging-equivalent-validation']
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  critical:
+    name: PR critical UI validation
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: command-center
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: command-center/package-lock.json
+      - run: npm ci
+      - run: npm run test:policy
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - run: npm run test:unit
+      - run: npm run test:e2e:critical
+      - name: Upload critical validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: command-center-critical-${{ github.run_id }}
+          path: |
+            command-center/test-results
+            command-center/playwright-report
+            command-center/tests/coverage-matrix.json
+          if-no-files-found: warn
+
+  nightly:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        repetition: [1, 2, 3]
+    defaults:
+      run:
+        working-directory: command-center
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: command-center/package-lock.json
+      - run: npm ci
+      - run: npm run test:policy
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run build
+      - run: npm run test:unit
+      - run: npm run test:e2e:all
+      - name: Upload nightly validation artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: command-center-nightly-${{ github.run_id }}-run-${{ matrix.repetition }}
+          path: |
+            command-center/test-results
+            command-center/playwright-report
+            command-center/tests/coverage-matrix.json
+          if-no-files-found: warn
+
+  staging-smoke:
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: command-center
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: command-center/package-lock.json
+      - run: npm ci
+      - run: npm run test:policy
+      - run: npx playwright install --with-deps chromium
+      - run: npm run build
+      - name: Run post-deployment smoke suite
+        env:
+          PLAYWRIGHT_BASE_URL: ${{ vars.CEREBRUM_STAGING_URL }}
+        run: npm run test:e2e:critical -- --grep "@critical login|@critical shadow"
+      - name: Upload staging smoke artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: command-center-staging-smoke-${{ github.run_id }}
+          path: |
+            command-center/test-results
+            command-center/playwright-report
+            command-center/tests/coverage-matrix.json
+          if-no-files-found: warn
