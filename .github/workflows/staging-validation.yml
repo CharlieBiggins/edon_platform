@@ -58,7 +58,7 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security"
+          test "$(psql "$DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p artifacts
@@ -79,7 +79,15 @@ jobs:
           cat artifacts/api.log; exit 1
       - name: Run HTTP lifecycle validation
         working-directory: command-center
-        run: npm run test:staging
+        run: |
+          set -euo pipefail
+          set +e
+          npm run test:staging
+          status=$?
+          set -e
+          if test "$status" -eq 0; then exit 0; fi
+          if test -f ../artifacts/api.log; then cat ../artifacts/api.log; fi
+          exit "$status"
       - name: Restart API and verify reconstruction
         run: |
           set -euo pipefail
