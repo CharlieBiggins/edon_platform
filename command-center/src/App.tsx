@@ -11,7 +11,7 @@ import { controlPlaneClient } from './controlPlaneClient';
 const navGroups = [
   { label: 'OPERATE', items: [{ page: 'overview', label: 'Operations Overview', icon: ActivityIcon }, { page: 'queue', label: 'Work Queue', icon: LayoutGrid, count: '3' }, { page: 'reviews', label: 'Human reviews', icon: ShieldCheck, count: '1' }] },
   { label: 'ASSURE', items: [{ page: 'outcomes', label: 'Shadow & outcomes', icon: ActivityIcon }, { page: 'reconstructions', label: 'Reconstructions', icon: ActivityIcon }, { page: 'receipts', label: 'Decision receipts', icon: FileCheck2 }, { page: 'exceptions', label: 'Execution exceptions', icon: TriangleAlert }, { page: 'integrity', label: 'Integrity status', icon: ShieldCheck }, { page: 'holds', label: 'Legal holds', icon: LockKeyhole }, { page: 'exports', label: 'Audit exports', icon: ArrowDownToLine }, { page: 'value', label: 'Value report', icon: TrendingUp }] },
-  { label: 'ADMINISTER', items: [{ page: 'builder', label: 'Institution Builder', icon: FlaskConical }, { page: 'state', label: 'Institutional state', icon: Network }, { page: 'integrations', label: 'Integrations', icon: Unplug }, { page: 'settings', label: 'Settings & Administration', icon: Settings2 }] },
+  { label: 'ADMINISTER', items: [{ page: 'builder', label: 'Institution Builder', icon: FlaskConical }, { page: 'intelligence', label: 'Intelligence Runtime', icon: Sparkles }, { page: 'state', label: 'Institutional state', icon: Network }, { page: 'integrations', label: 'Integrations', icon: Unplug }, { page: 'settings', label: 'Settings & Administration', icon: Settings2 }] },
 ] as const;
 const pageTitles: Record<Page, [string, string]> = {
   overview: ['Operations Overview', 'Network posture, decision urgency, and the work that needs attention now.'],
@@ -31,6 +31,7 @@ const pageTitles: Record<Page, [string, string]> = {
   holds: ['Legal holds', 'Case-scoped retention and investigation controls.'],
   exports: ['Audit exports', 'Signed evidence package manifests and export history.'],
   builder: ['Institution Builder', 'Compile, validate and govern the institution before it reaches the runtime.'],
+  intelligence: ['Intelligence Runtime', 'Inspect C1 releases, qualified capabilities, evaluations and deployment boundaries.'],
 };
 const scopes = [
   { id: 'institution', label: 'Meridian Logistics', detail: 'Institution · 4 networks' },
@@ -169,6 +170,7 @@ export default function App() {
         {route.page === 'location' && <LocationOverview onOpen={id => navigate('incident', id)} onActor={() => navigate('actor')} onNavigate={navigate} />}
         {route.page === 'actor' && <ActorInspector onLocation={() => navigate('location')} onOpen={id => navigate('incident', id)} />}
         {route.page === 'builder' && <InstitutionBuilder onNotify={notify} />}
+        {route.page === 'intelligence' && <Panel title="Cerebrum C1 · c1-shadow-0.9.1" action={<Badge tone="teal">QUALIFIED SHADOW</Badge>}><Notice title="About this intelligence" tone="blue">C1 understands institutional situations, diagnoses changes, compares plans and proposes typed actions. It does not establish truth, grant authority or execute commands. The Kernel authorizes; Execution Assurance acts.</Notice><div className="two-columns"><Panel title="Qualified capabilities"><DefinitionList rows={[['Situation assessment', 'QUALIFIED_SHADOW · logistics.recovery'], ['Plan comparison', 'INTENDED · not production-qualified'], ['Typed action proposals', 'QUALIFIED_SHADOW · human review required'], ['Counterfactual supervision', 'RESEARCH_SUPPORTED · evaluation-bound']]}/></Panel><Panel title="Release boundary"><DefinitionList rows={[['Model hash', 'sha256:c1-shadow-demo'], ['ActionNet', 'actionnet-v0.4'], ['Operating modes', 'SHADOW only'], ['Approval authority', 'Institutional Kernel'], ['Unsupported', 'Unadmitted evidence · missing state version'], ['Fallback', 'ABSTAIN and request human review']]}/></Panel></div></Panel>}
         {route.page === 'reconstructions' && <ReconstructionPage onNotify={notify} />}
         {(['exceptions', 'integrity', 'holds', 'exports'] as Page[]).includes(route.page) && <AssuranceRegisterPage kind={route.page as 'exceptions' | 'integrity' | 'holds' | 'exports'} onNotify={notify} />}
       </>}

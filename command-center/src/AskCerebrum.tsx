@@ -36,7 +36,7 @@ const prompts = [
   'What evidence is missing?',
   'Why is human approval required?',
 ];
-const pageLabels: Record<Page, string> = { overview: 'Operations Overview', queue: 'Work Queue', incident: 'Cerebrum Workspace', reviews: 'Human reviews', outcomes: 'Shadow & outcomes', receipts: 'Receipt Inspector', value: 'Value report', state: 'Institutional state', integrations: 'Integration health', settings: 'Settings & Administration', location: 'Location Overview', actor: 'Actor Inspector', reconstructions: 'Reconstructions', exceptions: 'Execution exceptions', integrity: 'Integrity status', holds: 'Legal holds', exports: 'Audit exports', builder: 'Institution Builder' };
+const pageLabels: Record<Page, string> = { overview: 'Operations Overview', queue: 'Work Queue', incident: 'Cerebrum Workspace', reviews: 'Human reviews', outcomes: 'Shadow & outcomes', receipts: 'Receipt Inspector', value: 'Value report', state: 'Institutional state', integrations: 'Integration health', settings: 'Settings & Administration', location: 'Location Overview', actor: 'Actor Inspector', reconstructions: 'Reconstructions', exceptions: 'Execution exceptions', integrity: 'Integrity status', holds: 'Legal holds', exports: 'Audit exports', builder: 'Institution Builder', intelligence: 'Intelligence Runtime' };
 
 function classify(question: string): AnalysisKind {
   const value = question.toLowerCase();

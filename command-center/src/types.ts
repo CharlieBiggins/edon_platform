@@ -1,7 +1,7 @@
 export type Tone = 'teal' | 'amber' | 'red' | 'neutral' | 'blue';
 export type Scenario = 'normal' | 'loading' | 'empty' | 'stale' | 'conflicted' | 'restricted' | 'degraded' | 'disconnected';
 export type Role = 'Operator' | 'Approver' | 'Auditor';
-export type Page = 'overview' | 'queue' | 'incident' | 'reviews' | 'outcomes' | 'receipts' | 'value' | 'state' | 'integrations' | 'settings' | 'location' | 'actor' | 'reconstructions' | 'exceptions' | 'integrity' | 'holds' | 'exports' | 'builder';
+export type Page = 'overview' | 'queue' | 'incident' | 'reviews' | 'outcomes' | 'receipts' | 'value' | 'state' | 'integrations' | 'settings' | 'location' | 'actor' | 'reconstructions' | 'exceptions' | 'integrity' | 'holds' | 'exports' | 'builder' | 'intelligence';
 export type WorkspaceTab = 'decision' | 'evidence' | 'shadow' | 'activity';
 export type ReviewStatus = 'unreviewed' | 'pending' | 'reviewed' | 'invalidated';
 export interface Plan {
