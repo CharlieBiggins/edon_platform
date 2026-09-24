@@ -66,7 +66,7 @@ jobs:
       - name: Start compiled API
         run: |
           set -euo pipefail
-          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
+          node --experimental-specifier-resolution=node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
           echo $! > artifacts/api.pid
           sleep 2
           if ! kill -0 "$(cat artifacts/api.pid)" 2>/dev/null; then cat artifacts/api.log; exit 1; fi
@@ -82,7 +82,7 @@ jobs:
         run: |
           set -euo pipefail
           kill "$(cat artifacts/api.pid)"; wait "$(cat artifacts/api.pid)" || test $? -eq 143
-          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 & echo $! > artifacts/api-restart.pid
+          node --experimental-specifier-resolution=node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 & echo $! > artifacts/api-restart.pid
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat artifacts/api-restart.log; exit 1
       - name: Backup and restore database
