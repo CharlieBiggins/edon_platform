@@ -1,4 +1,4 @@
-export type Principal = { tenant_id: string; actor_id: string; actor_type: 'HUMAN' | 'AGENT' | 'SYSTEM' | 'CONNECTOR'; roles: string[]; expires_at: string; revoked?: boolean };
+export type Principal = { tenant_id: string; actor_id: string; actor_type: 'HUMAN' | 'AGENT' | 'SYSTEM' | 'CONNECTOR'; roles: string[]; expires_at: string; revoked?: boolean; active?: boolean };
 export interface IdentityVerifier { verify(request: unknown): Promise<Principal | null>; }
 export class SimulatedIdentityVerifier implements IdentityVerifier { constructor(private principal: Principal) {} async verify() { return this.principal.revoked || new Date(this.principal.expires_at).getTime() <= Date.now() ? null : this.principal; } }
 
@@ -25,8 +25,8 @@ export class OidcIdentityVerifier implements IdentityVerifier {
     const now = Math.floor(Date.now() / 1000); if (typeof claims.exp !== 'number' || claims.exp <= now || (typeof claims.nbf === 'number' && claims.nbf > now)) return null;
     await this.loadKeys(); const key = this.keys.get(String(head.kid)); if (!key) return null;
     const valid = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, decodeBytes(parts[2]), new TextEncoder().encode(`${parts[0]}.${parts[1]}`));
-    if (!valid || typeof claims.tenant_id !== 'string' || typeof claims.sub !== 'string') return null;
-    return { tenant_id: claims.tenant_id, actor_id: claims.sub, actor_type: (claims.actor_type as Principal['actor_type']) ?? 'HUMAN', roles: Array.isArray(claims.roles) ? claims.roles.map(String) : [], expires_at: new Date((claims.exp as number) * 1000).toISOString(), revoked: claims.revoked === true };
+    if (!valid || typeof claims.tenant_id !== 'string' || typeof claims.sub !== 'string' || claims.revoked === true) return null;
+    return { tenant_id: claims.tenant_id, actor_id: claims.sub, actor_type: (claims.actor_type as Principal['actor_type']) ?? 'HUMAN', roles: Array.isArray(claims.roles) ? claims.roles.map(String) : [], expires_at: new Date((claims.exp as number) * 1000).toISOString(), active: claims.active !== false };
   }
 }
 

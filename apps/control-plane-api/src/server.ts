@@ -42,6 +42,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     const principal = await runtimeDependencies.identityVerifier.verify(request);
     const authenticatedRoute = url.pathname.startsWith('/v1/');
     if (authenticatedRoute && !principal) return reply(response, 401, { error: { code: 'AUTHENTICATION_REQUIRED', message: 'Authentication is required', correlation_id: request.headers['x-correlation-id'] ?? 'unknown' } });
+    if (authenticatedRoute && principal?.active === false) return failure(response, 'PERMISSION_DENIED', 'Actor is inactive');
     if (request.method === 'POST' && principal && bind && (bind.tenant_id !== principal.tenant_id || bind.actor_id !== principal.actor_id)) return failure(response, 'PERMISSION_DENIED', 'Request identity does not match verified identity', principal.actor_id);
     if (request.method === 'POST' && (!validateRequest(body) || bind?.contract_version !== CONTRACT_VERSION)) return failure(response, 'VALIDATION_FAILED', 'Required request binding is missing or invalid', bind?.correlation_id);
     const currentState = bind ? await state(runtimeDependencies.repositories, principal?.tenant_id ?? bind.tenant_id, String(body.scope_id ?? 'memphis-fulfillment')) : { version: 141, values: {} };

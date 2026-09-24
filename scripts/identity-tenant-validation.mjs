@@ -1,23 +1,21 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts'); await mkdir(artifactDir, { recursive: true });
-const issuer = process.env.OIDC_ISSUER ?? 'http://127.0.0.1:8899'; const api = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
+const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
+const issuer = process.env.OIDC_ISSUER ?? 'http://127.0.0.1:8899';
+const api = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
+const report = { expected_tenant: 'meridian-demo', expected_incident: 'INC-1042', expected_reconstruction_role: 'auditor', cases: [], passed: false };
+await mkdir(artifactDir, { recursive: true });
 const token = async query => (await (await fetch(`${issuer}/token?${query}`)).json()).access_token;
-const valid = await token('tenant=meridian-demo'); const expired = await token('tenant=meridian-demo&expires=-1'); const wrongAudience = await token('tenant=meridian-demo&audience=wrong-audience'); const wrongTenant = await token('tenant=other-tenant');
-const auditor = await token('tenant=meridian-demo&role=auditor');
-const stateResponse = await fetch(`${api}/v1/state/memphis-fulfillment`, { headers: { authorization: `Bearer ${valid}` } }); const stateBody = await stateResponse.json(); const expectedStateVersion = stateBody?.data?.version;
-if (typeof expectedStateVersion !== 'number') throw new Error(`Current state version unavailable (${stateResponse.status})`);
-const statuses = {};
-const reconstructionStatus = async (name, jwt) => { const response = await fetch(`${api}/v1/reconstructions/INC-1042`, { headers: jwt ? { authorization: `Bearer ${jwt}` } : {} }); statuses[name] = response.status; return response.status; };
-const call = async (name, jwt, bindingTenant = 'meridian-demo', incidentId = 'INC-SECURITY-VALIDATION') => { const response = await fetch(`${api}/v1/events`, { method: 'POST', headers: { authorization: `Bearer ${jwt}`, 'content-type': 'application/json' }, body: JSON.stringify({ event_id: `identity-${Date.now()}-${Math.random()}`, scope_id: 'memphis-fulfillment', incident_id: incidentId, payload: {}, binding: { tenant_id: bindingTenant, actor_id: 'operator-01', correlation_id: 'identity-check', trace_id: 'identity-check', idempotency_key: `identity-${Date.now()}-${Math.random()}`, contract_version: '2026-09-24.v1', request_timestamp: new Date().toISOString(), expected_state_version: expectedStateVersion, evidence_references: [] } }) }); statuses[name] = response.status; return response.status; };
-const checks = [
-  { name: 'valid token accepted', passed: [200, 201].includes(await call('valid', valid)) },
-  { name: 'expired token denied', passed: (await call('expired', expired)) === 403 },
-  { name: 'wrong audience denied', passed: (await call('wrong_audience', wrongAudience)) === 403 },
-  { name: 'wrong tenant binding denied', passed: (await call('wrong_tenant', wrongTenant)) === 403 },
-  { name: 'authorized audit reconstruction allowed', passed: (await reconstructionStatus('auditor_reconstruction', auditor)) === 200 },
-  { name: 'operator reconstruction denied', passed: (await reconstructionStatus('operator_reconstruction', valid)) === 403 },
-  { name: 'cross-tenant reconstruction denied', passed: (await reconstructionStatus('other_tenant_reconstruction', await token('tenant=other-tenant&role=auditor'))) === 200 ? false : statuses.other_tenant_reconstruction === 403 },
-  { name: 'missing reconstruction token denied', passed: (await reconstructionStatus('missing_reconstruction', undefined)) === 401 },
-];
-const report = { state_version: expectedStateVersion, statuses, passed: checks.every(check => check.passed), checks }; await writeFile(`${artifactDir}/identity-tenant-isolation.json`, JSON.stringify(report, null, 2)); if (!report.passed) process.exitCode = 1;
+const sanitized = body => body?.error ? { code: String(body.error.code ?? 'API_ERROR'), message: String(body.error.message ?? '').slice(0, 300) } : { body: String(JSON.stringify(body ?? {})).slice(0, 500) };
+async function requestCase(name, jwt, expectedStatus, role, tenant, method = 'GET', path = '/v1/reconstructions/INC-1042') {
+  const response = await fetch(`${api}${path}`, { method, headers: jwt ? { authorization: `Bearer ${jwt}` } : {} });
+  const body = await response.json().catch(() => ({}));
+  const result = { name, method, path, expected_status: expectedStatus, actual_status: response.status, error: sanitized(body), response_body: sanitized(body), expected_actor_role: role, expected_tenant: tenant, passed: response.status === expectedStatus };
+  report.cases.push(result); console.log(`${result.passed ? 'PASS' : 'FAIL'} ${name}: expected ${expectedStatus}, received ${response.status}`); return result;
+}
+try {
+  const validAudit = await token('tenant=meridian-demo&role=auditor'); const operator = await token('tenant=meridian-demo&role=operator'); const otherAudit = await token('tenant=other-tenant&role=auditor'); const expired = await token('tenant=meridian-demo&role=auditor&expires=-1'); const inactive = await token('tenant=meridian-demo&role=auditor&active=false'); const wrongAudience = await token('tenant=meridian-demo&role=auditor&audience=wrong-audience'); const wrongIssuer = await token('tenant=meridian-demo&role=auditor&issuer=http://wrong-issuer');
+  await requestCase('missing token', undefined, 401, 'none', 'meridian-demo'); await requestCase('malformed token', 'not-a-jwt', 401, 'none', 'meridian-demo'); await requestCase('wrong issuer', wrongIssuer, 401, 'auditor', 'meridian-demo'); await requestCase('wrong audience', wrongAudience, 401, 'auditor', 'meridian-demo'); await requestCase('expired token', expired, 401, 'auditor', 'meridian-demo'); await requestCase('inactive actor', inactive, 403, 'auditor', 'meridian-demo'); await requestCase('valid actor and matching tenant', validAudit, 200, 'auditor', 'meridian-demo'); await requestCase('valid actor from another tenant', otherAudit, 403, 'auditor', 'other-tenant'); await requestCase('operator without reconstruction permission', operator, 403, 'operator', 'meridian-demo'); await requestCase('authorized audit reconstruction reader', validAudit, 200, 'auditor', 'meridian-demo');
+  report.passed = report.cases.every(item => item.passed); await writeFile(`${artifactDir}/identity-tenant-validation.json`, JSON.stringify(report, null, 2));
+  if (!report.passed) { console.error('Identity validation failed:'); for (const item of report.cases.filter(item => !item.passed)) console.error(`FAIL ${item.name}: expected ${item.expected_status}, received ${item.actual_status} (${item.error.code ?? item.error.body})`); process.exitCode = 1; }
+} catch (error) { report.unexpected_error = error instanceof Error ? error.stack : String(error); await writeFile(`${artifactDir}/identity-tenant-validation.json`, JSON.stringify(report, null, 2)); console.error('Unexpected identity validation error:', report.unexpected_error); process.exitCode = 1; }
