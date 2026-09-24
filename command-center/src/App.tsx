@@ -6,6 +6,7 @@ import { ActorInspector, AssuranceRegisterPage, IncidentQueue, InstitutionBuilde
 import Workspace, { ShadowComparison } from './Workspace';
 import AskCerebrum from './AskCerebrum';
 import type { Activity, Evidence, Page, Plan, Receipt, RecourseRecord, ReviewRecord, Role, Scenario, WorkspaceTab } from './types';
+import { controlPlaneClient } from './controlPlaneClient';
 
 const navGroups = [
   { label: 'OPERATE', items: [{ page: 'overview', label: 'Operations Overview', icon: ActivityIcon }, { page: 'queue', label: 'Work Queue', icon: LayoutGrid, count: '3' }, { page: 'reviews', label: 'Human reviews', icon: ShieldCheck, count: '1' }] },
@@ -73,6 +74,7 @@ export default function App() {
   const [commandQuery, setCommandQuery] = useState('');
   const [note, setNote] = useState(''); const [scopeAccepted, setScopeAccepted] = useState(false);
   const [recourseKind, setRecourseKind] = useState('Request additional evidence');
+  const [liveState, setLiveState] = useState<'idle' | 'loading' | 'ready' | 'disconnected'>('idle');
   const sequence = useRef(842); const pending = useRef<ReturnType<typeof setTimeout> | null>(null);
   const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const appMainRef = useRef<HTMLElement | null>(null);
@@ -88,6 +90,12 @@ export default function App() {
   useEffect(() => { const change = () => { setRoute(routeFromHash()); setTab('decision'); setSidebarOpen(false); }; window.addEventListener('hashchange', change); return () => window.removeEventListener('hashchange', change); }, []);
   useEffect(() => () => { if (pending.current) clearTimeout(pending.current); if (toastTimer.current) clearTimeout(toastTimer.current); }, []);
   useEffect(() => { document.title = `${route.page === 'incident' ? incident.title : pageTitles[route.page][0]} · Cerebrum Prototype`; }, [route.page, incident.title]);
+  useEffect(() => {
+    if (!import.meta.env.VITE_CONTROL_PLANE_API_URL || route.incidentId !== 'INC-1042') { setLiveState('idle'); return; }
+    const controller = new AbortController(); setLiveState('loading');
+    controlPlaneClient.state('memphis-fulfillment', controller.signal).then(result => { setVersions(previous => ({ ...previous, [route.incidentId]: result.version })); setLiveState('ready'); }).catch(() => setLiveState('disconnected'));
+    return () => controller.abort();
+  }, [route.incidentId]);
   useEffect(() => { appMainRef.current?.scrollTo({ top: 0, behavior: 'auto' }); }, [route.page, route.incidentId]);
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); setCommandOpen(true); } if (event.key === 'Escape') setCommandOpen(false); }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, []);
 
@@ -150,7 +158,7 @@ export default function App() {
       {scenario === 'loading' ? <><LoadingState /><button className="button secondary" onClick={() => setMode('normal')}>Complete simulated load</button></> : scenario === 'restricted' ? <Panel title="Restricted compartment"><EmptyState restricted title="This record is outside your simulated access scope" description="The denied-state fixture hides operational content. No restricted payload is present. Production access must be enforced on the server." action={<button className="button secondary" onClick={() => setMode('normal')}>Return to permitted mock records</button>} /></Panel> : <>
         {route.page === 'overview' && <OperationsOverview scenario={scenario} role={role} scope={scope} onOpen={id => navigate('incident', id)} onNavigate={navigate} onAsk={() => setAskOpen(true)} onNotify={notify} onLocation={() => navigate('location')} />}
         {route.page === 'queue' && <IncidentQueue onOpen={id => navigate('incident', id)} empty={scenario === 'empty'} />}
-        {route.page === 'incident' && <><div className="metrics-grid"><Metric label="Commitments at risk" value={String(incident.commitments)} detail="Delivery windows before 16:00 CDT" tone="amber" /><Metric label="Orders affected" value={String(incident.orders)} detail="Across the selected workflow" /><Metric label="Modeled exposure" value={`$${Math.round(incident.exposure / 1000)}K`} detail={`Range $${Math.round(incident.exposure * .85 / 1000)}K–$${Math.round(incident.exposure * 1.15 / 1000)}K · not verified loss`} /><Metric label="Decision urgency" value={incident.timeRemaining} detail={`${incident.costOfDelay} delay cost · ${incident.nextRequiredAction}`} tone="teal" /></div><Workspace incident={incident} plan={plan} scenario={scenario} role={role} tab={tab} version={version} proposalVersion={proposalVersion} reviewStatus={review?.status ?? 'unreviewed'} blocked={blocked} activities={activities[incident.id] ?? baseActivity} recourses={incidentRecourses} onTab={setTab} onPlan={choosePlan} onEvidence={evidence => setDialog({ kind: 'evidence', evidence })} onReview={openReview} onRecourse={openRecourse} onReceipt={inspectCurrentReceipt} onRefresh={refreshState} onResolve={resolveRecourse} /></>}
+        {route.page === 'incident' && <>{liveState === 'disconnected' && <Notice title="Control Plane unavailable" tone="red">Live INC-1042 data could not be loaded. No fixture fallback is used for the configured API workflow.</Notice>}{liveState === 'loading' && <LoadingState />}{liveState === 'ready' && <Notice title="Live shadow workflow connected" tone="teal">Institutional state and lifecycle records are sourced from the authenticated Control Plane API. Execution remains disabled.</Notice>}<div className="metrics-grid"><Metric label="Commitments at risk" value={String(incident.commitments)} detail="Delivery windows before 16:00 CDT" tone="amber" /><Metric label="Orders affected" value={String(incident.orders)} detail="Across the selected workflow" /><Metric label="Modeled exposure" value={`$${Math.round(incident.exposure / 1000)}K`} detail={`Range $${Math.round(incident.exposure * .85 / 1000)}K–$${Math.round(incident.exposure * 1.15 / 1000)}K · not verified loss`} /><Metric label="Decision urgency" value={incident.timeRemaining} detail={`${incident.costOfDelay} delay cost · ${incident.nextRequiredAction}`} tone="teal" /></div><Workspace incident={incident} plan={plan} scenario={scenario} role={role} tab={tab} version={version} proposalVersion={proposalVersion} reviewStatus={review?.status ?? 'unreviewed'} blocked={blocked} activities={activities[incident.id] ?? baseActivity} recourses={incidentRecourses} onTab={setTab} onPlan={choosePlan} onEvidence={evidence => setDialog({ kind: 'evidence', evidence })} onReview={openReview} onRecourse={openRecourse} onReceipt={inspectCurrentReceipt} onRefresh={refreshState} onResolve={resolveRecourse} /></>}
         {route.page === 'reviews' && <ReviewsPage records={reviews} onOpen={id => navigate('incident', id)} />}
         {route.page === 'outcomes' && <><div className="report-toolbar"><label className="incident-picker">Historical incident<select aria-label="Outcome incident" value={incident.id} onChange={e => navigate('outcomes', e.target.value)}>{incidents.map(i => <option key={i.id} value={i.id}>{i.id} · {i.title}</option>)}</select></label><Badge>Historical fixtures · 23 Sep 2026</Badge></div><ShadowComparison incident={incident} plan={plan} /></>}
         {route.page === 'receipts' && <ReceiptList receipts={receipts} onInspect={receipt => setDialog({ kind: 'receipt', receipt })} />}

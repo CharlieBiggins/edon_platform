@@ -10,7 +10,7 @@ const pg = await loadPg('pg');
 const pool = new pg.Pool({ connectionString: config.databaseUrl, max: 1 });
 await pool.query('SELECT 1');
 const executor = { query: async <T = unknown>(text: string, values?: unknown[]) => { const tenant = values?.[0]; if (typeof tenant === 'string') await pool.query('SELECT set_config($1, $2, false)', ['app.tenant_id', tenant]); return await pool.query(text, values) as { rows: T[] }; } };
-const server = createControlPlaneServer({ profile: config.profile, repositories: new PostgreSQLPlatformRepositories(executor), identityVerifier: new OidcIdentityVerifier(config.oidcIssuer, config.oidcAudience, config.jwksUrl), receiptSigner: new LocalReceiptSigner(config.signingKey), signingKeyMode: 'KMS', tenantIsolation: true, auditLogging: true });
+const server = createControlPlaneServer({ profile: config.profile, repositories: new PostgreSQLPlatformRepositories(executor), identityVerifier: new OidcIdentityVerifier(config.oidcIssuer, config.oidcAudience, config.jwksUrl), receiptSigner: new LocalReceiptSigner(config.signingKey), signingKeyMode: 'KMS', tenantIsolation: true, auditLogging: true, corsOrigin: config.corsOrigin });
 server.listen(config.port, config.host, () => process.stdout.write(`Control Plane API listening on ${config.host}:${config.port}\n`));
 const shutdown = () => server.close(async () => { await pool.end(); process.exit(0); });
 process.on('SIGTERM', shutdown); process.on('SIGINT', shutdown);
