@@ -1,6 +1,9 @@
 import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
 
 const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
+const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
+await mkdir(artifactDir, { recursive: true });
 const started = new Date().toISOString();
 const checks = [];
 async function check(name, path) {
@@ -31,7 +34,5 @@ await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: propo
 const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), 'receipt survives HTTP serialization');
 await check('reconstruction serialization', '/v1/reconstructions/INC-1042');
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
-const artifactDir = process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts';
-await mkdir(artifactDir, { recursive: true });
 await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
 if (!report.passed) process.exitCode = 1;

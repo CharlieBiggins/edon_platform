@@ -29,7 +29,8 @@ jobs:
       API_HOST: 127.0.0.1
       API_PORT: '8787'
       CEREBRUM_API_URL: http://127.0.0.1:8787
-      CEREBRUM_ARTIFACT_DIR: ../artifacts
+      CEREBRUM_ARTIFACT_DIR: ${{ github.workspace }}/artifacts
+      ARTIFACT_DIR: ${{ github.workspace }}/artifacts
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -61,22 +62,22 @@ jobs:
           test "$(psql "$DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records"
       - name: Start temporary OIDC issuer
         run: |
-          mkdir -p artifacts
-          node scripts/oidc-test-issuer.mjs > artifacts/oidc.log 2>&1 & echo $! > artifacts/oidc.pid
+          mkdir -p "$ARTIFACT_DIR"
+          node scripts/oidc-test-issuer.mjs > $ARTIFACT_DIR/oidc.log 2>&1 & echo $! > $ARTIFACT_DIR/oidc.pid
       - name: Start compiled API
         run: |
           set -euo pipefail
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/start.js
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/server.js
-          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api.log 2>&1 &
-          echo $! > artifacts/api.pid
+          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > $ARTIFACT_DIR/api.log 2>&1 &
+          echo $! > $ARTIFACT_DIR/api.pid
           sleep 2
-          if ! kill -0 "$(cat artifacts/api.pid)" 2>/dev/null; then cat artifacts/api.log; exit 1; fi
+          if ! kill -0 "$(cat $ARTIFACT_DIR/api.pid)" 2>/dev/null; then cat $ARTIFACT_DIR/api.log; exit 1; fi
       - name: Wait for readiness
         run: |
           set -euo pipefail
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/healthz >/dev/null && curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
-          cat artifacts/api.log; exit 1
+          cat $ARTIFACT_DIR/api.log; exit 1
       - name: Run HTTP lifecycle validation
         working-directory: command-center
         run: |
@@ -86,19 +87,19 @@ jobs:
           status=$?
           set -e
           if test "$status" -eq 0; then exit 0; fi
-          if test -f ../artifacts/api.log; then cat ../artifacts/api.log; fi
+          if test -f "$ARTIFACT_DIR/api.log"; then cat "$ARTIFACT_DIR/api.log"; fi
           exit "$status"
       - name: Capture durability baseline
         run: |
           set -euo pipefail
           node scripts/durability-validation.mjs
-          PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > artifacts/db-durability-baseline.txt
-          test -s artifacts/db-durability-baseline.txt
-          ! grep -Eq '=0:' artifacts/db-durability-baseline.txt
+          PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-baseline.txt
+          test -s $ARTIFACT_DIR/db-durability-baseline.txt
+          ! grep -Eq '=0:' $ARTIFACT_DIR/db-durability-baseline.txt
       - name: Restart API and verify durability
         run: |
           set -euo pipefail
-          api_pid="$(cat artifacts/api.pid)"
+          api_pid="$(cat $ARTIFACT_DIR/api.pid)"
           if kill "$api_pid" 2>/dev/null; then :; fi
           for i in $(seq 1 30); do
             if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi
@@ -106,19 +107,20 @@ jobs:
           done
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/start.js
           test -f apps/control-plane-api/dist/apps/control-plane-api/src/server.js
-          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restart.log 2>&1 & echo $! > artifacts/api-restart.pid
-          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then break; fi; sleep 1; done
+          node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > $ARTIFACT_DIR/api-restart.log 2>&1 & echo $! > $ARTIFACT_DIR/api-restart.pid
+          ready=0
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
+          if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restart.log; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
-          PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > artifacts/db-durability-restart.txt
-          cmp artifacts/db-durability-baseline.txt artifacts/db-durability-restart.txt
-          cat artifacts/api-restart.log; exit 1
+          PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restart.txt
+          cmp $ARTIFACT_DIR/db-durability-baseline.txt $ARTIFACT_DIR/db-durability-restart.txt
       - name: Backup and restore database
         env:
           PGPASSWORD: validation-only
           PGCONNECT_TIMEOUT: '5'
         run: |
           set -euo pipefail
-          api_pid="$(cat artifacts/api-restart.pid)"
+          api_pid="$(cat $ARTIFACT_DIR/api-restart.pid)"
           kill "$api_pid"
           for i in $(seq 1 30); do if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi; done
           pg_dump \
@@ -127,7 +129,7 @@ jobs:
             -d cerebrum_validation \
             --no-owner \
             --no-acl \
-            > artifacts/backup.sql
+            > $ARTIFACT_DIR/backup.sql
           dropdb \
             --if-exists \
             -h 127.0.0.1 \
@@ -142,7 +144,7 @@ jobs:
             -U cerebrum_admin \
             -d cerebrum_restore \
             -v ON_ERROR_STOP=1 \
-            < artifacts/backup.sql
+            < $ARTIFACT_DIR/backup.sql
           psql \
             -h 127.0.0.1 \
             -U cerebrum_admin \
@@ -150,17 +152,19 @@ jobs:
             -v ON_ERROR_STOP=1 \
             -c "SELECT count(*) FROM journal_events;"
           printf '{"backup":"created","restore":"applied"}\n' \
-            > artifacts/backup-restore.json
-          DATABASE_URL="postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore" node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > artifacts/api-restore.log 2>&1 &
-          echo $! > artifacts/api-restore.pid
-          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then break; fi; sleep 1; done
+            > $ARTIFACT_DIR/backup-restore.json
+          DATABASE_URL="postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore" node apps/control-plane-api/dist/apps/control-plane-api/src/start.js > $ARTIFACT_DIR/api-restore.log 2>&1 &
+          echo $! > $ARTIFACT_DIR/api-restore.pid
+          ready=0
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
+          if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restore.log; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
-          PGPASSWORD=validation-only psql -h 127.0.0.1 -U cerebrum_admin -d cerebrum_restore -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > artifacts/db-durability-restore.txt
-          cmp artifacts/db-durability-baseline.txt artifacts/db-durability-restore.txt
+          PGPASSWORD=validation-only psql -h 127.0.0.1 -U cerebrum_admin -d cerebrum_restore -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restore.txt
+          cmp $ARTIFACT_DIR/db-durability-baseline.txt $ARTIFACT_DIR/db-durability-restore.txt
       - name: Stop services
         if: always()
         run: |
-          for pid_file in artifacts/api.pid artifacts/api-restart.pid artifacts/api-restore.pid artifacts/oidc.pid; do
+          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/oidc.pid; do
             if test -f "$pid_file"; then
               pid="$(cat "$pid_file")"
               if kill -0 "$pid" 2>/dev/null; then kill "$pid" 2>/dev/null; fi
@@ -169,4 +173,4 @@ jobs:
       - name: Upload validation artifacts
         if: always()
         uses: actions/upload-artifact@v4
-        with: { name: staging-validation-artifacts, path: artifacts/, if-no-files-found: error }
+        with: { name: staging-validation-artifacts, path: ${{ github.workspace }}/artifacts/, if-no-files-found: error }

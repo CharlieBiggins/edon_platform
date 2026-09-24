@@ -1,8 +1,11 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { resolve } from 'node:path';
+import { mkdir } from 'node:fs/promises';
 
 const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
-const artifact = process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts';
+const artifact = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
+await mkdir(artifact, { recursive: true });
 const baselinePath = `${artifact}/durability-baseline.json`;
 const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 async function get(path) {
