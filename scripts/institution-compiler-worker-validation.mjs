@@ -1,4 +1,4 @@
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
 import { createHash } from 'node:crypto';
@@ -30,7 +30,10 @@ const runFault = async (fault, suffix, expectDurable) => {
   const fixture = await seed(suffix);
   const worker = spawnWorker(fault, 9000 + checks.length);
   const candidateSql = 'SELECT count(*) FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2';
-  const candidateSeen = await waitFor(() => adminCount(candidateSql, [tenant, fixture.institution]) > 0, 15000);
+  const candidateSeen = await waitFor(async () => {
+    if (await adminCount(candidateSql, [tenant, fixture.institution]) > 0) return true;
+    try { return (await readFile(worker.logPath, 'utf8')).includes('inserted: true'); } catch { return false; }
+  }, 15000);
   if (expectDurable) {
     if (!candidateSeen) fail(`crash ${fault}`, 'candidate was not durable before worker termination');
     await stopWorker(worker);
