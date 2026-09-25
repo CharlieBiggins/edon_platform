@@ -11,6 +11,7 @@ const leaseMs = Math.max(1000, Number(process.env.WORKER_LEASE_MS ?? 30000));
 const maxAttempts = Math.max(1, Number(process.env.WORKER_MAX_ATTEMPTS ?? 5));
 const workerPort = Number(process.env.WORKER_PORT ?? config.port + 1);
 if (!process.env.WORKER_ACTOR_ID) throw new Error('WORKER_ACTOR_ID is required for the server-only worker');
+if (process.env.WORKER_ACTOR_ID === 'operator-01' || process.env.WORKER_ACTOR_TYPE === 'HUMAN') throw new Error('Workers require a distinct service identity');
 
 type PgClient = { query: <T = unknown>(text: string, values?: unknown[]) => Promise<{ rows: T[] }>; release: () => void };
 type PgPool = { query: <T = unknown>(text: string, values?: unknown[]) => Promise<{ rows: T[] }>; connect: () => Promise<PgClient>; end: () => Promise<void> };

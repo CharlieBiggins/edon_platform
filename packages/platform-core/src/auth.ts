@@ -20,13 +20,15 @@ export class OidcIdentityVerifier implements IdentityVerifier {
     const raw = token.slice(7); const parts = raw.split('.'); if (parts.length !== 3) return null;
     const decodeBytes = (value: string) => Uint8Array.from(atob(value.replace(/-/g, '+').replace(/_/g, '/') + '='.repeat((4 - value.length % 4) % 4)), character => character.charCodeAt(0));
     const decode = (value: string) => JSON.parse(new TextDecoder().decode(decodeBytes(value))) as Record<string, unknown>;
-    const head = decode(parts[0]); const claims = decode(parts[1]);
-    if (claims.iss !== this.issuer || claims.aud !== this.audience) return null;
+    let head: Record<string, unknown>; let claims: Record<string, unknown>;
+    try { head = decode(parts[0]); claims = decode(parts[1]); } catch { return null; }
+    if (head.alg !== 'RS256' || head.typ !== 'JWT') return null;
+    if (claims.iss !== this.issuer || !(Array.isArray(claims.aud) ? claims.aud.includes(this.audience) : claims.aud === this.audience)) return null;
     const now = Math.floor(Date.now() / 1000); if (typeof claims.exp !== 'number' || claims.exp <= now || (typeof claims.nbf === 'number' && claims.nbf > now)) return null;
-    await this.loadKeys(); const key = this.keys.get(String(head.kid)); if (!key) return null;
+    await this.loadKeys(); let key = this.keys.get(String(head.kid)); if (!key) { this.loadedAt = 0; await this.loadKeys(); key = this.keys.get(String(head.kid)); } if (!key) return null;
     const valid = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, decodeBytes(parts[2]), new TextEncoder().encode(`${parts[0]}.${parts[1]}`));
     if (!valid || typeof claims.tenant_id !== 'string' || typeof claims.sub !== 'string' || claims.revoked === true) return null;
-    return { tenant_id: claims.tenant_id, actor_id: claims.sub, actor_type: (claims.actor_type as Principal['actor_type']) ?? 'HUMAN', roles: Array.isArray(claims.roles) ? claims.roles.map(String) : [], expires_at: new Date((claims.exp as number) * 1000).toISOString(), active: claims.active !== false };
+    return { tenant_id: claims.tenant_id, actor_id: claims.sub, actor_type: (claims.actor_type as Principal['actor_type']) ?? 'HUMAN', roles: Array.isArray(claims.roles) ? claims.roles.map(String) : [], expires_at: new Date((claims.exp as number) * 1000).toISOString(), active: claims.active !== false && claims.actor_status !== 'DISABLED' };
   }
 }
 
