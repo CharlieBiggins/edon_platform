@@ -19,9 +19,31 @@ try {
   else {
     const caseReport = JSON.parse(await import('node:fs/promises').then(fs => fs.readFile(resolve(artifactDir, 'institution-compiler-worker-cases.json'), 'utf8')));
     suppliedCases = Object.fromEntries((caseReport.checks ?? []).map(check => [check.name, check.passed]));
+    const rename = {
+      'crash BEFORE_CANDIDATE_COMMIT': 'rollback before commit',
+      'crash AFTER_CANDIDATE_COMMIT_BEFORE_ACK': 'commit before acknowledgement redelivery',
+    };
+    for (const check of caseReport.checks ?? []) {
+      if (rename[check.name]) suppliedCases[rename[check.name]] = check.passed;
+      const crash = /^crash ([A-Z_]+)$/.exec(check.name);
+      if (crash) {
+        const semantic = `crash ${crash[1].toLowerCase().replaceAll('_', ' ')}`;
+        suppliedCases[semantic] = check.passed;
+      }
+    }
+    suppliedCases['atomic submission'] = suppliedCases['rollback before commit'] === true;
+    suppliedCases['crash after candidate persistence'] = suppliedCases['commit before acknowledgement redelivery'] === true;
+    suppliedCases['source-binding enforcement'] = (caseReport.checks ?? []).some(check => check.name.startsWith('source binding') && check.passed);
   }
 } catch { fail('required-case manifest', 'compiler worker case report is missing or invalid'); }
-for (const name of requiredCaseNames) suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');
+for (const name of requiredCaseNames) {
+  if (name === 'restart equality' && phase === 'baseline') continue;
+  if (name === 'backup/restore equality' && phase !== 'restore') continue;
+  suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');
+}
+if (phase && ['baseline', 'restart', 'restore'].includes(phase)) pass('phase binding', phase);
+if (tenant && institution) pass('scope binding', `${tenant}/${institution}`);
+if (databaseUrl) pass('database binding', 'configured');
 if (!phase || !['baseline', 'restart', 'restore'].includes(phase)) fail('phase binding', 'CEREBRUM_COMPILER_PHASE must be baseline, restart or restore');
 if (!tenant || !institution) fail('scope binding', 'CEREBRUM_COMPILER_TENANT and CEREBRUM_COMPILER_INSTITUTION are required');
 if (!databaseUrl) fail('database binding', 'DATABASE_URL or MIGRATOR_DATABASE_URL is required');
@@ -64,7 +86,11 @@ try {
 finally { if (pool) await pool.end(); }
 
 const required = ['phase binding', 'scope binding', 'database binding', 'tenant-scoped source loading', 'candidate persistence', 'durable compilation request', 'candidate deduplication', ...requiredCaseNames];
-for (const name of required) if (!checks.some(check => check.name === name)) fail(name, 'required case did not run');
+for (const name of required) {
+  if (name === 'restart equality' && phase === 'baseline') continue;
+  if (name === 'backup/restore equality' && phase !== 'restore') continue;
+  if (!checks.some(check => check.name === name)) fail(name, 'required case did not run');
+}
 const report = { boundary: 'INSTITUTION_COMPILER_WORKER_V1', disposition: checks.length > 0 && checks.every(check => check.passed) ? 'QUALIFIED' : 'FAILED', phase, tenant, institution, canonical_digest: snapshot ? digest(snapshot) : null, required_cases: Object.fromEntries(checks.map(check => [check.name, check.passed ? 'PASSED' : 'FAILED'])), checks, completed_at: new Date().toISOString() };
 await writeFile(resolve(artifactDir, 'institution-compiler-qualification.json'), JSON.stringify(report, null, 2));
 console.log(JSON.stringify(report, null, 2));

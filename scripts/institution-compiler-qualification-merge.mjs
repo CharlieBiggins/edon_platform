@@ -3,7 +3,7 @@ import { resolve } from 'node:path';
 const dir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(dir, { recursive: true });
 const load = async name => JSON.parse(await readFile(resolve(dir, name), 'utf8'));
-const required = ['institution-compiler-worker-cases.json', 'institution-compiler-qualification.json', 'institution-compiler-qualification-restart.json', 'institution-compiler-qualification-restore.json'];
+const required = ['institution-compiler-worker-cases.json', 'institution-compiler-qualification-baseline.json', 'institution-compiler-qualification-restart.json', 'institution-compiler-qualification-restore.json'];
 const cases = [];
 for (const name of required) {
   try { cases.push({ name, report: await load(name), passed: true }); } catch (error) { cases.push({ name, passed: false, error: error instanceof Error ? error.message : String(error) }); }
