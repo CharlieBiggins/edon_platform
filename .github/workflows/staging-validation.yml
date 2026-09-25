@@ -56,6 +56,14 @@ jobs:
           command-center/node_modules/.bin/tsc -p packages/platform-core/tsconfig.json
           command-center/node_modules/.bin/tsc -p packages/platform-testkit/tsconfig.json
           command-center/node_modules/.bin/tsc -p apps/control-plane-api/tsconfig.json
+      - name: Validate KMS custody and break-glass boundaries
+        run: |
+          set -euo pipefail
+          mkdir -p "$ARTIFACT_DIR"
+          node scripts/receipt-breakglass-validation.mjs
+          node scripts/proposal-kernel-review-validation.mjs
+          node scripts/execution-assurance-validation.mjs
+          node scripts/forensic-reconstruction-validation.mjs
       - name: Create database roles
         run: |
           set -euo pipefail
@@ -71,7 +79,8 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases,007_observation_state_lifecycle,008_identity_memberships"
+          psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -c "INSERT INTO actor_memberships (tenant_id,actor_id,role,active,facility_scope,mandate_expires_at) VALUES ('meridian-demo','operator-01','administrator',true,'*','2099-01-01T00:00:00Z') ON CONFLICT (tenant_id,actor_id,role) DO UPDATE SET active=true, mandate_expires_at='2099-01-01T00:00:00Z'"
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases,007_observation_state_lifecycle,008_identity_memberships,009_receipt_custody,010_break_glass,011_receipt_signing_claims,012_execution_assurance,013_institution_sources,014_institution_releases,015_release_lifecycle,016_release_transition_permissions,017_release_version_bigint,018_idempotency_response_permissions"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
@@ -86,6 +95,10 @@ jobs:
           echo "CEREBRUM_DURABILITY_ACTOR=audit-01" >> "$GITHUB_ENV"
           echo "CEREBRUM_DURABILITY_ROLE=auditor" >> "$GITHUB_ENV"
           echo "CEREBRUM_DURABILITY_TENANT=meridian-demo" >> "$GITHUB_ENV"
+          release_token="$(curl -fsS 'http://127.0.0.1:8899/token?role=administrator' | node -e "process.stdin.on('data',d=>process.stdout.write(JSON.parse(d).access_token))")"
+          test -n "$release_token"
+          echo "::add-mask::$release_token"
+          echo "CEREBRUM_RELEASE_TOKEN=$release_token" >> "$GITHUB_ENV"
       - name: Start compiled API
         run: |
           set -euo pipefail
@@ -107,6 +120,55 @@ jobs:
           echo $! > "$ARTIFACT_DIR/worker.pid"
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat "$ARTIFACT_DIR/worker.log"; exit 1
+      - name: Seed release transition acceptance record
+        run: |
+          set -Eeuo pipefail
+          echo "Seeding tenant-scoped release transition record"
+          psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 <<'SQL'
+          INSERT INTO institution_releases
+            (tenant_id,institution_id,release_id,candidate_id,version,status,lifecycle_state,manifest_hash,signature_status,payload)
+          VALUES
+            ('meridian-demo','meridian-logistics','REL-TRANSITION-001','CAND-TRANSITION-001',1,'DRAFT','DRAFT','sha256:release-transition-manifest','SIGNATURE_PENDING','{"compiler_version":"compiler-test-v1","input_source_hashes":["sha256:source-a"],"institutional_ir":{"version":"ir-v1"},"control_graph_diff":{}}'::jsonb)
+          ON CONFLICT (tenant_id,institution_id,release_id) DO NOTHING;
+          SQL
+          echo "CEREBRUM_RELEASE_ID=REL-TRANSITION-001" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_INSTITUTION=meridian-logistics" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_ACTOR=operator-01" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_TENANT=meridian-demo" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_EXPECTED_STATE=DRAFT" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_EXPECTED_VERSION=1" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_NEXT_STATE=EXTRACTED" >> "$GITHUB_ENV"
+          echo "CEREBRUM_MIGRATION_VERSIONS=$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" >> "$GITHUB_ENV"
+          echo "CEREBRUM_POSTGRES_VERSION=$(psql "$MIGRATOR_DATABASE_URL" -At -c "SHOW server_version")" >> "$GITHUB_ENV"
+      - name: Run PostgreSQL rollback-injection qualification
+        run: |
+          set -Eeuo pipefail
+          trap 'rc=$?; for artifact in "$ARTIFACT_DIR/release-transition-fault-validation.json" "$ARTIFACT_DIR/api.log" "$ARTIFACT_DIR/worker.log" "$ARTIFACT_DIR/oidc.log"; do if test -f "$artifact"; then echo "===== $artifact ====="; if [[ "$artifact" == *.json ]]; then cat "$artifact"; else tail -n 200 "$artifact"; fi; fi; done; exit "$rc"' ERR
+          node scripts/release-transition-fault-validation.mjs
+      - name: Run signed-release mutation qualification
+        run: |
+          set -Eeuo pipefail
+          echo "CEREBRUM_CANONICAL_RELEASE_ID=REL-CANONICAL-SIGNED" >> "$GITHUB_ENV"
+          node scripts/release-immutability-validation.mjs
+          node scripts/repository-version-validation.mjs
+      - name: Transition canonical signed release
+        run: |
+          set -Eeuo pipefail
+          now="$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)"
+          jq -n --arg tenant "$CEREBRUM_RELEASE_TENANT" --arg actor "$CEREBRUM_RELEASE_ACTOR" --arg now "$now" '{institution_id:"meridian-logistics",expected_state:"SIGNED",expected_version:1,next_state:"SHADOW",reason:"canonical durability qualification",binding:{tenant_id:$tenant,actor_id:$actor,correlation_id:"canonical-release-transition",trace_id:"canonical-release-trace",idempotency_key:"canonical-release-transition-1",contract_version:"2026-09-24.v1",request_timestamp:$now,evidence_references:[]}}' > "$ARTIFACT_DIR/canonical-transition.json"
+          status="$(curl -sS -o "$ARTIFACT_DIR/canonical-transition-response.json" -w '%{http_code}' -X POST -H "authorization: Bearer $CEREBRUM_RELEASE_TOKEN" -H 'content-type: application/json' --data-binary @"$ARTIFACT_DIR/canonical-transition.json" "$CEREBRUM_API_URL/v1/institution-releases/$CEREBRUM_CANONICAL_RELEASE_ID/transition")"
+          if [[ "$status" != 2* ]]; then
+            echo "::error::Canonical transition failed with HTTP $status"
+            cat "$ARTIFACT_DIR/canonical-transition-response.json"
+            exit 1
+          fi
+      - name: Capture canonical release digest
+        run: |
+          set -Eeuo pipefail
+          CEREBRUM_DIGEST_OUTPUT=release-digest-baseline.json node scripts/release-digest.mjs
+      - name: Run release transition qualification
+        working-directory: command-center
+        run: npm run test:release-transition
       - name: Run validation
         working-directory: command-center
         shell: bash
@@ -212,6 +274,10 @@ jobs:
             exit "$rc"' ERR
           echo "Stopping API before restart durability verification"
           api_pid="$(cat $ARTIFACT_DIR/api.pid)"
+          worker_pid="$(cat $ARTIFACT_DIR/worker.pid)"
+          if kill "$worker_pid" 2>/dev/null; then
+            for i in $(seq 1 30); do if kill -0 "$worker_pid" 2>/dev/null; then sleep 1; else break; fi; done
+          fi
           if kill "$api_pid" 2>/dev/null; then :; fi
           for i in $(seq 1 30); do
             if kill -0 "$api_pid" 2>/dev/null; then sleep 1; else break; fi
@@ -224,7 +290,13 @@ jobs:
           ready=0
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
           if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restart.log; exit 1; fi
+          node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/worker-restart.log" 2>&1 & echo $! > "$ARTIFACT_DIR/worker-restart.pid"
+          worker_ready=0
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then worker_ready=1; break; fi; sleep 1; done
+          if test "$worker_ready" -ne 1; then cat "$ARTIFACT_DIR/worker-restart.log"; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
+          CEREBRUM_DIGEST_OUTPUT=release-digest-restart.json node scripts/release-digest.mjs
+          diff -u "$ARTIFACT_DIR/release-digest-baseline.json" "$ARTIFACT_DIR/release-digest-restart.json"
           PGOPTIONS='-c app.tenant_id=meridian-demo' PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions WHERE proposal_id='PROP-1042' UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes WHERE payload->>'proposal_id'='PROP-1042' UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restart.txt
           echo "Comparing restart durability snapshot"
           if ! diff -u "$ARTIFACT_DIR/db-durability-baseline.txt" "$ARTIFACT_DIR/db-durability-restart.txt"; then echo "::error::Database durability snapshot changed after restart"; exit 1; fi
@@ -280,13 +352,19 @@ jobs:
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
           if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restore.log; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
+          CEREBRUM_DIGEST_DB_URL="postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore" CEREBRUM_DIGEST_OUTPUT=release-digest-restore.json node scripts/release-digest.mjs
+          diff -u "$ARTIFACT_DIR/release-digest-baseline.json" "$ARTIFACT_DIR/release-digest-restore.json"
           PGPASSWORD=validation-only psql -h 127.0.0.1 -U cerebrum_admin -d cerebrum_restore -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions WHERE proposal_id='PROP-1042' UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes WHERE payload->>'proposal_id'='PROP-1042' UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restore.txt
           echo "Comparing restored database durability snapshot"
           if ! diff -u "$ARTIFACT_DIR/db-durability-baseline.txt" "$ARTIFACT_DIR/db-durability-restore.txt"; then echo "::error::Database durability snapshot changed after restore"; exit 1; fi
+      - name: Merge release-transition qualification
+        run: |
+          set -Eeuo pipefail
+          node scripts/release-qualification-merge.mjs
       - name: Stop services
         if: always()
         run: |
-          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/worker.pid $ARTIFACT_DIR/oidc.pid; do
+          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/worker.pid $ARTIFACT_DIR/worker-restart.pid $ARTIFACT_DIR/oidc.pid; do
             if test -f "$pid_file"; then
               pid="$(cat "$pid_file")"
               if kill -0 "$pid" 2>/dev/null; then kill "$pid" 2>/dev/null; fi

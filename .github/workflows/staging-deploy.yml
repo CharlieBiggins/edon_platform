@@ -1,0 +1,100 @@
+name: persistent-staging-deploy
+on:
+  workflow_dispatch:
+    inputs:
+      plan_approved:
+        description: 'Set true only after reviewing the immutable Terraform audit artifact'
+        required: true
+        type: boolean
+permissions:
+  id-token: write
+  contents: read
+env:
+  AWS_REGION: ${{ vars.CEREBRUM_AWS_REGION }}
+  CEREBRUM_AWS_REGION: ${{ vars.CEREBRUM_AWS_REGION }}
+  CEREBRUM_CONTAINER_IMAGE: ${{ vars.CEREBRUM_CONTAINER_IMAGE }}
+  CEREBRUM_WORKER_IMAGE: ${{ vars.CEREBRUM_WORKER_IMAGE }}
+  CEREBRUM_OIDC_ISSUER: ${{ vars.CEREBRUM_OIDC_ISSUER }}
+  CEREBRUM_OIDC_AUDIENCE: ${{ vars.CEREBRUM_OIDC_AUDIENCE }}
+  CEREBRUM_JWKS_URL: ${{ vars.CEREBRUM_JWKS_URL }}
+  CEREBRUM_CERTIFICATE_ARN: ${{ vars.CEREBRUM_CERTIFICATE_ARN }}
+  TF_VAR_aws_region: ${{ vars.CEREBRUM_AWS_REGION }}
+  TF_VAR_github_repository: ${{ github.repository }}
+jobs:
+  deploy:
+    if: vars.CEREBRUM_STAGING_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.CEREBRUM_DEPLOY_ROLE_ARN }}
+          aws-region: ${{ vars.CEREBRUM_AWS_REGION }}
+          role-session-name: cerebrum-staging-${{ github.run_id }}
+      - uses: hashicorp/setup-terraform@v3
+      - name: Validate required staging configuration
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          test "${{ inputs.plan_approved }}" = "true" || { echo "::error::Terraform plan has not been reviewed"; exit 1; }
+          required=(CEREBRUM_AWS_REGION CEREBRUM_CONTAINER_IMAGE CEREBRUM_WORKER_IMAGE CEREBRUM_OIDC_ISSUER CEREBRUM_OIDC_AUDIENCE CEREBRUM_JWKS_URL CEREBRUM_CERTIFICATE_ARN)
+          for name in "${required[@]}"; do test -n "${!name:-}" || { echo "::error::Missing $name"; exit 1; }; done
+      - name: Terraform apply
+        working-directory: infra/aws/staging
+        env:
+          TF_VAR_container_image: ${{ vars.CEREBRUM_CONTAINER_IMAGE }}
+          TF_VAR_worker_image: ${{ vars.CEREBRUM_WORKER_IMAGE }}
+          TF_VAR_oidc_issuer: ${{ vars.CEREBRUM_OIDC_ISSUER }}
+          TF_VAR_oidc_audience: ${{ vars.CEREBRUM_OIDC_AUDIENCE }}
+          TF_VAR_jwks_url: ${{ vars.CEREBRUM_JWKS_URL }}
+          TF_VAR_certificate_arn: ${{ vars.CEREBRUM_CERTIFICATE_ARN }}
+          TF_VAR_route53_zone_id: ${{ vars.CEREBRUM_ROUTE53_ZONE_ID }}
+          TF_VAR_staging_hostname: ${{ vars.CEREBRUM_STAGING_HOSTNAME }}
+        run: |
+          terraform init -input=false
+          terraform validate
+          terraform apply -input=false -auto-approve
+      - name: Run dedicated migrations
+        run: |
+          set -Eeuo pipefail
+          cd infra/aws/staging
+          task_definition="$(terraform output -raw migrator_task_definition)"
+          subnet_json="$(terraform output -json private_subnet_ids)"
+          security_group="$(terraform output -raw api_security_group_id)"
+          network_config="$(jq -cn --argjson subnets "$subnet_json" --arg sg "$security_group" '{awsvpcConfiguration:{subnets:$subnets,securityGroups:[$sg],assignPublicIp:"DISABLED"}}')"
+          task_arn="$(aws ecs run-task --cluster cerebrum-staging --launch-type FARGATE --task-definition "$task_definition" --network-configuration "$network_config" --query 'tasks[0].taskArn' --output text)"
+          aws ecs wait tasks-stopped --cluster cerebrum-staging --tasks "$task_arn"
+          exit_code="$(aws ecs describe-tasks --cluster cerebrum-staging --tasks "$task_arn" --query 'tasks[0].containers[0].exitCode' --output text)"
+          test "$exit_code" = "0" || { echo "::error::Migration task failed with exit $exit_code"; exit 1; }
+      - name: Deploy API and worker after successful migration
+        working-directory: infra/aws/staging
+        env:
+          TF_VAR_api_desired_count: '2'
+          TF_VAR_worker_desired_count: '1'
+        run: terraform apply -input=false -auto-approve
+      - name: Managed staging qualification
+        env:
+          CEREBRUM_STAGING_ENABLED: 'true'
+          CEREBRUM_STAGING_URL: ${{ vars.CEREBRUM_STAGING_URL }}
+          CEREBRUM_API_URL: ${{ vars.CEREBRUM_STAGING_URL }}
+          CEREBRUM_AUTH_TOKEN: ${{ secrets.CEREBRUM_STAGING_OPERATOR_TOKEN }}
+          CEREBRUM_DURABILITY_TOKEN: ${{ secrets.CEREBRUM_STAGING_AUDITOR_TOKEN }}
+          CEREBRUM_ARTIFACT_DIR: ${{ github.workspace }}/artifacts
+        run: |
+          set -Eeuo pipefail
+          test -n "$CEREBRUM_STAGING_URL"
+          curl --fail --silent --show-error "$CEREBRUM_STAGING_URL/healthz" >/dev/null
+          curl --fail --silent --show-error "$CEREBRUM_STAGING_URL/readyz" >/dev/null
+          test -n "$CEREBRUM_AUTH_TOKEN"
+          test -n "$CEREBRUM_DURABILITY_TOKEN"
+          npm ci --prefix command-center
+          node scripts/staging-validation.mjs
+          node scripts/staging-qualification-report.mjs
+      - name: Upload staging qualification report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: managed-staging-qualification-${{ github.run_id }}
+          path: artifacts/
+          if-no-files-found: warn

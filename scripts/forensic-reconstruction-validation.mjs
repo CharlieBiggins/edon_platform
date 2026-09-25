@@ -1,0 +1,24 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
+import { InMemoryPlatformRepositories } from '../apps/control-plane-api/dist/packages/platform-core/src/repositories.js';
+import { ForensicReconstructionService } from '../apps/control-plane-api/dist/packages/platform-core/src/reconstruction.js';
+import { KmsReceiptCustody, DeterministicKmsProvider, canonicalize } from '../apps/control-plane-api/dist/packages/platform-core/src/receipt-custody.js';
+
+const checks = []; const check = (name, passed, detail = '') => { checks.push({ name, passed, detail }); if (!passed) throw new Error(`${name}: ${detail}`); };
+const repos = new InMemoryPlatformRepositories();
+const event = (id, type, recorded_at, payload = {}) => ({ event_id: id, tenant_id: 'meridian-demo', event_type: type, actor_id: 'operator-01', actor_type: 'HUMAN', scope_id: 'memphis-fulfillment', incident_id: 'INC-1042', occurred_at: recorded_at, observed_at: recorded_at, available_to_controller_at: recorded_at, recorded_at, correlation_id: 'corr-1042', trace_id: 'trace-1042', state_version_before: 141, state_version_after: 142, policy_version: 'POL-LOG-07 v18', payload, payload_hash: `sha256:${id}`, previous_record_hash: 'sha256:previous', signature: 'simulated', simulated: true });
+await repos.appendEvent(event('evt-observation', 'OBSERVATION_RECEIVED', '2026-09-24T10:00:00.000Z', { evidence_status: 'reported' }));
+await repos.appendEvent(event('evt-proposal', 'PROPOSAL_CREATED', '2026-09-24T10:05:00.000Z', { proposal_hash: 'sha256:proposal' }));
+const signer = new KmsReceiptCustody(new DeterministicKmsProvider(), 'kms-test-key');
+const service = new ForensicReconstructionService(repos, signer);
+const before = await service.reconstruct('meridian-demo', { caseId: 'INC-1042', cutoff: '2026-09-24T10:01:00.000Z', legalHold: true });
+check('point-in-time replay', before.events.length === 1);
+const pkg = await service.exportPackage('meridian-demo', { caseId: 'INC-1042', legalHold: true });
+const repeat = await service.exportPackage('meridian-demo', { caseId: 'INC-1042', legalHold: true });
+check('canonical export repeatable', pkg.manifest.files['timeline.jsonl'] === repeat.manifest.files['timeline.jsonl']);
+check('restricted evidence omission explicit', pkg.manifest.omissions.length === 1);
+check('manifest signature verifies', await signer.verify(canonicalize(pkg.manifest), pkg.signature.signature, pkg.signature.key_id, pkg.signature.key_version));
+const tampered = `${pkg.files['timeline.jsonl']}tamper`;
+check('tampering changes file digest', pkg.manifest.files['timeline.jsonl'] !== `sha256:${createHash('sha256').update(tampered).digest('hex')}`);
+await mkdir(process.env.ARTIFACT_DIR ?? 'artifacts', { recursive: true });
+await writeFile(`${process.env.ARTIFACT_DIR ?? 'artifacts'}/forensic-reconstruction-validation.json`, JSON.stringify({ checks, status: 'passed', files: Object.keys(pkg.files) }, null, 2));

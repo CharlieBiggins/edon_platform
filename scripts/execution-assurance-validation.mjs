@@ -1,0 +1,27 @@
+import { InMemoryPlatformRepositories } from '../apps/control-plane-api/dist/packages/platform-core/src/repositories.js';
+import { ShadowExecutionAssurance } from '../apps/control-plane-api/dist/packages/platform-core/src/execution-assurance.js';
+
+const checks = [];
+const check = (name, passed, detail = '') => { checks.push({ name, passed, detail }); if (!passed) throw new Error(`${name}: ${detail}`); };
+const repos = new InMemoryPlatformRepositories();
+const assurance = new ShadowExecutionAssurance(repos);
+const command = await assurance.create({ tenant_id: 'meridian-demo', command_id: 'cmd-validation', incident_id: 'INC-1042', proposal_id: 'PROP-1042', authorization_id: 'DEC-1042', proposal_hash: 'sha256:proposal', state_version: 142, external_idempotency_key: 'ext-1042', connector: 'tms', resource: 'nashville-capacity', credential_scope: 'NONE', dispatch_requested_at: '2026-09-24T10:42:00.000Z', expires_at: '2099-01-01T00:00:00.000Z' });
+check('command pending', command.status === 'DISPATCH_PENDING');
+const rejected = await assurance.dispatch(command);
+check('shadow dispatch rejected', rejected.status === 'DISPATCH_REJECTED');
+const acknowledged = await assurance.transition(rejected, 'DISPATCH_REJECTED', 'RECONCILIATION_REQUIRED', { reason: 'governed reconciliation' }).catch(() => null);
+check('invalid transition rejected', acknowledged === null);
+const live = await assurance.create({ ...command, command_id: 'cmd-live', external_idempotency_key: 'ext-live' });
+const dispatched = await assurance.transition(live, 'DISPATCH_PENDING', 'DISPATCHED', { external_idempotency_key: live.external_idempotency_key });
+const ack = await assurance.transition(dispatched, 'DISPATCHED', 'ACKNOWLEDGED', { external_reference: 'carrier-ack-1' });
+const duplicateAck = await assurance.transition(ack, 'ACKNOWLEDGED', 'ACKNOWLEDGED', {}).catch(() => null);
+check('duplicate acknowledgement rejected', duplicateAck === null);
+const reported = await assurance.transition(ack, 'ACKNOWLEDGED', 'OUTCOME_REPORTED', { completion: 'partial' });
+const partial = await assurance.transition(reported, 'OUTCOME_REPORTED', 'PARTIALLY_COMPLETED', { completed_units: 260, remaining_units: 220 });
+const compensation = await assurance.transition(partial, 'PARTIALLY_COMPLETED', 'COMPENSATION_REQUIRED', { reason: 'remaining capacity' });
+check('partial completion and compensation explicit', compensation.status === 'COMPENSATION_REQUIRED');
+const transitions = await repos.listExecutionTransitions('meridian-demo', command.command_id);
+const liveTransitions = await repos.listExecutionTransitions('meridian-demo', live.command_id);
+check('transitions durable', transitions.length === 2 && liveTransitions.length === 6);
+check('tenant isolation', (await repos.getExecution('other-tenant', live.command_id)) === null);
+await import('node:fs/promises').then(fs => fs.mkdir(process.env.ARTIFACT_DIR ?? 'artifacts', { recursive: true }).then(() => fs.writeFile(`${process.env.ARTIFACT_DIR ?? 'artifacts'}/execution-assurance-validation.json`, JSON.stringify({ checks, status: 'passed' }, null, 2))));

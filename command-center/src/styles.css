@@ -608,3 +608,134 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{width:100%;min-width:0}
 .ask-main-workspace[data-layout="chat-focus"] .context-drawer-backdrop{overflow:hidden}
 @media(max-width:900px){.ask-main-workspace[data-layout="chat-focus"]{grid-template-columns:minmax(0,1fr) 64px}.ask-main-workspace[data-layout="chat-focus"] .context-drawer{width:calc(100vw - 64px)!important;max-width:none}.ask-main-workspace[data-layout="chat-focus"]>.context-drawer-backdrop{inset:0 64px 0 0}}
+
+/* Chat Focus: full-page institutional conversation with an overlay context rail. */
+.ask-main-workspace[data-layout="chat-focus"]{grid-template-columns:minmax(0,1fr) 64px!important;grid-template-rows:minmax(0,1fr);min-height:0;height:100%;gap:0;position:relative;overflow:hidden}
+.ask-shell.ask-full,.ask-shell.ask-full .ask-main-workspace,.ask-shell.ask-full .ask-workspace{overflow-x:hidden}
+.ask-shell.ask-full .workspace-boundary{display:flex;align-items:center;gap:14px;min-height:34px;padding:5px 18px;border-bottom:1px solid #e5d19d;font-size:12px}
+.ask-shell.ask-full .workspace-incident-header{display:flex;align-items:center;gap:22px;min-height:62px;padding:8px 18px;border-bottom:1px solid var(--line);background:var(--wash)}
+.ask-shell.ask-full .workspace-incident-header>div:first-child{display:flex;align-items:baseline;gap:10px;min-width:0;flex:1}.ask-shell.ask-full .workspace-incident-header h2{margin:0;font-size:18px;white-space:nowrap}.ask-shell.ask-full .workspace-incident-header p{margin:0;font-size:12px;white-space:nowrap}.ask-shell.ask-full .incident-header-status{display:flex;align-items:center;gap:12px;white-space:nowrap}.ask-shell.ask-full .incident-header-actions{display:flex;align-items:center;gap:8px;white-space:nowrap}.ask-shell.ask-full .incident-header-actions button{min-height:40px}
+.ask-main-workspace[data-layout="chat-focus"]>.workspace-split-toolbar{display:none}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace{display:grid!important;grid-column:1;grid-row:1;grid-template-columns:minmax(0,1fr)!important;min-width:0;width:100%;height:100%;overflow:hidden}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-conversation{display:grid;grid-template-rows:auto minmax(0,1fr) auto;grid-column:1;grid-row:1;width:100%!important;max-width:none!important;min-width:0;height:100%;overflow:hidden}
+.ask-main-workspace[data-layout="chat-focus"] .ask-conversation-header{display:flex;align-items:center;min-height:48px;padding:8px clamp(18px,4vw,64px);border-bottom:1px solid var(--line);background:var(--surface);gap:16px}
+.ask-main-workspace[data-layout="chat-focus"] .ask-conversation-header>div:first-child{display:flex;align-items:baseline;gap:12px;min-width:0}
+.ask-main-workspace[data-layout="chat-focus"] .ask-conversation-header>div:first-child strong{font-size:16px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ask-main-workspace[data-layout="chat-focus"] .ask-conversation-header>div:nth-child(2){display:none}
+.ask-main-workspace[data-layout="chat-focus"] .ask-messages{width:100%;max-width:none!important;padding:28px clamp(18px,10vw,10%);overflow-y:auto;overflow-x:hidden;scrollbar-gutter:stable}
+.ask-main-workspace[data-layout="chat-focus"] .ask-message{width:min(1280px,80vw);max-width:100%;margin-left:auto;margin-right:auto;overflow-wrap:anywhere}
+.ask-main-workspace[data-layout="chat-focus"] .ask-message.user{max-width:min(100%,900px)}
+.ask-main-workspace[data-layout="chat-focus"] .ask-object,.ask-main-workspace[data-layout="chat-focus"] .ask-message .answer-provenance{width:100%;max-width:1280px;margin-left:auto;margin-right:auto}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{position:sticky;bottom:0;z-index:4;width:100%;min-width:0;padding:8px clamp(18px,4vw,64px) 10px;background:color-mix(in srgb,var(--surface) 96%,transparent);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-actions{display:flex;gap:8px;overflow-x:auto;white-space:nowrap;margin:0 0 6px;scrollbar-width:none}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-actions::-webkit-scrollbar{display:none}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-actions button{display:inline-flex;align-items:center;gap:6px;min-height:36px;padding:7px 11px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);white-space:nowrap}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer{min-height:88px;height:auto;padding:10px 52px 10px 14px}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer textarea{min-height:58px;font-size:16px!important;line-height:1.5}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer>button{width:44px;height:44px;right:14px;top:17px}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer>small{font-size:12px!important}
+.ask-main-workspace[data-layout="chat-focus"] .ask-prompt-list{max-height:44px;margin:0 0 6px;padding:0;overflow-x:auto;overflow-y:hidden}
+.ask-main-workspace[data-layout="chat-focus"] .ask-prompt-list button{min-height:36px}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail{grid-column:2;grid-row:1;position:static;width:64px;min-width:64px;height:100%;display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 8px;overflow:visible;background:var(--surface);border-left:1px solid var(--line);z-index:7}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button{position:relative;width:48px;min-width:48px;height:48px;min-height:44px;padding:0;display:grid;place-items:center;border:0;border-radius:7px;background:transparent;color:var(--muted)}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button:hover,.ask-main-workspace[data-layout="chat-focus"] .context-rail button:focus-visible{background:var(--wash);color:var(--teal);outline:2px solid var(--teal);outline-offset:2px}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button span{display:none!important}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail button i{position:absolute;top:1px;right:1px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:#e9b567;color:#362512;font-size:11px;font-style:normal;line-height:17px;text-align:center}
+.ask-main-workspace[data-layout="chat-focus"] .context-rail-restore{margin-top:auto!important}
+.ask-main-workspace[data-layout="chat-focus"]>.context-drawer-backdrop{position:absolute;inset:0 64px 0 0;z-index:20;display:flex;justify-content:flex-end;overflow:hidden;background:#17383b20}
+.ask-main-workspace[data-layout="chat-focus"] .context-drawer{width:clamp(480px,38vw,560px)!important;max-width:calc(100vw - 64px);height:100%;margin:0;border-radius:0;border-top:0;border-bottom:0;box-shadow:-16px 0 36px #17383b24}
+.ask-shell.ask-full .decision-rail{min-height:64px;height:64px;padding:8px 18px;display:flex;align-items:center;gap:18px;overflow:hidden}
+.ask-shell.ask-full .decision-rail>div{display:flex;align-items:baseline;gap:8px;white-space:nowrap}.ask-shell.ask-full .decision-rail dl{display:flex;gap:16px;margin:0;flex:1}.ask-shell.ask-full .decision-rail dl div{display:flex;align-items:baseline;gap:6px;white-space:nowrap}.ask-shell.ask-full .decision-rail dt{font-size:11px}.ask-shell.ask-full .decision-rail dd{font-size:14px}
+@media(max-width:900px){.ask-main-workspace[data-layout="chat-focus"] .ask-messages{padding-left:14px;padding-right:14px}.ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{padding-left:10px;padding-right:10px}.ask-main-workspace[data-layout="chat-focus"] .ask-message{width:100%}.ask-main-workspace[data-layout="chat-focus"] .context-drawer{width:calc(100vw - 64px)!important}.ask-shell.ask-full .decision-rail{height:64px;min-height:64px}.ask-shell.ask-full .decision-rail dl{gap:8px}.ask-shell.ask-full .decision-rail dl div:nth-child(n+3){display:none}}
+
+/* Compressed Chat Focus chrome: preserve readable content while reclaiming vertical space. */
+.ask-shell.ask-full .ask-header{height:60px;min-height:60px;padding:0 18px}
+.ask-shell.ask-full .ask-brand strong{font-size:19px;line-height:1;letter-spacing:.8px}
+.ask-shell.ask-full .ask-brand small{font-size:11px;margin-top:3px}
+.ask-shell.ask-full .ask-brand>span{width:30px;height:30px}
+.ask-shell.ask-full .workspace-boundary{height:34px;min-height:34px;padding:0 18px;gap:12px;font-size:11px}
+.ask-shell.ask-full .workspace-boundary strong{font-size:10px;padding:3px 6px}
+.ask-shell.ask-full .workspace-boundary b{font-size:11px}
+.ask-shell.ask-full .workspace-boundary span{font-size:11px;padding-left:10px}
+.ask-shell.ask-full .workspace-incident-header{height:64px;min-height:64px;padding:0 18px;gap:14px;overflow:hidden}
+.ask-shell.ask-full .workspace-incident-header>div:first-child{gap:8px;white-space:nowrap}
+.ask-shell.ask-full .workspace-incident-header .eyebrow{font-size:10px!important;letter-spacing:.7px}
+.ask-shell.ask-full .workspace-incident-header h2{font-size:16px!important;line-height:1.1}
+.ask-shell.ask-full .workspace-incident-header p,.ask-shell.ask-full .incident-header-status>span,.ask-shell.ask-full .incident-header-actions>span{font-size:11px!important;line-height:1.2}
+.ask-shell.ask-full .incident-header-status{gap:8px;flex:none}
+.ask-shell.ask-full .incident-header-actions{gap:6px;flex:none}
+.ask-shell.ask-full .incident-header-actions button{min-height:44px;padding:8px 10px;font-size:12px}
+.ask-shell.ask-full .ask-conversation-header{height:40px;min-height:40px;padding:0 18px}
+.ask-shell.ask-full .ask-conversation-header>div:first-child strong{font-size:13px!important;line-height:1}
+.ask-shell.ask-full .ask-conversation-header .eyebrow{font-size:10px!important}
+.ask-shell.ask-full .ask-main-workspace{grid-template-rows:minmax(0,1fr)!important}
+.ask-shell.ask-full .decision-rail{height:64px;min-height:64px;padding:0 18px;gap:14px}
+
+/* Shared navigation refinements: readable targets with an optional icon rail. */
+.nav-item{min-height:42px;padding-top:9px;padding-bottom:9px;font-size:13px}
+.sidebar-collapse{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;margin-left:auto;color:#9ab1aa;border:1px solid transparent;border-radius:5px}
+.sidebar-collapse:hover{background:#223c43;color:#eef5f1}
+.sidebar-collapse:focus-visible{outline:3px solid #4baea0;outline-offset:2px}
+.app-shell.sidebar-collapsed{grid-template-columns:72px minmax(0,1fr)}
+.app-shell.sidebar-collapsed .sidebar{width:72px;padding-left:10px;padding-right:10px}
+.sidebar.collapsed .brand{justify-content:center;padding-left:0;padding-right:0}
+.sidebar.collapsed .brand>div,.sidebar.collapsed .institution-switch>span:nth-child(2),.sidebar.collapsed .institution-switch>svg,.sidebar.collapsed .nav-label,.sidebar.collapsed .nav-item>span,.sidebar.collapsed .nav-item>small,.sidebar.collapsed .pilot-card,.sidebar.collapsed .help-button,.sidebar.collapsed .profile>div:not(.avatar){display:none}
+.sidebar.collapsed .institution-switch{justify-content:center;padding:9px;margin-bottom:20px}
+.sidebar.collapsed .nav-item{justify-content:center;padding-left:0;padding-right:0;gap:0}
+.sidebar.collapsed .nav-group{margin-bottom:18px}
+.sidebar.collapsed .sidebar-collapse{margin-left:0}
+.sidebar.collapsed .profile{justify-content:center;padding-left:0;padding-right:0}
+.sidebar.collapsed .profile .avatar{margin:0}
+@media(max-width:899px){.app-shell.sidebar-collapsed{display:block}.sidebar.collapsed{width:72px}.sidebar.collapsed.open{transform:translateX(0)}.sidebar-collapse{display:none}.sidebar:not(.collapsed) .sidebar-collapse{display:inline-flex}}
+
+/* The launcher sits lightly over the page when idle; the open workspace retains its own surface. */
+.ask-launcher{background:transparent;border-color:transparent;box-shadow:none;color:#1f5f50;padding:8px 10px}
+.ask-launcher:hover,.ask-launcher:focus-visible{background:#e8f2ed;border-color:#b9d8c9;box-shadow:0 6px 18px #18372b18}
+.ask-launcher small{color:#55786a}
+.ask-launcher svg{color:#398b72}
+.sidebar.collapsed nav{display:block;visibility:visible}
+.sidebar.collapsed .nav-item svg{display:block;visibility:visible;color:#9abdb0}
+.sidebar.collapsed .nav-item.active svg{color:#9bd1bc}
+.app-shell.sidebar-collapsed .app-main{padding-left:24px}
+.app-shell.sidebar-collapsed .topbar,.app-shell.sidebar-collapsed .simulation-banner,.app-shell.sidebar-collapsed .demo-toolbar{padding-left:24px}
+/* Keep the transparent launcher discoverable with a clear action outline. */
+.ask-launcher{border:1px solid #78aa98}
+.ask-launcher:hover,.ask-launcher:focus-visible{border-color:#398b72}
+.logout-button{display:flex;align-items:center;gap:8px;width:100%;padding:10px 9px;color:#a9bfbd;font-size:11px;border-top:1px solid #31474d;margin-top:4px;text-align:left}
+.logout-button:hover{color:#f0f7f3;background:#223c43;border-radius:5px}
+.logout-button:focus-visible{outline:3px solid #4baea0;outline-offset:2px}
+.sidebar.collapsed .logout-button{justify-content:center;padding-left:0;padding-right:0;border-top:0}
+.sidebar.collapsed .logout-button span{display:none}
+
+.builder-release-summary{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 15px;margin:0 0 18px;border:1px solid #d9e4da;border-radius:6px;background:#f8faf7;color:#526a59;font-size:11px}.builder-release-summary strong{color:#2e5946;font-size:13px}.builder-release-summary>span{padding-left:10px;border-left:1px solid #d3ded4}.builder-stage-group{padding:12px 0 4px}.builder-stage-group+.builder-stage-group{border-top:1px solid #e5ebe4}.builder-stage-heading{display:block;padding:0 15px 8px;color:#819184;font-size:9px;font-weight:700;letter-spacing:1.3px}.builder-nav{padding:0 0 10px}.builder-nav .builder-stage-group button{display:grid;grid-template-columns:20px 24px minmax(0,1fr) 15px;align-items:center;gap:7px;width:100%;min-height:42px;padding:8px 15px;border-left:3px solid transparent;text-align:left;color:#65796b;font-size:11px}.builder-nav .builder-stage-group button:hover{background:#f1f6f1;color:#2d6b56}.builder-nav .builder-stage-group button.active{background:#edf6ef;border-left-color:#4b9b79;color:#205e4b;font-weight:650}.builder-stage-status{display:grid;place-items:center;width:18px;height:18px;color:#6a9d7d}.builder-stage-status.attention{color:#bf8c3e}.builder-stage-status.locked{color:#a0aaa1}.builder-stage-status.available{color:#6f8790}.builder-stage-index{color:#9aa69b;font-size:10px;font-variant-numeric:tabular-nums}.builder-nav button>svg{margin-left:auto;color:#9aa89d}.builder-record{display:flex;align-items:center;gap:10px;padding:12px 20px;border-top:1px solid #edf1eb}.builder-record>span{flex:1;min-width:0}.builder-record strong,.builder-record small{display:block}.builder-record strong{font-size:11px}.builder-record small{margin-top:4px;color:#849286;font-size:9px}
+/* Assurance page polish: keep status cards compact and balanced at desktop widths. */
+.assurance-metric-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.assurance-register-grid{align-items:stretch}
+.assurance-register-grid>.panel{height:100%;min-width:0}
+.register-status>.badge{justify-self:start;width:max-content}
+.register-status strong{line-height:1.35}
+.assurance-register-grid .validation-item{padding:16px 20px;align-items:flex-start}
+.assurance-register-grid .validation-item>svg{margin-top:2px;flex:none}
+.assurance-register-grid .validation-item strong{line-height:1.35}
+.assurance-register-grid .validation-item small{line-height:1.5}
+.assurance-register-actions{align-items:center;margin-top:2px}
+@media(max-width:1100px){.assurance-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.assurance-metric-grid{grid-template-columns:1fr}}
+/* Keep the send control beside the input instead of layering it over the text field. */
+.ask-composer{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:start}
+.ask-composer textarea{grid-column:1;padding-right:14px}
+.ask-composer>button{position:static;grid-column:2;grid-row:1;margin-top:7px;flex:none}
+.ask-composer>small{grid-column:1/-1}
+@media(max-width:520px){.ask-composer{grid-template-columns:minmax(0,1fr) 40px}.ask-composer>button{width:40px!important;height:40px!important}}
+/* Compact assurance register cards without artificial empty height. */
+.assurance-register-grid>.panel{height:auto;align-self:start}
+.register-status{grid-template-columns:auto minmax(0,1fr);column-gap:14px;align-items:start;padding:2px 0 4px}
+.register-status>.badge{grid-row:1 / span 2;align-self:start;margin-top:2px}
+.register-status strong{font-size:15px;line-height:1.4}
+.register-status small{line-height:1.5}
+.assurance-register-grid>.panel .panel-heading{padding-bottom:13px}
+.history-row{align-items:flex-start;gap:12px;padding:14px 20px;background:#fff}
+.history-row+ .history-row{border-top:1px solid #edf1eb}
+.history-row>svg{width:17px;height:17px;margin-top:1px;color:#668376;padding:2px;border-radius:50%;background:#edf4ef;box-sizing:content-box}
+.history-row strong{font-size:11px;line-height:1.4}
+.history-row small{font-size:10px;line-height:1.45}

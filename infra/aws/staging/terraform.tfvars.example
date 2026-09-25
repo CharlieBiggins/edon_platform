@@ -1,0 +1,14 @@
+aws_region = "us-east-1"
+name = "cerebrum-staging"
+container_image = "123456789012.dkr.ecr.us-east-1.amazonaws.com/cerebrum-api:RELEASE"
+worker_image = "123456789012.dkr.ecr.us-east-1.amazonaws.com/cerebrum-api:RELEASE"
+oidc_issuer = "https://login.example.com"
+oidc_audience = "cerebrum-control-plane"
+jwks_url = "https://login.example.com/.well-known/jwks.json"
+github_repository = "CharlieBiggins/edon_platform"
+certificate_arn = "arn:aws:acm:us-east-1:123456789012:certificate/REPLACE"
+route53_zone_id = "REPLACE"
+staging_hostname = "staging.example.com"
+
+# Configure the S3 backend separately with an encrypted, versioned bucket and
+# DynamoDB lock table. Never commit backend credentials or runtime secret values.
