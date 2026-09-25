@@ -2,7 +2,7 @@ import { createControlPlaneServer } from './server.js';
 import { requireRuntimeEnvironment } from './runtime.js';
 import { PostgreSQLPlatformRepositories } from '../../../packages/platform-core/src/repositories.js';
 import { OidcIdentityVerifier } from '../../../packages/platform-core/src/auth.js';
-import { LocalReceiptSigner } from '../../../packages/platform-core/src/receipt-custody.js';
+import { AwsKmsProvider, DeterministicKmsProvider, KmsReceiptCustody } from '../../../packages/platform-core/src/receipt-custody.js';
 
 const config = requireRuntimeEnvironment(process.env);
 type PgClient = { query: <T = unknown>(text: string, values?: unknown[]) => Promise<{ rows: T[] }>; release: () => void };
@@ -36,7 +36,8 @@ const executor = {
     throw new Error('Transaction retry loop exited unexpectedly');
   },
 };
-const server = createControlPlaneServer({ profile: config.profile, repositories: new PostgreSQLPlatformRepositories(executor), identityVerifier: new OidcIdentityVerifier(config.oidcIssuer, config.oidcAudience, config.jwksUrl), receiptSigner: new LocalReceiptSigner(config.signingKey), signingKeyMode: 'KMS', tenantIsolation: true, auditLogging: true, corsOrigin: config.corsOrigin });
+const receiptSigner = new KmsReceiptCustody(config.profile === 'STAGING_TEST' ? new DeterministicKmsProvider() : new AwsKmsProvider(), config.profile === 'STAGING_TEST' ? 'kms-test-key' : (config.kmsKeyId ?? ''));
+const server = createControlPlaneServer({ profile: config.profile, repositories: new PostgreSQLPlatformRepositories(executor), identityVerifier: new OidcIdentityVerifier(config.oidcIssuer, config.oidcAudience, config.jwksUrl), receiptSigner, signingKeyMode: 'KMS', tenantIsolation: true, auditLogging: true, corsOrigin: config.corsOrigin });
 server.listen(config.port, config.host, () => process.stdout.write(`Control Plane API listening on ${config.host}:${config.port}\n`));
 const shutdown = () => server.close(async () => { await pool.end(); process.exit(0); });
 process.on('SIGTERM', shutdown); process.on('SIGINT', shutdown);

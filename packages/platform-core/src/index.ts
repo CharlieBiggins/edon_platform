@@ -7,6 +7,7 @@ export * from './outcome-comparator.js';
 export * from './proposal-generator.js';
 export * from './receipt-service.js';
 export * from './shadow-evaluator.js';
+export * from './outbox-worker.js';
 export * from './state-projector.js';
 export * from './repositories.js';
 export * from './auth.js';
