@@ -26,7 +26,7 @@ try {
     for (const check of caseReport.checks ?? []) {
       if (rename[check.name]) suppliedCases[rename[check.name]] = check.passed;
       if (check.name.startsWith('crash ')) {
-        const semantic = check.name.toLowerCase().replaceAll('_', ' ');
+        const semantic = check.name.toLowerCase().replaceAll('_', ' ').replace('crash after ir mapping', 'crash after IR mapping');
         suppliedCases[semantic] = check.passed;
       }
     }
