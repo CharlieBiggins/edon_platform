@@ -48,7 +48,7 @@ checks.push({ name: 'one concurrent transition wins', expected: 'one 200 and one
 
 const winnerKey = winner.data?.data?.idempotency_key ?? 'transition-a';
 const retry = await request('idempotent retry returns original result', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody(winnerKey), 200);
-checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), response_match: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data) });
+checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), response_match: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), original: winner.data?.data ?? null, retry: retry.data?.data ?? null });
 
 const after = await request('read release after transition', 'GET', `/v1/institution-releases/${encodeURIComponent(releaseId)}`, null, 200);
 checks.push({ name: 'one release version advancement', expected: expectedVersion + 1, actual: after.data?.data?.version, passed: Number(after.data?.data?.version) === expectedVersion + 1 });
