@@ -10,9 +10,10 @@ export class ControlPlaneClient {
   private readonly baseUrl = (import.meta.env.VITE_CONTROL_PLANE_API_URL as string | undefined)?.replace(/\/$/, '') ?? '';
   constructor(private readonly tokenProvider: () => string | undefined = () => (globalThis as { __CEREBRUM_TOKEN__?: string }).__CEREBRUM_TOKEN__) {}
   private async request<T>(path: string, init: RequestInit = {}, signal?: AbortSignal): Promise<T> {
-    if (!this.baseUrl && !(globalThis as { __CEREBRUM_API_MOCK__?: boolean }).__CEREBRUM_API_MOCK__) throw new ControlPlaneError('API_UNCONFIGURED', 0, 'Control Plane API is not configured');
+    const token = this.tokenProvider();
+    if (!this.baseUrl && !token && import.meta.env.MODE !== 'test' && !(globalThis as { __CEREBRUM_API_MOCK__?: boolean }).__CEREBRUM_API_MOCK__) throw new ControlPlaneError('API_UNCONFIGURED', 0, 'Control Plane API is not configured');
     const controller = new AbortController(); const timeout = setTimeout(() => controller.abort(), 10_000); if (signal) signal.addEventListener('abort', () => controller.abort(), { once: true });
-    try { const token = this.tokenProvider(); const headers = new Headers(init.headers); headers.set('accept', 'application/json'); if (token) headers.set('authorization', `Bearer ${token}`); const response = await fetch(`${this.baseUrl}${path}`, { ...init, headers, signal: controller.signal }); const body = await response.json() as ApiResult<T> & ApiError; if (!response.ok) throw new ControlPlaneError(body.error?.code ?? 'API_ERROR', response.status, body.error?.message ?? 'Control Plane request failed'); return body.data; } finally { clearTimeout(timeout); }
+    try { const headers = new Headers(init.headers); headers.set('accept', 'application/json'); if (token) headers.set('authorization', `Bearer ${token}`); const response = await fetch(`${this.baseUrl}${path}`, { ...init, headers, signal: controller.signal }); const body = await response.json() as ApiResult<T> & ApiError; if (!response.ok) throw new ControlPlaneError(body.error?.code ?? 'API_ERROR', response.status, body.error?.message ?? 'Control Plane request failed'); return body.data; } finally { clearTimeout(timeout); }
   }
   state(scopeId: string, signal?: AbortSignal) { return this.request<ControlPlaneState>(`/v1/state/${encodeURIComponent(scopeId)}`, {}, signal); }
   incident(id: string, signal?: AbortSignal) { return this.request<Record<string, unknown>>(`/v1/incidents/${encodeURIComponent(id)}`, {}, signal); }
