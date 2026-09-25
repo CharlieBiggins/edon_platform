@@ -979,7 +979,9 @@ by GitHub Actions run `36119356688`.
 This boundary qualifies the release transition transaction and its persistence
 guarantees in staging-equivalent infrastructure. It does not qualify managed
 production infrastructure, external KMS custody, customer data, production
-dispatch or the Institution Compiler worker.
+dispatch or the Institution Compiler worker. The retained GitHub Actions
+artifact is `staging-validation-artifacts` from run `36119356688`, digest
+`sha256:d7271280f4b02e395b3f7351031a68a717e069c8ed0d2af6e7843d854bca6268`.
 
 ### Priority 1: Managed staging
 
