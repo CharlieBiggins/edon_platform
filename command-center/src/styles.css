@@ -739,3 +739,4 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .history-row>svg{width:17px;height:17px;margin-top:1px;color:#668376;padding:2px;border-radius:50%;background:#edf4ef;box-sizing:content-box}
 .history-row strong{font-size:11px;line-height:1.4}
 .history-row small{font-size:10px;line-height:1.45}
+.builder-actions{display:flex;gap:10px;flex-wrap:wrap;padding-top:14px}.builder-progress{display:flex;align-items:center;justify-content:space-between;padding:16px;border:1px solid var(--line);border-radius:8px;background:var(--wash);font-variant-numeric:tabular-nums}.mapping-list{display:grid;gap:0}.mapping-list .mapping-row{margin:0}.builder-main .notice .text-link{margin-left:10px}

@@ -51,6 +51,8 @@ const capabilityFor = (method: string, path: string): string | null => {
   if (method === 'GET' && path.startsWith('/v1/model-releases')) return 'model-release:administer';
   if (method === 'POST' && /^\/v1\/institutions\/[^/]+\/sources$/.test(path)) return 'institution:compile';
   if (method === 'GET' && /^\/v1\/institutions\/[^/]+\/sources(?:\/[^/]+\/versions)?$/.test(path)) return 'institution:read';
+  if (method === 'GET' && path === '/v1/institution-compilations') return 'institution:read';
+  if (method === 'GET' && /^\/v1\/institution-compilations\/[^/]+$/.test(path)) return 'institution:read';
   if (method === 'POST' && /^\/v1\/institution-releases\/[^/]+\/transition$/.test(path)) return 'institution:compile';
   if (method === 'GET' && /^\/v1\/institution-releases\/[^/]+$/.test(path)) return 'institution:read';
   if (method === 'GET' && (path.startsWith('/v1/state/') || path.startsWith('/v1/incidents/') || path.startsWith('/v1/proposals/') || path.startsWith('/v1/decisions/') || path.startsWith('/v1/outcomes/') || path.startsWith('/v1/executions/'))) return 'evidence:read';
@@ -259,7 +261,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
       const institutionId = sourceMatch[1];
       const sourceId = String(body.source_id ?? '');
       const sourceVersion = String(body.source_version ?? '');
-      const ownerId = String(body.owner_id ?? principal!.actor_id);
+      const ownerId = principal!.actor_id;
       const effectiveFrom = String(body.effective_from ?? '');
       const contentHash = String(body.content_hash ?? '');
       if (!sourceId || !sourceVersion || !effectiveFrom || !contentHash || !body.provenance || !body.sensitivity) return failureResult('VALIDATION_FAILED', 'Source id, version, provenance, sensitivity, effective_from and content_hash are required', bind?.correlation_id);
@@ -272,6 +274,11 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     if (sourceMatch && request.method === 'GET') return await runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => {
       const institutionId = sourceMatch[1]; const sourceId = sourceMatch[2]; const data = sourceId ? await repositories.listInstitutionSourceVersions(principal!.tenant_id, institutionId, sourceId) : await repositories.listInstitutionSources(principal!.tenant_id, institutionId);
       return reply(response, 200, { data, meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } });
+    });
+    if (request.method === 'GET' && url.pathname === '/v1/institution-compilations') return await runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => {
+      const institutionId = String(url.searchParams.get('institution_id') ?? '');
+      if (!institutionId) return failure(response, 'VALIDATION_FAILED', 'institution_id is required');
+      return reply(response, 200, { data: await repositories.getInstitutionCompilationStatus(principal!.tenant_id, institutionId), meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } });
     });
     const compilationMatch = url.pathname.match(/^\/v1\/institution-compilations\/([^/]+)$/);
     if (request.method === 'POST' && url.pathname === '/v1/institution-compilations') return await transactionResponse(runtimeDependencies.repositories, principal!.tenant_id, response, async repositories => {
