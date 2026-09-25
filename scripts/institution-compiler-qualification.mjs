@@ -25,15 +25,13 @@ try {
     };
     for (const check of caseReport.checks ?? []) {
       if (rename[check.name]) suppliedCases[rename[check.name]] = check.passed;
-      const crash = /^crash ([A-Z_]+)$/.exec(check.name);
-      if (crash) {
-        const semantic = `crash ${crash[1].toLowerCase().replaceAll('_', ' ')}`;
+      if (check.name.startsWith('crash ')) {
+        const semantic = check.name.toLowerCase().replaceAll('_', ' ');
         suppliedCases[semantic] = check.passed;
       }
     }
     suppliedCases['atomic submission'] = suppliedCases['rollback before commit'] === true;
     suppliedCases['crash after candidate persistence'] = suppliedCases['commit before acknowledgement redelivery'] === true;
-    suppliedCases['source-binding enforcement'] = (caseReport.checks ?? []).some(check => check.name.startsWith('source binding') && check.passed);
   }
 } catch { fail('required-case manifest', 'compiler worker case report is missing or invalid'); }
 for (const name of requiredCaseNames) {
@@ -74,6 +72,12 @@ try {
     const expected = new Set(sources.map(source => `${source.source_id}@${source.source_version}:${source.content_hash}`));
     const actual = new Set(Array.isArray(candidate.input_source_hashes) ? candidate.input_source_hashes : []);
     if ([...actual].every(hash => expected.has(hash))) pass(`source binding ${candidate.candidate_id}`, 'all hashes resolve to immutable source versions'); else fail(`source binding ${candidate.candidate_id}`, 'candidate references missing or modified source content');
+  }
+  const sourceBindingChecks = checks.filter(check => check.name.startsWith('source binding '));
+  const sourceBindingAggregate = checks.find(check => check.name === 'source-binding enforcement');
+  if (sourceBindingAggregate) {
+    sourceBindingAggregate.passed = sourceBindingChecks.length > 0 && sourceBindingChecks.every(check => check.passed);
+    sourceBindingAggregate.detail = sourceBindingAggregate.passed ? 'all candidate source hashes resolve' : 'candidate source hash binding failed';
   }
   const canonicalDigest = digest(snapshot);
   const digestFile = resolve(artifactDir, 'institution-compiler-canonical-digest.json');
