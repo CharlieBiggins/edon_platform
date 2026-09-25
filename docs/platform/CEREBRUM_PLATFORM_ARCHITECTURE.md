@@ -1,7 +1,7 @@
 ---
 document_id: CEREBRUM-PLATFORM-ARCHITECTURE-001
 title: Cerebrum Platform Architecture
-version: 0.1.0
+version: 0.2.0
 status: CANONICAL_DRAFT
 owner: EDON
 last_updated: 2026-09-25
@@ -965,6 +965,21 @@ Never imply simulated data is live, modeled exposure is verified loss, a recomme
 20. Capability labels never exceed validated status.
 
 ## 30. Highest-priority roadmap
+
+### 30.1 Institution release transition boundary
+
+`INSTITUTION_RELEASE_TRANSITION_V1` is **STAGING_QUALIFIED** as of merge commit
+`4728bcce2d492563598f6b6722125f556938cfa3`. The staging-equivalent workflow
+passed PostgreSQL rollback injection at `AFTER_CAS`, `AFTER_JOURNAL_APPEND` and
+`AFTER_OUTBOX_ENQUEUE`, concurrent transition and idempotency checks, tenant
+isolation, signed-field mutation attacks, journal verification, restart
+durability and backup/restore equality. The qualification artifact is retained
+by GitHub Actions run `36119356688`.
+
+This boundary qualifies the release transition transaction and its persistence
+guarantees in staging-equivalent infrastructure. It does not qualify managed
+production infrastructure, external KMS custody, customer data, production
+dispatch or the Institution Compiler worker.
 
 ### Priority 1: Managed staging
 
