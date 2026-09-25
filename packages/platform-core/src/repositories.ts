@@ -3,7 +3,7 @@ import type { BreakGlassGrant, DecisionReceipt, EventEnvelope, EvidenceRecord, O
 export type StoredIncident = { incident_id: string; tenant_id: string; scope_id: string; state_version: number; status: string; values?: Record<string, unknown>; state_hash?: string };
 export type StateDiff = { tenant_id: string; scope_id: string; version: number; diff: Record<string, unknown>; state_hash: string };
 export type EvidenceRelationship = { tenant_id: string; relationship_id: string; event_id: string; evidence_id: string; relationship_type: 'ADMITTED_FOR' | 'RESTRICTED_FROM' | 'DISPUTED_BY' | 'REJECTED_FOR' };
-export type StoredReview = { review_id: string; proposal_id: string; actor_id: string; approved: boolean; recorded_at: string };
+export type StoredReview = { review_id: string; proposal_id: string; actor_id: string; approved: boolean; recorded_at: string; proposal_hash?: string; context_hash?: string };
 export type StoredShadow = { proposal_id: string; recorded_at: string; executed: false; credentials: 'NONE' };
 export type StoredKernelDecision = KernelDecision & { tenant_id: string; recorded_at?: string };
 export type OutboxMessage = { outbox_id: string; tenant_id: string; dedupe_key: string; topic: string; aggregate_id: string; payload: Record<string, unknown>; correlation_id: string; trace_id: string; state_version?: number; status?: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'DEAD_LETTER'; attempts?: number; available_at?: string; lease_expires_at?: string; worker_id?: string; last_error?: string; last_error_code?: string; last_error_metadata?: Record<string, unknown> };
@@ -23,6 +23,7 @@ export interface PlatformRepositories {
   putProposal(proposal: ActionProposal & { tenant_id: string }): Promise<void>;
   getProposal(tenantId: string, proposalId: string): Promise<(ActionProposal & { tenant_id: string }) | null>;
   putReview(review: StoredReview & { tenant_id: string }): Promise<void>;
+  getReview(tenantId: string, proposalId: string): Promise<(StoredReview & { tenant_id: string }) | null>;
   putKernelDecision(decision: StoredKernelDecision): Promise<void>;
   getKernelDecision(tenantId: string, proposalId: string): Promise<StoredKernelDecision | null>;
   putMandate(mandate: Record<string, unknown> & { tenant_id: string }): Promise<void>;
@@ -51,7 +52,7 @@ export interface PlatformRepositories {
 }
 
 export class InMemoryPlatformRepositories implements PlatformRepositories {
-  private events: EventEnvelope[] = []; private states = new Map<string, { version: number; values: Record<string, unknown> }>(); private receipts = new Map<string, DecisionReceipt & { tenant_id: string }>(); private proposals = new Map<string, ActionProposal & { tenant_id: string }>(); private decisions = new Map<string, StoredKernelDecision>(); private outcomes = new Map<string, OutcomeRecord & { tenant_id: string }>(); private idempotency = new Map<string, unknown>();
+  private events: EventEnvelope[] = []; private states = new Map<string, { version: number; values: Record<string, unknown> }>(); private receipts = new Map<string, DecisionReceipt & { tenant_id: string }>(); private proposals = new Map<string, ActionProposal & { tenant_id: string }>(); private decisions = new Map<string, StoredKernelDecision>(); private reviews = new Map<string, StoredReview & { tenant_id: string }>(); private outcomes = new Map<string, OutcomeRecord & { tenant_id: string }>(); private idempotency = new Map<string, unknown>();
   async transaction<T>(_tenantId: string, work: (repositories: PlatformRepositories) => Promise<T>): Promise<T> { return work(this); }
   async lockScope(_scopeId: string) {}
   async appendEvent(event: EventEnvelope) { if (this.events.some(existing => existing.tenant_id === event.tenant_id && existing.event_id === event.event_id)) return false; this.events.push(structuredClone(event)); return true; }
@@ -62,9 +63,10 @@ export class InMemoryPlatformRepositories implements PlatformRepositories {
   async putStateDiff() {}
   async linkEvidence() {}
   async putIncident() {}
-  async putProposal(proposal: ActionProposal & { tenant_id: string }) { this.proposals.set(`${proposal.tenant_id}:${proposal.proposal_id}`, structuredClone(proposal)); }
+  async putProposal(proposal: ActionProposal & { tenant_id: string }) { const key = `${proposal.tenant_id}:${proposal.proposal_id}`; if (!this.proposals.has(key)) this.proposals.set(key, structuredClone(proposal)); }
   async getProposal(tenantId: string, proposalId: string) { return this.proposals.get(`${tenantId}:${proposalId}`) ?? null; }
-  async putReview() {}
+  async putReview(review: StoredReview & { tenant_id: string }) { this.reviews.set(`${review.tenant_id}:${review.proposal_id}`, structuredClone(review)); }
+  async getReview(tenantId: string, proposalId: string) { return this.reviews.get(`${tenantId}:${proposalId}`) ?? null; }
   async putKernelDecision(decision: StoredKernelDecision) { this.decisions.set(`${decision.tenant_id}:${decision.proposal_id}`, structuredClone(decision)); }
   async getKernelDecision(tenantId: string, proposalId: string) { return this.decisions.get(`${tenantId}:${proposalId}`) ?? null; }
   async putMandate() {}
@@ -124,9 +126,10 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async putIncident(incident: StoredIncident) { await this.db.query('INSERT INTO incidents (tenant_id,incident_id,scope_id,state_version,status) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (tenant_id,incident_id) DO UPDATE SET state_version=EXCLUDED.state_version,status=EXCLUDED.status', [incident.tenant_id, incident.incident_id, incident.scope_id, incident.state_version, incident.status]); }
   async putProposal(proposal: ActionProposal & { tenant_id: string }) { await this.db.query('INSERT INTO proposals (tenant_id,proposal_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,proposal_id) DO NOTHING', [proposal.tenant_id, proposal.proposal_id, JSON.stringify(proposal)]); }
   async getProposal(tenantId: string, proposalId: string) { const result = await this.db.query<{ payload: ActionProposal & { tenant_id: string } }>('SELECT payload FROM proposals WHERE tenant_id=$1 AND proposal_id=$2', [tenantId, proposalId]); return result.rows[0]?.payload ?? null; }
-  async putReview(review: StoredReview & { tenant_id: string }) { await this.db.query('INSERT INTO human_reviews (tenant_id,review_id,payload) VALUES ($1,$2,$3)', [review.tenant_id, review.review_id, JSON.stringify(review)]); }
+  async putReview(review: StoredReview & { tenant_id: string }) { await this.db.query('INSERT INTO human_reviews (tenant_id,review_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,review_id) DO NOTHING', [review.tenant_id, review.review_id, JSON.stringify(review)]); }
+  async getReview(tenantId: string, proposalId: string) { const result = await this.db.query<{ payload: StoredReview & { tenant_id: string } }>('SELECT payload FROM human_reviews WHERE tenant_id=$1 AND payload->>\'proposal_id\'=$2 ORDER BY recorded_at DESC LIMIT 1', [tenantId, proposalId]); return result.rows[0]?.payload ?? null; }
   async putKernelDecision(decision: StoredKernelDecision) { await this.db.query('INSERT INTO kernel_decisions (tenant_id,decision_id,proposal_id,payload,recorded_at) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (tenant_id,decision_id) DO NOTHING', [decision.tenant_id, decision.decision_id, decision.proposal_id, JSON.stringify(decision), decision.recorded_at ?? decision.evaluated_at]); }
-  async getKernelDecision(tenantId: string, proposalId: string) { const result = await this.db.query<{ payload: StoredKernelDecision }>('SELECT payload FROM kernel_decisions WHERE tenant_id=$1 AND proposal_id=$2 ORDER BY recorded_at DESC LIMIT 1', [tenantId, proposalId]); return result.rows[0]?.payload ?? null; }
+  async getKernelDecision(tenantId: string, proposalId: string) { const result = await this.db.query<{ payload: StoredKernelDecision }>('SELECT payload FROM kernel_decisions WHERE tenant_id=$1 AND proposal_id=$2 ORDER BY recorded_at DESC, decision_id DESC LIMIT 1', [tenantId, proposalId]); return result.rows[0]?.payload ?? null; }
   async putMandate(mandate: Record<string, unknown> & { tenant_id: string }) { await this.db.query('INSERT INTO mandates (tenant_id,mandate_id,payload) VALUES ($1,$2,$3)', [mandate.tenant_id, String(mandate.mandate_id), JSON.stringify(mandate)]); }
   async putShadow(shadow: StoredShadow & { tenant_id: string }) { await this.db.query('INSERT INTO shadow_evaluations (tenant_id,proposal_id,payload) VALUES ($1,$2,$3)', [shadow.tenant_id, shadow.proposal_id, JSON.stringify(shadow)]); }
   async putOutcome(outcome: OutcomeRecord & { tenant_id: string }) { await this.db.query('INSERT INTO outcomes (tenant_id,outcome_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,outcome_id) DO NOTHING', [outcome.tenant_id, outcome.outcome_id, JSON.stringify(outcome)]); }

@@ -61,6 +61,7 @@ jobs:
           set -euo pipefail
           mkdir -p "$ARTIFACT_DIR"
           node scripts/receipt-breakglass-validation.mjs
+          node scripts/proposal-kernel-review-validation.mjs
       - name: Create database roles
         run: |
           set -euo pipefail
