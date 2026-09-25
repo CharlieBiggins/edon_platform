@@ -6,7 +6,7 @@ const tenant = process.env.CEREBRUM_RELEASE_TENANT ?? 'meridian-demo';
 const releaseId = process.env.CEREBRUM_CANONICAL_RELEASE_ID ?? 'REL-CANONICAL-SIGNED';
 const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(artifactDir, { recursive: true });
-const { Pool } = await import('pg');
+const { Pool } = await import('../command-center/node_modules/pg/index.js');
 const pool = new Pool({ connectionString: dbUrl });
 const q = (sql, values = []) => pool.query(sql, values);
 const rows = async (sql, values = []) => (await q(sql, values)).rows;
