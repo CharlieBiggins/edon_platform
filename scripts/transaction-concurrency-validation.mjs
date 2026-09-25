@@ -1,0 +1,39 @@
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
+const token = process.env.CEREBRUM_AUTH_TOKEN;
+const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
+await mkdir(artifactDir, { recursive: true });
+const headers = { authorization: `Bearer ${token}`, 'content-type': 'application/json' };
+const scopeId = 'concurrency-validation';
+const incidentId = 'INC-CONCURRENCY';
+const checks = [];
+const getState = async () => {
+  const response = await fetch(`${baseUrl}/v1/state/${scopeId}`, { headers });
+  const body = await response.json();
+  if (!response.ok || typeof body?.data?.version !== 'number') throw new Error(`state read failed: HTTP ${response.status}`);
+  return body.data;
+};
+const postEvent = async ({ eventId, idempotencyKey, expectedStateVersion }) => {
+  const binding = { tenant_id: 'meridian-demo', actor_id: 'operator-01', correlation_id: `concurrency-${idempotencyKey}`, trace_id: `trace-${idempotencyKey}`, idempotency_key: idempotencyKey, contract_version: '2026-09-24.v1', request_timestamp: '2026-09-24T15:30:00.000Z', expected_state_version: expectedStateVersion, evidence_references: ['EV-2081'] };
+  const response = await fetch(`${baseUrl}/v1/events`, { method: 'POST', headers, body: JSON.stringify({ binding, event_id: eventId, incident_id: incidentId, scope_id: scopeId, payload: { capacity_units: 260 } }) });
+  return { status: response.status, body: await response.json() };
+};
+const duplicateState = await getState();
+const duplicateResults = await Promise.all(Array.from({ length: 8 }, () => postEvent({ eventId: 'evt-concurrent-duplicate', idempotencyKey: 'idem-concurrent-duplicate', expectedStateVersion: duplicateState.version })));
+const duplicateStatuses = duplicateResults.map(result => result.status);
+const duplicatePass = duplicateStatuses.filter(status => status === 201).length === 1 && duplicateStatuses.every(status => status === 201 || status === 200);
+checks.push({ name: 'concurrent duplicate requests produce one result', passed: duplicatePass, statuses: duplicateStatuses });
+const projectedState = await getState();
+checks.push({ name: 'duplicate requests advance state once', passed: projectedState.version === duplicateState.version + 1, before: duplicateState.version, after: projectedState.version });
+const concurrentState = await getState();
+const competingResults = await Promise.all(Array.from({ length: 8 }, (_, index) => postEvent({ eventId: `evt-concurrent-${index}`, idempotencyKey: `idem-concurrent-${index}`, expectedStateVersion: concurrentState.version })));
+const competingStatuses = competingResults.map(result => result.status);
+const competingPass = competingStatuses.filter(status => status === 201).length === 1 && competingStatuses.every(status => status === 201 || status === 409);
+checks.push({ name: 'concurrent projections allow one version advance', passed: competingPass, statuses: competingStatuses });
+const finalState = await getState();
+checks.push({ name: 'losing projections preserve one optimistic version', passed: finalState.version === concurrentState.version + 1, before: concurrentState.version, after: finalState.version });
+const report = { passed: checks.every(check => check.passed), scope_id: scopeId, incident_id: incidentId, checks };
+await writeFile(resolve(artifactDir, 'transaction-concurrency-validation.json'), JSON.stringify(report, null, 2));
+if (!report.passed) process.exitCode = 1;

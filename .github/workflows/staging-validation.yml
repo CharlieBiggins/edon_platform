@@ -111,6 +111,10 @@ jobs:
             done;
             exit "$code"' ERR
           npm run test:staging
+      - name: Validate transaction concurrency
+        run: |
+          set -Eeuo pipefail
+          node scripts/transaction-concurrency-validation.mjs
       - name: Validate identity, tenant isolation and role permissions
         run: |
           set -Eeuo pipefail

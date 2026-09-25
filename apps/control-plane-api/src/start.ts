@@ -14,19 +14,26 @@ await pool.query('SELECT 1');
 const executor = {
   query: <T = unknown>(text: string, values?: unknown[]) => pool.query<T>(text, values),
   transaction: async <T>(tenantId: string, work: (db: { query: <R = unknown>(text: string, values?: unknown[]) => Promise<{ rows: R[] }> }) => Promise<T>) => {
-    const client = await pool.connect();
-    try {
-      await client.query('BEGIN');
-      await client.query('SELECT set_config($1, $2, true)', ['app.tenant_id', tenantId]);
-      const result = await work(client);
-      await client.query('COMMIT');
-      return result;
-    } catch (error) {
-      try { await client.query('ROLLBACK'); } catch (rollbackError) { console.error('Control Plane rollback failed', rollbackError); }
-      throw error;
-    } finally {
-      client.release();
+    const maxAttempts = 3;
+    for (let attempt = 1; attempt <= maxAttempts; attempt += 1) {
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        await client.query('SELECT set_config($1, $2, true)', ['app.tenant_id', tenantId]);
+        const result = await work(client);
+        await client.query('COMMIT');
+        return result;
+      } catch (error) {
+        try { await client.query('ROLLBACK'); } catch (rollbackError) { console.error('Control Plane rollback failed', rollbackError); }
+        const code = typeof error === 'object' && error !== null && 'code' in error ? String((error as { code?: unknown }).code) : '';
+        const retryable = code === '40001' || code === '40P01';
+        if (!retryable || attempt === maxAttempts) throw error;
+        await new Promise(resolve => setTimeout(resolve, 25 * attempt));
+      } finally {
+        client.release();
+      }
     }
+    throw new Error('Transaction retry loop exited unexpectedly');
   },
 };
 const server = createControlPlaneServer({ profile: config.profile, repositories: new PostgreSQLPlatformRepositories(executor), identityVerifier: new OidcIdentityVerifier(config.oidcIssuer, config.oidcAudience, config.jwksUrl), receiptSigner: new LocalReceiptSigner(config.signingKey), signingKeyMode: 'KMS', tenantIsolation: true, auditLogging: true, corsOrigin: config.corsOrigin });

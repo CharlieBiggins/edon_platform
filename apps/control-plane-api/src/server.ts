@@ -18,6 +18,7 @@ const modelReleases: C1ModelRelease[] = [{ release_id: 'c1-shadow-0.9.1', model_
 const json = (request: IncomingMessage) => new Promise<Record<string, unknown>>((resolve, reject) => { let body = ''; request.on('data', chunk => { body += chunk; }); request.on('end', () => { try { resolve(body ? JSON.parse(body) : {}); } catch { reject(new Error('invalid json')); } }); });
 const reply = (response: ServerResponse, status: number, body: unknown) => { response.statusCode = status; response.setHeader('content-type', 'application/json'); response.end(JSON.stringify(body)); };
 const failure = (response: ServerResponse, code: string, message: string, correlation_id = 'unknown') => reply(response, code === 'INTERNAL_ERROR' ? 500 : code === 'VALIDATION_FAILED' ? 400 : code === 'PERMISSION_DENIED' ? 403 : code === 'STATE_STALE' ? 409 : 422, { error: { code, message, correlation_id } });
+class StateConflictError extends Error { constructor(public readonly correlationId: string) { super('State changed while projecting the event'); } }
 const binding = (body: Record<string, unknown>) => body.binding as RequestBinding | undefined;
 const validateRequest = (body: Record<string, unknown>) => validateBinding(binding(body));
 
@@ -47,14 +48,18 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     if (request.method === 'POST' && principal && bind && (bind.tenant_id !== principal.tenant_id || bind.actor_id !== principal.actor_id)) return failure(response, 'PERMISSION_DENIED', 'Request identity does not match verified identity', principal.actor_id);
     if (request.method === 'POST' && (!validateRequest(body) || bind?.contract_version !== CONTRACT_VERSION)) return failure(response, 'VALIDATION_FAILED', 'Required request binding is missing or invalid', bind?.correlation_id);
     const currentState = bind ? await runtimeDependencies.repositories.transaction(principal!.tenant_id, repositories => state(repositories, principal!.tenant_id, String(body.scope_id ?? 'memphis-fulfillment'))) : { version: 141, values: {} };
-    if (request.method === 'POST' && bind?.expected_state_version !== undefined && bind.expected_state_version !== currentState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind.correlation_id);
+    if (request.method === 'POST' && url.pathname !== '/v1/events' && bind?.expected_state_version !== undefined && bind.expected_state_version !== currentState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind.correlation_id);
     if (request.method === 'POST' && url.pathname === '/v1/events') {
       return runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => {
         const transactionState = await state(repositories, principal!.tenant_id, String(body.scope_id ?? 'memphis-fulfillment'));
-        if (bind!.expected_state_version !== undefined && bind!.expected_state_version !== transactionState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind!.correlation_id);
         const event = { event_id: String(body.event_id ?? `evt-${Date.now()}`), tenant_id: principal!.tenant_id, event_type: 'OBSERVATION_RECEIVED' as const, actor_id: bind!.actor_id, actor_type: 'CONNECTOR' as const, scope_id: String(body.scope_id ?? 'memphis-fulfillment'), incident_id: String(body.incident_id ?? 'INC-1042'), occurred_at: bind!.request_timestamp, observed_at: bind!.request_timestamp, available_to_controller_at: bind!.request_timestamp, recorded_at: bind!.request_timestamp, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version_before: transactionState.version, state_version_after: transactionState.version, policy_version: 'POL-LOG-07 v18', payload: (body.payload ?? {}) as Record<string, unknown>, payload_hash: 'sha256:api', previous_record_hash: 'sha256:api', signature: 'simulated', simulated: true as const };
-        const idempotency = await repositories.claimIdempotency(principal!.tenant_id, `POST:/v1/events:${bind!.idempotency_key}`, event);
+        const operationKey = `POST:/v1/events:${bind!.idempotency_key}`;
+        const existing = await repositories.getIdempotency(principal!.tenant_id, operationKey);
+        if (existing !== undefined) return reply(response, 200, { data: existing, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
+        if (bind!.expected_state_version !== undefined && bind!.expected_state_version !== transactionState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind!.correlation_id);
+        const idempotency = await repositories.claimIdempotency(principal!.tenant_id, operationKey, event);
         if (!idempotency.claimed) return reply(response, 200, { data: idempotency.response, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
+        if (bind!.expected_state_version !== undefined && bind!.expected_state_version !== transactionState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind!.correlation_id);
         const appended = await repositories.appendEvent(event);
         if (!appended) return reply(response, 200, { data: event, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
         const projectedEvent = { ...event, event_id: `${event.event_id}:state`, event_type: 'STATE_PROJECTED' as const, actor_id: 'control-plane', actor_type: 'SYSTEM' as const, state_version_before: transactionState.version, state_version_after: transactionState.version + 1, causation_id: event.event_id, payload: { capacity_units: Number((event.payload as Record<string, unknown>).capacity_units ?? 260), commitments_at_risk: Number((event.payload as Record<string, unknown>).commitments_at_risk ?? 4) } };
@@ -62,7 +67,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
         const projected = await state(repositories, bind!.tenant_id, event.scope_id);
         const projectedVersion = projected.version;
         const persisted = await repositories.putState({ tenant_id: bind!.tenant_id, incident_id: event.incident_id, scope_id: event.scope_id, state_version: projectedVersion, status: 'OPEN', values: projected.values }, transactionState.version);
-        if (!persisted) return failure(response, 'STATE_STALE', 'State changed while projecting the event', bind!.correlation_id);
+        if (!persisted) throw new StateConflictError(bind!.correlation_id);
         return reply(response, 201, { data: { ...event, state_version_after: projectedVersion }, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
       });
     }
@@ -83,6 +88,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     if (request.method === 'GET' && url.pathname.startsWith('/v1/reconstructions/')) return runtimeDependencies.repositories.transaction(tenantId!, async repositories => { const incidentId = url.pathname.split('/').at(-1) ?? ''; const events = await repositories.getEvents(tenantId!, incidentId); if (!events.length) return failure(response, 'PERMISSION_DENIED', 'Incident is not available in the authenticated tenant'); return reply(response, 200, { data: { incident_id: incidentId, events, state: await state(repositories, tenantId!, 'memphis-fulfillment') }, meta: { correlation_id: 'read', contract_version: CONTRACT_VERSION } }); });
     return failure(response, 'VALIDATION_FAILED', 'Route not found');
     } catch (error) {
+      if (error instanceof StateConflictError) return failure(response, 'STATE_STALE', error.message, error.correlationId);
       console.error('Control Plane request failed', error);
       return failure(response, 'INTERNAL_ERROR', 'Internal server error');
     }

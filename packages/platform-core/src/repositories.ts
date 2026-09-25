@@ -24,6 +24,7 @@ export interface PlatformRepositories {
   getOutcome(tenantId: string, outcomeId: string): Promise<(OutcomeRecord & { tenant_id: string }) | null>;
   putReceipt(receipt: DecisionReceipt & { tenant_id: string }): Promise<void>;
   getReceipt(tenantId: string, receiptId: string): Promise<(DecisionReceipt & { tenant_id: string }) | null>;
+  getIdempotency(tenantId: string, key: string): Promise<unknown | undefined>;
   claimIdempotency(tenantId: string, key: string, response: unknown): Promise<{ claimed: boolean; response: unknown }>;
 }
 
@@ -47,6 +48,7 @@ export class InMemoryPlatformRepositories implements PlatformRepositories {
   async getOutcome(tenantId: string, outcomeId: string) { return this.outcomes.get(`${tenantId}:${outcomeId}`) ?? null; }
   async putReceipt(receipt: DecisionReceipt & { tenant_id: string }) { this.receipts.set(`${receipt.tenant_id}:${receipt.receipt_id}`, structuredClone(receipt)); }
   async getReceipt(tenantId: string, receiptId: string) { return this.receipts.get(`${tenantId}:${receiptId}`) ?? null; }
+  async getIdempotency(tenantId: string, key: string) { return this.idempotency.get(`${tenantId}:${key}`); }
   async claimIdempotency(tenantId: string, key: string, response: unknown) { const id = `${tenantId}:${key}`; if (this.idempotency.has(id)) return { claimed: false, response: this.idempotency.get(id) }; this.idempotency.set(id, structuredClone(response)); return { claimed: true, response }; }
 }
 
@@ -78,6 +80,7 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async getOutcome(tenantId: string, outcomeId: string) { const result = await this.db.query<{ payload: OutcomeRecord & { tenant_id: string } }>('SELECT payload FROM outcomes WHERE tenant_id=$1 AND outcome_id=$2', [tenantId, outcomeId]); return result.rows[0]?.payload ?? null; }
   async putReceipt(receipt: DecisionReceipt & { tenant_id: string }) { await this.db.query('INSERT INTO receipts (tenant_id,receipt_id,payload) VALUES ($1,$2,$3)', [receipt.tenant_id, receipt.receipt_id, JSON.stringify(receipt)]); }
   async getReceipt(tenantId: string, receiptId: string) { const result = await this.db.query<{ payload: DecisionReceipt & { tenant_id: string } }>('SELECT payload FROM receipts WHERE tenant_id=$1 AND receipt_id=$2', [tenantId, receiptId]); return result.rows[0]?.payload ?? null; }
+  async getIdempotency(tenantId: string, key: string) { const result = await this.db.query<{ response: unknown }>('SELECT response FROM idempotency_keys WHERE tenant_id=$1 AND key=$2', [tenantId, key]); return result.rows[0]?.response; }
   async claimIdempotency(tenantId: string, key: string, response: unknown) { const result = await this.db.query<{ response: unknown }>('INSERT INTO idempotency_keys (tenant_id,key,response) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING response', [tenantId, key, JSON.stringify(response)]); if (result.rows.length) return { claimed: true, response }; const existing = await this.db.query<{ response: unknown }>('SELECT response FROM idempotency_keys WHERE tenant_id=$1 AND key=$2', [tenantId, key]); return { claimed: false, response: existing.rows[0]?.response }; }
 }
 
