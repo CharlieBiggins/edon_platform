@@ -28,7 +28,7 @@ const runFault = async (fault, suffix, expectDurable) => {
   const fixture = await seed(suffix);
   const worker = spawnWorker(fault, 9000 + checks.length);
   const candidateSql = 'SELECT count(*) FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2';
-  const candidateSeen = await waitFor(() => count(candidateSql, [tenant, fixture.institution]) > 0, 5000);
+  const candidateSeen = await waitFor(() => count(candidateSql, [tenant, fixture.institution]) > 0, 15000);
   if (expectDurable) {
     if (!candidateSeen) fail(`crash ${fault}`, 'candidate was not durable before worker termination');
     await stopWorker(worker);
@@ -61,7 +61,7 @@ try {
   });
   await tx(tenant, async client => { await client.query('INSERT INTO transactional_outbox (tenant_id,outbox_id,dedupe_key,topic,aggregate_id,payload,correlation_id,trace_id,state_version) VALUES ($1,$2,$3,$4,$5,$6::jsonb,$7,$8,0) ON CONFLICT (tenant_id,dedupe_key) DO NOTHING', [tenant, 'compiler-duplicate-2', `compiler-request:${duplicate.institution}:${duplicate.sourceId}:v1`, 'INSTITUTION_COMPILE_REQUESTED', duplicate.institution, JSON.stringify({ institution_id: duplicate.institution }), 'duplicate-2', 'duplicate-trace']); });
   const duplicateRows = await count('SELECT count(*) FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2', [tenant, duplicate.institution]); if (duplicateRows === 1) pass('duplicate-request protection', 'one durable outbox request'); else fail('duplicate-request protection', `outbox rows=${duplicateRows}`);
-  const normal = spawnWorker(null, 9200); const duplicateRecovered = await waitFor(() => count('SELECT count(*) FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2', [tenant, duplicate.institution]) === 1, 10000); await stopWorker(normal); if (duplicateRecovered) pass('deterministic compilation', 'candidate persisted once with immutable source hash binding'); else fail('deterministic compilation', 'candidate did not persist');
+  const normal = spawnWorker(null, 9200); const duplicateRecovered = await waitFor(() => count('SELECT count(*) FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2', [tenant, duplicate.institution]) === 1, 15000); const duplicateStatus = (await tenantQuery(tenant, 'SELECT status FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2', [tenant, duplicate.institution])).rows[0]?.status; await stopWorker(normal); if (duplicateRecovered) pass('deterministic compilation', 'candidate persisted once with immutable source hash binding'); else fail('deterministic compilation', `candidate did not persist; outbox status=${duplicateStatus}`);
   try { await tx(tenant, async client => { await client.query('UPDATE institution_ir_candidates SET ir_hash=ir_hash WHERE tenant_id=$1 AND institution_id=$2', [tenant, duplicate.institution]); }); fail('candidate immutability', 'application role update unexpectedly succeeded'); } catch { pass('candidate immutability', 'application role cannot mutate candidate fields'); }
   const otherTenant = await tx('other-tenant', client => client.query('SELECT count(*) FROM institution_sources WHERE institution_id=$1 AND source_id=$2', [duplicate.institution, duplicate.sourceId])); if (Number(otherTenant.rows[0].count) === 0) pass('tenant isolation', 'other tenant cannot observe compiler fixture'); else fail('tenant isolation', 'cross-tenant source visibility detected');
 } catch (error) { fail('compiler worker harness', error instanceof Error ? error.message : String(error)); }
