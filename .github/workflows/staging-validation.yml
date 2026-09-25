@@ -71,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases"
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases,007_observation_state_lifecycle"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
@@ -128,6 +128,14 @@ jobs:
         run: |
           set -Eeuo pipefail
           node scripts/transaction-concurrency-validation.mjs
+      - name: Validate canonical observation evidence state lifecycle
+        run: |
+          set -Eeuo pipefail
+          node scripts/observation-state-validation.mjs
+          PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM state_diffs WHERE tenant_id='meridian-demo' AND scope_id='canonical-observation-validation'" > "$ARTIFACT_DIR/canonical-state-diff-count.txt"
+          test "$(cat "$ARTIFACT_DIR/canonical-state-diff-count.txt")" -gt 0
+          PGOPTIONS='-c app.tenant_id=meridian-demo' psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT count(*) FROM evidence_relationships WHERE tenant_id='meridian-demo' AND event_id LIKE 'canonical-event-%'" > "$ARTIFACT_DIR/canonical-evidence-link-count.txt"
+          test "$(cat "$ARTIFACT_DIR/canonical-evidence-link-count.txt")" -gt 0
       - name: Validate transactional outbox crash recovery
         run: |
           set -Eeuo pipefail
