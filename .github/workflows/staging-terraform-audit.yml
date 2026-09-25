@@ -1,0 +1,71 @@
+name: persistent-staging-terraform-audit
+on:
+  workflow_dispatch:
+  pull_request:
+    paths: ['infra/aws/staging/**', '.github/workflows/staging-terraform-audit.yml']
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: hashicorp/setup-terraform@v3
+      - uses: terraform-linters/setup-tflint@v4
+      - name: Require plan inputs
+        env:
+          BACKEND_BUCKET: ${{ vars.CEREBRUM_TF_STATE_BUCKET }}
+          BACKEND_REGION: ${{ vars.CEREBRUM_AWS_REGION }}
+          BACKEND_LOCK_TABLE: ${{ vars.CEREBRUM_TF_LOCK_TABLE }}
+          CONTAINER_IMAGE: ${{ vars.CEREBRUM_CONTAINER_IMAGE }}
+          WORKER_IMAGE: ${{ vars.CEREBRUM_WORKER_IMAGE }}
+          OIDC_ISSUER: ${{ vars.CEREBRUM_OIDC_ISSUER }}
+          OIDC_AUDIENCE: ${{ vars.CEREBRUM_OIDC_AUDIENCE }}
+          JWKS_URL: ${{ vars.CEREBRUM_JWKS_URL }}
+          CERTIFICATE_ARN: ${{ vars.CEREBRUM_CERTIFICATE_ARN }}
+        run: |
+          set -Eeuo pipefail
+          for value in "$BACKEND_BUCKET" "$BACKEND_REGION" "$BACKEND_LOCK_TABLE" "$CONTAINER_IMAGE" "$WORKER_IMAGE" "$OIDC_ISSUER" "$OIDC_AUDIENCE" "$JWKS_URL" "$CERTIFICATE_ARN"; do test -n "$value" || { echo '::error::Required audit input missing'; exit 1; }; done
+      - name: Terraform fmt check
+        working-directory: infra/aws/staging
+        run: terraform fmt -check -recursive
+      - name: Terraform init
+        working-directory: infra/aws/staging
+        env:
+          TF_STATE_BUCKET: ${{ vars.CEREBRUM_TF_STATE_BUCKET }}
+          TF_STATE_REGION: ${{ vars.CEREBRUM_AWS_REGION }}
+          TF_LOCK_TABLE: ${{ vars.CEREBRUM_TF_LOCK_TABLE }}
+        run: terraform init -input=false -backend-config="bucket=$TF_STATE_BUCKET" -backend-config="region=$TF_STATE_REGION" -backend-config="dynamodb_table=$TF_LOCK_TABLE" -backend-config="key=cerebrum/staging/terraform.tfstate" -backend-config="encrypt=true"
+      - name: Terraform validate
+        working-directory: infra/aws/staging
+        run: terraform validate
+      - name: TFLint
+        working-directory: infra/aws/staging
+        run: tflint --init && tflint --format compact
+      - name: Checkov
+        uses: bridgecrewio/checkov-action@v12
+        with:
+          directory: infra/aws/staging
+          output_format: json
+          output_file_path: artifacts/checkov.json
+      - name: Terraform plan
+        working-directory: infra/aws/staging
+        env:
+          TF_VAR_aws_region: ${{ vars.CEREBRUM_AWS_REGION }}
+          TF_VAR_container_image: ${{ vars.CEREBRUM_CONTAINER_IMAGE }}
+          TF_VAR_worker_image: ${{ vars.CEREBRUM_WORKER_IMAGE }}
+          TF_VAR_oidc_issuer: ${{ vars.CEREBRUM_OIDC_ISSUER }}
+          TF_VAR_oidc_audience: ${{ vars.CEREBRUM_OIDC_AUDIENCE }}
+          TF_VAR_jwks_url: ${{ vars.CEREBRUM_JWKS_URL }}
+          TF_VAR_github_repository: ${{ github.repository }}
+          TF_VAR_certificate_arn: ${{ vars.CEREBRUM_CERTIFICATE_ARN }}
+        run: terraform plan -input=false -lock=false -out=tfplan
+      - name: Upload audit outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: persistent-staging-terraform-audit-${{ github.run_id }}
+          path: |
+            infra/aws/staging/tfplan
+            artifacts/checkov.json
+          if-no-files-found: warn

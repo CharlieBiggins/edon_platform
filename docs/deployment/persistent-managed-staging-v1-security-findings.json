@@ -1,0 +1,22 @@
+{
+  "decision": "BLOCKED",
+  "ready_to_apply": false,
+  "apply_executed": false,
+  "checks": {
+    "terraform_fmt": "PENDING_TOOLING",
+    "terraform_init": "PENDING_BACKEND_CONFIGURATION",
+    "terraform_validate": "PENDING_TOOLING",
+    "tflint": "PENDING_TOOLING",
+    "checkov": "PENDING_TOOLING",
+    "plan": "NOT_GENERATED",
+    "iam_least_privilege": "REVIEW_REQUIRED",
+    "cost_estimate": "DOCUMENTED_INDICATIVE"
+  },
+  "findings": [
+    { "id": "KMS-ROTATION", "severity": "resolved", "detail": "Automatic rotation removed; alias-based manual rotation required." },
+    { "id": "PLAN-MISSING", "severity": "blocker", "detail": "No reviewed plan exists until backend configuration and Terraform tooling are available." },
+    { "id": "ENDPOINT-HARDENING", "severity": "review", "detail": "Add interface VPC endpoints and restrict NAT egress before production-like use." },
+    { "id": "SECRET-BOOTSTRAP", "severity": "blocker", "detail": "Populate DATABASE_URL in Secrets Manager without exposing it to Terraform state or logs." }
+  ],
+  "required_artifacts": ["tfplan", "tflint.json", "checkov.json", "iam-review.json", "cost-estimate.json"]
+}

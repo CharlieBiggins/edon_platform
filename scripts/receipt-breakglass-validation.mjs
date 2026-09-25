@@ -1,4 +1,4 @@
-import { canonicalize, DeterministicKmsProvider, KmsReceiptCustody } from '../apps/control-plane-api/dist/packages/platform-core/src/receipt-custody.js';
+import { canonicalize, DeterministicKmsProvider, KmsReceiptCustody, UnavailableKmsProvider } from '../apps/control-plane-api/dist/packages/platform-core/src/receipt-custody.js';
 import { InMemoryPlatformRepositories } from '../apps/control-plane-api/dist/packages/platform-core/src/repositories.js';
 import { mkdir, writeFile } from 'node:fs/promises';
 
@@ -10,7 +10,10 @@ const payload = canonicalize({ tenant: 'meridian-demo', incident: 'INC-1042', st
 const signed = await custody.sign(payload);
 check('KMS signature verifies', await custody.verify(payload, signed.signature, signed.key_id, signed.key_version), 'valid signature accepted');
 check('tampered receipt rejected', !(await custody.verify(`${payload}x`, signed.signature, signed.key_id, signed.key_version)), 'modified canonical payload rejected');
+try { await new KmsReceiptCustody(new UnavailableKmsProvider(), 'kms-test-key').sign(payload); check('KMS outage fails closed', false, 'signing unexpectedly succeeded'); } catch { check('KMS outage fails closed', true, 'signing failed without unsigned fallback'); }
 const repos = new InMemoryPlatformRepositories();
+await repos.putReceipt({ tenant_id: 'meridian-demo', receipt_id: 'RCP-TEST', incident_id: 'INC-1042', proposal_id: 'PROP-TEST', kernel_decision_id: 'DEC-TEST', human_reviewed: true, shadow_only: true, event_ids: [], receipt_hash: 'sha256:test', signature: '', simulated: true, signature_status: 'SIGNATURE_PENDING' });
+check('duplicate signing is idempotent', await repos.putReceiptCustody({ tenant_id: 'meridian-demo', receipt_id: 'RCP-TEST', status: 'SIGNED', ...signed }) && !(await repos.putReceiptCustody({ tenant_id: 'meridian-demo', receipt_id: 'RCP-TEST', status: 'SIGNED', ...signed })), 'second custody insert is rejected');
 await repos.putBreakGlass({ grant_id: 'bg-test', tenant_id: 'meridian-demo', incident_id: 'INC-1042', requested_by: 'operator-01', capabilities: ['evidence:restricted:read'], resources: ['memphis-fulfillment'], justification: 'Investigate carrier evidence gap', duration_seconds: 60, status: 'REQUESTED', requested_at: new Date(0).toISOString() });
 const grant = await repos.getBreakGlass('meridian-demo', 'bg-test');
 check('break-glass grant is tenant scoped', grant?.tenant_id === 'meridian-demo', 'grant loaded for matching tenant');

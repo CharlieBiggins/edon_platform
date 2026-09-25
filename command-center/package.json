@@ -14,7 +14,8 @@
     "test:policy": "node ../scripts/validate-ui-test-policy.mjs",
     "test:e2e:critical": "playwright test tests/validation.spec.ts --project=desktop --grep @critical",
     "test:e2e:all": "playwright test",
-    "test:staging": "node ../scripts/staging-validation.mjs"
+    "test:staging": "node ../scripts/staging-validation.mjs",
+    "test:release-transition": "node ../scripts/release-transition-validation.mjs"
   },
   "dependencies": {
     "lucide-react": "^1.47.0",

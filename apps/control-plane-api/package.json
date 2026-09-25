@@ -3,5 +3,5 @@
   "private": true,
   "type": "module",
   "scripts": { "typecheck": "tsc -p tsconfig.json", "build": "tsc -p tsconfig.json", "start:staging-test": "node dist/apps/control-plane-api/src/start.js", "start:worker": "node dist/apps/control-plane-api/src/worker.js" },
-  "dependencies": { "@aws-sdk/client-kms": "^3.900.0" }
+  "dependencies": { "@aws-sdk/client-kms": "^3.900.0", "pg": "^8.16.3" }
 }
