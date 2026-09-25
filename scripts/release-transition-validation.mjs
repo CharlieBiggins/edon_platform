@@ -15,8 +15,8 @@ const startedAt = new Date().toISOString();
 
 const checks = [];
 const hash = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex');
-const request = async (name, method, path, body, expected) => {
-  const response = await fetch(`${baseUrl}${path}`, { method, headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
+const request = async (name, method, path, body, expected, authToken = token) => {
+  const response = await fetch(`${baseUrl}${path}`, { method, headers: { authorization: `Bearer ${authToken}`, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
   const data = await response.json().catch(() => ({}));
   const passed = Array.isArray(expected) ? expected.includes(response.status) : response.status === expected;
   checks.push({ name, expected_status: expected, actual_status: response.status, passed, error_code: data?.error?.code ?? null });
@@ -39,8 +39,8 @@ foreignBody.binding = { ...foreignBody.binding, tenant_id: 'other-tenant' };
 const foreign = await request('tenant substitution is rejected', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, foreignBody, 403);
 
 const [first, second] = await Promise.all([
-  request('concurrent transition winner', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody('transition-a'), [200]),
-  request('concurrent transition loser', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody('transition-b'), [409, 422]),
+  request('concurrent transition A', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody('transition-a'), [200, 409, 422]),
+  request('concurrent transition B', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody('transition-b'), [200, 409, 422]),
 ]);
 const winner = first.response.status === 200 ? first : second;
 const loser = first.response.status === 200 ? second : first;
@@ -48,11 +48,11 @@ checks.push({ name: 'one concurrent transition wins', expected: 'one 200 and one
 
 const winnerKey = winner.data?.data?.idempotency_key ?? 'transition-a';
 const retry = await request('idempotent retry returns original result', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody(winnerKey), 200);
-checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data) });
+checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), response_match: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data) });
 
 const after = await request('read release after transition', 'GET', `/v1/institution-releases/${encodeURIComponent(releaseId)}`, null, 200);
 checks.push({ name: 'one release version advancement', expected: expectedVersion + 1, actual: after.data?.data?.version, passed: Number(after.data?.data?.version) === expectedVersion + 1 });
-const reconstruction = await request('reconstruct transition history', 'GET', `/v1/reconstructions/${encodeURIComponent(releaseId)}`, null, 200);
+const reconstruction = await request('reconstruct transition history', 'GET', `/v1/reconstructions/${encodeURIComponent(releaseId)}`, null, 200, process.env.CEREBRUM_DURABILITY_TOKEN ?? token);
 const events = reconstruction.data?.data?.events ?? [];
 checks.push({ name: 'one transition journal event', expected: 1, actual: events.filter(event => event.event_type === 'INSTITUTION_RELEASE_TRANSITIONED').length, passed: events.filter(event => event.event_type === 'INSTITUTION_RELEASE_TRANSITIONED').length === 1 });
 checks.push({ name: 'journal chain is linked', expected: 'valid', actual: events.every((event, index) => index === 0 || event.previous_record_hash === events[index - 1].payload_hash), passed: events.every((event, index) => index === 0 || event.previous_record_hash === events[index - 1].payload_hash) });
