@@ -48,15 +48,17 @@ try {
     const before = await readSnapshot(releaseId);
     const runtime = await start(port, faultPoint);
     const response = await fetch(`http://127.0.0.1:${port}/v1/institution-releases/${releaseId}/transition`, { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(bodyFor(idem)) });
+    const responseBody = await response.json().catch(() => ({}));
     const failed = response.status >= 500;
     const afterFailure = await readSnapshot(releaseId);
-    checks.push({ name: `rollback injection ${faultPoint}`, expected: '5xx with unchanged records', actual: { status: response.status, unchanged: JSON.stringify(before) === JSON.stringify(afterFailure) }, passed: failed && JSON.stringify(before) === JSON.stringify(afterFailure) });
+    checks.push({ name: `rollback injection ${faultPoint}`, expected: '5xx with unchanged records', actual: { status: response.status, error: responseBody?.error?.code ?? null, unchanged: JSON.stringify(before) === JSON.stringify(afterFailure) }, passed: failed && JSON.stringify(before) === JSON.stringify(afterFailure) });
     await runtime.stop();
     const retryPort = port + 100;
     const retryRuntime = await start(retryPort, null);
     const retry = await fetch(`http://127.0.0.1:${retryPort}/v1/institution-releases/${releaseId}/transition`, { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(bodyFor(idem)) });
+    const retryBody = await retry.json().catch(() => ({}));
     const final = await readSnapshot(releaseId);
-    checks.push({ name: `retry after ${faultPoint}`, expected: 'one successful transition', actual: { status: retry.status, version: final.release?.version, events: final.events.length, outbox: final.outbox.length }, passed: retry.status === 200 && Number(final.release?.version) === 2 && final.events.length === 1 && final.outbox.length === 1 });
+    checks.push({ name: `retry after ${faultPoint}`, expected: 'one successful transition', actual: { status: retry.status, error: retryBody?.error?.code ?? null, version: final.release?.version, events: final.events.length, outbox: final.outbox.length }, passed: retry.status === 200 && Number(final.release?.version) === 2 && final.events.length === 1 && final.outbox.length === 1 });
     await retryRuntime.stop();
   }
 } finally { await pool.end(); }
