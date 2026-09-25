@@ -74,14 +74,12 @@ jobs:
           ALTER ROLE cerebrum_app LOGIN PASSWORD 'validation-only';
           ALTER ROLE cerebrum_audit LOGIN PASSWORD 'validation-only';
           GRANT CONNECT ON DATABASE cerebrum_validation TO cerebrum_app, cerebrum_audit;
-          INSERT INTO actor_memberships (tenant_id,actor_id,role,active,facility_scope,mandate_expires_at)
-          VALUES ('meridian-demo','operator-01','administrator',true,'*','2099-01-01T00:00:00Z')
-          ON CONFLICT (tenant_id,actor_id,role) DO UPDATE SET active=true, mandate_expires_at='2099-01-01T00:00:00Z';
           SQL
       - name: Apply migrations and verify version
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
+          psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -c "INSERT INTO actor_memberships (tenant_id,actor_id,role,active,facility_scope,mandate_expires_at) VALUES ('meridian-demo','operator-01','administrator',true,'*','2099-01-01T00:00:00Z') ON CONFLICT (tenant_id,actor_id,role) DO UPDATE SET active=true, mandate_expires_at='2099-01-01T00:00:00Z'"
           test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases,007_observation_state_lifecycle,008_identity_memberships,009_receipt_custody,010_break_glass,011_receipt_signing_claims,012_execution_assurance,013_institution_sources,014_institution_releases,015_release_lifecycle,016_release_transition_permissions"
       - name: Start temporary OIDC issuer
         run: |
