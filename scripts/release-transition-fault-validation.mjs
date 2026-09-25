@@ -20,7 +20,7 @@ const binding = key => ({ tenant_id: tenant, actor_id: process.env.CEREBRUM_RELE
 const bodyFor = key => ({ institution_id: institution, expected_state: 'DRAFT', expected_version: 1, next_state: 'EXTRACTED', reason: 'fault injection qualification', binding: binding(key) });
 const readSnapshot = async releaseId => {
   const release = (await query('SELECT lifecycle_state,version,manifest_hash,payload FROM institution_releases WHERE tenant_id=$1 AND release_id=$2', [tenant, releaseId])).rows[0];
-  const events = (await query("SELECT event_id,event_type,payload_hash,previous_record_hash,payload FROM journal_events WHERE tenant_id=$1 AND incident_id=$2 ORDER BY recorded_at,event_id", [tenant, releaseId])).rows;
+  const events = (await query("SELECT event_id,event_type,payload->>'payload_hash' AS payload_hash,payload->>'previous_record_hash' AS previous_record_hash,payload FROM journal_events WHERE tenant_id=$1 AND payload->>'incident_id'=$2 ORDER BY recorded_at,event_id", [tenant, releaseId])).rows;
   const outbox = (await query('SELECT outbox_id,dedupe_key,topic,aggregate_id,payload FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2 ORDER BY outbox_id', [tenant, releaseId])).rows;
   const idempotency = (await query('SELECT key,response FROM idempotency_keys WHERE tenant_id=$1 AND key LIKE $2 ORDER BY key', [tenant, `institution-release-transition:${releaseId}:%`])).rows;
   return { release, events, outbox, idempotency };
