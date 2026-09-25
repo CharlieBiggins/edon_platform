@@ -16,7 +16,7 @@ const { Pool } = pgModule.default ?? pgModule;
 const pool = new Pool({ connectionString: dbUrl });
 const query = (sql, values = []) => pool.query(sql, values);
 const ports = { AFTER_CAS: 8791, AFTER_JOURNAL_APPEND: 8792, AFTER_OUTBOX_ENQUEUE: 8793 };
-const binding = key => ({ tenant_id: tenant, actor_id: process.env.CEREBRUM_RELEASE_ACTOR ?? 'administrator-01', correlation_id: `fault-${key}`, trace_id: `trace-${key}`, idempotency_key: key, contract_version: '2026-09-24.v1', request_timestamp: new Date().toISOString(), expected_state_version: 1, evidence_references: [] });
+const binding = key => ({ tenant_id: tenant, actor_id: process.env.CEREBRUM_RELEASE_ACTOR ?? 'operator-01', correlation_id: `fault-${key}`, trace_id: `trace-${key}`, idempotency_key: key, contract_version: '2026-09-24.v1', request_timestamp: new Date().toISOString(), expected_state_version: 1, evidence_references: [] });
 const bodyFor = key => ({ institution_id: institution, expected_state: 'DRAFT', expected_version: 1, next_state: 'EXTRACTED', reason: 'fault injection qualification', binding: binding(key) });
 const readSnapshot = async releaseId => {
   const release = (await query('SELECT lifecycle_state,version,manifest_hash,payload FROM institution_releases WHERE tenant_id=$1 AND release_id=$2', [tenant, releaseId])).rows[0];

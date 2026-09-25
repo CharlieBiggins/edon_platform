@@ -132,6 +132,7 @@ jobs:
           SQL
           echo "CEREBRUM_RELEASE_ID=REL-TRANSITION-001" >> "$GITHUB_ENV"
           echo "CEREBRUM_RELEASE_INSTITUTION=meridian-logistics" >> "$GITHUB_ENV"
+          echo "CEREBRUM_RELEASE_ACTOR=operator-01" >> "$GITHUB_ENV"
           echo "CEREBRUM_RELEASE_TENANT=meridian-demo" >> "$GITHUB_ENV"
           echo "CEREBRUM_RELEASE_EXPECTED_STATE=DRAFT" >> "$GITHUB_ENV"
           echo "CEREBRUM_RELEASE_EXPECTED_VERSION=1" >> "$GITHUB_ENV"
@@ -151,7 +152,7 @@ jobs:
         run: |
           set -Eeuo pipefail
           now="$(date -u +%Y-%m-%dT%H:%M:%S.%3NZ)"
-          jq -n --arg tenant "$CEREBRUM_RELEASE_TENANT" --arg actor "administrator-01" --arg now "$now" '{institution_id:"meridian-logistics",expected_state:"SIGNED",expected_version:1,next_state:"SHADOW",reason:"canonical durability qualification",binding:{tenant_id:$tenant,actor_id:$actor,correlation_id:"canonical-release-transition",trace_id:"canonical-release-trace",idempotency_key:"canonical-release-transition-1",contract_version:"2026-09-24.v1",request_timestamp:$now,expected_state_version:1,evidence_references:[]}}' > "$ARTIFACT_DIR/canonical-transition.json"
+          jq -n --arg tenant "$CEREBRUM_RELEASE_TENANT" --arg actor "$CEREBRUM_RELEASE_ACTOR" --arg now "$now" '{institution_id:"meridian-logistics",expected_state:"SIGNED",expected_version:1,next_state:"SHADOW",reason:"canonical durability qualification",binding:{tenant_id:$tenant,actor_id:$actor,correlation_id:"canonical-release-transition",trace_id:"canonical-release-trace",idempotency_key:"canonical-release-transition-1",contract_version:"2026-09-24.v1",request_timestamp:$now,expected_state_version:1,evidence_references:[]}}' > "$ARTIFACT_DIR/canonical-transition.json"
           curl -fsS -X POST -H "authorization: Bearer $CEREBRUM_RELEASE_TOKEN" -H 'content-type: application/json' --data-binary @"$ARTIFACT_DIR/canonical-transition.json" "$CEREBRUM_API_URL/v1/institution-releases/$CEREBRUM_CANONICAL_RELEASE_ID/transition" > "$ARTIFACT_DIR/canonical-transition-response.json"
       - name: Capture canonical release digest
         run: |
