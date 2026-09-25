@@ -30,7 +30,7 @@ const projectedState = await check('projected state', '/v1/state/memphis-fulfill
 if (typeof projectedState?.version === 'number') binding.expected_state_version = projectedState.version;
 const proposal = await post('/v1/proposals', { binding });
 assertValue('proposal created', Boolean(proposal?.proposal_id), 'proposal identifier returned');
-const decision = await post('/v1/reviews', { binding, proposal_id: proposal?.proposal_id, proposal_hash: proposal?.proposal_hash, context_hash: proposal?.context?.state_hash, approved: true });
+const decision = await post('/v1/reviews', { binding, scope_id: 'memphis-fulfillment', proposal_id: proposal?.proposal_id, proposal_hash: proposal?.proposal_hash, context_hash: proposal?.context?.state_hash, approved: true });
 assertValue('Kernel reevaluation', decision?.disposition === 'DENY' || decision?.disposition === 'ALLOW', `disposition=${decision?.disposition ?? 'missing'}`);
 await post('/v1/shadow-evaluations', { binding, proposal_id: proposal?.proposal_id });
 await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: proposal?.proposal_id, verification_status: 'PENDING', actual_cost: 15800, commitments_protected: 3 });
