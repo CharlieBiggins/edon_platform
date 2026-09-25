@@ -14,7 +14,12 @@ if (!token || !releaseId) throw new Error('CEREBRUM_RELEASE_TOKEN and CEREBRUM_R
 const startedAt = new Date().toISOString();
 
 const checks = [];
-const hash = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex');
+const canonicalize = value => {
+  if (value === null || typeof value !== 'object') return JSON.stringify(value);
+  if (Array.isArray(value)) return `[${value.map(canonicalize).join(',')}]`;
+  return `{${Object.entries(value).sort(([a], [b]) => a.localeCompare(b)).map(([key, item]) => `${JSON.stringify(key)}:${canonicalize(item)}`).join(',')}}`;
+};
+const hash = value => createHash('sha256').update(canonicalize(value ?? null)).digest('hex');
 const request = async (name, method, path, body, expected, authToken = token) => {
   const response = await fetch(`${baseUrl}${path}`, { method, headers: { authorization: `Bearer ${authToken}`, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
   const data = await response.json().catch(() => ({}));
@@ -48,7 +53,7 @@ checks.push({ name: 'one concurrent transition wins', expected: 'one 200 and one
 
 const winnerKey = winner.data?.data?.idempotency_key ?? 'transition-a';
 const retry = await request('idempotent retry returns original result', 'POST', `/v1/institution-releases/${encodeURIComponent(releaseId)}/transition`, makeBody(winnerKey), 200);
-checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), response_match: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data), original: winner.data?.data ?? null, retry: retry.data?.data ?? null });
+checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: canonicalize(winner.data?.data) === canonicalize(retry.data?.data), response_match: canonicalize(winner.data?.data) === canonicalize(retry.data?.data) });
 
 const after = await request('read release after transition', 'GET', `/v1/institution-releases/${encodeURIComponent(releaseId)}`, null, 200);
 checks.push({ name: 'one release version advancement', expected: expectedVersion + 1, actual: after.data?.data?.version, passed: Number(after.data?.data?.version) === expectedVersion + 1 });
