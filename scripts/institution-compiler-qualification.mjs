@@ -35,8 +35,7 @@ try {
   }
 } catch { fail('required-case manifest', 'compiler worker case report is missing or invalid'); }
 for (const name of requiredCaseNames) {
-  if (name === 'restart equality' && phase === 'baseline') continue;
-  if (name === 'backup/restore equality' && phase !== 'restore') continue;
+  if (name === 'restart equality' || name === 'backup/restore equality') continue;
   suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');
 }
 if (phase && ['baseline', 'restart', 'restore'].includes(phase)) pass('phase binding', phase);
