@@ -28,7 +28,7 @@ function assertValue(name, condition, detail) { checks.push({ name, passed: Bool
 const event = await post('/v1/events', { binding, incident_id: 'INC-1042', scope_id: 'memphis-fulfillment', payload: { capacity_units: 260 } });
 const projectedState = await check('projected state', '/v1/state/memphis-fulfillment');
 if (typeof projectedState?.version === 'number') binding.expected_state_version = projectedState.version;
-const proposal = await post('/v1/proposals', { binding });
+const proposal = await post('/v1/proposals', { binding, proposal_id: 'PROP-1042' });
 assertValue('proposal created', Boolean(proposal?.proposal_id), 'proposal identifier returned');
 const decision = await post('/v1/reviews', { binding, scope_id: 'memphis-fulfillment', proposal_id: proposal?.proposal_id, proposal_hash: proposal?.proposal_hash, context_hash: proposal?.context?.state_hash, approved: true });
 assertValue('Kernel reevaluation', decision?.disposition === 'DENY' || decision?.disposition === 'ALLOW', `disposition=${decision?.disposition ?? 'missing'}`);

@@ -23,11 +23,12 @@ async function get(path) {
   return body.data;
 }
 const reconstruction = await get('/v1/reconstructions/INC-1042');
+const proposal = await get('/v1/proposals/PROP-1042');
 const records = {
-  proposal: await get('/v1/proposals/PROP-1042'),
+  proposal,
   decision: await get('/v1/decisions/PROP-1042'),
   outcome: await get('/v1/outcomes/OUT-1042'),
-  receipt: await get('/v1/receipts/RCP-1042'),
+  receipt: await get(`/v1/receipts/RCP-${proposal.proposal_id}`),
   state: await get('/v1/state/memphis-fulfillment'),
   reconstruction,
 };
