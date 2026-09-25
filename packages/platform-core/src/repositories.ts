@@ -7,6 +7,7 @@ export type StoredKernelDecision = KernelDecision & { tenant_id: string; recorde
 
 export interface PlatformRepositories {
   transaction<T>(tenantId: string, work: (repositories: PlatformRepositories) => Promise<T>): Promise<T>;
+  lockScope(scopeId: string): Promise<void>;
   appendEvent(event: EventEnvelope): Promise<boolean>;
   getEvents(tenantId: string, incidentId?: string): Promise<EventEnvelope[]>;
   putEvidence(record: EvidenceRecord & { tenant_id: string }): Promise<void>;
@@ -31,6 +32,7 @@ export interface PlatformRepositories {
 export class InMemoryPlatformRepositories implements PlatformRepositories {
   private events: EventEnvelope[] = []; private states = new Map<string, { version: number; values: Record<string, unknown> }>(); private receipts = new Map<string, DecisionReceipt & { tenant_id: string }>(); private proposals = new Map<string, ActionProposal & { tenant_id: string }>(); private decisions = new Map<string, StoredKernelDecision>(); private outcomes = new Map<string, OutcomeRecord & { tenant_id: string }>(); private idempotency = new Map<string, unknown>();
   async transaction<T>(_tenantId: string, work: (repositories: PlatformRepositories) => Promise<T>): Promise<T> { return work(this); }
+  async lockScope(_scopeId: string) {}
   async appendEvent(event: EventEnvelope) { if (this.events.some(existing => existing.tenant_id === event.tenant_id && existing.event_id === event.event_id)) return false; this.events.push(structuredClone(event)); return true; }
   async getEvents(tenantId: string, incidentId?: string): Promise<EventEnvelope[]> { return this.events.filter(event => event.tenant_id === tenantId && (!incidentId || event.incident_id === incidentId)).map(event => structuredClone(event)); }
   async putEvidence() {}
@@ -63,6 +65,7 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
     if (!this.db.transaction) return work(this);
     return this.db.transaction(tenantId, async scopedDb => work(new PostgreSQLPlatformRepositories(scopedDb)));
   }
+  async lockScope(scopeId: string) { await this.db.query('SELECT pg_advisory_xact_lock(hashtextextended($1, 0))', [scopeId]); }
   async appendEvent(event: EventEnvelope) { const result = await this.db.query('INSERT INTO journal_events (tenant_id,event_id,event_type,payload,recorded_at) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (tenant_id,event_id) DO NOTHING RETURNING event_id', [event.tenant_id, event.event_id, event.event_type, JSON.stringify(event), event.recorded_at]); return result.rows.length === 1; }
   async getEvents(tenantId: string, incidentId?: string) { const result = await this.db.query<EventEnvelope>('SELECT payload FROM journal_events WHERE tenant_id=$1 AND ($2::text IS NULL OR payload->>\'incident_id\'=$2) ORDER BY recorded_at,event_id', [tenantId, incidentId ?? null]); return result.rows.map(row => (row as unknown as { payload: EventEnvelope }).payload); }
   async putEvidence(record: EvidenceRecord & { tenant_id: string }) { await this.db.query('INSERT INTO evidence_records (tenant_id,evidence_id,payload) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,evidence_id) DO NOTHING', [record.tenant_id, record.evidence_id, JSON.stringify(record)]); }
