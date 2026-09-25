@@ -133,7 +133,12 @@ jobs:
           trap 'rc=$?; for log in "$ARTIFACT_DIR"/compiler-worker*.log "$ARTIFACT_DIR"/worker*.log "$ARTIFACT_DIR"/api*.log "$ARTIFACT_DIR"/oidc*.log; do if test -f "$log"; then echo "===== $log ====="; tail -n 200 "$log"; fi; done; if test -f "$ARTIFACT_DIR/institution-compiler-worker-cases.json"; then cat "$ARTIFACT_DIR/institution-compiler-worker-cases.json"; fi; exit "$rc"' ERR
           echo "Stopping background workers so each compiler fault case owns the queue"
           for pid_file in "$ARTIFACT_DIR/worker.pid" "$ARTIFACT_DIR/compiler-worker.pid"; do
-            if test -f "$pid_file"; then pid="$(cat "$pid_file")"; if kill -0 "$pid" 2>/dev/null; then kill "$pid"; fi; fi
+            if test -f "$pid_file"; then
+              pid="$(cat "$pid_file")"
+              if kill -0 "$pid" 2>/dev/null; then kill "$pid"; fi
+              for i in $(seq 1 20); do if ! kill -0 "$pid" 2>/dev/null; then break; fi; sleep 0.1; done
+              if kill -0 "$pid" 2>/dev/null; then kill -KILL "$pid"; fi
+            fi
           done
           sleep 1
           echo "Running compiler worker crash and deduplication cases"
