@@ -67,7 +67,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
         if (!idempotency.claimed) return { status: 200, body: { data: idempotency.response, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
         const appended = await repositories.appendEvent(event);
         if (!appended) return { status: 200, body: { data: event, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
-        const evidence = new DeterministicEvidenceAdmission().admit(payload);
+        const evidence = new DeterministicEvidenceAdmission().admit({ ...payload, evidence_id: payload.evidence_id ?? `${event.event_id}:evidence` });
         for (const record of evidence) {
           await repositories.putEvidence({ ...record, tenant_id: principal!.tenant_id });
           await repositories.appendEvent({ ...event, event_id: `${event.event_id}:evidence:${record.evidence_id}`, event_type: 'EVIDENCE_ADMITTED', actor_id: 'evidence-admission', actor_type: 'SYSTEM', causation_id: event.event_id, payload: { ...record }, payload_hash: stableHash(record) });
