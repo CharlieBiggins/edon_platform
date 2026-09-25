@@ -1,6 +1,7 @@
 name: staging-equivalent-validation
 on:
   workflow_dispatch:
+  pull_request:
   push:
     paths: ['apps/control-plane-api/**', 'packages/**', 'scripts/**', '.github/workflows/staging-validation.yml']
 jobs:
