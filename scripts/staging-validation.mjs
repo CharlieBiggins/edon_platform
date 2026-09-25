@@ -9,7 +9,7 @@ await mkdir(artifactDir, { recursive: true });
 const started = new Date().toISOString();
 const checks = [];
 async function check(name, path, headers = authorization) {
-  try { const response = await fetch(`${baseUrl}${path}`, { headers }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); }
+  try { const response = await fetch(`${baseUrl}${path}`, { headers }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); return body?.data; } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); return undefined; }
 }
 await check('process health', '/healthz');
 await check('runtime readiness', '/readyz');
@@ -26,7 +26,8 @@ async function post(path, payload) {
 }
 function assertValue(name, condition, detail) { checks.push({ name, passed: Boolean(condition), detail }); }
 const event = await post('/v1/events', { binding, incident_id: 'INC-1042', scope_id: 'memphis-fulfillment', payload: { capacity_units: 260 } });
-await check('projected state', '/v1/state/memphis-fulfillment');
+const projectedState = await check('projected state', '/v1/state/memphis-fulfillment');
+if (typeof projectedState?.version === 'number') binding.expected_state_version = projectedState.version;
 const proposal = await post('/v1/proposals', { binding });
 assertValue('proposal created', Boolean(proposal?.proposal_id), 'proposal identifier returned');
 const decision = await post('/v1/reviews', { binding, proposal_id: proposal?.proposal_id, approved: true });
