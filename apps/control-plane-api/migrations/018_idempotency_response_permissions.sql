@@ -4,7 +4,7 @@ BEGIN;
 -- committed response in the same transaction. Permit only that response
 -- column to be updated; keys and tenant ownership remain immutable.
 GRANT UPDATE (response) ON idempotency_keys TO cerebrum_app;
-REVOKE UPDATE (tenant_id, key, created_at) ON idempotency_keys FROM cerebrum_app, cerebrum_audit;
+REVOKE UPDATE (tenant_id, key) ON idempotency_keys FROM cerebrum_app, cerebrum_audit;
 
 INSERT INTO schema_migrations(version)
 VALUES ('018_idempotency_response_permissions')
