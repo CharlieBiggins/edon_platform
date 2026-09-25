@@ -16,6 +16,7 @@ CREATE POLICY receipt_custody_tenant_isolation ON receipt_custody
   WITH CHECK (tenant_id = current_setting('app.tenant_id', true));
 REVOKE ALL ON receipt_custody FROM PUBLIC;
 GRANT SELECT, INSERT ON receipt_custody TO cerebrum_app;
+GRANT REFERENCES ON receipts TO cerebrum_app;
 GRANT SELECT ON receipt_custody TO cerebrum_audit;
 REVOKE UPDATE, DELETE ON receipt_custody FROM cerebrum_app, cerebrum_audit;
 INSERT INTO schema_migrations(version) VALUES ('009_receipt_custody') ON CONFLICT DO NOTHING;
