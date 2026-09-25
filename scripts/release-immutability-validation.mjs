@@ -7,7 +7,7 @@ const institution = process.env.CEREBRUM_RELEASE_INSTITUTION ?? 'meridian-logist
 const releaseId = process.env.CEREBRUM_CANONICAL_RELEASE_ID ?? 'REL-CANONICAL-SIGNED';
 const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(artifactDir, { recursive: true });
-const { Pool } = await import('../apps/control-plane-api/node_modules/pg/index.js');
+const { Pool } = await import('../apps/control-plane-api/node_modules/pg/lib/index.js');
 const admin = new Pool({ connectionString: adminUrl });
 const app = new Pool({ connectionString: appUrl });
 await admin.query("INSERT INTO institution_ir_candidates (tenant_id,institution_id,candidate_id,version,ir_hash,compiler_version,input_source_hashes,validation_findings,control_graph_diff,status,payload) VALUES ($1,$2,$3,'1','sha256:ir-canonical','compiler-v1','[\"sha256:source\"]'::jsonb,'[{\"status\":\"PASSED\",\"qualification_hash\":\"sha256:qualification\"}]'::jsonb,'sha256:graph','QUALIFIED','{}'::jsonb) ON CONFLICT DO NOTHING", [tenant, institution, `CAND-${releaseId}`]);

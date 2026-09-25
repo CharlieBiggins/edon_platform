@@ -11,7 +11,7 @@ if (!token) throw new Error('CEREBRUM_RELEASE_TOKEN is required');
 
 const checks = [];
 const dbUrl = process.env.MIGRATOR_DATABASE_URL ?? process.env.DATABASE_URL;
-const { Pool } = await import('../apps/control-plane-api/node_modules/pg/index.js');
+const { Pool } = await import('../apps/control-plane-api/node_modules/pg/lib/index.js');
 const pool = new Pool({ connectionString: dbUrl });
 const query = (sql, values = []) => pool.query(sql, values);
 const ports = { AFTER_CAS: 8791, AFTER_JOURNAL_APPEND: 8792, AFTER_OUTBOX_ENQUEUE: 8793 };
