@@ -8,7 +8,7 @@ export interface EventEnvelope<T = Record<string, unknown>> {
   correlation_id: string; causation_id?: string; trace_id: string; state_version_before: number; state_version_after: number;
   policy_version: string; model_release?: string; payload: T; payload_hash: string; previous_record_hash: string; signature: string; simulated: true;
 }
-export interface EvidenceRecord { evidence_id: string; status: 'verified' | 'observed' | 'reported' | 'inferred' | 'missing' | 'restricted'; source: string; version: string; citation_text: string; }
+export interface EvidenceRecord { evidence_id: string; status: 'verified' | 'observed' | 'reported' | 'inferred' | 'missing' | 'restricted' | 'disputed'; source: string; version: string; citation_text: string; }
 export interface ActionProposal { proposal_id: string; incident_id: string; objective: string; actions: string[]; modeled_cost: number; commitments_protected: number; assumptions: string[]; citations: string[]; state_version: number; policy_version: string; status: 'DRAFT' | 'PENDING_KERNEL' | 'REVIEW_REQUIRED' | 'SHADOW_RECORDED'; }
 export interface KernelDecision { decision_id: string; proposal_id: string; disposition: KernelDisposition; reason_codes: string[]; required_approval: boolean; evaluated_at: string; state_version: number; policy_version: string; simulated: true; }
 export interface OutcomeRecord { outcome_id: string; proposal_id: string; observed_at: string; recovery_time: string; actual_cost: number; commitments_protected: number; evidence_ids: string[]; verification_status: 'PENDING' | 'VERIFIED' | 'DISPUTED'; }
