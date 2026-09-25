@@ -1,13 +1,14 @@
 import { mkdir, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { spawn } from 'node:child_process';
+import { createRequire } from 'node:module';
 
 const artifactDir = resolve(process.env.ARTIFACT_DIR ?? process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
 await mkdir(artifactDir, { recursive: true });
 const tenant = process.env.OUTBOX_HARNESS_TENANT ?? 'worker-crash-test';
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) throw new Error('DATABASE_URL is required');
-const { Pool } = await import('pg');
+const { Pool } = createRequire(import.meta.url)('../command-center/node_modules/pg');
 const pool = new Pool({ connectionString: databaseUrl });
 const checks = [];
 const sql = async (text, values = [], tenantId = tenant) => {
