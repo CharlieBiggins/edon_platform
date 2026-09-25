@@ -83,14 +83,15 @@ try {
   if (phase === 'baseline') await writeFile(digestFile, JSON.stringify({ phase, canonical_digest: canonicalDigest }, null, 2));
   else {
     const expected = JSON.parse(await import('node:fs/promises').then(fs => fs.readFile(digestFile, 'utf8'))).canonical_digest;
-    if (expected === canonicalDigest) pass(`${phase} equality`, canonicalDigest); else fail(`${phase} equality`, `expected ${expected}, received ${canonicalDigest}`);
+    const equalityName = phase === 'restore' ? 'backup/restore equality' : `${phase} equality`;
+    if (expected === canonicalDigest) pass(equalityName, canonicalDigest); else fail(equalityName, `expected ${expected}, received ${canonicalDigest}`);
   }
 } catch (error) { fail('qualification runner', error instanceof Error ? error.message : String(error)); }
 finally { if (pool) await pool.end(); }
 
 const required = ['phase binding', 'scope binding', 'database binding', 'tenant-scoped source loading', 'candidate persistence', 'durable compilation request', 'candidate deduplication', ...requiredCaseNames];
 for (const name of required) {
-  if (name === 'restart equality' && phase === 'baseline') continue;
+  if (name === 'restart equality' && phase !== 'restart') continue;
   if (name === 'backup/restore equality' && phase !== 'restore') continue;
   if (!checks.some(check => check.name === name)) fail(name, 'required case did not run');
 }
