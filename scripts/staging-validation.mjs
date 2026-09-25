@@ -9,7 +9,7 @@ await mkdir(artifactDir, { recursive: true });
 const started = new Date().toISOString();
 const checks = [];
 async function check(name, path, headers = authorization) {
-  try { const response = await fetch(`${baseUrl}${path}`, { headers }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); }
+  try { const response = await fetch(`${baseUrl}${path}`, { headers }); const body = await response.json(); const passed = response.ok; checks.push({ name, passed, detail: passed ? 'endpoint ready' : String(body?.error?.code ?? 'request failed') }); return body?.data; } catch (error) { checks.push({ name, passed: false, detail: 'API unavailable' }); return undefined; }
 }
 await check('process health', '/healthz');
 await check('runtime readiness', '/readyz');
@@ -21,19 +21,20 @@ async function post(path, payload) {
   const requestBinding = { ...(payload.binding ?? binding), idempotency_key: `ci-${operation}-${postSequence}` };
   const response = await fetch(`${baseUrl}${path}`, { method: 'POST', headers: { 'content-type': 'application/json', ...authorization }, body: JSON.stringify({ ...payload, binding: requestBinding }) });
   const data = await response.json();
-  checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : String(data?.error?.code ?? 'failed') });
+  checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : `${String(data?.error?.code ?? 'failed')}: ${String(data?.error?.message ?? '')}`.trim() });
   return data?.data;
 }
 function assertValue(name, condition, detail) { checks.push({ name, passed: Boolean(condition), detail }); }
 const event = await post('/v1/events', { binding, incident_id: 'INC-1042', scope_id: 'memphis-fulfillment', payload: { capacity_units: 260 } });
-await check('projected state', '/v1/state/memphis-fulfillment');
+const projectedState = await check('projected state', '/v1/state/memphis-fulfillment');
+if (typeof projectedState?.version === 'number') binding.expected_state_version = projectedState.version;
 const proposal = await post('/v1/proposals', { binding });
 assertValue('proposal created', Boolean(proposal?.proposal_id), 'proposal identifier returned');
 const decision = await post('/v1/reviews', { binding, proposal_id: proposal?.proposal_id, approved: true });
 assertValue('Kernel reevaluation', decision?.disposition === 'APPROVAL_REQUIRED', `disposition=${decision?.disposition ?? 'missing'}`);
 await post('/v1/shadow-evaluations', { binding, proposal_id: proposal?.proposal_id });
 await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: proposal?.proposal_id, verification_status: 'PENDING', actual_cost: 15800, commitments_protected: 3 });
-const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`, { headers: authorization }); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), 'receipt survives HTTP serialization');
+const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`, { headers: authorization }); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), receiptResponse.ok ? (receiptBody?.data ? 'receipt survives HTTP serialization' : 'receipt response contained no data') : `HTTP ${receiptResponse.status} ${String(receiptBody?.error?.code ?? 'request failed')}`);
 await check('reconstruction serialization', '/v1/reconstructions/INC-1042', durabilityAuthorization);
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
 await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
