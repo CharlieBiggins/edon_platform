@@ -82,7 +82,9 @@ jobs:
           if-no-files-found: warn
 
   staging-smoke:
-    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success'
+    # Persistent staging is optional until it is provisioned. An unset or false
+    # flag is an explicit NOT_CONFIGURED state, so no smoke test is attempted.
+    if: github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success' && vars.CEREBRUM_STAGING_ENABLED == 'true'
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -98,6 +100,15 @@ jobs:
       - run: npm run test:policy
       - run: npx playwright install --with-deps chromium
       - run: npm run build
+      - name: Verify staging configuration
+        env:
+          CEREBRUM_STAGING_URL: ${{ vars.CEREBRUM_STAGING_URL }}
+        run: |
+          set -euo pipefail
+          if [ -z "$CEREBRUM_STAGING_URL" ]; then
+            echo "::error::CEREBRUM_STAGING_ENABLED is true but CEREBRUM_STAGING_URL is missing"
+            exit 1
+          fi
       - name: Run post-deployment smoke suite
         env:
           PLAYWRIGHT_BASE_URL: ${{ vars.CEREBRUM_STAGING_URL }}
