@@ -69,7 +69,7 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async getState(tenantId: string, scopeId: string) { const result = await this.db.query<{ version: number; values: Record<string, unknown> }>('SELECT version,values FROM state_snapshots WHERE tenant_id=$1 AND scope_id=$2', [tenantId, scopeId]); return result.rows[0] ?? null; }
   async putState(incident: StoredIncident, expectedVersion: number) {
     if (incident.state_version !== expectedVersion + 1) return false;
-    const updated = await this.db.query('UPDATE state_snapshots SET version=$3, values=$5 WHERE tenant_id=$1 AND scope_id=$2 AND version=$4 RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]);
+    const updated = await this.db.query('UPDATE state_snapshots SET version=$3::bigint, values=$5::jsonb WHERE tenant_id=$1 AND scope_id=$2 AND version=$4::bigint RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]);
     if (updated.rows.length === 1) return true;
     const inserted = await this.db.query('INSERT INTO state_snapshots (tenant_id,scope_id,version,values) VALUES ($1,$2,$3,$5) ON CONFLICT (tenant_id,scope_id) DO NOTHING RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]);
     return inserted.rows.length === 1;
