@@ -38,7 +38,7 @@ try {
   const pgModule = await import('../apps/control-plane-api/node_modules/pg/lib/index.js');
   const { Pool } = pgModule.default ?? pgModule;
   pool = new Pool({ connectionString: databaseUrl });
-  const query = (sql, values = []) => pool.query(sql, values);
+  const query = async (sql, values = []) => { const client = await pool.connect(); try { await client.query('BEGIN'); await client.query('SELECT set_config($1,$2,true)', ['app.tenant_id', tenant ?? '']); const result = await client.query(sql, values); await client.query('COMMIT'); return result; } catch (error) { await client.query('ROLLBACK'); throw error; } finally { client.release(); } };
   const sources = (await query('SELECT tenant_id,institution_id,source_id,source_version,content_hash,classification_status,payload FROM institution_sources WHERE tenant_id=$1 AND institution_id=$2 ORDER BY source_id,source_version', [tenant, institution])).rows;
   const candidates = (await query('SELECT tenant_id,institution_id,candidate_id,version,ir_hash,compiler_version,input_source_hashes,validation_findings,control_graph_diff,status,payload FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2 ORDER BY candidate_id', [tenant, institution])).rows;
   const outbox = (await query("SELECT outbox_id,dedupe_key,topic,aggregate_id,payload,status,attempts FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2 ORDER BY outbox_id", [tenant, institution])).rows;
