@@ -32,6 +32,7 @@ const runFault = async (fault, suffix, expectDurable) => {
   if (expectDurable) {
     if (!candidateSeen) fail(`crash ${fault}`, 'candidate was not durable before worker termination');
     await stopWorker(worker);
+    await sleep(1500);
     const retryWorker = spawnWorker(null, 9100 + checks.length);
     const recovered = await waitFor(async () => {
     const result = await tenantQuery(tenant, 'SELECT status FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2', [tenant, fixture.institution]);
@@ -41,7 +42,8 @@ const runFault = async (fault, suffix, expectDurable) => {
     const candidates = await count(candidateSql, [tenant, fixture.institution]);
     const candidate = (await tenantQuery(tenant, 'SELECT candidate_id FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2', [tenant, fixture.institution])).rows[0];
     const events = Number((await tenantQuery(tenant, 'SELECT count(*) FROM journal_events WHERE tenant_id=$1 AND event_id=$2', [tenant, `institution-candidate:${candidate?.candidate_id ?? ''}`])).rows[0]?.count ?? 0);
-    if (recovered && candidates === 1 && events === 1) pass(`crash ${fault}`, 'post-commit candidate survived and redelivery deduplicated'); else fail(`crash ${fault}`, `recovered=${recovered} candidates=${candidates} events=${events}`);
+    const status = (await tenantQuery(tenant, 'SELECT status FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2', [tenant, fixture.institution])).rows[0]?.status;
+    if (recovered && candidates === 1 && events === 1) pass(`crash ${fault}`, 'post-commit candidate survived and redelivery deduplicated'); else fail(`crash ${fault}`, `recovered=${recovered} status=${status} candidates=${candidates} events=${events}`);
   } else {
     await sleep(500);
     await stopWorker(worker);
