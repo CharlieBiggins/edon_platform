@@ -12,10 +12,11 @@ export class DurableOutboxWorker {
     private readonly handle: OutboxHandler,
     private readonly verify: OutboxMessageVerifier,
     private readonly maxAttempts = 5,
+    private readonly leaseMs = 30000,
   ) {}
 
   async processOnce(): Promise<'IDLE' | 'COMPLETED' | 'RETRYING' | 'DEAD_LETTER'> {
-    const message = await this.repositories.transaction(this.tenantId, repositories => repositories.claimOutbox(this.tenantId, this.workerId));
+    const message = await this.repositories.transaction(this.tenantId, repositories => repositories.claimOutbox(this.tenantId, this.workerId, this.leaseMs));
     if (!message) return 'IDLE';
     try {
       await this.verify(message);
@@ -23,7 +24,10 @@ export class DurableOutboxWorker {
       await this.repositories.transaction(this.tenantId, repositories => repositories.completeOutbox(this.tenantId, message.outbox_id));
       return 'COMPLETED';
     } catch (error) {
-      return this.repositories.transaction(this.tenantId, repositories => repositories.retryOutbox(this.tenantId, message.outbox_id, error instanceof Error ? error.message : 'worker failure', this.maxAttempts));
+      const attempts = message.attempts ?? 1;
+      const base = Math.min(30000, 250 * 2 ** Math.max(0, attempts - 1));
+      const jittered = Math.round(base * (0.8 + Math.random() * 0.4));
+      return this.repositories.transaction(this.tenantId, repositories => repositories.retryOutbox(this.tenantId, message.outbox_id, error instanceof Error ? error.message : 'worker failure', this.maxAttempts, jittered));
     }
   }
 }
