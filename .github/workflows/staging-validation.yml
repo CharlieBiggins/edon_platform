@@ -74,6 +74,9 @@ jobs:
           ALTER ROLE cerebrum_app LOGIN PASSWORD 'validation-only';
           ALTER ROLE cerebrum_audit LOGIN PASSWORD 'validation-only';
           GRANT CONNECT ON DATABASE cerebrum_validation TO cerebrum_app, cerebrum_audit;
+          INSERT INTO actor_memberships (tenant_id,actor_id,role,active,facility_scope,mandate_expires_at)
+          VALUES ('meridian-demo','operator-01','administrator',true,'*','2099-01-01T00:00:00Z')
+          ON CONFLICT (tenant_id,actor_id,role) DO UPDATE SET active=true, mandate_expires_at='2099-01-01T00:00:00Z';
           SQL
       - name: Apply migrations and verify version
         run: |
