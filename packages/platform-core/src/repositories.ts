@@ -71,7 +71,7 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
     if (incident.state_version !== expectedVersion + 1) return false;
     const updated = await this.db.query('UPDATE state_snapshots SET version=$3::bigint, values=$5::jsonb WHERE tenant_id=$1 AND scope_id=$2 AND version=$4::bigint RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]);
     if (updated.rows.length === 1) return true;
-    const inserted = await this.db.query('INSERT INTO state_snapshots (tenant_id,scope_id,version,values) VALUES ($1,$2,$3,$5) ON CONFLICT (tenant_id,scope_id) DO NOTHING RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, expectedVersion, JSON.stringify(incident.values ?? {})]);
+    const inserted = await this.db.query('INSERT INTO state_snapshots (tenant_id,scope_id,version,values) VALUES ($1,$2,$3::bigint,$4::jsonb) ON CONFLICT (tenant_id,scope_id) DO NOTHING RETURNING scope_id', [incident.tenant_id, incident.scope_id, incident.state_version, JSON.stringify(incident.values ?? {})]);
     return inserted.rows.length === 1;
   }
   async putIncident(incident: StoredIncident) { await this.db.query('INSERT INTO incidents (tenant_id,incident_id,scope_id,state_version,status) VALUES ($1,$2,$3,$4,$5) ON CONFLICT (tenant_id,incident_id) DO UPDATE SET state_version=EXCLUDED.state_version,status=EXCLUDED.status', [incident.tenant_id, incident.incident_id, incident.scope_id, incident.state_version, incident.status]); }
