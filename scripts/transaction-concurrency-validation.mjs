@@ -32,7 +32,7 @@ const competingResults = await Promise.all(Array.from({ length: 8 }, (_, index) 
 const competingStatuses = competingResults.map(result => result.status);
 const competingErrors = competingResults.map(result => result.body?.error?.code ?? null);
 const competingPass = competingStatuses.filter(status => status === 201).length === 1 && competingStatuses.every(status => status === 201 || status === 409);
-checks.push({ name: 'concurrent projections allow one version advance', passed: competingPass, statuses: competingStatuses, errors: competingErrors });
+checks.push({ name: 'concurrent projections allow one version advance', passed: competingPass, statuses: competingStatuses, errors: competingErrors, responses: competingResults.map(result => ({ status: result.status, error: result.body?.error ?? null })) });
 const finalState = await getState();
 checks.push({ name: 'losing projections preserve one optimistic version', passed: finalState.version === concurrentState.version + 1, before: concurrentState.version, after: finalState.version });
 const report = { passed: checks.every(check => check.passed), scope_id: scopeId, incident_id: incidentId, checks };

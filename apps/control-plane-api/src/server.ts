@@ -59,7 +59,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
         const operationKey = `POST:/v1/events:${bind!.idempotency_key}`;
         const existing = await repositories.getIdempotency(principal!.tenant_id, operationKey);
         if (existing !== undefined) return { status: 200, body: { data: existing, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
-        if (bind!.expected_state_version !== undefined && bind!.expected_state_version !== transactionState.version) return failureResult('STATE_STALE', 'Expected state version is stale', bind!.correlation_id);
+        if (bind!.expected_state_version !== undefined && bind!.expected_state_version !== transactionState.version) { console.error('Event state version conflict', { expected: bind!.expected_state_version, actual: transactionState.version, operationKey }); return failureResult('STATE_STALE', 'Expected state version is stale', bind!.correlation_id); }
         const idempotency = await repositories.claimIdempotency(principal!.tenant_id, operationKey, event);
         if (!idempotency.claimed) return { status: 200, body: { data: idempotency.response, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
         const appended = await repositories.appendEvent(event);
