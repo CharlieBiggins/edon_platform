@@ -11,6 +11,10 @@ const databaseUrl = process.env.DATABASE_URL ?? process.env.MIGRATOR_DATABASE_UR
 const checks = [];
 const fail = (name, detail) => checks.push({ name, passed: false, detail });
 const pass = (name, detail) => checks.push({ name, passed: true, detail });
+const requiredCaseNames = ['atomic submission', 'duplicate-request protection', 'crash after claim', 'crash after source loading', 'crash after extraction', 'crash after IR mapping', 'crash after validation', 'crash before candidate persistence', 'crash after candidate persistence', 'deterministic compilation', 'source-binding enforcement', 'candidate immutability', 'tenant isolation', 'restart equality', 'backup/restore equality'];
+let suppliedCases = {};
+try { suppliedCases = JSON.parse(process.env.CEREBRUM_COMPILER_REQUIRED_CASES ?? '{}'); } catch { fail('required-case manifest', 'CEREBRUM_COMPILER_REQUIRED_CASES is not valid JSON'); }
+for (const name of requiredCaseNames) suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');
 if (!phase || !['baseline', 'restart', 'restore'].includes(phase)) fail('phase binding', 'CEREBRUM_COMPILER_PHASE must be baseline, restart or restore');
 if (!tenant || !institution) fail('scope binding', 'CEREBRUM_COMPILER_TENANT and CEREBRUM_COMPILER_INSTITUTION are required');
 if (!databaseUrl) fail('database binding', 'DATABASE_URL or MIGRATOR_DATABASE_URL is required');
@@ -52,7 +56,7 @@ try {
 } catch (error) { fail('qualification runner', error instanceof Error ? error.message : String(error)); }
 finally { if (pool) await pool.end(); }
 
-const required = ['phase binding', 'scope binding', 'database binding', 'tenant-scoped source loading', 'candidate persistence', 'durable compilation request', 'candidate deduplication'];
+const required = ['phase binding', 'scope binding', 'database binding', 'tenant-scoped source loading', 'candidate persistence', 'durable compilation request', 'candidate deduplication', ...requiredCaseNames];
 for (const name of required) if (!checks.some(check => check.name === name)) fail(name, 'required case did not run');
 const report = { boundary: 'INSTITUTION_COMPILER_WORKER_V1', disposition: checks.length > 0 && checks.every(check => check.passed) ? 'QUALIFIED' : 'FAILED', phase, tenant, institution, canonical_digest: snapshot ? digest(snapshot) : null, required_cases: Object.fromEntries(checks.map(check => [check.name, check.passed ? 'PASSED' : 'FAILED'])), checks, completed_at: new Date().toISOString() };
 await writeFile(resolve(artifactDir, 'institution-compiler-qualification.json'), JSON.stringify(report, null, 2));
