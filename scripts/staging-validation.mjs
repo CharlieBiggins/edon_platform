@@ -21,7 +21,7 @@ async function post(path, payload) {
   const requestBinding = { ...(payload.binding ?? binding), idempotency_key: `ci-${operation}-${postSequence}` };
   const response = await fetch(`${baseUrl}${path}`, { method: 'POST', headers: { 'content-type': 'application/json', ...authorization }, body: JSON.stringify({ ...payload, binding: requestBinding }) });
   const data = await response.json();
-  checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : String(data?.error?.code ?? 'failed') });
+  checks.push({ name: `HTTP ${path}`, passed: response.ok, detail: response.ok ? 'accepted' : `${String(data?.error?.code ?? 'failed')}: ${String(data?.error?.message ?? '')}`.trim() });
   return data?.data;
 }
 function assertValue(name, condition, detail) { checks.push({ name, passed: Boolean(condition), detail }); }
