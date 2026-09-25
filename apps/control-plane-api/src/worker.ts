@@ -48,6 +48,7 @@ const digest = (value: unknown) => `sha256:${createHash('sha256').update(canonic
 const compileInstitution = async (message: OutboxMessage) => {
   const institutionId = String(message.payload.institution_id ?? message.aggregate_id);
   const sources = await repositories.transaction(message.tenant_id, scoped => scoped.listInstitutionSources(message.tenant_id, institutionId));
+  if (config.profile === 'STAGING_TEST') console.log('Institution compiler loading sources', { institution_id: institutionId, source_count: sources.length, outbox_id: message.outbox_id });
   failAt('AFTER_SOURCE_LOADING');
   const ordered = sources.slice().sort((a, b) => `${a.source_id}:${a.source_version}`.localeCompare(`${b.source_id}:${b.source_version}`));
   const sourceHashes = ordered.map(source => `${source.source_id}@${source.source_version}:${source.content_hash}`);
@@ -69,7 +70,8 @@ const compileInstitution = async (message: OutboxMessage) => {
   failAt('AFTER_VALIDATION');
   failAt('BEFORE_CANDIDATE_PERSISTENCE');
   await repositories.transaction(message.tenant_id, async scoped => {
-    await scoped.createInstitutionCandidate(candidate);
+    const inserted = await scoped.createInstitutionCandidate(candidate);
+    if (config.profile === 'STAGING_TEST') console.log('Institution compiler candidate persistence', { candidate_id: candidate.candidate_id, inserted });
     const recordedAt = new Date().toISOString();
     await scoped.appendEvent({ event_id: `institution-candidate:${candidate.candidate_id}`, tenant_id: message.tenant_id, event_type: 'INSTITUTION_CANDIDATE_COMPILED', actor_id: workerId, actor_type: 'WORKER', scope_id: institutionId, incident_id: candidate.candidate_id, occurred_at: recordedAt, observed_at: recordedAt, available_to_controller_at: recordedAt, recorded_at: recordedAt, correlation_id: message.correlation_id, trace_id: message.trace_id, state_version_before: 0, state_version_after: 0, policy_version: 'institution-compiler-v1', payload: { candidate_id: candidate.candidate_id, ir_hash: candidate.ir_hash, input_source_hashes: candidate.input_source_hashes, validation_findings: candidate.validation_findings, control_graph_diff: candidate.control_graph_diff }, payload_hash: digest(candidate), previous_record_hash: 'sha256:institution-compiler-genesis', signature: 'simulated', simulated: true });
     failAt('BEFORE_CANDIDATE_COMMIT');
