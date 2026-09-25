@@ -30,6 +30,12 @@ jobs:
       TENANT_ISOLATION_ENFORCEMENT: 'true'
       API_HOST: 127.0.0.1
       API_PORT: '8787'
+      WORKER_PORT: '8788'
+      WORKER_ID: staging-worker-01
+      WORKER_ACTOR_ID: outbox-worker-staging
+      WORKER_TENANTS: meridian-demo
+      WORKER_POLL_MS: '100'
+      WORKER_LEASE_MS: '30000'
       CORS_ORIGIN: http://127.0.0.1:4173
       CEREBRUM_API_URL: http://127.0.0.1:8787
       CEREBRUM_ARTIFACT_DIR: ${{ github.workspace }}/artifacts
@@ -65,7 +71,7 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox"
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox,006_outbox_leases"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
@@ -94,6 +100,13 @@ jobs:
           set -euo pipefail
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/healthz >/dev/null && curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat $ARTIFACT_DIR/api.log; exit 1
+      - name: Start transactional outbox worker
+        run: |
+          set -euo pipefail
+          node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/worker.log" 2>&1 &
+          echo $! > "$ARTIFACT_DIR/worker.pid"
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then exit 0; fi; sleep 1; done
+          cat "$ARTIFACT_DIR/worker.log"; exit 1
       - name: Run validation
         working-directory: command-center
         shell: bash
@@ -115,6 +128,10 @@ jobs:
         run: |
           set -Eeuo pipefail
           node scripts/transaction-concurrency-validation.mjs
+      - name: Validate transactional outbox crash recovery
+        run: |
+          set -Eeuo pipefail
+          node scripts/outbox-crash-validation.mjs
       - name: Validate identity, tenant isolation and role permissions
         run: |
           set -Eeuo pipefail
@@ -261,7 +278,7 @@ jobs:
       - name: Stop services
         if: always()
         run: |
-          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/oidc.pid; do
+          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/worker.pid $ARTIFACT_DIR/oidc.pid; do
             if test -f "$pid_file"; then
               pid="$(cat "$pid_file")"
               if kill -0 "$pid" 2>/dev/null; then kill "$pid" 2>/dev/null; fi
