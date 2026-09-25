@@ -38,4 +38,8 @@ const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-${proposal?.prop
 await check('reconstruction serialization', '/v1/reconstructions/INC-1042', durabilityAuthorization);
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
 await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
-if (!report.passed) process.exitCode = 1;
+console.log(JSON.stringify(report, null, 2));
+if (!report.passed) {
+  for (const check of checks.filter(check => !check.passed)) console.error(`FAILED: ${check.name} (${check.detail})`);
+  process.exitCode = 1;
+}
