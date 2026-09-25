@@ -815,7 +815,7 @@ This snapshot is dated **2026-09-25**. Code and CI remain authoritative.
 | C1 capability registry | `REFERENCE_IMPLEMENTED` | Versioned manifests and API/UI surfaces |
 | C1 logistics research release | `QUALIFIED_SHADOW` | Bounded synthetic/reference workflow only |
 | Institution Builder UI | `UI_SIMULATED` | Must show simulated/candidate-not-active labels |
-| Institution Compiler module | `IMPLEMENTED_NOT_QUALIFIED` | Durable outbox worker, deterministic candidate IR and tenant-scoped persistence; PostgreSQL qualification pending |
+| Institution Compiler module | `STAGING_QUALIFIED` | Durable outbox worker, deterministic candidate IR, tenant-scoped persistence, crash recovery, restart equality and backup/restore equality |
 | Persistent source registry | `REFERENCE_IMPLEMENTED` | Tenant-scoped immutable source versions and source-triggered compilation jobs |
 | Institution release registry | `DESIGNED` | Review/sign/deploy/rollback incomplete |
 | Real customer connectors | `DESIGNED` | Credentials and dispatch intentionally unavailable |
@@ -994,13 +994,17 @@ changes and explicit compilation requests are durable outbox messages; the
 worker loads only the verified tenant's immutable source versions, binds their
 content hashes, performs deterministic extraction, IR mapping, validation and
 Control Graph diff generation, and persists an immutable candidate record. The
-worker is retry-safe through outbox deduplication and lease recovery. It remains
-`IMPLEMENTED_NOT_QUALIFIED` until PostgreSQL restart, crash-recovery and
-backup/restore qualification passes. Qualification must distinguish a fault
-before the candidate transaction commits (candidate and journal roll back) from
-a fault after candidate commit but before outbox acknowledgement (candidate
-survives and redelivery is deduplicated). The Builder UI remains simulated and
-is not connected to this path.
+worker is retry-safe through outbox deduplication and lease recovery. It is
+`STAGING_QUALIFIED` as of merge commit `4b16dda393eb1cc3052645a72208d058e6f663ab`.
+The staging-equivalent workflow run `36131229407` passed atomic submission,
+duplicate protection, every worker crash boundary including candidate-commit
+before acknowledgement, deterministic compilation, source binding, candidate
+immutability, tenant isolation, restart equality and backup/restore equality.
+The final qualification artifact has canonical digest
+`sha256:659763c122f7f04e1a8314263d4498230a623a42f4b59ea70bc20ea8c17cde2c`
+and artifact SHA-256
+`d280a2d5a952d2b983aa68c33e6bf924abf615b75948218abc3a57abd9eb7014`.
+The Builder UI remains simulated and is not connected to this path.
 
 ```text
 Source ingestion
