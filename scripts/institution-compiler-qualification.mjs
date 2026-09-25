@@ -11,7 +11,7 @@ const databaseUrl = process.env.DATABASE_URL ?? process.env.MIGRATOR_DATABASE_UR
 const checks = [];
 const fail = (name, detail) => checks.push({ name, passed: false, detail });
 const pass = (name, detail) => checks.push({ name, passed: true, detail });
-const requiredCaseNames = ['atomic submission', 'duplicate-request protection', 'crash after claim', 'crash after source loading', 'crash after extraction', 'crash after IR mapping', 'crash after validation', 'crash before candidate persistence', 'crash after candidate persistence', 'deterministic compilation', 'source-binding enforcement', 'candidate immutability', 'tenant isolation', 'restart equality', 'backup/restore equality'];
+const requiredCaseNames = ['atomic submission', 'rollback before commit', 'duplicate-request protection', 'crash after claim', 'crash after source loading', 'crash after extraction', 'crash after IR mapping', 'crash after validation', 'crash before candidate persistence', 'commit before acknowledgement redelivery', 'crash after candidate persistence', 'deterministic compilation', 'source-binding enforcement', 'candidate immutability', 'tenant isolation', 'restart equality', 'backup/restore equality'];
 let suppliedCases = {};
 try { suppliedCases = JSON.parse(process.env.CEREBRUM_COMPILER_REQUIRED_CASES ?? '{}'); } catch { fail('required-case manifest', 'CEREBRUM_COMPILER_REQUIRED_CASES is not valid JSON'); }
 for (const name of requiredCaseNames) suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');

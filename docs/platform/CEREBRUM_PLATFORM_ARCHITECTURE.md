@@ -996,8 +996,11 @@ content hashes, performs deterministic extraction, IR mapping, validation and
 Control Graph diff generation, and persists an immutable candidate record. The
 worker is retry-safe through outbox deduplication and lease recovery. It remains
 `IMPLEMENTED_NOT_QUALIFIED` until PostgreSQL restart, crash-recovery and
-backup/restore qualification passes. The Builder UI remains simulated and is
-not connected to this path.
+backup/restore qualification passes. Qualification must distinguish a fault
+before the candidate transaction commits (candidate and journal roll back) from
+a fault after candidate commit but before outbox acknowledgement (candidate
+survives and redelivery is deduplicated). The Builder UI remains simulated and
+is not connected to this path.
 
 ```text
 Source ingestion
