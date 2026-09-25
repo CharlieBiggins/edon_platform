@@ -4,6 +4,7 @@ export type StoredIncident = { incident_id: string; tenant_id: string; scope_id:
 export type StoredReview = { review_id: string; proposal_id: string; actor_id: string; approved: boolean; recorded_at: string };
 export type StoredShadow = { proposal_id: string; recorded_at: string; executed: false; credentials: 'NONE' };
 export type StoredKernelDecision = KernelDecision & { tenant_id: string; recorded_at?: string };
+export type OutboxMessage = { outbox_id: string; tenant_id: string; dedupe_key: string; topic: string; aggregate_id: string; payload: Record<string, unknown>; correlation_id: string; trace_id: string; state_version?: number; status?: 'PENDING' | 'PROCESSING' | 'COMPLETED' | 'DEAD_LETTER'; attempts?: number; available_at?: string; last_error?: string };
 
 export interface PlatformRepositories {
   transaction<T>(tenantId: string, work: (repositories: PlatformRepositories) => Promise<T>): Promise<T>;
@@ -27,6 +28,10 @@ export interface PlatformRepositories {
   getReceipt(tenantId: string, receiptId: string): Promise<(DecisionReceipt & { tenant_id: string }) | null>;
   getIdempotency(tenantId: string, key: string): Promise<unknown | undefined>;
   claimIdempotency(tenantId: string, key: string, response: unknown): Promise<{ claimed: boolean; response: unknown }>;
+  enqueueOutbox(message: OutboxMessage): Promise<boolean>;
+  claimOutbox(tenantId: string, workerId: string): Promise<OutboxMessage | null>;
+  completeOutbox(tenantId: string, outboxId: string): Promise<void>;
+  retryOutbox(tenantId: string, outboxId: string, error: string, maxAttempts?: number): Promise<'RETRYING' | 'DEAD_LETTER'>;
 }
 
 export class InMemoryPlatformRepositories implements PlatformRepositories {
@@ -52,6 +57,11 @@ export class InMemoryPlatformRepositories implements PlatformRepositories {
   async getReceipt(tenantId: string, receiptId: string) { return this.receipts.get(`${tenantId}:${receiptId}`) ?? null; }
   async getIdempotency(tenantId: string, key: string) { return this.idempotency.get(`${tenantId}:${key}`); }
   async claimIdempotency(tenantId: string, key: string, response: unknown) { const id = `${tenantId}:${key}`; if (this.idempotency.has(id)) return { claimed: false, response: this.idempotency.get(id) }; this.idempotency.set(id, structuredClone(response)); return { claimed: true, response }; }
+  private outbox = new Map<string, OutboxMessage>();
+  async enqueueOutbox(message: OutboxMessage) { const key = `${message.tenant_id}:${message.dedupe_key}`; if ([...this.outbox.values()].some(item => `${item.tenant_id}:${item.dedupe_key}` === key)) return false; this.outbox.set(`${message.tenant_id}:${message.outbox_id}`, { ...structuredClone(message), status: 'PENDING', attempts: 0 }); return true; }
+  async claimOutbox(tenantId: string, _workerId: string) { const item = [...this.outbox.values()].find(candidate => candidate.tenant_id === tenantId && candidate.status === 'PENDING' && (!candidate.available_at || candidate.available_at <= new Date().toISOString())); if (!item) return null; item.status = 'PROCESSING'; item.attempts = (item.attempts ?? 0) + 1; return structuredClone(item); }
+  async completeOutbox(tenantId: string, outboxId: string) { const item = this.outbox.get(`${tenantId}:${outboxId}`); if (item) item.status = 'COMPLETED'; }
+  async retryOutbox(tenantId: string, outboxId: string, error: string, maxAttempts = 5) { const item = this.outbox.get(`${tenantId}:${outboxId}`); if (!item) return 'DEAD_LETTER' as const; item.last_error = error; if ((item.attempts ?? 0) >= maxAttempts) { item.status = 'DEAD_LETTER'; return 'DEAD_LETTER' as const; } item.status = 'PENDING'; item.available_at = new Date(Date.now() + 250 * 2 ** Math.max(0, (item.attempts ?? 1) - 1)).toISOString(); return 'RETRYING' as const; }
 }
 
 /** Adapter contract for pg.Pool; production wiring supplies the query/transaction implementation. */
@@ -91,6 +101,10 @@ export class PostgreSQLPlatformRepositories implements PlatformRepositories {
   async getReceipt(tenantId: string, receiptId: string) { const result = await this.db.query<{ payload: DecisionReceipt & { tenant_id: string } }>('SELECT payload FROM receipts WHERE tenant_id=$1 AND receipt_id=$2', [tenantId, receiptId]); return result.rows[0]?.payload ?? null; }
   async getIdempotency(tenantId: string, key: string) { const result = await this.db.query<{ response: unknown }>('SELECT response FROM idempotency_keys WHERE tenant_id=$1 AND key=$2', [tenantId, key]); return result.rows[0]?.response; }
   async claimIdempotency(tenantId: string, key: string, response: unknown) { const result = await this.db.query<{ response: unknown }>('INSERT INTO idempotency_keys (tenant_id,key,response) VALUES ($1,$2,$3) ON CONFLICT (tenant_id,key) DO NOTHING RETURNING response', [tenantId, key, JSON.stringify(response)]); if (result.rows.length) return { claimed: true, response }; const existing = await this.db.query<{ response: unknown }>('SELECT response FROM idempotency_keys WHERE tenant_id=$1 AND key=$2', [tenantId, key]); return { claimed: false, response: existing.rows[0]?.response }; }
+  async enqueueOutbox(message: OutboxMessage) { const result = await this.db.query('INSERT INTO transactional_outbox (tenant_id,outbox_id,dedupe_key,topic,aggregate_id,payload,correlation_id,trace_id,state_version) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9) ON CONFLICT (tenant_id,dedupe_key) DO NOTHING RETURNING outbox_id', [message.tenant_id, message.outbox_id, message.dedupe_key, message.topic, message.aggregate_id, JSON.stringify(message.payload), message.correlation_id, message.trace_id, message.state_version ?? null]); return result.rows.length === 1; }
+  async claimOutbox(tenantId: string, workerId: string) { const result = await this.db.query<OutboxMessage & { payload: Record<string, unknown> }>(`UPDATE transactional_outbox SET status='PROCESSING', attempts=attempts+1, locked_at=now() WHERE tenant_id=$1 AND outbox_id=(SELECT outbox_id FROM transactional_outbox WHERE tenant_id=$1 AND status='PENDING' AND available_at<=now() ORDER BY created_at FOR UPDATE SKIP LOCKED LIMIT 1) RETURNING *`, [tenantId]); if (!result.rows[0]) return null; return { ...result.rows[0], status: 'PROCESSING' as const, attempts: result.rows[0].attempts, payload: result.rows[0].payload }; }
+  async completeOutbox(tenantId: string, outboxId: string) { await this.db.query("UPDATE transactional_outbox SET status='COMPLETED', completed_at=now() WHERE tenant_id=$1 AND outbox_id=$2 AND status='PROCESSING'", [tenantId, outboxId]); }
+  async retryOutbox(tenantId: string, outboxId: string, error: string, maxAttempts = 5) { const result = await this.db.query<{ attempts: number }>('SELECT attempts FROM transactional_outbox WHERE tenant_id=$1 AND outbox_id=$2', [tenantId, outboxId]); const attempts = Number(result.rows[0]?.attempts ?? maxAttempts); const dead = attempts >= maxAttempts; await this.db.query(`UPDATE transactional_outbox SET status=$3, available_at=now() + ($4::integer * interval '1 millisecond'), last_error=$5 WHERE tenant_id=$1 AND outbox_id=$2`, [tenantId, outboxId, dead ? 'DEAD_LETTER' : 'PENDING', dead ? 0 : 250 * 2 ** Math.max(0, attempts - 1), error.slice(0, 1000)]); return dead ? 'DEAD_LETTER' as const : 'RETRYING' as const; }
 }
 
 

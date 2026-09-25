@@ -65,7 +65,7 @@ jobs:
         run: |
           set -euo pipefail
           for migration in apps/control-plane-api/migrations/*.sql; do psql "$MIGRATOR_DATABASE_URL" -v ON_ERROR_STOP=1 -f "$migration"; done
-          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions"
+          test "$(psql "$MIGRATOR_DATABASE_URL" -At -c "SELECT string_agg(version, ',' ORDER BY version) FROM schema_migrations")" = "001_initial,002_security,003_lifecycle_records,004_projection_permissions,005_transactional_outbox"
       - name: Start temporary OIDC issuer
         run: |
           mkdir -p "$ARTIFACT_DIR"
