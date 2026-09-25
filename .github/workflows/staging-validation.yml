@@ -120,6 +120,36 @@ jobs:
           echo $! > "$ARTIFACT_DIR/worker.pid"
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then exit 0; fi; sleep 1; done
           cat "$ARTIFACT_DIR/worker.log"; exit 1
+      - name: Start institution compiler worker
+        run: |
+          set -euo pipefail
+          WORKER_PORT=8789 WORKER_ID=compiler-worker-staging node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/compiler-worker.log" 2>&1 &
+          echo $! > "$ARTIFACT_DIR/compiler-worker.pid"
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8789/readyz >/dev/null; then exit 0; fi; sleep 1; done
+          cat "$ARTIFACT_DIR/compiler-worker.log"; exit 1
+      - name: Run institution compiler worker qualification
+        run: |
+          set -Eeuo pipefail
+          trap 'rc=$?; for log in "$ARTIFACT_DIR"/compiler-worker*.log "$ARTIFACT_DIR"/worker*.log "$ARTIFACT_DIR"/api*.log "$ARTIFACT_DIR"/oidc*.log; do if test -f "$log"; then echo "===== $log ====="; tail -n 200 "$log"; fi; done; if test -f "$ARTIFACT_DIR/institution-compiler-worker-cases.json"; then cat "$ARTIFACT_DIR/institution-compiler-worker-cases.json"; fi; exit "$rc"' ERR
+          echo "Stopping background workers so each compiler fault case owns the queue"
+          for pid_file in "$ARTIFACT_DIR/worker.pid" "$ARTIFACT_DIR/compiler-worker.pid"; do
+            if test -f "$pid_file"; then pid="$(cat "$pid_file")"; if kill -0 "$pid" 2>/dev/null; then kill "$pid"; fi; fi
+          done
+          sleep 1
+          echo "Running compiler worker crash and deduplication cases"
+          node scripts/institution-compiler-worker-validation.mjs
+          echo "Capturing compiler qualification baseline"
+          CEREBRUM_COMPILER_PHASE=baseline CEREBRUM_COMPILER_TENANT=meridian-demo CEREBRUM_COMPILER_INSTITUTION=compiler-validation-duplicate node scripts/institution-compiler-qualification.mjs
+          cp "$ARTIFACT_DIR/institution-compiler-qualification.json" "$ARTIFACT_DIR/institution-compiler-qualification-baseline.json"
+      - name: Restart workers after compiler qualification
+        run: |
+          set -euo pipefail
+          node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/worker-after-compiler.log" 2>&1 & echo $! > "$ARTIFACT_DIR/worker.pid"
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then break; fi; sleep 1; done
+          curl -fsS http://127.0.0.1:8788/readyz >/dev/null
+          WORKER_PORT=8789 WORKER_ID=compiler-worker-after-qualification node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/compiler-worker-after-compiler.log" 2>&1 & echo $! > "$ARTIFACT_DIR/compiler-worker.pid"
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8789/readyz >/dev/null; then break; fi; sleep 1; done
+          curl -fsS http://127.0.0.1:8789/readyz >/dev/null
       - name: Seed release transition acceptance record
         run: |
           set -Eeuo pipefail
@@ -294,7 +324,13 @@ jobs:
           worker_ready=0
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8788/readyz >/dev/null; then worker_ready=1; break; fi; sleep 1; done
           if test "$worker_ready" -ne 1; then cat "$ARTIFACT_DIR/worker-restart.log"; exit 1; fi
+          WORKER_PORT=8789 WORKER_ID=compiler-worker-restart node apps/control-plane-api/dist/apps/control-plane-api/src/worker.js > "$ARTIFACT_DIR/compiler-worker-restart.log" 2>&1 & echo $! > "$ARTIFACT_DIR/compiler-worker-restart.pid"
+          compiler_ready=0
+          for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8789/readyz >/dev/null; then compiler_ready=1; break; fi; sleep 1; done
+          if test "$compiler_ready" -ne 1; then cat "$ARTIFACT_DIR/compiler-worker-restart.log"; exit 1; fi
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
+          CEREBRUM_COMPILER_PHASE=restart CEREBRUM_COMPILER_TENANT=meridian-demo CEREBRUM_COMPILER_INSTITUTION=compiler-validation-duplicate node scripts/institution-compiler-qualification.mjs
+          cp "$ARTIFACT_DIR/institution-compiler-qualification.json" "$ARTIFACT_DIR/institution-compiler-qualification-restart.json"
           CEREBRUM_DIGEST_OUTPUT=release-digest-restart.json node scripts/release-digest.mjs
           diff -u "$ARTIFACT_DIR/release-digest-baseline.json" "$ARTIFACT_DIR/release-digest-restart.json"
           PGOPTIONS='-c app.tenant_id=meridian-demo' PGPASSWORD=validation-only psql "$DATABASE_URL" -At -v ON_ERROR_STOP=1 -c "SELECT 'journal_events='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY event_id)),'empty') FROM journal_events WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'proposals='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY proposal_id)),'empty') FROM proposals WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'kernel_decisions='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY decision_id)),'empty') FROM kernel_decisions WHERE proposal_id='PROP-1042' UNION ALL SELECT 'outcomes='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY outcome_id)),'empty') FROM outcomes WHERE payload->>'proposal_id'='PROP-1042' UNION ALL SELECT 'receipts='||count(*)||':'||coalesce(md5(string_agg(payload::text, '' ORDER BY receipt_id)),'empty') FROM receipts WHERE payload->>'incident_id'='INC-1042' UNION ALL SELECT 'state_snapshot='||coalesce(string_agg(version::text||':'||md5(values::text), ',' ORDER BY scope_id),'empty') FROM state_snapshots WHERE tenant_id='meridian-demo' AND scope_id='memphis-fulfillment'" > $ARTIFACT_DIR/db-durability-restart.txt
@@ -351,6 +387,8 @@ jobs:
           ready=0
           for i in $(seq 1 60); do if curl -fsS http://127.0.0.1:8787/readyz >/dev/null; then ready=1; break; fi; sleep 1; done
           if test "$ready" -ne 1; then cat $ARTIFACT_DIR/api-restore.log; exit 1; fi
+          CEREBRUM_COMPILER_PHASE=restore CEREBRUM_COMPILER_TENANT=meridian-demo CEREBRUM_COMPILER_INSTITUTION=compiler-validation-duplicate DATABASE_URL="postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore" node scripts/institution-compiler-qualification.mjs
+          cp "$ARTIFACT_DIR/institution-compiler-qualification.json" "$ARTIFACT_DIR/institution-compiler-qualification-restore.json"
           DURABILITY_MODE=verify node scripts/durability-validation.mjs
           CEREBRUM_DIGEST_DB_URL="postgresql://cerebrum_admin:validation-only@127.0.0.1:5432/cerebrum_restore" CEREBRUM_DIGEST_OUTPUT=release-digest-restore.json node scripts/release-digest.mjs
           diff -u "$ARTIFACT_DIR/release-digest-baseline.json" "$ARTIFACT_DIR/release-digest-restore.json"
@@ -361,10 +399,14 @@ jobs:
         run: |
           set -Eeuo pipefail
           node scripts/release-qualification-merge.mjs
+      - name: Merge institution compiler qualification
+        run: |
+          set -Eeuo pipefail
+          node scripts/institution-compiler-qualification-merge.mjs
       - name: Stop services
         if: always()
         run: |
-          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/worker.pid $ARTIFACT_DIR/worker-restart.pid $ARTIFACT_DIR/oidc.pid; do
+          for pid_file in $ARTIFACT_DIR/api.pid $ARTIFACT_DIR/api-restart.pid $ARTIFACT_DIR/api-restore.pid $ARTIFACT_DIR/worker.pid $ARTIFACT_DIR/worker-restart.pid $ARTIFACT_DIR/compiler-worker.pid $ARTIFACT_DIR/compiler-worker-restart.pid $ARTIFACT_DIR/oidc.pid; do
             if test -f "$pid_file"; then
               pid="$(cat "$pid_file")"
               if kill -0 "$pid" 2>/dev/null; then kill "$pid" 2>/dev/null; fi
