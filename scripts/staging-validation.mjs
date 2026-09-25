@@ -34,7 +34,7 @@ const decision = await post('/v1/reviews', { binding, proposal_id: proposal?.pro
 assertValue('Kernel reevaluation', decision?.disposition === 'APPROVAL_REQUIRED', `disposition=${decision?.disposition ?? 'missing'}`);
 await post('/v1/shadow-evaluations', { binding, proposal_id: proposal?.proposal_id });
 await post('/v1/outcomes', { binding, outcome_id: 'OUT-1042', proposal_id: proposal?.proposal_id, verification_status: 'PENDING', actual_cost: 15800, commitments_protected: 3 });
-const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`, { headers: authorization }); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), 'receipt survives HTTP serialization');
+const receiptResponse = await fetch(`${baseUrl}/v1/receipts/RCP-1042`, { headers: authorization }); const receiptBody = await receiptResponse.json(); assertValue('receipt serialization', receiptResponse.ok && Boolean(receiptBody?.data), receiptResponse.ok ? (receiptBody?.data ? 'receipt survives HTTP serialization' : 'receipt response contained no data') : `HTTP ${receiptResponse.status} ${String(receiptBody?.error?.code ?? 'request failed')}`);
 await check('reconstruction serialization', '/v1/reconstructions/INC-1042', durabilityAuthorization);
 const report = { profile: process.env.CEREBRUM_RUNTIME_PROFILE ?? 'STAGING_TEST', started_at: started, finished_at: new Date().toISOString(), passed: checks.every(check => check.passed), checks };
 await writeFile(`${artifactDir}/staging-validation.json`, JSON.stringify(report, null, 2));
