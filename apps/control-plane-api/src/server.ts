@@ -266,12 +266,27 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
       const source: InstitutionSourceRecord = { tenant_id: principal!.tenant_id, institution_id: institutionId, source_id: sourceId, source_version: sourceVersion, owner_id: ownerId, provenance: String(body.provenance), sensitivity: String(body.sensitivity), effective_from: effectiveFrom, effective_to: body.effective_to ? String(body.effective_to) : undefined, content_hash: contentHash, classification_status: String(body.classification_status ?? 'PENDING'), ingestion_timestamp: bind!.request_timestamp, payload: typeof body.payload === 'object' && body.payload !== null ? body.payload as Record<string, unknown> : {} };
       const inserted = await repositories.putInstitutionSource(source);
       if (!inserted) return failureResult('VALIDATION_FAILED', 'Source version already exists', bind?.correlation_id);
-      await repositories.enqueueOutbox({ outbox_id: `compile-source-${principal!.tenant_id}-${institutionId}-${sourceId}-${sourceVersion}`, tenant_id: principal!.tenant_id, dedupe_key: `institution-source:${institutionId}:${sourceId}:${sourceVersion}`, topic: 'INSTITUTION_SOURCE_CHANGED', aggregate_id: institutionId, payload: { institution_id: institutionId, source_id: sourceId, source_version: sourceVersion, content_hash: contentHash }, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version: 0 });
+      await repositories.enqueueOutbox({ outbox_id: `compile-source-${principal!.tenant_id}-${institutionId}-${sourceId}-${sourceVersion}`, tenant_id: principal!.tenant_id, dedupe_key: `institution-compile:${institutionId}:${sourceId}:${sourceVersion}`, topic: 'INSTITUTION_COMPILE_REQUESTED', aggregate_id: institutionId, payload: { institution_id: institutionId, source_id: sourceId, source_version: sourceVersion, content_hash: contentHash, requested_by: principal!.actor_id }, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version: 0 });
       return { status: 201, body: { data: source, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
     });
     if (sourceMatch && request.method === 'GET') return await runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => {
       const institutionId = sourceMatch[1]; const sourceId = sourceMatch[2]; const data = sourceId ? await repositories.listInstitutionSourceVersions(principal!.tenant_id, institutionId, sourceId) : await repositories.listInstitutionSources(principal!.tenant_id, institutionId);
       return reply(response, 200, { data, meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } });
+    });
+    const compilationMatch = url.pathname.match(/^\/v1\/institution-compilations\/([^/]+)$/);
+    if (request.method === 'POST' && url.pathname === '/v1/institution-compilations') return await transactionResponse(runtimeDependencies.repositories, principal!.tenant_id, response, async repositories => {
+      const institutionId = String(body.institution_id ?? '');
+      if (!institutionId) return failureResult('VALIDATION_FAILED', 'institution_id is required', bind?.correlation_id);
+      const requestKey = `institution-compile-request:${institutionId}:${bind!.idempotency_key}`;
+      const queued = await repositories.enqueueOutbox({ outbox_id: `compile-request-${principal!.tenant_id}-${institutionId}-${bind!.idempotency_key}`, tenant_id: principal!.tenant_id, dedupe_key: requestKey, topic: 'INSTITUTION_COMPILE_REQUESTED', aggregate_id: institutionId, payload: { institution_id: institutionId, requested_by: principal!.actor_id }, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version: 0 });
+      return { status: queued ? 202 : 200, body: { data: { institution_id: institutionId, queued, status: 'COMPILATION_REQUESTED' }, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
+    });
+    if (request.method === 'GET' && compilationMatch) return await runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => {
+      const institutionId = String(url.searchParams.get('institution_id') ?? '');
+      if (!institutionId) return failure(response, 'VALIDATION_FAILED', 'institution_id is required');
+      const candidate = await repositories.getInstitutionCandidate(principal!.tenant_id, institutionId, compilationMatch[1]);
+      if (!candidate) return reply(response, 404, { error: { code: 'NOT_FOUND', message: 'Institution compilation not found' } });
+      return reply(response, 200, { data: candidate, meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } });
     });
     if (request.method === 'GET' && url.pathname.startsWith('/v1/reconstructions/') && !principal?.roles.some(role => role === 'auditor' || role === 'investigator')) return failure(response, 'PERMISSION_DENIED', 'Reconstruction access requires an auditor or investigator role');
     if (request.method === 'GET' && url.pathname.startsWith('/v1/state/')) return await runtimeDependencies.repositories.transaction(tenantId!, async repositories => reply(response, 200, { data: await state(repositories, tenantId!, url.pathname.split('/').at(-1) ?? ''), meta: { correlation_id: request.headers['x-correlation-id'] ?? 'read', contract_version: CONTRACT_VERSION } }));

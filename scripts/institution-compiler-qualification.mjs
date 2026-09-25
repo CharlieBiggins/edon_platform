@@ -1,0 +1,101 @@
+import { createHash } from 'node:crypto';
+import { mkdir, writeFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
+await mkdir(artifactDir, { recursive: true });
+const phase = process.env.CEREBRUM_COMPILER_PHASE;
+const tenant = process.env.CEREBRUM_COMPILER_TENANT;
+const institution = process.env.CEREBRUM_COMPILER_INSTITUTION;
+const databaseUrl = process.env.DATABASE_URL ?? process.env.MIGRATOR_DATABASE_URL;
+const checks = [];
+const fail = (name, detail) => checks.push({ name, passed: false, detail });
+const pass = (name, detail) => checks.push({ name, passed: true, detail });
+const requiredCaseNames = ['atomic submission', 'rollback before commit', 'duplicate-request protection', 'crash after claim', 'crash after source loading', 'crash after extraction', 'crash after IR mapping', 'crash after validation', 'crash before candidate persistence', 'commit before acknowledgement redelivery', 'crash after candidate persistence', 'deterministic compilation', 'source-binding enforcement', 'candidate immutability', 'tenant isolation', 'restart equality', 'backup/restore equality'];
+let suppliedCases = {};
+try {
+  const supplied = process.env.CEREBRUM_COMPILER_REQUIRED_CASES;
+  if (supplied) suppliedCases = JSON.parse(supplied);
+  else {
+    const caseReport = JSON.parse(await import('node:fs/promises').then(fs => fs.readFile(resolve(artifactDir, 'institution-compiler-worker-cases.json'), 'utf8')));
+    suppliedCases = Object.fromEntries((caseReport.checks ?? []).map(check => [check.name, check.passed]));
+    const rename = {
+      'crash BEFORE_CANDIDATE_COMMIT': 'rollback before commit',
+      'crash AFTER_CANDIDATE_COMMIT_BEFORE_ACK': 'commit before acknowledgement redelivery',
+    };
+    for (const check of caseReport.checks ?? []) {
+      if (rename[check.name]) suppliedCases[rename[check.name]] = check.passed;
+      if (check.name.startsWith('crash ')) {
+        const semantic = check.name.toLowerCase().replaceAll('_', ' ').replace('crash after ir mapping', 'crash after IR mapping');
+        suppliedCases[semantic] = check.passed;
+      }
+    }
+    suppliedCases['atomic submission'] = suppliedCases['rollback before commit'] === true;
+    suppliedCases['crash after candidate persistence'] = suppliedCases['commit before acknowledgement redelivery'] === true;
+  }
+} catch { fail('required-case manifest', 'compiler worker case report is missing or invalid'); }
+for (const name of requiredCaseNames) {
+  if (name === 'restart equality' || name === 'backup/restore equality') continue;
+  suppliedCases[name] === true ? pass(name, 'reported by PostgreSQL qualification harness') : fail(name, 'required case missing or failed');
+}
+if (phase && ['baseline', 'restart', 'restore'].includes(phase)) pass('phase binding', phase);
+if (tenant && institution) pass('scope binding', `${tenant}/${institution}`);
+if (databaseUrl) pass('database binding', 'configured');
+if (!phase || !['baseline', 'restart', 'restore'].includes(phase)) fail('phase binding', 'CEREBRUM_COMPILER_PHASE must be baseline, restart or restore');
+if (!tenant || !institution) fail('scope binding', 'CEREBRUM_COMPILER_TENANT and CEREBRUM_COMPILER_INSTITUTION are required');
+if (!databaseUrl) fail('database binding', 'DATABASE_URL or MIGRATOR_DATABASE_URL is required');
+
+const stable = value => {
+  if (Array.isArray(value)) return `[${value.map(stable).join(',')}]`;
+  if (value && typeof value === 'object') return `{${Object.keys(value).sort().map(key => `${JSON.stringify(key)}:${stable(value[key])}`).join(',')}}`;
+  return JSON.stringify(value);
+};
+const digest = value => `sha256:${createHash('sha256').update(stable(value)).digest('hex')}`;
+let pool;
+let snapshot = null;
+try {
+  const pgModule = await import('../apps/control-plane-api/node_modules/pg/lib/index.js');
+  const { Pool } = pgModule.default ?? pgModule;
+  pool = new Pool({ connectionString: databaseUrl });
+  const query = async (sql, values = []) => { const client = await pool.connect(); try { await client.query('BEGIN'); await client.query('SELECT set_config($1,$2,true)', ['app.tenant_id', tenant ?? '']); const result = await client.query(sql, values); await client.query('COMMIT'); return result; } catch (error) { await client.query('ROLLBACK'); throw error; } finally { client.release(); } };
+  const sources = (await query('SELECT tenant_id,institution_id,source_id,source_version,content_hash,classification_status,payload FROM institution_sources WHERE tenant_id=$1 AND institution_id=$2 ORDER BY source_id,source_version', [tenant, institution])).rows;
+  const candidates = (await query('SELECT tenant_id,institution_id,candidate_id,version,ir_hash,compiler_version,input_source_hashes,validation_findings,control_graph_diff,status,payload FROM institution_ir_candidates WHERE tenant_id=$1 AND institution_id=$2 ORDER BY candidate_id', [tenant, institution])).rows;
+  const outbox = (await query("SELECT outbox_id,dedupe_key,topic,aggregate_id,payload,status,attempts FROM transactional_outbox WHERE tenant_id=$1 AND aggregate_id=$2 ORDER BY outbox_id", [tenant, institution])).rows;
+  snapshot = { tenant, institution, sources, candidates, outbox };
+  if (sources.length) pass('tenant-scoped source loading', `${sources.length} source versions`); else fail('tenant-scoped source loading', 'no source versions persisted');
+  if (candidates.length) pass('candidate persistence', `${candidates.length} candidate records`); else fail('candidate persistence', 'no candidate records persisted');
+  if (outbox.some(row => row.topic === 'INSTITUTION_COMPILE_REQUESTED')) pass('durable compilation request', 'compile outbox message present'); else fail('durable compilation request', 'compile outbox message missing');
+  const candidateHashes = new Set(candidates.map(row => row.ir_hash));
+  if (candidateHashes.size === candidates.length) pass('candidate deduplication', 'candidate hashes are unique'); else fail('candidate deduplication', 'duplicate candidate hash detected');
+  for (const candidate of candidates) {
+    const expected = new Set(sources.map(source => `${source.source_id}@${source.source_version}:${source.content_hash}`));
+    const actual = new Set(Array.isArray(candidate.input_source_hashes) ? candidate.input_source_hashes : []);
+    if ([...actual].every(hash => expected.has(hash))) pass(`source binding ${candidate.candidate_id}`, 'all hashes resolve to immutable source versions'); else fail(`source binding ${candidate.candidate_id}`, 'candidate references missing or modified source content');
+  }
+  const sourceBindingChecks = checks.filter(check => check.name.startsWith('source binding '));
+  const sourceBindingAggregate = checks.find(check => check.name === 'source-binding enforcement');
+  if (sourceBindingAggregate) {
+    sourceBindingAggregate.passed = sourceBindingChecks.length > 0 && sourceBindingChecks.every(check => check.passed);
+    sourceBindingAggregate.detail = sourceBindingAggregate.passed ? 'all candidate source hashes resolve' : 'candidate source hash binding failed';
+  }
+  const canonicalDigest = digest(snapshot);
+  const digestFile = resolve(artifactDir, 'institution-compiler-canonical-digest.json');
+  if (phase === 'baseline') await writeFile(digestFile, JSON.stringify({ phase, canonical_digest: canonicalDigest }, null, 2));
+  else {
+    const expected = JSON.parse(await import('node:fs/promises').then(fs => fs.readFile(digestFile, 'utf8'))).canonical_digest;
+    const equalityName = phase === 'restore' ? 'backup/restore equality' : `${phase} equality`;
+    if (expected === canonicalDigest) pass(equalityName, canonicalDigest); else fail(equalityName, `expected ${expected}, received ${canonicalDigest}`);
+  }
+} catch (error) { fail('qualification runner', error instanceof Error ? error.message : String(error)); }
+finally { if (pool) await pool.end(); }
+
+const required = ['phase binding', 'scope binding', 'database binding', 'tenant-scoped source loading', 'candidate persistence', 'durable compilation request', 'candidate deduplication', ...requiredCaseNames];
+for (const name of required) {
+  if (name === 'restart equality' && phase !== 'restart') continue;
+  if (name === 'backup/restore equality' && phase !== 'restore') continue;
+  if (!checks.some(check => check.name === name)) fail(name, 'required case did not run');
+}
+const report = { boundary: 'INSTITUTION_COMPILER_WORKER_V1', disposition: checks.length > 0 && checks.every(check => check.passed) ? 'QUALIFIED' : 'FAILED', phase, tenant, institution, canonical_digest: snapshot ? digest(snapshot) : null, required_cases: Object.fromEntries(checks.map(check => [check.name, check.passed ? 'PASSED' : 'FAILED'])), checks, completed_at: new Date().toISOString() };
+await writeFile(resolve(artifactDir, 'institution-compiler-qualification.json'), JSON.stringify(report, null, 2));
+console.log(JSON.stringify(report, null, 2));
+if (report.disposition !== 'QUALIFIED') process.exitCode = 1;

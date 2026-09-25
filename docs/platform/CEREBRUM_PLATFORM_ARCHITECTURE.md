@@ -815,8 +815,8 @@ This snapshot is dated **2026-09-25**. Code and CI remain authoritative.
 | C1 capability registry | `REFERENCE_IMPLEMENTED` | Versioned manifests and API/UI surfaces |
 | C1 logistics research release | `QUALIFIED_SHADOW` | Bounded synthetic/reference workflow only |
 | Institution Builder UI | `UI_SIMULATED` | Must show simulated/candidate-not-active labels |
-| Institution Compiler module | `REFERENCE_IMPLEMENTED` | Server-only foundation; authoritative release path incomplete |
-| Persistent source registry | `DESIGNED` | Full persistence path incomplete |
+| Institution Compiler module | `IMPLEMENTED_NOT_QUALIFIED` | Durable outbox worker, deterministic candidate IR and tenant-scoped persistence; PostgreSQL qualification pending |
+| Persistent source registry | `REFERENCE_IMPLEMENTED` | Tenant-scoped immutable source versions and source-triggered compilation jobs |
 | Institution release registry | `DESIGNED` | Review/sign/deploy/rollback incomplete |
 | Real customer connectors | `DESIGNED` | Credentials and dispatch intentionally unavailable |
 | Managed AWS staging | `DESIGNED` | Terraform audited; apply blocked pending configuration and plan review |
@@ -988,6 +988,19 @@ artifact is `staging-validation-artifacts` from run `36119356688`, digest
 Configure cloud account, remote state, certificate, OIDC and secrets; run Terraform/TFLint/Checkov; review IAM and cost; apply through protected approval; run migration and qualification.
 
 ### Priority 2: Authoritative Institution Compiler slice
+
+`INSTITUTION_COMPILER_WORKER_V1` now has a server-only reference path: source
+changes and explicit compilation requests are durable outbox messages; the
+worker loads only the verified tenant's immutable source versions, binds their
+content hashes, performs deterministic extraction, IR mapping, validation and
+Control Graph diff generation, and persists an immutable candidate record. The
+worker is retry-safe through outbox deduplication and lease recovery. It remains
+`IMPLEMENTED_NOT_QUALIFIED` until PostgreSQL restart, crash-recovery and
+backup/restore qualification passes. Qualification must distinguish a fault
+before the candidate transaction commits (candidate and journal roll back) from
+a fault after candidate commit but before outbox acknowledgement (candidate
+survives and redelivery is deduplicated). The Builder UI remains simulated and
+is not connected to this path.
 
 ```text
 Source ingestion
