@@ -7,7 +7,7 @@ export class ReplayableStateProjector implements StateProjector {
       return typeof payload.capacity_units === 'number' && payload.capacity_units >= 0 && payload.capacity_units <= 10000
         && typeof payload.commitments_at_risk === 'number' && payload.commitments_at_risk >= 0;
     })
-      .sort((a, b) => (a.occurred_at ?? '').localeCompare(b.occurred_at ?? ''));
+      .sort((a, b) => a.state_version_after - b.state_version_after || (a.occurred_at ?? '').localeCompare(b.occurred_at ?? ''));
     const projection = projections.at(-1);
     const payload = projection?.payload as { capacity_units?: number; commitments_at_risk?: number } | undefined;
     return { version: projection?.state_version_after ?? 141, values: {
