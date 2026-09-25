@@ -814,7 +814,7 @@ This snapshot is dated **2026-09-25**. Code and CI remain authoritative.
 | Forensic reconstruction/export | `REFERENCE_IMPLEMENTED` | Deterministic package validation exists |
 | C1 capability registry | `REFERENCE_IMPLEMENTED` | Versioned manifests and API/UI surfaces |
 | C1 logistics research release | `QUALIFIED_SHADOW` | Bounded synthetic/reference workflow only |
-| Institution Builder UI | `UI_SIMULATED` | Must show simulated/candidate-not-active labels |
+| Institution Builder UI | `V1_FROZEN` | API-backed ten-stage workflow; candidate-only boundary; changes require pilot or research evidence |
 | Institution Compiler module | `STAGING_QUALIFIED` | Durable outbox worker, deterministic candidate IR, tenant-scoped persistence, crash recovery, restart equality and backup/restore equality |
 | Persistent source registry | `REFERENCE_IMPLEMENTED` | Tenant-scoped immutable source versions and source-triggered compilation jobs |
 | Institution release registry | `DESIGNED` | Review/sign/deploy/rollback incomplete |
@@ -1004,7 +1004,7 @@ The final qualification artifact has canonical digest
 `sha256:659763c122f7f04e1a8314263d4498230a623a42f4b59ea70bc20ea8c17cde2c`
 and artifact SHA-256
 `d280a2d5a952d2b983aa68c33e6bf924abf615b75948218abc3a57abd9eb7014`.
-The Builder UI remains simulated and is not connected to this path.
+Institution Builder v1 is API-backed and connected to the qualified compiler boundary. It remains candidate-only: compilation cannot authorize, sign, deploy or activate a release. This subsystem is frozen; changes require a documented pilot or research finding.
 
 ```text
 Source ingestion
@@ -1115,3 +1115,8 @@ Versioning:
 Cerebrum is not only a model and not only a dashboard. Institution Builder and Compiler define a versioned institution. Observation and evidence establish admissible information. State projection and the Control Graph maintain context. C1 understands, diagnoses, plans and proposes. The Kernel evaluates authority. Humans govern. Execution Assurance controls action. Outcome services verify results. Receipts and reconstruction preserve proof. ActionNet and release controls turn verified experience into future qualified intelligence.
 
 The platform succeeds only when intelligence, authority, execution and proof remain separate but interoperable.
+
+
+### Institution Builder v1 freeze
+
+Institution Builder v1 is frozen at the API-backed boundary validated by PR #17 and master commit 736cb84ba7c45055b59b9d6dc370ddaa007103dc. The ten-stage UI reads authenticated source, compilation, candidate, finding and Control Graph data from the Control Plane. No broad platform work should modify this subsystem unless a research result or pilot finding identifies a concrete defect or required capability.
