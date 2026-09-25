@@ -67,7 +67,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
         const projectedEvent = { ...event, event_id: `${event.event_id}:state`, event_type: 'STATE_PROJECTED' as const, actor_id: 'control-plane', actor_type: 'SYSTEM' as const, state_version_before: transactionState.version, state_version_after: transactionState.version + 1, causation_id: event.event_id, payload: { capacity_units: Number((event.payload as Record<string, unknown>).capacity_units ?? 260), commitments_at_risk: Number((event.payload as Record<string, unknown>).commitments_at_risk ?? 4) } };
         await repositories.appendEvent(projectedEvent);
         const projected = await state(repositories, bind!.tenant_id, event.scope_id);
-        const projectedVersion = projected.version;
+        const projectedVersion = transactionState.version + 1;
         const persisted = await repositories.putState({ tenant_id: bind!.tenant_id, incident_id: event.incident_id, scope_id: event.scope_id, state_version: projectedVersion, status: 'OPEN', values: projected.values }, transactionState.version);
         if (!persisted) throw new StateConflictError(bind!.correlation_id);
         return { status: 201, body: { data: { ...event, state_version_after: projectedVersion }, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
