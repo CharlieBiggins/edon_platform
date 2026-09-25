@@ -89,7 +89,7 @@ test.describe('governed Command Center validation', () => {
       await expect(page.locator('main')).toBeVisible();
       await expect(page.locator('main').getByRole('heading').first()).toBeVisible();
     }
-    await openNav(page, 'Settings & Administration');
+    await openNav(page, 'Settings');
     await page.getByRole('button', { name: /^Authority & mandates/ }).click();
     await expect(page.getByText(/view only|Governed operation/i).first()).toBeVisible();
     await expect(page.getByRole('button', { name: 'Submit change proposal' }).first()).toBeVisible();
