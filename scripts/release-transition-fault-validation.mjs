@@ -56,10 +56,14 @@ try {
     const retryRuntime = await start(retryPort, null);
     const retry = await fetch(`http://127.0.0.1:${retryPort}/v1/institution-releases/${releaseId}/transition`, { method: 'POST', headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: JSON.stringify(bodyFor(idem)) });
     const final = await readSnapshot(releaseId);
-    checks.push({ name: `retry after ${faultPoint}`, expected: 'one successful transition', actual: { status: retry.status, version: final.release?.version, events: final.events.length, outbox: final.outbox.length }, passed: retry.status === 200 && final.release?.version === 2 && final.events.length === 1 && final.outbox.length === 1 });
+    checks.push({ name: `retry after ${faultPoint}`, expected: 'one successful transition', actual: { status: retry.status, version: final.release?.version, events: final.events.length, outbox: final.outbox.length }, passed: retry.status === 200 && Number(final.release?.version) === 2 && final.events.length === 1 && final.outbox.length === 1 });
     await retryRuntime.stop();
   }
 } finally { await pool.end(); }
 const report = { qualification: 'release-transition-fault-injection-v1', disposition: checks.every(check => check.passed) ? 'PASSED' : 'FAILED', checks, completed_at: new Date().toISOString() };
 await writeFile(resolve(artifactDir, 'release-transition-fault-validation.json'), JSON.stringify(report, null, 2));
-if (report.disposition !== 'PASSED') process.exitCode = 1;
+console.log(JSON.stringify(report, null, 2));
+if (report.disposition !== 'PASSED') {
+  for (const check of checks.filter(check => !check.passed)) console.error(`FAILED: ${check.name}`, JSON.stringify(check.actual));
+  process.exit(1);
+}

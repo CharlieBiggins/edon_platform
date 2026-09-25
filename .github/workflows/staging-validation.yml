@@ -143,12 +143,14 @@ jobs:
       - name: Run PostgreSQL rollback-injection qualification
         run: |
           set -Eeuo pipefail
+          trap 'rc=$?; for artifact in "$ARTIFACT_DIR/release-transition-fault-validation.json" "$ARTIFACT_DIR/api.log" "$ARTIFACT_DIR/worker.log" "$ARTIFACT_DIR/oidc.log"; do if test -f "$artifact"; then echo "===== $artifact ====="; if [[ "$artifact" == *.json ]]; then cat "$artifact"; else tail -n 200 "$artifact"; fi; fi; done; exit "$rc"' ERR
           node scripts/release-transition-fault-validation.mjs
       - name: Run signed-release mutation qualification
         run: |
           set -Eeuo pipefail
           echo "CEREBRUM_CANONICAL_RELEASE_ID=REL-CANONICAL-SIGNED" >> "$GITHUB_ENV"
           node scripts/release-immutability-validation.mjs
+          node scripts/repository-version-validation.mjs
       - name: Transition canonical signed release
         run: |
           set -Eeuo pipefail

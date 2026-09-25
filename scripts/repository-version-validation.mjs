@@ -1,0 +1,10 @@
+const { PostgreSQLPlatformRepositories } = await import('../apps/control-plane-api/dist/packages/platform-core/src/repositories.js');
+const pgModule = await import('../apps/control-plane-api/node_modules/pg/lib/index.js');
+const { Pool } = pgModule.default ?? pgModule;
+const pool = new Pool({ connectionString: process.env.MIGRATOR_DATABASE_URL });
+const executor = { query: (sql, values) => pool.query(sql, values), transaction: async (tenant, work) => { const client = await pool.connect(); try { await client.query('BEGIN'); await client.query('SELECT set_config($1,$2,true)', ['app.tenant_id', tenant]); const value = await work(client); await client.query('COMMIT'); return value; } catch (error) { await client.query('ROLLBACK'); throw error; } finally { client.release(); } } };
+const repositories = new PostgreSQLPlatformRepositories(executor);
+const release = await repositories.getInstitutionRelease(process.env.CEREBRUM_RELEASE_TENANT ?? 'meridian-demo', process.env.CEREBRUM_CANONICAL_RELEASE_ID ?? 'REL-CANONICAL-SIGNED');
+if (!release || typeof release.version !== 'number') throw new Error(`Expected JavaScript number release version, received ${typeof release?.version}`);
+console.log(JSON.stringify({ release_id: release.release_id, version: release.version, type: typeof release.version }));
+await pool.end();

@@ -248,7 +248,7 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
         });
         return reply(response, 200, { data: result, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } });
       } catch (error) {
-        const code = error instanceof Error && (error.message === 'STATE_STALE' || error.message.startsWith('INVALID_')) ? 'STATE_STALE' : 'VALIDATION_FAILED';
+        const code = error instanceof Error && error.message.startsWith('TEST_FAULT_') ? 'INTERNAL_ERROR' : error instanceof Error && (error.message === 'STATE_STALE' || error.message.startsWith('INVALID_')) ? 'STATE_STALE' : 'VALIDATION_FAILED';
         return failure(response, code, error instanceof Error ? error.message : 'Transition failed', bind?.correlation_id);
       }
     }
