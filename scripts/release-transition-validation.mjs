@@ -5,7 +5,7 @@ import { createHash } from 'node:crypto';
 const baseUrl = process.env.CEREBRUM_API_URL ?? 'http://127.0.0.1:8787';
 const token = process.env.CEREBRUM_RELEASE_TOKEN ?? process.env.CEREBRUM_AUTH_TOKEN;
 const tenant = process.env.CEREBRUM_RELEASE_TENANT ?? 'meridian-demo';
-const actor = process.env.CEREBRUM_RELEASE_ACTOR ?? 'administrator-01';
+const actor = process.env.CEREBRUM_RELEASE_ACTOR ?? 'operator-01';
 const institution = process.env.CEREBRUM_RELEASE_INSTITUTION ?? 'meridian-logistics';
 const releaseId = process.env.CEREBRUM_RELEASE_ID;
 const artifactDir = resolve(process.env.CEREBRUM_ARTIFACT_DIR ?? 'artifacts');
@@ -14,7 +14,7 @@ if (!token || !releaseId) throw new Error('CEREBRUM_RELEASE_TOKEN and CEREBRUM_R
 const startedAt = new Date().toISOString();
 
 const checks = [];
-const hash = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
+const hash = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex');
 const request = async (name, method, path, body, expected) => {
   const response = await fetch(`${baseUrl}${path}`, { method, headers: { authorization: `Bearer ${token}`, 'content-type': 'application/json' }, body: body ? JSON.stringify(body) : undefined });
   const data = await response.json().catch(() => ({}));
@@ -22,7 +22,7 @@ const request = async (name, method, path, body, expected) => {
   checks.push({ name, expected_status: expected, actual_status: response.status, passed, error_code: data?.error?.code ?? null });
   return { response, data };
 };
-const binding = idempotencyKey => ({ tenant_id: tenant, actor_id: actor, correlation_id: `release-validation-${idempotencyKey}`, trace_id: `trace-${idempotencyKey}`, idempotency_key: idempotencyKey, contract_version: '2026-09-24.v1', request_timestamp: new Date().toISOString(), expected_state_version: 0, evidence_references: [] });
+const binding = idempotencyKey => ({ tenant_id: tenant, actor_id: actor, correlation_id: `release-validation-${idempotencyKey}`, trace_id: `trace-${idempotencyKey}`, idempotency_key: idempotencyKey, contract_version: '2026-09-24.v1', request_timestamp: new Date().toISOString(), evidence_references: [] });
 
 const initial = await request('read release baseline', 'GET', `/v1/institution-releases/${encodeURIComponent(releaseId)}`, null, 200);
 if (!initial.data?.data) throw new Error('Release baseline unavailable');
@@ -51,7 +51,7 @@ const retry = await request('idempotent retry returns original result', 'POST', 
 checks.push({ name: 'idempotent response matches original', expected: hash(winner.data?.data), actual: hash(retry.data?.data), passed: JSON.stringify(winner.data?.data) === JSON.stringify(retry.data?.data) });
 
 const after = await request('read release after transition', 'GET', `/v1/institution-releases/${encodeURIComponent(releaseId)}`, null, 200);
-checks.push({ name: 'one release version advancement', expected: expectedVersion + 1, actual: after.data?.data?.version, passed: after.data?.data?.version === expectedVersion + 1 });
+checks.push({ name: 'one release version advancement', expected: expectedVersion + 1, actual: after.data?.data?.version, passed: Number(after.data?.data?.version) === expectedVersion + 1 });
 const reconstruction = await request('reconstruct transition history', 'GET', `/v1/reconstructions/${encodeURIComponent(releaseId)}`, null, 200);
 const events = reconstruction.data?.data?.events ?? [];
 checks.push({ name: 'one transition journal event', expected: 1, actual: events.filter(event => event.event_type === 'INSTITUTION_RELEASE_TRANSITIONED').length, passed: events.filter(event => event.event_type === 'INSTITUTION_RELEASE_TRANSITIONED').length === 1 });
