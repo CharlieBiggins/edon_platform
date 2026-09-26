@@ -911,6 +911,26 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
   min-height: 0;
   overflow: hidden;
 }
+.ask-full > .ask-shell > .ask-main-workspace[data-layout="chat-focus"] {
+  /* The toolbar is hidden in Chat Focus, so the conversation owns the whole
+     workspace row instead of being placed in the toolbar-sized first row. */
+  grid-template-rows: minmax(0, 1fr) !important;
+}
+.ask-full > .ask-shell > .ask-header,
+.ask-full > .ask-shell > .workspace-boundary,
+.ask-full > .ask-shell > .decision-rail {
+  box-sizing: border-box;
+}
+.ask-full > .ask-shell > .ask-header {
+  height: 60px;
+  min-height: 60px;
+  padding: 0 18px;
+}
+.ask-full > .ask-shell > .workspace-boundary {
+  height: 32px;
+  min-height: 32px;
+  padding: 0 18px;
+}
 .ask-full > .ask-shell > .ask-main-workspace > .ask-workspace {
   height: 100%;
   min-height: 0;
