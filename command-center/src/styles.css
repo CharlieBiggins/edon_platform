@@ -803,3 +803,31 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-shell.ask-full .ask-object,.ask-shell.ask-full .ask-message .answer-provenance{max-width:1050px}
 .ask-shell.ask-full .decision-rail{height:56px;min-height:56px}
 @media(max-width:900px){.ask-header-context{gap:6px;font-size:10px}.ask-header-context>span:first-child{display:none}.ask-header-context>span+span{padding-left:6px}.ask-header-context .badge{font-size:9px!important}}
+
+/* Keep the docked assistant readable at narrow widths. */
+.ask-docked .ask-header{height:88px;min-height:88px;display:flex;flex-wrap:wrap;align-content:center;padding:8px 12px;gap:4px 8px}
+.ask-docked .ask-brand{flex:1 1 auto;min-width:0}
+.ask-docked .ask-brand small{max-width:190px}
+.ask-docked .ask-header-context{order:3;flex:1 0 100%;min-width:0;margin:0;gap:7px;overflow:hidden;font-size:10px}
+.ask-docked .ask-header-context>span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ask-docked .ask-header-context>span+span{padding-left:7px}
+.ask-docked .ask-header-context .badge{flex:none;font-size:9px!important;padding:3px 6px}
+.ask-docked .workspace-boundary{grid-template-columns:auto auto auto;gap:5px 7px;padding:7px 12px}
+.ask-docked .workspace-boundary>span:last-child{font-size:10px!important;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ask-docked .ask-conversation-header{min-width:0;overflow:hidden;padding:9px 12px 8px}
+.ask-docked .ask-conversation-header>div:first-child{min-width:0;display:block}
+.ask-docked .ask-conversation-header>div:first-child strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12px!important}
+.ask-docked .ask-conversation-header .eyebrow{font-size:9px!important}
+.ask-docked .ask-messages{padding:14px 12px 8px}
+.ask-docked .ask-message,.ask-docked .ask-message p,.ask-docked .ask-summary-card,.ask-docked .ask-object,.ask-docked .answer-provenance{width:100%;max-width:100%;min-width:0}
+.ask-docked .ask-message p{font-size:14px!important;line-height:1.55!important}
+.ask-docked .ask-summary-card p{font-size:14px!important}
+.ask-docked .ask-summary-metrics{gap:6px 0}
+.ask-docked .ask-summary-metrics span{padding:2px 7px;white-space:nowrap}
+.ask-docked .ask-summary-metrics strong{font-size:13px!important}
+.ask-docked .ask-summary-metrics small{font-size:10px!important}
+.ask-docked .ask-summary-actions{flex-wrap:wrap}
+.ask-docked .ask-summary-actions button{min-height:36px;font-size:11px!important}
+.ask-docked .ask-answer-actions{flex-wrap:wrap;margin-left:0}
+.ask-docked .ask-composer-region{padding-left:10px;padding-right:10px}
+.ask-docked .ask-composer textarea{width:100%;font-size:14px!important}
