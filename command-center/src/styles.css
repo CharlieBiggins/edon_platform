@@ -876,3 +876,9 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-shell.ask-full .ask-mode-actions>button[aria-label="Back to chat"],.ask-shell.ask-full .ask-mode-actions>button[aria-label="Return to workspace"]{min-height:36px;padding:7px 11px;border:1px solid #557773;border-radius:4px;background:#234a49;color:#e0efea;font-size:11px}
 .ask-shell.ask-full .ask-mode-actions>button[aria-label="Back to chat"]:focus-visible,.ask-shell.ask-full .ask-mode-actions>button[aria-label="Return to workspace"]:focus-visible,.ask-shell.ask-full .ask-mode-actions>button[aria-label="Close workspace"]:focus-visible{outline:2px solid #b8e2cf;outline-offset:2px}
 @media(max-width:700px){.ask-shell.ask-full .ask-mode-actions>button[aria-label="Back to chat"] span,.ask-shell.ask-full .ask-mode-actions>button[aria-label="Return to workspace"] span{display:none}.ask-shell.ask-full .ask-mode-actions>button[aria-label="Back to chat"],.ask-shell.ask-full .ask-mode-actions>button[aria-label="Return to workspace"]{width:36px;min-width:36px;padding:7px}}
+
+/* Keep the composer anchored to the bottom of the chat canvas after removing prompts. */
+.ask-main-workspace[data-layout="chat-focus"]{flex:1;min-height:0;height:100%}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace{height:100%;min-height:0}
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-conversation{height:100%;min-height:0}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{margin-top:auto;align-self:end}
