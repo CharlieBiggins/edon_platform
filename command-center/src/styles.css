@@ -891,3 +891,52 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-conversation{display:flex!important;flex-direction:column;min-height:0;height:100%}
 .ask-main-workspace[data-layout="chat-focus"] .ask-messages{flex:1 1 auto;min-height:0}
 .ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{flex:0 0 auto;margin-top:auto}
+
+/* The full workspace is mounted as .ask-full > .ask-shell. Keep the viewport
+   math on that real container so the conversation and inspector consume the
+   space above the decision footer instead of leaving a trailing white block. */
+.ask-full > .ask-shell {
+  display: grid;
+  grid-template-rows: 60px 32px minmax(0, 1fr) 56px;
+  height: 100dvh;
+  min-height: 0;
+  max-height: 100dvh;
+  overflow: hidden;
+}
+.ask-full > .ask-shell > .ask-main-workspace {
+  grid-row: 3;
+  display: grid;
+  grid-template-rows: 48px minmax(0, 1fr);
+  height: calc(100dvh - 60px - 32px - 56px);
+  min-height: 0;
+  overflow: hidden;
+}
+.ask-full > .ask-shell > .ask-main-workspace > .ask-workspace {
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+.ask-full > .ask-shell > .decision-rail {
+  grid-row: 4;
+  height: 56px;
+  min-height: 56px;
+  overflow: hidden;
+}
+.ask-full > .ask-shell .ask-workspace > .ask-conversation,
+.ask-full > .ask-shell .ask-workspace > .ask-inspector {
+  height: 100%;
+  min-height: 0;
+}
+.ask-full > .ask-shell .ask-main-workspace[data-layout="chat-focus"] .ask-messages {
+  padding-top: 64px;
+  scroll-padding-top: 64px;
+}
+@media (max-width: 900px) {
+  .ask-full > .ask-shell > .ask-main-workspace {
+    height: calc(100dvh - 60px - 32px - 56px);
+  }
+  .ask-full > .ask-shell .ask-main-workspace[data-layout="chat-focus"] .ask-messages {
+    padding-top: 32px;
+    scroll-padding-top: 32px;
+  }
+}
