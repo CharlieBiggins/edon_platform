@@ -960,3 +960,44 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
     scroll-padding-top: 32px;
   }
 }
+
+/* Chat/workspace controls stay as compact icon actions on the right side of
+   the shared header. Text remains available through aria-label and title. */
+.ask-full > .ask-shell > .ask-header .ask-brand { order: 1; min-width: 0; }
+.ask-full > .ask-shell > .ask-header .ask-header-context {
+  order: 2;
+  margin-left: auto;
+  margin-right: 10px;
+  min-width: 0;
+}
+.ask-full > .ask-shell > .ask-header .ask-mode-actions {
+  order: 3;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: 0;
+}
+.ask-full > .ask-shell > .ask-header .ask-mode-actions button {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  min-width: 36px;
+  height: 36px;
+  min-height: 36px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 5px;
+}
+.ask-full > .ask-shell > .ask-header .ask-mode-actions button span {
+  display: none !important;
+}
+.ask-full > .ask-shell > .ask-header .ask-mode-actions button:hover,
+.ask-full > .ask-shell > .ask-header .ask-mode-actions button:focus-visible {
+  background: #28494a;
+  border-color: #70928c;
+  color: #fff;
+}
+@media (max-width: 700px) {
+  .ask-full > .ask-shell > .ask-header .ask-header-context { margin-right: 4px; }
+  .ask-full > .ask-shell > .ask-header .ask-header-context > span:first-child { display: none; }
+}
