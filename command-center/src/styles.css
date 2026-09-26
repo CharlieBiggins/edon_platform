@@ -794,3 +794,12 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 .ask-conversation .answer-provenance{margin-top:8px;padding:6px 0;border:0;background:transparent;gap:7px}.ask-conversation .answer-provenance strong{font-size:9px!important;color:#6a7e70}.ask-conversation .answer-provenance span{font-size:10px!important;color:#6a7e70}.ask-conversation .answer-provenance button{margin-left:auto;font-size:10px!important}
 .ask-shell.ask-full .decision-rail{height:48px;min-height:48px;padding:0 18px;gap:12px}.ask-shell.ask-full .decision-summary strong{font-size:13px!important}.ask-shell.ask-full .decision-summary span{font-size:11px!important}.ask-shell.ask-full .decision-rail-actions button{min-height:32px;padding:6px 9px;font-size:11px!important}
 @media(max-width:900px){.ask-answer-actions{opacity:1}.ask-summary-metrics span{padding:0 8px}.ask-summary-metrics small{font-size:10px!important}.ask-shell.ask-full .decision-rail{height:52px;min-height:52px}}
+
+/* Compact context header after removing the duplicate investigation bar. */
+.ask-header-context{display:flex;align-items:center;gap:10px;margin-left:auto;margin-right:8px;color:#c9ddd5;white-space:nowrap;font-size:11px}
+.ask-header-context>span+span{padding-left:10px;border-left:1px solid #486464}
+.ask-header-context .badge{font-size:10px!important;padding:4px 7px}
+.ask-shell.ask-full .ask-message{width:min(100%,1050px)}
+.ask-shell.ask-full .ask-object,.ask-shell.ask-full .ask-message .answer-provenance{max-width:1050px}
+.ask-shell.ask-full .decision-rail{height:56px;min-height:56px}
+@media(max-width:900px){.ask-header-context{gap:6px;font-size:10px}.ask-header-context>span:first-child{display:none}.ask-header-context>span+span{padding-left:6px}.ask-header-context .badge{font-size:9px!important}}
