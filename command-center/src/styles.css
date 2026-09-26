@@ -886,3 +886,8 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
 /* Give the opening conversation block more breathing room without moving fixed chrome. */
 .ask-main-workspace[data-layout="chat-focus"] .ask-messages{padding-top:52px;scroll-padding-top:52px}
 @media(max-width:900px){.ask-main-workspace[data-layout="chat-focus"] .ask-messages{padding-top:34px;scroll-padding-top:34px}}
+
+/* Use a flex column so the composer occupies the bottom edge of Chat Focus. */
+.ask-main-workspace[data-layout="chat-focus"]>.ask-workspace>.ask-conversation{display:flex!important;flex-direction:column;min-height:0;height:100%}
+.ask-main-workspace[data-layout="chat-focus"] .ask-messages{flex:1 1 auto;min-height:0}
+.ask-main-workspace[data-layout="chat-focus"] .ask-composer-region{flex:0 0 auto;margin-top:auto}
