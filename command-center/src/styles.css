@@ -1001,3 +1001,50 @@ html,body,#root{min-height:100%;min-width:0}.app-shell{min-height:100dvh}.app-bo
   .ask-full > .ask-shell > .ask-header .ask-header-context { margin-right: 4px; }
   .ask-full > .ask-shell > .ask-header .ask-header-context > span:first-child { display: none; }
 }
+
+.ask-full > .ask-shell > .pinned-drawer-backdrop {
+  position: absolute;
+  inset: 60px 0 56px;
+  z-index: 24;
+  display: flex;
+  justify-content: flex-end;
+  background: #17383b1f;
+}
+.pinned-drawer {
+  width: clamp(320px, 34vw, 480px);
+  min-width: 320px;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  background: #f8fbf8;
+  border-left: 1px solid #c7d9cd;
+  box-shadow: -16px 0 38px #17383b26;
+  overflow: hidden;
+}
+.pinned-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 17px;
+  border-bottom: 1px solid #d5e2d8;
+  background: #fff;
+}
+.pinned-drawer-header > div { display: grid; gap: 4px; }
+.pinned-drawer-header strong { font-size: 15px; color: #284e43; }
+.pinned-drawer-header button { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 5px; color: #557064; }
+.pinned-drawer-header button:hover,.pinned-drawer-header button:focus-visible { background: #edf5ef; color: #1e604d; }
+.pinned-drawer-body { min-height: 0; overflow: auto; padding: 14px; }
+.pinned-empty { display: grid; justify-items: center; gap: 8px; padding: 48px 22px; text-align: center; color: #728579; }
+.pinned-empty svg { color: #4a9676; }
+.pinned-empty strong { color: #315a4b; font-size: 13px; }
+.pinned-empty span { max-width: 250px; font-size: 11px; line-height: 1.5; }
+.pinned-answer { padding: 14px; border: 1px solid #d5e3d8; border-radius: 7px; background: #fff; box-shadow: 0 2px 8px #2444330b; }
+.pinned-answer + .pinned-answer { margin-top: 10px; }
+.pinned-answer > div { display: flex; align-items: center; justify-content: space-between; }
+.pinned-answer p { margin: 9px 0 12px; color: #405b4d; font-size: 12px; line-height: 1.55; }
+.pinned-answer-remove { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 4px; color: #28745c; }
+.pinned-answer-remove:hover,.pinned-answer-remove:focus-visible { background: #e7f2ea; }
+.pinned-answer-open { display: inline-flex; align-items: center; gap: 5px; color: #24705a; font-size: 10px; font-weight: 650; }
+@media (max-width: 700px) {
+  .ask-full > .ask-shell > .pinned-drawer-backdrop { inset: 60px 0 56px; }
+  .pinned-drawer { width: min(100%, 420px); min-width: 0; }
+}
