@@ -42,6 +42,8 @@ const capabilityFor = (method: string, path: string): string | null => {
   if (method === 'POST' && /^\/v1\/executions\/[^/]+\/(acknowledge|outcome|verify|reconcile|cancel|compensate|takeover)$/.test(path)) return 'outcome:record';
   if (method === 'POST' && /^\/v1\/outbox\/[^/]+\/requeue$/.test(path)) return 'outbox:requeue';
   if (method === 'POST' && path === '/v1/break-glass/requests') return 'break-glass:request';
+  if (method === 'POST' && path === '/v1/collaborations') return 'collaboration:write';
+  if (method === 'GET' && path === '/v1/collaborations') return 'collaboration:read';
   if (method === 'POST' && /\/v1\/break-glass\/[^/]+\/(approve|activate|revoke)$/.test(path)) return path.endsWith('/revoke') ? 'break-glass:revoke' : 'break-glass:approve';
   if (method === 'POST' && /\/v1\/break-glass\/[^/]+\/use$/.test(path)) return 'break-glass:use';
   if (method === 'GET' && path.startsWith('/v1/break-glass/')) return 'break-glass:read';
@@ -58,7 +60,7 @@ const capabilityFor = (method: string, path: string): string | null => {
   if (method === 'GET' && (path.startsWith('/v1/state/') || path.startsWith('/v1/incidents/') || path.startsWith('/v1/proposals/') || path.startsWith('/v1/decisions/') || path.startsWith('/v1/outcomes/') || path.startsWith('/v1/executions/'))) return 'evidence:read';
   return null;
 };
-const rolesForCapability: Record<string, string[]> = { 'event:submit': ['operator', 'connector'], 'evidence:read': ['operator', 'auditor', 'investigator', 'administrator'], 'evidence:restricted:read': ['auditor', 'investigator'], 'proposal:create': ['operator', 'administrator'], 'review:approve': ['operator', 'reviewer', 'administrator'], 'shadow:evaluate': ['operator', 'administrator'], 'outcome:record': ['operator', 'connector', 'administrator'], 'receipt:read': ['operator', 'auditor', 'investigator', 'administrator'], 'reconstruction:read': ['auditor', 'investigator', 'administrator'], 'outbox:requeue': ['auditor', 'investigator', 'administrator'], 'model-release:administer': ['administrator'], 'institution:compile': ['administrator'], 'institution:read': ['administrator', 'auditor', 'investigator'], 'break-glass:request': ['operator', 'administrator'], 'break-glass:approve': ['administrator'], 'break-glass:revoke': ['administrator', 'auditor'], 'break-glass:read': ['operator', 'auditor', 'investigator', 'administrator'], 'break-glass:use': ['operator', 'auditor', 'investigator', 'administrator'] };
+const rolesForCapability: Record<string, string[]> = { 'event:submit': ['operator', 'connector'], 'evidence:read': ['operator', 'auditor', 'investigator', 'administrator'], 'evidence:restricted:read': ['auditor', 'investigator'], 'proposal:create': ['operator', 'administrator'], 'review:approve': ['operator', 'reviewer', 'administrator'], 'shadow:evaluate': ['operator', 'administrator'], 'outcome:record': ['operator', 'connector', 'administrator'], 'receipt:read': ['operator', 'auditor', 'investigator', 'administrator'], 'reconstruction:read': ['auditor', 'investigator', 'administrator'], 'outbox:requeue': ['auditor', 'investigator', 'administrator'], 'model-release:administer': ['administrator'], 'institution:compile': ['administrator'], 'institution:read': ['administrator', 'auditor', 'investigator'], 'collaboration:write': ['operator', 'reviewer', 'auditor', 'investigator', 'administrator'], 'collaboration:read': ['operator', 'reviewer', 'auditor', 'investigator', 'administrator'], 'break-glass:request': ['operator', 'administrator'], 'break-glass:approve': ['administrator'], 'break-glass:revoke': ['administrator', 'auditor'], 'break-glass:read': ['operator', 'auditor', 'investigator', 'administrator'], 'break-glass:use': ['operator', 'auditor', 'investigator', 'administrator'] };
 
 export type ControlPlaneServerOptions = Partial<RuntimeDependencies> & { profile?: RuntimeProfile; identityVerifier?: IdentityVerifier; receiptSigner?: ReceiptSigner; corsOrigin?: string; faultInjector?: TransitionFaultInjector };
 export function createControlPlaneServer(options: ControlPlaneServerOptions = {}) {
@@ -98,6 +100,40 @@ export function createControlPlaneServer(options: ControlPlaneServerOptions = {}
     }
     const currentState = bind ? await runtimeDependencies.repositories.transaction(principal!.tenant_id, repositories => state(repositories, principal!.tenant_id, String(body.scope_id ?? 'memphis-fulfillment'))) : { version: 141, values: {} };
     if (request.method === 'POST' && url.pathname !== '/v1/events' && url.pathname !== '/v1/reviews' && bind?.expected_state_version !== undefined && bind.expected_state_version !== currentState.version) return failure(response, 'STATE_STALE', 'Expected state version is stale', bind.correlation_id);
+    if (request.method === 'POST' && url.pathname === '/v1/collaborations') {
+      return await transactionResponse(runtimeDependencies.repositories, principal!.tenant_id, response, async repositories => {
+        const primitive = String(body.primitive ?? '');
+        const allowedPrimitives = ['Discuss', 'Request', 'Assign', 'Handoff', 'Share', 'Follow'];
+        const status = String(body.status ?? (primitive === 'Follow' ? 'ACTIVE' : primitive === 'Request' || primitive === 'Assign' ? 'OPEN' : 'RECORDED'));
+        const allowedStatuses = ['RECORDED', 'OPEN', 'ACKNOWLEDGED', 'IN_PROGRESS', 'BLOCKED', 'SATISFIED', 'DECLINED', 'EXPIRED', 'CANCELLED', 'ACTIVE', 'REVOKED'];
+        const objectType = String(body.object_type ?? '');
+        const objectId = String(body.object_id ?? '');
+        // Scope is derived from the authenticated request context. A client may
+        // request a facility scope, but cannot assign itself a broader audience.
+        const visibilityScope = String(request.headers['x-facility-scope'] ?? body.scope_id ?? '');
+        const stateVersion = Number(body.state_version ?? bind?.expected_state_version ?? currentState.version);
+        if (!allowedPrimitives.includes(primitive) || !allowedStatuses.includes(status) || !objectType || !objectId || !visibilityScope || !Number.isSafeInteger(stateVersion) || stateVersion < 0) return failureResult('VALIDATION_FAILED', 'Collaboration records require a supported primitive, operational object, state version and visibility scope', bind!.correlation_id);
+        if (bind?.expected_state_version !== undefined && stateVersion !== bind.expected_state_version) return failureResult('STATE_STALE', 'Collaboration is bound to a different state version', bind.correlation_id);
+        const operationKey = `POST:/v1/collaborations:${bind!.idempotency_key}`;
+        const prior = await repositories.getIdempotency(principal!.tenant_id, operationKey);
+        if (prior !== undefined) return { status: 200, body: { data: prior, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
+        const now = new Date().toISOString();
+        const collaboration = { tenant_id: principal!.tenant_id, collaboration_id: String(body.collaboration_id ?? `collab-${principal!.tenant_id}-${bind!.idempotency_key}`), primitive: primitive as 'Discuss' | 'Request' | 'Assign' | 'Handoff' | 'Share' | 'Follow', object_type: objectType, object_id: objectId, state_version: stateVersion, actor_id: principal!.actor_id, visibility_scope: visibilityScope, status, payload: (body.payload && typeof body.payload === 'object' ? body.payload : {}) as Record<string, unknown>, created_at: now, expires_at: typeof body.expires_at === 'string' ? body.expires_at : undefined };
+        const reservation = await repositories.claimIdempotency(principal!.tenant_id, operationKey, collaboration);
+        if (!reservation.claimed) return { status: 200, body: { data: reservation.response, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
+        const created = await repositories.createCollaboration(collaboration);
+        if (!created) return failureResult('VALIDATION_FAILED', 'Collaboration record already exists', bind!.correlation_id);
+        await repositories.appendEvent({ event_id: `${collaboration.collaboration_id}:recorded`, tenant_id: principal!.tenant_id, event_type: 'COLLABORATION_RECORDED', actor_id: principal!.actor_id, actor_type: principal!.actor_type, scope_id: visibilityScope, incident_id: objectType === 'INCIDENT' ? objectId : String(body.incident_id ?? objectId), occurred_at: now, observed_at: now, available_to_controller_at: now, recorded_at: now, correlation_id: bind!.correlation_id, trace_id: bind!.trace_id, state_version_before: stateVersion, state_version_after: stateVersion, policy_version: 'COLLABORATION-v1', payload: { collaboration_id: collaboration.collaboration_id, primitive, object_type: objectType, object_id: objectId, status, visibility_scope: visibilityScope }, payload_hash: stableHash(collaboration), previous_record_hash: 'sha256:collaboration', signature: 'simulated', simulated: true });
+        await repositories.putIdempotencyResponse(principal!.tenant_id, operationKey, collaboration);
+        return { status: 201, body: { data: collaboration, meta: { correlation_id: bind!.correlation_id, contract_version: CONTRACT_VERSION } } };
+      });
+    }
+    if (request.method === 'GET' && url.pathname === '/v1/collaborations') {
+      const objectType = url.searchParams.get('object_type');
+      const objectId = url.searchParams.get('object_id');
+      if (!objectType || !objectId) return failure(response, 'VALIDATION_FAILED', 'object_type and object_id are required');
+      return await runtimeDependencies.repositories.transaction(principal!.tenant_id, async repositories => reply(response, 200, { data: await repositories.listCollaborations(principal!.tenant_id, objectType, objectId), meta: { correlation_id: 'read', contract_version: CONTRACT_VERSION } }));
+    }
     if (request.method === 'POST' && url.pathname === '/v1/events') {
       return await transactionResponse(runtimeDependencies.repositories, principal!.tenant_id, response, async repositories => {
         await repositories.lockScope(`${principal!.tenant_id}:${String(body.scope_id ?? 'memphis-fulfillment')}`);
